@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "mssql": "^8.1.0",
+    "rest-mssql-nodejs": "^1.0.10"
+  },
+  "name": "prueba",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
