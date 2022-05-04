@@ -1,4 +1,4 @@
-#Sele Miracle Run 🅿️ℹ️ 🆘
+# Sele Miracle Run 🅿️ℹ️ 🆘
 Proyecto Integrado de Ingenieria de Sofware y Bases de Datos - CI-0128 - UCR
 ## Integrantes
 - Jarod Venegas B98410 🐐
