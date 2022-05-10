@@ -1,0 +1,153 @@
+/* body {
+    margin: 0;
+    background: #151616;
+    font-family: roboto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+   */
+@import url('https://fonts.googleapis.com/css2?family=Sora&display=swap');
+  
+  :root {
+    /* --bg:  #2d6b8d; */
+    --bg: #133c54;
+    --bg-accent: #2d6b8d;
+    --text-color: #dadce1;
+    --nav-size: 60px;
+    --border: 1px solid #474a4d;
+    --border-radius: 8px;
+    --speed: 500ms; 
+  }
+  
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  a {
+    color: var(--text-color);
+    text-decoration: none;;
+  }
+  
+  
+  /* <li> */
+  .nav-item {
+    width: calc(var(--nav-size) * 0.8);
+    margin-right: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Icon Button */
+  .icon-button {
+    width: 70px;
+    height: 70px;
+    padding: 5px;
+    margin-right: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: filter 300ms;
+  }
+  
+  .icon-button:hover {
+    filter: brightness(1.2);
+  }
+
+  .menu-button svg { 
+    fill: var(#fff);
+    width: 50px;
+    height: 50px;
+  }
+  
+  .icon-button svg { 
+    fill: var(--text-color);
+    width: 20px;
+    height: px;
+  }
+  
+  
+  /* Dropdown Menu */
+  
+  .dropdown {
+    position: absolute;
+    margin-top:22px;
+    margin-left: 84px;
+    top: 58px;
+    width: 250px;
+    height: 100px;
+    background-color: var(--bg);
+    transform: translateX(-45%);
+    border: var(--border);
+    border-bottom-left-radius: 0.5rem;
+    padding: 1rem;
+    overflow: hidden;
+    transition: height var(--speed) ease;
+  }
+  
+  .menu {
+    height: 300px;
+    width: 100%;
+  }
+  
+  .menu-item {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    border-radius: var(--border-radius);
+    transition: background var(--speed);
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  
+  .menu-item .icon-button {
+    margin-right: 0.5rem;
+  }
+  
+  
+  .menu-item .icon-button:hover {
+    filter: none;
+  }
+  
+  .menu-item:hover {
+    background-color: #15cdfc;
+  }
+  
+  .icon-right {
+    margin-left: auto;
+  }
+  
+  /* CSSTransition classes  */
+  .menu-primary-enter {
+    position: absolute;
+    transform: translateX(-110%);
+  }
+  .menu-primary-enter-active {
+    transform: translateX(0%);
+    transition: all var(--speed) ease;
+  }
+  .menu-primary-exit {
+    position: absolute;
+  }
+  .menu-primary-exit-active {
+    transform: translateX(-110%);
+    transition: all var(--speed) ease;
+  }
+  
+  
+  .menu-secondary-enter {
+    transform: translateX(110%);
+  }
+  .menu-secondary-enter-active {
+    transform: translateX(0%);
+    transition: all var(--speed) ease;
+  }
+  .menu-secondary-exit {
+  
+  }
+  .menu-secondary-exit-active {
+    transform: translateX(110%);
+    transition: all var(--speed) ease;
+  }
