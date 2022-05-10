@@ -2,11 +2,11 @@ import React from 'react';
 import './App.css';
 import Navbar from './Components/Navbar/Navbar';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './pages/home';
-import Benefits from './pages/benefits';
-import Employees from './pages/employees';
-import VolDeductions from './pages/volDeductions';
-import Contracts from './pages/contracts';
+import Home from './Pages/home';
+import Benefits from './Pages/benefits';
+import Employees from './Pages/employees';
+import VolDeductions from './Pages/volDeductions';
+import Contracts from './Pages/contracts';
   
 function App() {
   return (
