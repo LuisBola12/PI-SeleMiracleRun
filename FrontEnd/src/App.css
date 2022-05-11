@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Sora&display=swap');
-*{
-  font-family: 'Sora',sans-serif;
+
+* {
+  font-family: 'Sora', sans-serif;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -42,6 +43,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -51,7 +53,7 @@
   display: flex;
   justify-content: Center;
   height: 100vh;
-  box-shadow: 0px 5px 15px 0px rgba(115,115,115,0.55);
+  box-shadow: 0px 5px 15px 0px rgba(115, 115, 115, 0.55);
   margin: 30px;
   border-radius: 1rem;
 }
@@ -64,17 +66,23 @@
   padding: 8px;
   border-radius: 8px;
   color: white;
-  border-color:white;
-  background-color:#133c54;
+  border-color: white;
+  background-color: #133c54;
   border-style: none;
 }
 
-.button:hover{
-  color:#61dafb;
+.warning-message {
+  color: darkred;
+  padding-right: 95px;
+
+}
+
+.button:hover {
+  color: #61dafb;
 }
 
 .cancel-button {
-  background-color:darkred;
+  background-color: darkred;
 }
 
 .create-button {

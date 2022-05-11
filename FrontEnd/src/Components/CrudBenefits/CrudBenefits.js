@@ -1,12 +1,12 @@
 import {
-    Table,
-    Container,
-    Modal,
-    ModalHeader,
-    ModalBody,
-    FormGroup,
-    ModalFooter,
-  } from "reactstrap";
+  Table,
+  Container,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  FormGroup,
+  ModalFooter,
+} from "reactstrap";
 
 import { useState } from "react";
 import '../../App.css'
@@ -20,12 +20,14 @@ const database = [
 ];
 
 export const CrudBenefits = () => {
-    const [data, setData] = useState(database);
-    const [viewModal, setViewModal] = useState(false);
-    const [name,setName] = useState('');
-    const [cost,setCost] = useState(0);
-    return (
-        <>
+  const [data, setData] = useState(database);
+  const [viewModal, setViewModal] = useState(false);
+  const [name, setName] = useState('');
+  const [cost, setCost] = useState(0);
+  const [warning, setWarning] = useState('');
+
+  return (
+    <>
       <Container className="content-container">
         <br />
         <button className=" button create-button" onClick={() => setViewModal(true)}>
@@ -43,13 +45,13 @@ export const CrudBenefits = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map((e) => (
-              <tr key={e.id}>
-                <td>{e.id}</td>
-                <td>{e.name}</td>
-                <td>{e.actualCost}</td>
+            {data.map((element) => (
+              <tr key={element.id}>
+                <td>{element.id}</td>
+                <td>{element.name}</td>
+                <td>{element.actualCost}</td>
                 <td>
-                  <button  className=" button"> Edit </button>
+                  <button className=" button"> Edit </button>
                 </td>
                 <td>
                   <button className=" button cancel-button" > Delete </button>
@@ -97,28 +99,40 @@ export const CrudBenefits = () => {
           </FormGroup>
         </ModalBody>
         <ModalFooter>
-          <button 
+          <label className="warning-message">{warning}</label>
+          <button
             className="button create-button"
             onClick={() => {
-              const newData = {
-                id: data.length + 1,
-                name: name,
-                cost: cost,
-              };
-              setData([...data, newData]);
-              setViewModal(false);
-              setName("");
-              setCost("");
+              if (name && cost) {
+                const newData = {
+                  id: data.length + 1,
+                  name: name,
+                  actualCost: cost,
+                };
+                setData([...data, newData]);
+                setWarning('');
+                setViewModal(false);
+                setName("");
+                setCost("");
+              }
+              else {
+                setWarning('*Please enter all the values')
+              }
             }}
           >
             Insert
           </button>
-          <button className="button cancel-button" onClick={() => setViewModal(false)}>
+          <button className="button cancel-button" onClick={() => {
+            setViewModal(false)
+            setName("");
+            setCost("");
+            setWarning('');
+          }}>
             Cancel
           </button>
         </ModalFooter>
       </Modal>
     </>
-    )
+  )
 
 };
