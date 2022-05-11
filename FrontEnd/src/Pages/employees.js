@@ -3,14 +3,7 @@ import React from 'react';
 const Employees = () => {
     console.log("hola");
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'Center',
-        alignItems: 'Center',
-        height: '100vh'
-      }}
-    >
+    <div className='page-content'>
       <h1>lista de empleados</h1>
     </div>
   );
