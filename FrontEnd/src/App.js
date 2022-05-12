@@ -10,17 +10,20 @@ import Contracts from './Pages/contracts';
   
 function App() {
   return (
-    <Router>
-      <Navbar/>
-      <Routes>
-        <Route path= "/" element={<Home/>} />
-        <Route path= "home" element={<Home/>} />
-        <Route path= "benefits" element={<Benefits/>} />
-        <Route path= "employees" element={<Employees/>} />
-        <Route path= "volDeductions" element={<VolDeductions/>} />
-        <Route path= "contracts" element={<Contracts/>} />
-      </Routes>
-    </Router>
+    <>
+      <Router>
+        <Navbar/>
+        <Routes>
+          <Route path= "/" element={<Home/>} />
+          <Route path= "home" element={<Home/>} />
+          <Route path= "benefits" element={<Benefits/>} />
+          <Route path= "employees" element={<Employees/>} />
+          <Route path= "volDeductions" element={<VolDeductions/>} />
+          <Route path= "contracts" element={<Contracts/>} />
+        </Routes>
+      </Router>
+      <footer>&copy; Sele Miracle Run - UCR</footer>
+    </>
   );
 }
   

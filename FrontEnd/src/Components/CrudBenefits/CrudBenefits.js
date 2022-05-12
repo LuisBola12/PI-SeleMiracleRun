@@ -62,7 +62,7 @@ export const CrudBenefits = () => {
           Create New Benefit
         </button>
         <br />
-        <Table>
+        <Table className="tabla" hover>
           <thead>
             <tr>
               <th>#</th>
