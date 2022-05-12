@@ -6,10 +6,11 @@ import Navbar from '../Components/Navbar/Navbar';
 const  Benefits = () => {
   return (
     <>
-      <Navbar/>
-      <div className = 'page-content'>
-        <CrudBenefits/>
-      </div>
+        <Navbar/>
+        <div className = 'page-content'>
+          { <CrudBenefits/> }
+        </div>
+        <footer>&copy; Sele Miracle Run - UCR</footer> 
     </>
   );
 };

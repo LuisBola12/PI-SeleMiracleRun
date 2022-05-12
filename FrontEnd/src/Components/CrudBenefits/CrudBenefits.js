@@ -17,6 +17,8 @@ const database = [
   { id: 1, name: "Gym", actualCost: 20000 },
   { id: 2, name: "Transporte", actualCost: 300000 },
   { id: 3, name: "Fisioterapia", actualCost: 40000 },
+ 
+  
 ];
 
 export const CrudBenefits = () => {
@@ -64,11 +66,11 @@ export const CrudBenefits = () => {
         <br />
         <table className="Table">
             <tr className="table-header">
-              <th>#</th>
+              <th className="table-left-border">#</th>
               <th>Benefit</th>
               <th>Actual Cost</th>
               <th>Edit</th>
-              <th>Delete</th>
+              <th className="table-right-border">Delete</th>
             </tr>
             {data.map((element) => (
               <tr key={element.id}>
@@ -85,7 +87,7 @@ export const CrudBenefits = () => {
             ))}
         </table>
       </Container>
-      <Modal isOpen={viewModal}>
+      <Modal className='modal-window' isOpen={viewModal}>
         <ModalHeader>
           <div>
             <h3>Insert New Benefit</h3>

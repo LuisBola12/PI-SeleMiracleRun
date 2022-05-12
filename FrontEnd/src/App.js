@@ -22,7 +22,6 @@ function App() {
           <Route path= "contracts" element={<Contracts/>} />
         </Routes>
       </Router>
-      <footer>&copy; Sele Miracle Run - UCR</footer>
     </>
   );
 }

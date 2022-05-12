@@ -1,5 +1,4 @@
 import React from 'react';
-import App from './../App';
 import Navbar from '../Components/Navbar/Navbar';
 
 const Home = () => {
@@ -9,6 +8,7 @@ const Home = () => {
       <div className='page-content'>
         <h1>Esto es el home page de la App</h1>
       </div>
+      <footer>&copy; Sele Miracle Run - UCR</footer> 
     </>
   );
 };
