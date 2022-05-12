@@ -1,12 +1,16 @@
 import React from 'react';
 import '../App.css'
 import { CrudBenefits } from '../Components/CrudBenefits/CrudBenefits';
+import Navbar from '../Components/Navbar/Navbar';
 
 const  Benefits = () => {
   return (
-    <div className = 'page-content'>
-      <CrudBenefits/>
-    </div>
+    <>
+      <Navbar/>
+      <div className = 'page-content'>
+        <CrudBenefits/>
+      </div>
+    </>
   );
 };
   

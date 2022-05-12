@@ -53,8 +53,8 @@
   display: flex;
   justify-content: Center;
   height: 100vh;
-  box-shadow: 0px 5px 15px 0px rgba(115, 115, 115, 0.55);
-  margin: 30px;
+  box-shadow: 0px 0px 10px 0px rgba(115, 115, 115, 0.55);
+  margin: 60px;
   border-radius: 1rem;
 }
 
@@ -69,6 +69,7 @@
   border-color: white;
   background-color: #133c54;
   border-style: none;
+  width: 100px;
 }
 
 .warning-message {
@@ -78,7 +79,7 @@
 }
 
 .button:hover {
-  color: #61dafb;
+  color: #15cdfc;
 }
 
 .cancel-button {
@@ -88,9 +89,33 @@
 .create-button {
   margin-bottom: 20px;
   background-color: darkgreen;
+  padding: 10px;
+  border-radius: 8px;
+  color: white;
+  border-color: white;
+  border-style: none;
+  width: 200px;
 }
 
 footer {
   text-align: center;
   margin-bottom: 20px;
+}
+
+table {
+  text-align: center;
+  height: 300px;
+}
+
+th {
+  text-align: center;
+  width: 400px;
+  margin-bottom: 20px;
+  background-color: #21232A;
+  color: #15cdfc;
+  padding: 20px;
+}
+
+td {
+  padding-top: 25px;
 }

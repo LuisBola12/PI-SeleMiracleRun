@@ -54,27 +54,25 @@ export const CrudBenefits = () => {
   }
 
   return (
-    <>
+    <> 
       <Container className="content-container">
         <br />
-        <button className=" button create-button" onClick={() => setViewModal(true)}>
+        <button className="create-button" onClick={() => setViewModal(true)}>
           {" "}
           Create New Benefit
         </button>
         <br />
-        <Table className="tabla" hover>
-          <thead>
-            <tr>
+        <table className="Table">
+            <tr className="table-header">
               <th>#</th>
               <th>Benefit</th>
               <th>Actual Cost</th>
-              <th>Actions</th>
+              <th>Edit</th>
+              <th>Delete</th>
             </tr>
-          </thead>
-          <tbody>
             {data.map((element) => (
               <tr key={element.id}>
-                <td>{element.id}</td>
+                <td className="tds">{element.id}</td>
                 <td>{element.name}</td>
                 <td>{element.actualCost} ₡</td>
                 <td>
@@ -85,8 +83,7 @@ export const CrudBenefits = () => {
                 </td>
               </tr>
             ))}
-          </tbody>
-        </Table>
+        </table>
       </Container>
       <Modal isOpen={viewModal}>
         <ModalHeader>
