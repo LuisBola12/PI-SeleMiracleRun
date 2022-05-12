@@ -38,7 +38,7 @@ export const CrudBenefits = () => {
         <Table>
           <thead>
             <tr>
-              <th>ID</th>
+              <th>#</th>
               <th>Benefit</th>
               <th>Actual Cost</th>
               <th>Actions</th>
@@ -49,7 +49,7 @@ export const CrudBenefits = () => {
               <tr key={element.id}>
                 <td>{element.id}</td>
                 <td>{element.name}</td>
-                <td>{element.actualCost}</td>
+                <td>{element.actualCost} ₡</td>
                 <td>
                   <button className=" button"> Edit </button>
                 </td>
@@ -69,7 +69,7 @@ export const CrudBenefits = () => {
         </ModalHeader>
         <ModalBody>
           <FormGroup>
-            <label>Id:</label>
+            <label>#:</label>
             <input
               className="form-control"
               readOnly
@@ -104,16 +104,25 @@ export const CrudBenefits = () => {
             className="button create-button"
             onClick={() => {
               if (name && cost) {
-                const newData = {
-                  id: data.length + 1,
-                  name: name,
-                  actualCost: cost,
-                };
-                setData([...data, newData]);
-                setWarning('');
-                setViewModal(false);
-                setName("");
-                setCost("");
+                const names = [];
+                data.map((index) => {
+                  names.push(index.name);
+                })
+                if (!names.includes(name)) {
+                  const newData = {
+                    id: data.length + 1,
+                    name: name,
+                    actualCost: cost,
+                  };
+                  setData([...data, newData]);
+                  setWarning('');
+                  setViewModal(false);
+                  setName("");
+                  setCost("");
+                } else {
+                  setWarning('*That benefit already exist')
+                }
+
               }
               else {
                 setWarning('*Please enter all the values')
