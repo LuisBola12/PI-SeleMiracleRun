@@ -26,6 +26,33 @@ export const CrudBenefits = () => {
   const [cost, setCost] = useState(0);
   const [warning, setWarning] = useState('');
 
+  const addToTable = () => {
+    if (name && cost) {
+      const names = [];
+      data.map((index) => {
+        names.push(index.name);
+      })
+      if (!names.includes(name)) {
+        const newData = {
+          id: data.length + 1,
+          name: name,
+          actualCost: cost,
+        };
+        setData([...data, newData]);
+        setWarning('');
+        setViewModal(false);
+        setName("");
+        setCost("");
+      } else {
+        setWarning('*That benefit already exist')
+      }
+
+    }
+    else {
+      setWarning('*Please enter all the values')
+    }
+  }
+
   return (
     <>
       <Container className="content-container">
@@ -103,30 +130,7 @@ export const CrudBenefits = () => {
           <button
             className="button create-button"
             onClick={() => {
-              if (name && cost) {
-                const names = [];
-                data.map((index) => {
-                  names.push(index.name);
-                })
-                if (!names.includes(name)) {
-                  const newData = {
-                    id: data.length + 1,
-                    name: name,
-                    actualCost: cost,
-                  };
-                  setData([...data, newData]);
-                  setWarning('');
-                  setViewModal(false);
-                  setName("");
-                  setCost("");
-                } else {
-                  setWarning('*That benefit already exist')
-                }
-
-              }
-              else {
-                setWarning('*Please enter all the values')
-              }
+              addToTable();
             }}
           >
             Insert
