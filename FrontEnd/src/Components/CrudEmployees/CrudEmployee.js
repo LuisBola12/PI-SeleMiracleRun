@@ -77,7 +77,7 @@ import {
             </thead>
             <tbody>
               {data.map((element) => (
-                <tr key={element.id}>
+                <tr key={element.Name}>
                   <td className="tds">{element.Name}</td>
                   <td>{element.LastName}</td>
                   <td>{element.Id}</td>
@@ -130,21 +130,22 @@ import {
               ></input>
             </FormGroup>
             <FormGroup>
-              <label>Contract:</label>
-              <input
-                className="form-control"
-                type="text"
-                value={id}
-                onChange={(e) => setId(e.target.value)}
-              ></input>
+              <label htmlFor="Contract">Contract:</label>
+              <select className="dropdown-Contract" name="Contract" id="Contract" onChange={(e)=>{
+                setContract(e.target.value)}}>
+                <option value="Tiempo Completo">Tiempo Completo</option>
+                <option value="Medio Tiempo">Medio Tiempo</option>
+                <option value="Por Horas">Por Horas</option>
+                <option value="Servicios Profesionales">Servicios Profesionales</option>
+              </select>
             </FormGroup>
             <FormGroup>
               <label>Email:</label>
               <input
                 className="form-control"
                 type="text"
-                value={contract}
-                onChange={(e) => setContract(e.target.value)}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               ></input>
             </FormGroup>
             <FormGroup>
@@ -152,8 +153,8 @@ import {
               <input
                 className="form-control"
                 type="text"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={netSalary}
+                onChange={(e) => setNetSalary(e.target.value)}
               ></input>
             </FormGroup>
           </ModalBody>

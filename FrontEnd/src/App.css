@@ -145,3 +145,10 @@ td {
   border-top-right-radius: 1rem;
   border-bottom-right-radius: 1rem;
 }
+.dropdown-Contract{
+  margin-left: 15px;
+  border-style: solid;
+  padding:8px;
+  text-align: center;
+  border-radius: 0.25rem;
+}
