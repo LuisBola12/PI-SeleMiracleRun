@@ -10,6 +10,8 @@ import {
   import { useState } from "react";
   import '../../App.css'
   import "bootstrap/dist/css/bootstrap.min.css";
+import history from "../../history";
+import { Link, Navigate } from "react-router-dom";
   
   
   const database = [
@@ -57,10 +59,12 @@ import {
       <>
         <Container className="content-container">
           <br/>
-          <button className="create-button" onClick={() => setViewModal(true)}>
-            {" "}
-            Create New Benefit
-          </button>
+            <button className="create-button" onClick=
+            {()=> { history.push('employees/createEmployee')
+              history.go()}}>
+              {" "}
+              Create New Employee
+            </button>         
           <br />
           <table className="Table">
             <thead>
