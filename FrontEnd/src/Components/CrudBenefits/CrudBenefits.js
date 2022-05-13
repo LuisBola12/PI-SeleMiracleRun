@@ -1,5 +1,4 @@
 import {
-  Table,
   Container,
   Modal,
   ModalHeader,
@@ -17,8 +16,8 @@ const database = [
   { id: 1, name: "Gym", actualCost: 20000 },
   { id: 2, name: "Transporte", actualCost: 300000 },
   { id: 3, name: "Fisioterapia", actualCost: 40000 },
- 
-  
+
+
 ];
 
 export const CrudBenefits = () => {
@@ -56,7 +55,7 @@ export const CrudBenefits = () => {
   }
 
   return (
-    <> 
+    <>
       <Container className="content-container">
         <br />
         <button className="create-button" onClick={() => setViewModal(true)}>
@@ -65,6 +64,7 @@ export const CrudBenefits = () => {
         </button>
         <br />
         <table className="Table">
+          <thead>
             <tr className="table-header">
               <th className="table-left-border">#</th>
               <th>Benefit</th>
@@ -72,6 +72,8 @@ export const CrudBenefits = () => {
               <th>Edit</th>
               <th className="table-right-border">Delete</th>
             </tr>
+          </thead>
+          <tbody>
             {data.map((element) => (
               <tr key={element.id}>
                 <td className="tds">{element.id}</td>
@@ -85,6 +87,7 @@ export const CrudBenefits = () => {
                 </td>
               </tr>
             ))}
+          </tbody>
         </table>
       </Container>
       <Modal className='modal-window' isOpen={viewModal}>
