@@ -15,16 +15,16 @@ const Navbar = () => {
         <img src={logo} alt="logo" />
         <Bars />
         <NavMenu>
-          <NavLink to="/home" activeStyle>
+          <NavLink to="/home" activestyle = 'true'>
             Home
           </NavLink>
-          <NavLink to="/benefits" activeStyle>
+          <NavLink to="/benefits" activestyle = 'true'>
             Benefits
           </NavLink>
-          <NavLink to="/employees" activeStyle>
+          <NavLink to="/employees" activestyle = 'true'>
             Employees
           </NavLink>
-          <NavLink to="/volDeductions" activeStyle>
+          <NavLink to="/volDeductions" activestyle = 'true'>
             Voluntary Deductions
           </NavLink>
         </NavMenu>
