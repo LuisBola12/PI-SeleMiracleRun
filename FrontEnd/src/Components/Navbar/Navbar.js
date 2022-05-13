@@ -6,7 +6,7 @@ import {
   NavMenu,
 } from "./NavbarElements";
 import logo from "./logo.png";
-import DropdownMenu, {Sidebar} from "../SideBar/Sidebar";
+import DropdownMenu, { Sidebar } from "../SideBar/Sidebar";
 import { ReactComponent as ListIcon } from '../SideBar/icons/list.svg';
 const Navbar = () => {
   return (
@@ -15,20 +15,23 @@ const Navbar = () => {
         <img src={logo} alt="logo" />
         <Bars />
         <NavMenu>
-          <NavLink to="/home" activestyle = 'true'>
+          <NavLink to="/home" activestyle='true'>
             Home
           </NavLink>
-          <NavLink to="/benefits" activestyle = 'true'>
+          <NavLink to="/benefits" activestyle='true'>
             Benefits
           </NavLink>
-          <NavLink to="/employees" activestyle = 'true'>
+          <NavLink to="/employees" activestyle='true'>
             Employees
           </NavLink>
-          <NavLink to="/volDeductions" activestyle = 'true'>
+          <NavLink to="/projectAdmin" activestyle='true'>
+            Administrate Projcts
+          </NavLink>
+          <NavLink to="/volDeductions" activestyle='true'>
             Voluntary Deductions
           </NavLink>
         </NavMenu>
-        <Sidebar icon = {<ListIcon/>}>
+        <Sidebar icon={<ListIcon />}>
           <DropdownMenu></DropdownMenu>
         </Sidebar>
         {/* <NavBtn>

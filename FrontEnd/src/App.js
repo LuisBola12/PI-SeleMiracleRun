@@ -7,23 +7,28 @@ import Benefits from './Pages/benefits';
 import Employees from './Pages/employees';
 import VolDeductions from './Pages/volDeductions';
 import Contracts from './Pages/contracts';
-  
+import Projects from './Pages/payrollProjects/Projects';
+
 function App() {
   return (
     <>
       <Router>
         {/* <Navbar/> */}
         <Routes>
-          <Route path= "/" element={<Home/>} />
-          <Route path= "home" element={<Home/>} />
-          <Route path= "benefits" element={<Benefits/>} />
-          <Route path= "employees" element={<Employees/>} />
-          <Route path= "volDeductions" element={<VolDeductions/>} />
-          <Route path= "contracts" element={<Contracts/>} />
+          <Route path="/" element={<Home />} />
+          <Route path="home" element={<Home />} />
+          <Route path="benefits" element={<Benefits />} />
+          <Route path="employees" element={<Employees />} />
+          <Route path="volDeductions" element={<VolDeductions />} />
+          <Route path="contracts" element={<Contracts />} />
+          <Route path="projectAdmin" element={<Projects />} />
+
+          projectAdmin
+
         </Routes>
       </Router>
     </>
   );
 }
-  
+
 export default App;
