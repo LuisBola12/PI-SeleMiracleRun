@@ -32,7 +32,7 @@
   
   
   /* <li> */
-  .nav-item {
+  .nav1-item1 {
     width: calc(var(--nav-size) * 0.8);
     margin-right: 30px;
     display: flex;
@@ -41,7 +41,7 @@
   }
   
   /* Icon Button */
-  .icon-button {
+  .icon1-button1 {
     width: 70px;
     height: 70px;
     padding: 5px;
@@ -52,17 +52,18 @@
     transition: filter 300ms;
   }
   
-  .icon-button:hover {
+  .icon1-button1:hover {
     filter: brightness(1.2);
   }
 
-  .menu-button svg { 
+  .menu1-button1 svg { 
     fill: var(#fff);
     width: 50px;
     height: 50px;
+    color: white;
   }
   
-  .icon-button svg { 
+  .icon1-button1 svg { 
     fill: var(--text-color);
     width: 20px;
     height: px;
@@ -71,7 +72,7 @@
   
   /* Dropdown Menu */
   
-  .dropdown {
+  .dropdown1 {
     position: absolute;
     margin-top:22px;
     margin-left: 84px;
@@ -87,67 +88,68 @@
     transition: height var(--speed) ease;
   }
   
-  .menu {
+  .menu1 {
     height: 300px;
     width: 100%;
   }
   
-  .menu-item {
+  .menu1-item1 {
+    color: white;
     height: 50px;
     display: flex;
     align-items: center;
     border-radius: var(--border-radius);
-    transition: background var(--speed);
     margin-top: 5px;
     margin-bottom: 5px;
+    text-decoration: none;
   }
   
-  .menu-item .icon-button {
+  .menu1-item1 .icon1-button1 {
     margin-right: 0.5rem;
   }
   
   
-  .menu-item .icon-button:hover {
+  .menu1-item1 .icon1-button1:hover {
     filter: none;
   }
   
-  .menu-item:hover {
+  .menu1-item1:hover {
     background-color: #15cdfc;
   }
   
-  .icon-right {
+  .icon1-right1 {
     margin-left: auto;
   }
   
   /* CSSTransition classes  */
-  .menu-primary-enter {
+  .menu1-primary1-enter1 {
     position: absolute;
     transform: translateX(-110%);
   }
-  .menu-primary-enter-active {
+  .menu1-primary1-enter1-active1 {
     transform: translateX(0%);
     transition: all var(--speed) ease;
   }
-  .menu-primary-exit {
+  .menu1-primary1-exit1 {
     position: absolute;
   }
-  .menu-primary-exit-active {
+  .menu1-primary1-exit1-active1 {
     transform: translateX(-110%);
     transition: all var(--speed) ease;
   }
   
   
-  .menu-secondary-enter {
+  .menu1-secondary1-enter1 {
     transform: translateX(110%);
   }
-  .menu-secondary-enter-active {
+  .menu1-secondary1-enter1-active1 {
     transform: translateX(0%);
     transition: all var(--speed) ease;
   }
   .menu-secondary-exit {
   
   }
-  .menu-secondary-exit-active {
+  .menu1-secondary1-exit1-active1 {
     transform: translateX(110%);
     transition: all var(--speed) ease;
   }

@@ -1,18 +1,17 @@
 import React from 'react';
-  
+import '../App.css'
+import { CrudBenefits } from '../Components/CrudBenefits/CrudBenefits';
+import Navbar from '../Components/Navbar/Navbar';
+
 const  Benefits = () => {
-    console.log("hola");
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'Center',
-        alignItems: 'Center',
-        height: '100vh'
-      }}
-    >
-      <h1>Lista de beneficios</h1>
-    </div>
+    <>
+        <Navbar/>
+        <div className = 'page-content'>
+          { <CrudBenefits/> }
+        </div>
+        <footer>&copy; Sele Miracle Run - UCR</footer> 
+    </>
   );
 };
   
