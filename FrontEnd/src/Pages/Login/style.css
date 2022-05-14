@@ -1,0 +1,77 @@
+.inputText{
+    width: 78vh;
+    height: 9vh;
+    border-radius: 1.2vh;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 4vh;
+    text-align: center;
+    background: #E2E2E2;
+    border: 0.2vh solid #E2E2E2;
+}
+
+.inputText:hover{
+    border: 0.2vh solid black;
+    background-color: #cdcdcd;
+}
+
+.buttonLogIn{
+    width: 78vh;
+    height: 9vh;
+    border-radius: 1.2vh;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    color: white;
+    font-size: 4vh;
+    background: #133c54;
+    border: 0vh;
+}
+
+.buttonLogIn:hover{
+    background: #164c6b;
+    box-shadow: 0px 5px 10px 0px rgba(87, 87, 87, 0.55);
+}
+
+.logInbox{
+    display: flex;
+    flex-direction: column;
+    gap: 6vh;
+    width: 95vh;
+    height: 60vh;
+    padding-top: 8.5vh;
+    border-radius:1.5vh;
+    box-shadow: 0px 0px 8px 0px rgba(87, 87, 87, 0.55);
+    margin-top: 13vh;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.logInpage{
+    text-align: center;
+    height: 100vh;
+}
+
+.logInBar{
+    width: 100%;
+    height: 12vh;
+    background-color: #133c54;
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: white;
+    font-size:5vh;
+    font-weight: bold;
+    padding-top: 2vh;
+    box-shadow: 0px 6px 10px 0px rgba(87, 87, 87, 0.55);
+}
+
+.footerCopyRights{
+    position: absolute;
+    bottom: 0;
+    font-size: 2.2vh;
+}
+
+.errorMessage{
+    color: red;
+    text-align: center;
+    font-family: Roboto;
+
+}

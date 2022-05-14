@@ -1,19 +1,20 @@
 import React from 'react';
 import './App.css';
-import Navbar from './Components/Navbar/Navbar';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './Pages/home';
 import Benefits from './Pages/benefits';
 import Employees from './Pages/employees';
 import VolDeductions from './Pages/volDeductions';
 import Contracts from './Pages/contracts';
+import Login from './Pages/Login/index'
   
 function App() {
   return (
     <>
       <Router>
-        {/* <Navbar/> */}
+        
         <Routes>
+          <Route path="login" element={<Login />} />
           <Route path= "/" element={<Home/>} />
           <Route path= "home" element={<Home/>} />
           <Route path= "benefits" element={<Benefits/>} />
