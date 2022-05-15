@@ -146,15 +146,15 @@ td {
   border-bottom-right-radius: 1rem;
 }
 .dropdown-Contract{
-  margin-left: 15px;
   border-style: solid;
+  height: 55px;
+  width: 500px;
   padding:8px;
   text-align: center;
   border-radius: 0.25rem;
 }
 
 .form-group{
-  margin-left:180px;
   margin-top: 30px;
 }
 .forms-create-employee{
@@ -162,11 +162,11 @@ td {
 }
 .user-head{
   position: relative;
-  right: 200px;
+  right: 100px;
 }
 .user-img{
-  height: 500px;
-  width: 500px;
+  height: 300px;
+  width: 300px;
   margin-top: 80px;
 }
 .user-tag{
@@ -177,12 +177,62 @@ td {
 .employee-label{
   font-size: 25px;
   margin-right: 20px;
+  width: 300px;
 }
 .employee-input{
-  height: 45px;
-  width: 400px;
+  height: 55px;
+  width: 500px;
+  border-radius: 0.25rem;
 }
 .employee-input-address{
   height: 100px;
   width: 500px;
+  border-radius: 0.25rem;
+}
+.submit-btn-employee{
+  margin: 50px;
+  background-color: darkgreen;
+  padding: 10px;
+  border-radius: 8px;
+  color: white;
+  border-color: white;
+  border-style: none;
+  height: 80px;
+  width: 150px;
+}
+.back-btn-employee{
+  margin: 50px;
+  background-color: darkred;
+  padding: 10px;
+  border-radius: 8px;
+  color: white;
+  border-color: white;
+  border-style: none;
+  height: 80px;
+  width: 150px;
+}
+.submit-cancel-employee{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.employee-address-div{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+::-webkit-input-placeholder {
+  text-align: center;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+  text-align: center;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+  text-align: center;  
+}
+
+:-ms-input-placeholder {  
+  text-align: center; 
 }

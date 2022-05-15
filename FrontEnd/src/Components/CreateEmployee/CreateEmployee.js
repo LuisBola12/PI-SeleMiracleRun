@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { FormGroup } from "reactstrap";
+import { Button, FormGroup } from "reactstrap";
 import user_icon from "./user_icon2.png";
+import history from "../../history";
 
 export const CreateEmployee = () => {
   const [email, setEmail] = useState("");
@@ -8,10 +9,30 @@ export const CreateEmployee = () => {
   const [name, setName] = useState("");
   const [lastname, setLastName] = useState("");
   const [id, setID] = useState("");
-  const [contract, setContract] = useState("");
+  const [contract, setContract] = useState("Full Time");
   const [hWage, setHWage] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
+  const submitEmployee = () =>{
+    const newEmployee = {email:email,password:password,name:name,lastname:lastname,id:id,contract:contract,hourlyWage:hWage,phoneNumber:phoneNumber,address:address};
+    console.log(newEmployee);
+  }
+  const resetAllStates = () =>{
+    setEmail("");
+    setPassword("");
+    setName("");
+    setLastName("");
+    setID("");
+    setContract("");
+    setHWage("");
+    setPhoneNumber("");
+    setAddress("");
+  }
+  const back = () =>{
+    resetAllStates();
+    history.push('/employees')
+    history.go()
+  }
   return (
     <>
       <div className="user-head">
@@ -19,32 +40,6 @@ export const CreateEmployee = () => {
         <p className="user-tag">New Employee</p>
       </div>
       <div className="form-group">
-        <FormGroup className="forms-create-employee">
-          <label className="employee-label" htmlFor="email">
-            Email:{" "}
-          </label>
-          <input
-            className="employee-input"
-            type="text"
-            id="email"
-            placeholder="Enter an Email Address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </FormGroup>
-        <FormGroup className="forms-create-employee">
-          <label className="employee-label" htmlFor="password">
-            Password:{" "}
-          </label>
-          <input
-            className="employee-input"
-            type="text"
-            id="password"
-            placeholder="Enter a Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </FormGroup>
         <FormGroup className="forms-create-employee">
           <label className="employee-label" htmlFor="name">
             First Name:{" "}
@@ -85,6 +80,32 @@ export const CreateEmployee = () => {
           />
         </FormGroup>
         <FormGroup className="forms-create-employee">
+          <label className="employee-label" htmlFor="email">
+            Email:{" "}
+          </label>
+          <input
+            className="employee-input"
+            type="text"
+            id="email"
+            placeholder="Enter an Email Address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </FormGroup>
+        <FormGroup className="forms-create-employee">
+          <label className="employee-label" htmlFor="password">
+            Password:{" "}
+          </label>
+          <input
+            className="employee-input"
+            type="text"
+            id="password"
+            placeholder="Enter a Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </FormGroup>
+        <FormGroup className="forms-create-employee">
           <label className="employee-label" htmlFor="contract">
             Type of Contract:{" "}
           </label>
@@ -92,13 +113,14 @@ export const CreateEmployee = () => {
             className="dropdown-Contract"
             name="Contract"
             id="Contract"
-            onSelect={(e) => setContract(e.target.value)}
+            value={contract}
+            onChange={(e)=>setContract(e.target.value)}
           >
-            <option value="Tiempo Completo">Tiempo Completo</option>
-            <option value="Medio Tiempo">Medio Tiempo</option>
-            <option value="Por Horas">Por Horas</option>
-            <option value="Servicios Profesionales">
-              Servicios Profesionales
+            <option value="Full Time">Full Time</option>
+            <option value="Part Time ">Part Time </option>
+            <option value="Hourly ">Hourly </option>
+            <option value="Professional Service ">
+              Professional Service 
             </option>
           </select>
         </FormGroup>
@@ -106,6 +128,7 @@ export const CreateEmployee = () => {
           <label className="employee-label" htmlFor="hourly-wage">
             Hourly Wage:{" "}
           </label>
+
           <input
             className="employee-input"
             type="text"
@@ -129,18 +152,21 @@ export const CreateEmployee = () => {
           />
         </FormGroup>
         <FormGroup className="forms-create-employee">
+          <div className="employee-address-div">
           <label className="employee-label" htmlFor="address">
             Address:{" "}
           </label>
-          <input
-            className="employee-input-address"
-            type="text"
-            id="address"
-            placeholder="Enter an Address"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-          />
+          <textarea className= "employee-input-address" name="textarea" rows="5" cols="50" value={address} onChange={(e)=>{setAddress(e.target.value)}} placeholder = "Enter an Address">Write something here</textarea>
+          </div>
         </FormGroup>
+        <button className="submit-btn-employee" onClick={()=>{submitEmployee()}}>
+          Submit
+      </button>
+      <button className="back-btn-employee" onClick={()=>{back()}}>
+          Back
+      </button>
+      </div>
+      <div className="submit-cancel-employee">
       </div>
     </>
   );
