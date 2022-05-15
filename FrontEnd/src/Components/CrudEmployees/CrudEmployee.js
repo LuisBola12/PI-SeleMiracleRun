@@ -11,7 +11,6 @@ import {
   import '../../App.css'
   import "bootstrap/dist/css/bootstrap.min.css";
 import history from "../../history";
-import { Link, Navigate } from "react-router-dom";
   
   
   const database = [
