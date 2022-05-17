@@ -24,19 +24,18 @@ const Navbar = () => {
           <NavLink to="/employees" activestyle='true'>
             Employees
           </NavLink>
-          <NavLink to="/projectAdmin" activestyle='true'>
-            Administrate Projcts
-          </NavLink>
+
           <NavLink to="/volDeductions" activestyle='true'>
             Voluntary Deductions
           </NavLink>
+
+
         </NavMenu>
+
         <Sidebar icon={<ListIcon />}>
           <DropdownMenu></DropdownMenu>
         </Sidebar>
-        {/* <NavBtn>
-          <NavBtnLink to='/signin'>Sign In</NavBtnLink>
-        </NavBtn> */}
+
       </Nav>
     </>
   );
