@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import {
   Container,
   Modal,
@@ -6,31 +5,68 @@ import {
   ModalBody,
   FormGroup,
   ModalFooter,
-} from "reactstrap";
+} from 'react-bootstrap'
+import React, { useState } from 'react'
+import NewProjectForm from './NewProjectForm'
 import '../../App.css'
-import "bootstrap/dist/css/bootstrap.min.css";
 
-
+import './newProject.css'
+import './projectsStyle.css'
 
 
 const database = [
-  { id: 1, name: "Gym", actualCost: 20000 },
-  { id: 2, name: "Transporte", actualCost: 300000 },
-  { id: 3, name: "Fisioterapia", actualCost: 40000 },
+  { name: "Coca Cola", empleados: ['Luis', 'Jarod'], periodoDePago: 'semanal' },
+  { name: "Pepsi", empleados: ['Carlos', 'Josef', 'Javier'], periodoDePago: 'mensual' },
+  { name: "Radiadores Solceri", empleados: ['Emilio', 'Jose'], periodoDePago: 'quincenal' },
 
 
-];
+]
+
+const employeesDatabase = ['Charlie', 'Jarod', 'Javier', 'Luis', 'Josef'];
 
 const CrudProjects = () => {
 
   const [data, setData] = useState(database);
   const [viewModal, setViewModal] = useState(false);
-  const [name, setName] = useState('');
-  const [cost, setCost] = useState(0);
 
+
+  const handleCloseChild = () => {
+    setViewModal(false);
+  }
+  const addNewEntry = (newEntry) => {
+    setData([...data, newEntry]);
+  }
 
   return (
-    <div>CrudProjects</div>
+
+    < div className='project-style'>
+      <div className=" project-projectsRow">
+
+        {
+          data.map((project) => {
+            return (
+              <div key={project.name} className='project-projectBox'>
+                <button className='project-projectLogo' >{project.name.charAt(0).toLocaleUpperCase()}</button>
+                <div className='project-projectName'>{project.name}</div>
+              </div>
+            )
+          })}
+
+        <div>
+          <button className="project-buttonCreate" onClick={() => setViewModal(true)}>+</button>
+          <p className='project-AddNewProjectText'>Add new Project</p>
+        </div>
+      </div>
+
+      <Modal show={viewModal} centered={true} dialogClassName='modal-90w'>
+        <NewProjectForm cover={handleCloseChild} addNewEntry={addNewEntry}
+          actualData={data} employeesDatabase={employeesDatabase} />
+      </Modal>
+
+    </div >
+
+
+
   )
 }
 
