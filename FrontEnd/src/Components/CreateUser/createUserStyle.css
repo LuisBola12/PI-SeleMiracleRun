@@ -1,0 +1,129 @@
+.register-page{
+    /* text-align: center; */
+    height: 100vh;
+    /* border: 1px solid black; */
+    background-color: #133c54;
+}
+
+.register-bar{
+    height: 150px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 33%
+}
+
+.register-title{
+    font-size: 50px ;
+    color: white;
+    font-family: 'Sora', sans-serif;
+    margin-right: 43.5%;
+}
+
+.register-logo {
+    background-color: transparent;
+    background-image: url(logo.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 18vh;
+    height: 18vh;
+}
+
+.title-atribute{
+    font-size: 2.5vh;
+    color: white;
+    font-family: 'Sora', sans-serif;
+    text-align: center;
+}
+
+.register-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    gap: 27px;
+    width: 55%;
+    height: 67%;
+    border-radius: 1.8vh;
+    box-shadow: 0px 0px 10px 0px #051d2c;
+}
+
+.register-full-name{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 25px;
+}
+
+.register-email-password{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 25px;
+}
+
+.register-id-phone{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 25px;
+}
+
+.register-atribute-input{
+    width: 220px;
+    height: 35px;
+    border-radius: 1.2vh;
+    font-size: 1.8vh;
+    text-align: center;
+    background: #E2E2E2;
+    border: none;
+    outline: none;
+    font-family: 'Sora', sans-serif;
+}
+
+.register-atribute-input:hover{
+    /* border: 0.4vh solid black; */
+    background-color: #cdcdcd;
+}
+
+.register-submit-btn-box{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+}
+
+.register-submit-btn{
+    width: 200px;
+    height: 50px;
+    justify-content: center;
+    background: #3673be;
+    border-radius: 1.2vh;
+    text-decoration: none;
+    border: none;
+    color: white;
+}
+
+.register-submit-btn:hover{
+    background: #4b8bda;
+    color: white;
+    /* box-shadow: 0px 0px 3px 0px rgba(255, 255, 255, 0.651); */
+}
+
+.submit-cancel-register{
+    width: 200px;
+    height: 50px;
+    justify-content: center;
+    background: rgb(237, 22, 22);
+    border-radius: 1.2vh;
+    text-decoration: none;
+    border: none;
+    color: white;
+}
+
+.submit-cancel-register:hover{
+    background: rgb(237, 75, 75);
+    color: white;
+    /* box-shadow: 0px 0px 3px 0px rgba(255, 255, 255, 0.651); */
+}

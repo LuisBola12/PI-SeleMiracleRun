@@ -7,6 +7,8 @@ import VolDeductions from './Pages/volDeductions';
 import Contracts from './Pages/contracts';
 import { CreateNewEmployee } from './Pages/createNewEmployee';
 import history from './history';
+import Login from './Pages/login'
+import Register from './Pages/register';
   
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
       <Router history={history}>
         {/* <Navbar/> */}
         <Routes>
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
           <Route path= "/" element={<Home/>} />
           <Route path= "home" element={<Home/>} />
           <Route path= "benefits" element={<Benefits/>} />
