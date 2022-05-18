@@ -1,6 +1,6 @@
 .inputText{
-    width: 78vh;
-    height: 9vh;
+    width: 65vh;
+    height: 8vh;
     border-radius: 1.2vh;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 4vh;
@@ -10,25 +10,66 @@
 }
 
 .inputText:hover{
-    border: 0.2vh solid black;
+    /* border: 0.4vh solid black; */
     background-color: #cdcdcd;
 }
 
 .buttonLogIn{
-    width: 78vh;
-    height: 9vh;
+    /* width: 78vh; */
+    width: 27vh;
+    height: 8vh;
     border-radius: 1.2vh;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-weight: bold;
     color: white;
     font-size: 4vh;
-    background: #133c54;
+    background: #47b8bc;
     border: 0vh;
 }
 
 .buttonLogIn:hover{
-    background: #164c6b;
-    box-shadow: 0px 5px 10px 0px rgba(87, 87, 87, 0.55);
+    background: #63ccd0;
+    /* box-shadow: 0px 5px 10px 0px rgb(255, 255, 255); */
+}
+
+.buttonCheckIn{
+    /* width: 78vh; */
+    width: 27vh;
+    height: 8vh;
+    border-radius: 1.2vh;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    color: white;
+    font-size: 4vh;
+    background: #3673be;
+    border: 0vh;
+    text-decoration: none;
+}
+
+.buttonCheckIn:hover{
+    background: #4b8bda;
+    /* box-shadow: 0px 5px 10px 0px rgb(255, 255, 255); */
+}
+
+.buttonCheckIn-link{
+    width: 27vh;
+    height: 8vh;
+    display: block;
+    border-radius: 1.2vh;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    color: white;
+    font-size: 4vh;
+    background: #3673be;
+    border: 0vh;
+    text-decoration: none;
+    padding-top:3%;
+}
+
+.buttonCheckIn-link:hover{
+    background: #4b8bda;
+    color: white;
+    /* box-shadow: 0px 5px 10px 0px rgb(255, 255, 255); */
 }
 
 .logInbox{
@@ -37,10 +78,10 @@
     gap: 6vh;
     width: 95vh;
     height: 60vh;
-    padding-top: 8.5vh;
+    /* padding-top: 8.5vh; */
     border-radius:1.5vh;
-    box-shadow: 0px 0px 8px 0px rgba(87, 87, 87, 0.55);
-    margin-top: 13vh;
+    /* box-shadow: 0px 0px 8px 0px rgba(87, 87, 87, 0.55); */
+    /* margin-top: 13vh; */
     margin-left: auto;
     margin-right: auto;
 }
@@ -48,24 +89,22 @@
 .logInpage{
     text-align: center;
     height: 100vh;
+    /* border: 1px solid black; */
+    background-color: #133c54;
 }
 
-.logInBar{
-    width: 100%;
-    height: 12vh;
-    background-color: #133c54;
-    text-align: center;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    color: white;
-    font-size:5vh;
-    font-weight: bold;
-    padding-top: 2vh;
-    box-shadow: 0px 6px 10px 0px rgba(87, 87, 87, 0.55);
+.boxButton{
+    display: flex;
+    flex-direction: row;
+    gap: 5vh;
+    justify-content: center;
 }
+
 
 .footerCopyRights{
     position: absolute;
     bottom: 0;
+    color: white;
     font-size: 2.2vh;
 }
 
@@ -74,4 +113,15 @@
     text-align: center;
     font-family: Roboto;
 
+}
+
+.logo {
+    background-color: transparent;
+    background-image: url(logo.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 35vh;
+    height: 35vh;
+    margin-left: auto;
+    margin-right: auto;
 }
