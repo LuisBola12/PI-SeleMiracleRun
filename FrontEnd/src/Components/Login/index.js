@@ -2,8 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { postLogin } from "../../Slices/user/requests/postLogin";
 import { Navigate } from "react-router-dom";
 import { useState } from "react";
-import logo from "./logo.png";
-import './style.css';
+import './loginStyle.css';
 
 const LoginComp = () => {
   // Data of the username
@@ -20,7 +19,7 @@ const LoginComp = () => {
     <Navigate to="/home" />
   ) : (
     <div className="logInpage">
-      <div className="logo"></div>
+      <div className="logIn-logo"></div>
       <div className="logInbox">
         <div>
           <input

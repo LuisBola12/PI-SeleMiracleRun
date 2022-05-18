@@ -6,14 +6,12 @@
     font-size: 4vh;
     text-align: center;
     background: #E2E2E2;
-    border: 0.2vh solid #E2E2E2;
+    border: none;
     outline: none;
 }
 
 .inputText:hover{
-    border: 0.4vh solid #47b8bc;
     background-color: #cdcdcd;
-    transform-origin: right top;
 }
 
 .buttonLogIn{
@@ -117,7 +115,7 @@
 
 }
 
-.logo {
+.logIn-logo {
     background-color: transparent;
     background-image: url(logo.png);
     background-repeat: no-repeat;

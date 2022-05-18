@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, FormGroup } from "reactstrap";
-import './style.css';
+import './createUserStyle.css';
 // import history from "../../history";
 
 export const CreateUser = () => {
@@ -36,8 +36,11 @@ export const CreateUser = () => {
 
   return (
     <div className="register-page">
-      <div className="register-title">
-        New User
+      <div className="register-bar">
+        <label className="register-logo"></label>
+        <label className="register-title">
+          Sign Up
+        </label>
       </div>
 
       <div className="register-box">
@@ -54,23 +57,23 @@ export const CreateUser = () => {
               />  
           </FormGroup>
           <FormGroup>
-          <div className="title-atribute">Last Name1</div>
+          <div className="title-atribute">First Last Name</div>
             <input
               className="register-atribute-input"
               type="text"
               id="last-name"
-              placeholder="Last Name1"
+              placeholder="First Last Name"
               value={lastname1}
               onChange={(e) => setLastName1(e.target.value)}
             />
           </FormGroup>
           <FormGroup>
-          <div className="title-atribute">Last Name2</div>
+          <div className="title-atribute">Second Last Name</div>
             <input
               className="register-atribute-input"
               type="text"
               id="last-name"
-              placeholder="Last Name2"
+              placeholder="Second Last Name"
               value={lastname2}
               onChange={(e) => setLastName2(e.target.value)}
             />
@@ -129,14 +132,16 @@ export const CreateUser = () => {
           <button className="register-submit-btn" onClick={()=>{submitEmployee()}}>
             Submit
           </button>
+          <button className="submit-cancel-register">
+            Cancel
+          </button>
         </div>
         
       {/* <button className="back-btn-employee" onClick={()=>{back()}}>
           Back
       </button> */}
       </div>
-      <div className="submit-cancel-employee">
-      </div>
+      <footer className="footerCopyRights"> &copy; SeleMiracleRun </footer>
     </div>
   );
 };
