@@ -63,6 +63,8 @@ const CrudProjects = () => {
           actualData={data} employeesDatabase={employeesDatabase} />
       </Modal>
 
+      <footer className='project-footer'>&copy; Sele Miracle Run - UCR</footer>
+
     </div >
 
 
