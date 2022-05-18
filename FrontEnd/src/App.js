@@ -8,6 +8,7 @@ import Employees from './Pages/employees';
 import VolDeductions from './Pages/volDeductions';
 import Contracts from './Pages/contracts';
 import Projects from './Pages/payrollProjects/Projects';
+import CrudProjects from './Components/CrudProjects/CrudProjects';
 
 function App() {
   return (
@@ -21,10 +22,7 @@ function App() {
           <Route path="employees" element={<Employees />} />
           <Route path="volDeductions" element={<VolDeductions />} />
           <Route path="contracts" element={<Contracts />} />
-          <Route path="projectAdmin" element={<Projects />} />
-
-          projectAdmin
-
+          <Route path="projectAdmin" element={<CrudProjects />} />
         </Routes>
       </Router>
     </>

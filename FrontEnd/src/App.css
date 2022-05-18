@@ -136,6 +136,9 @@ td {
   padding-top: 250px;
 }
 
+
+
+
 .table-left-border {
   border-top-left-radius: 1rem;
   border-bottom-left-radius: 1rem;
@@ -144,4 +147,9 @@ td {
 .table-right-border {
   border-top-right-radius: 1rem;
   border-bottom-right-radius: 1rem;
+}
+
+
+.sideBarItem {
+  text-decoration: none;
 }
