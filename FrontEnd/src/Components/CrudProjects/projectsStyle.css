@@ -1,0 +1,55 @@
+.project-style {
+  background-color: #133c54;
+  min-height: 100vh;
+}
+
+.project-projectsRow {
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 50px;
+  padding-top: 17%;
+}
+
+.project-projectLogo {
+  color: white;
+  height: 200px;
+  width: 200px;
+  line-height: 200px;
+  font-size: 10rem;
+  text-align: center;
+  background: #47b8bc;
+  border-radius: 9px;
+
+}
+
+.project-projectName {
+  margin-top: 1rem;
+  color: white;
+  text-align: center;
+  font-size: large;
+
+}
+
+.project-buttonCreate {
+  height: 200px;
+  width: 200px;
+  background-color: #3673be;
+  border-radius: 100px;
+  color: white;
+  border-style: none;
+  border: 3px solid;
+  font-size: 200px;
+  text-align: center;
+  line-height: 200px;
+
+}
+
+.project-AddNewProjectText {
+  margin-top: 1rem;
+
+  color: white;
+  font-size: large;
+  text-align: center;
+}
