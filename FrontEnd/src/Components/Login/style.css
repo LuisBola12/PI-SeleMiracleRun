@@ -7,11 +7,13 @@
     text-align: center;
     background: #E2E2E2;
     border: 0.2vh solid #E2E2E2;
+    outline: none;
 }
 
 .inputText:hover{
-    /* border: 0.4vh solid black; */
+    border: 0.4vh solid #47b8bc;
     background-color: #cdcdcd;
+    transform-origin: right top;
 }
 
 .buttonLogIn{

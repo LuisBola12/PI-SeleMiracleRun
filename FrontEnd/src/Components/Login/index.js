@@ -5,7 +5,7 @@ import { useState } from "react";
 import logo from "./logo.png";
 import './style.css';
 
-const Login = () => {
+const LoginComp = () => {
   // Data of the username
   const [username, setUsername] = useState("");
   // Data of the password
@@ -46,7 +46,7 @@ const Login = () => {
         </div>
         <div className="boxButton">
         <button className="buttonCheckIn">
-            <a href="/Register" className="buttonCheckIn-link">Check in</a>
+            <a href="/register" className="buttonCheckIn-link">Check in</a>
           </button>
           <button
             className="buttonLogIn"
@@ -68,4 +68,4 @@ const Login = () => {
   );
 }
   
-export default Login;
+export default LoginComp;

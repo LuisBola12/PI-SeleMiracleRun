@@ -6,7 +6,8 @@ import Benefits from './Pages/benefits';
 import Employees from './Pages/employees';
 import VolDeductions from './Pages/volDeductions';
 import Contracts from './Pages/contracts';
-import Login from './Pages/Login/index'
+import Login from './Pages/login'
+import Register from './Pages/register';
   
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
           <Route path= "/" element={<Home/>} />
           <Route path= "home" element={<Home/>} />
           <Route path= "benefits" element={<Benefits/>} />
