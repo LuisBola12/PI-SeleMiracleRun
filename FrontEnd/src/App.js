@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext, useState } from 'react';
 import './App.css';
 import Navbar from './Components/Navbar/Navbar';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -9,10 +9,18 @@ import VolDeductions from './Pages/volDeductions';
 import Contracts from './Pages/contracts';
 import Projects from './Pages/payrollProjects/Projects';
 import CrudProjects from './Components/CrudProjects/CrudProjects';
+import ProjectContext from './Contexts/ProjectContext';
+
+
 
 function App() {
+  const [activeProject, setActiveProject] = useState('Proyecto desdeAoo');
+  const changeActiveProject = (newActiveProject) => {
+    setActiveProject(newActiveProject);
+  };
+
   return (
-    <>
+    <ProjectContext.Provider value={{ activeProject, setActiveProject }}>
       <Router>
         {/* <Navbar/> */}
         <Routes>
@@ -25,7 +33,7 @@ function App() {
           <Route path="projectAdmin" element={<CrudProjects />} />
         </Routes>
       </Router>
-    </>
+    </ProjectContext.Provider>
   );
 }
 
