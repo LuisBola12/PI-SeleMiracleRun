@@ -19,3 +19,4 @@ export const getConnection = async () =>{
         console.log(`Error: ${e}`);
     }
 }
+export {sql};
