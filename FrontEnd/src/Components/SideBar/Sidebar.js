@@ -23,7 +23,7 @@ const DropdownMenu = () => {
   const [menuHeight, setMenuHeight] = useState(null);
   const dropdownRef = useRef(null);
 
-  const redirectToHome = () => {
+  const redirectToProjectSelecion = () => {
     navigate('/ProjectAdmin');
   }
 
@@ -40,7 +40,7 @@ const DropdownMenu = () => {
     const navigate = useNavigate();
 
     return (
-      <button onClick={redirectToHome} className="sidebar-button" >
+      <button onClick={redirectToProjectSelecion} className="sidebar-button" >
         {props.children}
       </button>
     );
@@ -56,10 +56,10 @@ const DropdownMenu = () => {
         onEnter={calcHeight}>
         <div className="sidebar-menu">
 
-          <button onClick={redirectToHome} className="sidebar-button" >
+          <button onClick={redirectToProjectSelecion} className="sidebar-button" >
             Projects
           </button>
-          <button onClick={redirectToHome} className="sidebar-button" >
+          <button className="sidebar-button" >
             Settings
           </button>
         </div>
