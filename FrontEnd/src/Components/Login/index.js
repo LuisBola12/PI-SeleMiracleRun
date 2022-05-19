@@ -49,17 +49,16 @@ const LoginComp = () => {
           />
         </div>
         <div className="logIn-btn-box">
-        <button className="logIn-btn-CheckIn" onClick={handleClick}>
-          Check In
-            {/* <a href="/register" className="logIn-btn-CheckIn-link">Check in</a> */}
-          </button>
           <button
             className="logIn-btn-login"
             onClick={() => {
               dispatch(postLogin({ username, password }));
             }}
           >
-            Log In
+            Sign In
+          </button>
+          <button className="logIn-btn-CheckIn" onClick={handleClick}>
+          Sing Up
           </button>
         </div>
         {
