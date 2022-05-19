@@ -7,7 +7,7 @@ import {
     ModalFooter,
   } from "reactstrap";
   
-  import { useState } from "react";
+  import { useState,useEffect } from "react";
   import '../../App.css'
   import "bootstrap/dist/css/bootstrap.min.css";
 import history from "../../history";
@@ -24,6 +24,8 @@ import history from "../../history";
   ];
   
   export const CrudEmployee = () => {
+
+    const [infoReceived,setInfoReceived]= useState(false);
     const [data, setData] = useState(database);
     const [viewModal, setViewModal] = useState(false);
     const [name, setName] = useState('');
@@ -54,7 +56,22 @@ import history from "../../history";
         setEmail("");
         setNetSalary(0);
     }
-    return (
+    useEffect(()=>{
+      const fetchSeleAPI = async () =>{
+        const seleUrl = "http://localhost:5000/employees";
+        var headers = {"Content-type": "application/json"}
+        try {
+          const response = await fetch(seleUrl);
+          const newData = await response.json();
+          setData(newData);
+          setInfoReceived(true);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      fetchSeleAPI();
+    },[]);
+    return !infoReceived ? <div class="loader"></div> : (
       <>
         <Container className="content-container">
           <br/>
@@ -70,6 +87,7 @@ import history from "../../history";
               <tr className="table-header">
                 <th className="table-left-border">Name</th>
                 <th>Last Name</th>
+                <th>Second Last Name</th>
                 <th>Id</th>
                 <th>Contract</th>
                 <th>Email</th>
@@ -80,13 +98,14 @@ import history from "../../history";
             </thead>
             <tbody>
               {data.map((element) => (
-                <tr key={element.Name}>
-                  <td className="tds">{element.Name}</td>
-                  <td>{element.LastName}</td>
-                  <td>{element.Id}</td>
-                  <td>{element.Contract}</td>
+                <tr key={element.Nombre}>
+                  <td>{element.Nombre}</td>
+                  <td>{element.Apellido1}</td>
+                  <td>{element.Apellido2}</td>
+                  <td>{element.Cedula}</td>
                   <td>{element.Email}</td>
-                  <td>₡{element.NetSalary}</td>
+                  <td>{element.TipoContrato}</td>
+                  <td>₡0.0</td>
                   <td>
                     <button className=" button"> Edit </button>
                   </td>
@@ -98,86 +117,6 @@ import history from "../../history";
             </tbody>
           </table>
         </Container>
-        <Modal className='modal-window' isOpen={viewModal}>
-          <ModalHeader>
-            <div>
-              <h3>Create New Employee</h3>
-            </div>
-          </ModalHeader>
-          <ModalBody>
-            <FormGroup>
-              <label>Name:</label>
-              <input
-                className="form-control"
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              ></input>
-            </FormGroup>
-            <FormGroup>
-              <label>LastName:</label>
-              <input
-                className="form-control"
-                type="text"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-              ></input>
-            </FormGroup>
-            <FormGroup>
-              <label>Id:</label>
-              <input
-                className="form-control"
-                type="text"
-                value={id}
-                onChange={(e) => setId(e.target.value)}
-              ></input>
-            </FormGroup>
-            <FormGroup>
-              <label htmlFor="Contract">Contract:</label>
-              <select className="dropdown-Contract" name="Contract" id="Contract" onChange={(e)=>{
-                setContract(e.target.value)}}>
-                <option value="Tiempo Completo">Tiempo Completo</option>
-                <option value="Medio Tiempo">Medio Tiempo</option>
-                <option value="Por Horas">Por Horas</option>
-                <option value="Servicios Profesionales">Servicios Profesionales</option>
-              </select>
-            </FormGroup>
-            <FormGroup>
-              <label>Email:</label>
-              <input
-                className="form-control"
-                type="text"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              ></input>
-            </FormGroup>
-            <FormGroup>
-              <label>NetSalary:</label>
-              <input
-                className="form-control"
-                type="text"
-                value={netSalary}
-                onChange={(e) => setNetSalary(e.target.value)}
-              ></input>
-            </FormGroup>
-          </ModalBody>
-          <ModalFooter>
-            <button
-              className="button create-button"
-              onClick={() => {
-                addToTable();
-              }}
-            >
-              Insert
-            </button>
-            <button className="button cancel-button" onClick={() => {
-              setViewModal(false)
-              resetCrud();
-            }}>
-              Cancel
-            </button>
-          </ModalFooter>
-        </Modal>
       </>
     )
   
