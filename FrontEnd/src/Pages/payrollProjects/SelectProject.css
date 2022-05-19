@@ -20,13 +20,19 @@
   min-height: 100vh;
 }
 
+.project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .project-projectsRow {
   justify-content: center;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   gap: 50px;
-  padding-top: 17%;
+  padding-top: 10%;
 }
 
 .project-projectsRow:hover {
@@ -90,11 +96,38 @@
 }
 
 .project-footer {
-  position: absolute;
+  position: relative;
   bottom: 0;
 
   width: 100%;
   height: 2.5rem;
   text-align: center;
   color: var(--unselectedText);
+}
+
+.project-logo {
+  margin-left: 1vh;
+  background-color: transparent;
+  background-image: url(../../icons/logo.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 14vh;
+  height: 14vh;
+}
+
+
+
+.project-backButton {
+  width: 10vh;
+  height: 10vh;
+  background-color: transparent;
+  border: none;
+  font-size: 7vh;
+  color: var(--unselectedText);
+  font-weight: 1vh;
+}
+
+.project-backButton:hover {
+  color: var(--seletedTextColor);
+
 }

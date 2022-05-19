@@ -1,22 +1,20 @@
-
-
 import {
   ModalHeader,
   ModalBody,
   ModalFooter,
   FormGroup,
-  Form,
-  Container,
+  Form
 } from 'react-bootstrap'
 import React, { useState } from 'react'
-import Multiselect from 'multiselect-react-dropdown'
+import './NewProject.css'
+
+// import Multiselect from 'multiselect-react-dropdown'
 const optionss = [
   { name: 'char', value: false },
   { name: 'jo', value: false },
   { name: 'ja', value: false },
-
-
 ]
+
 
 
 const NewProjectForm = ({ cover, addNewEntry, actualData, employeesDatabase }) => {
@@ -55,11 +53,6 @@ const NewProjectForm = ({ cover, addNewEntry, actualData, employeesDatabase }) =
       setWarning('*Please enter all the values')
     }
   }
-
-
-
-
-
 
   return (
 
