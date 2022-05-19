@@ -13,19 +13,18 @@ import {
   
   
   const database = [
-    { id: 1, name: "Insurance", actualCost: 15000 },
-    { id: 2, name: "Charity", actualCost: 20000 },
+    { id: 1, name: "Insurance"},
+    { id: 2, name: "Charity"},
   ];
   
   export const CrudVolDeductions = () => {
     const [data, setData] = useState(database);
     const [viewModal, setViewModal] = useState(false);
     const [name, setName] = useState('');
-    const [cost, setCost] = useState(0);
     const [warning, setWarning] = useState('');
   
     const addToTable = () => {
-      if (name && cost) {
+      if (name) {
         const names = [];
         data.map((index) => {
           names.push(index.name);
@@ -34,13 +33,11 @@ import {
           const newData = {
             id: data.length + 1,
             name: name,
-            actualCost: cost,
           };
           setData([...data, newData]);
           setWarning('');
           setViewModal(false);
           setName("");
-          setCost("");
         } else {
           setWarning('*That benefit already exist')
         }
@@ -65,7 +62,6 @@ import {
               <tr className="table-header">
                 <th className="table-left-border">#</th>
                 <th>Voluntary Deduction</th>
-                <th>Actual Cost</th>
                 <th>Edit</th>
                 <th className="table-right-border">Delete</th>
               </tr>
@@ -75,7 +71,6 @@ import {
                 <tr key={element.id}>
                   <td className="tds">{element.id}</td>
                   <td>{element.name}</td>
-                  <td>{element.actualCost} ₡</td>
                   <td>
                     <button className=" button"> Edit </button>
                   </td>
@@ -113,16 +108,6 @@ import {
                 onChange={(e) => setName(e.target.value)}
               ></input>
             </FormGroup>
-  
-            <FormGroup>
-              <label>Cost:</label>
-              <input
-                className="form-control"
-                type="number"
-                value={cost}
-                onChange={(e) => setCost(e.target.value)}
-              ></input>
-            </FormGroup>
           </ModalBody>
           <ModalFooter>
             <label className="warning-message">{warning}</label>
@@ -137,7 +122,6 @@ import {
             <button className="button cancel-button" onClick={() => {
               setViewModal(false)
               setName("");
-              setCost("");
               setWarning('');
             }}>
               Cancel
@@ -146,6 +130,5 @@ import {
         </Modal>
       </>
     )
-  
   };
   
