@@ -136,6 +136,9 @@ td {
   padding-top: 250px;
 }
 
+
+
+
 .table-left-border {
   border-top-left-radius: 1rem;
   border-bottom-left-radius: 1rem;
@@ -145,6 +148,12 @@ td {
   border-top-right-radius: 1rem;
   border-bottom-right-radius: 1rem;
 }
+
+
+
+.sideBarItem {
+  text-decoration: none;
+
 .dropdown-Contract{
   border-style: solid;
   height: 55px;
