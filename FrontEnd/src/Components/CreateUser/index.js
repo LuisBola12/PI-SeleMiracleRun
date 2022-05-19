@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Button, FormGroup } from "reactstrap";
+import { FormGroup } from "reactstrap";
+import { useNavigate } from "react-router-dom";
 import './createUserStyle.css';
 // import history from "../../history";
 
@@ -28,11 +29,11 @@ export const CreateUser = () => {
     setPhoneNumber("");
   }
 
-  // const back = () =>{
-  //   resetAllStates();
-  //   history.push('/employees')
-  //   history.go()
-  // }
+  let navigate = useNavigate();
+  function handleClick() {
+    resetAllStates();
+    navigate("/login");
+  }
 
   return (
     <div className="register-page">
@@ -46,7 +47,7 @@ export const CreateUser = () => {
       <div className="register-box">
         <div className="register-full-name">
           <FormGroup>
-              <div className="title-atribute">First Name</div>
+              <div className="register-title-atribute">First Name</div>
               <input
                 className="register-atribute-input"
                 type="text"
@@ -57,7 +58,7 @@ export const CreateUser = () => {
               />  
           </FormGroup>
           <FormGroup>
-          <div className="title-atribute">First Last Name</div>
+          <div className="register-title-atribute">First Last Name</div>
             <input
               className="register-atribute-input"
               type="text"
@@ -68,7 +69,7 @@ export const CreateUser = () => {
             />
           </FormGroup>
           <FormGroup>
-          <div className="title-atribute">Second Last Name</div>
+          <div className="register-title-atribute">Second Last Name</div>
             <input
               className="register-atribute-input"
               type="text"
@@ -81,7 +82,7 @@ export const CreateUser = () => {
         </div>
         <div className="register-id-phone">
           <FormGroup>
-          <div className="title-atribute">ID Card</div>
+          <div className="register-title-atribute">ID Card</div>
             <input
               className="register-atribute-input"
               type="text"
@@ -93,7 +94,7 @@ export const CreateUser = () => {
           </FormGroup>
 
           <FormGroup>
-          <div className="title-atribute">Phone Number</div>
+          <div className="register-title-atribute">Phone Number</div>
           <input
             className="register-atribute-input"
             type="text"
@@ -106,7 +107,7 @@ export const CreateUser = () => {
         </div>
         <div className="register-email-password">
           <FormGroup>
-          <div className="title-atribute">Email</div>
+          <div className="register-title-atribute">Email</div>
             <input
               className="register-atribute-input"
               type="text"
@@ -117,7 +118,7 @@ export const CreateUser = () => {
             />
           </FormGroup>
           <FormGroup>
-          <div className="title-atribute">Password</div>
+          <div className="register-title-atribute">Password</div>
             <input
               className="register-atribute-input"
               type="text"
@@ -132,7 +133,7 @@ export const CreateUser = () => {
           <button className="register-submit-btn" onClick={()=>{submitEmployee()}}>
             Submit
           </button>
-          <button className="submit-cancel-register">
+          <button className="register-submit-cancel" onClick={handleClick}>
             Cancel
           </button>
         </div>
@@ -141,7 +142,7 @@ export const CreateUser = () => {
           Back
       </button> */}
       </div>
-      <footer className="footerCopyRights"> &copy; SeleMiracleRun </footer>
+      <footer className="register-footerCopyRights"> &copy; SeleMiracleRun </footer>
     </div>
   );
 };

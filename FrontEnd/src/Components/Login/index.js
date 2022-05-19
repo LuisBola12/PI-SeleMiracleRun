@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { postLogin } from "../../Slices/user/requests/postLogin";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate} from "react-router-dom";
 import { useState } from "react";
 import './loginStyle.css';
 
@@ -15,15 +15,20 @@ const LoginComp = () => {
   const errorMessage = useSelector((state) => state.user.errorMessage);
   const dispatch = useDispatch(); 
 
+  let navigate = useNavigate();
+  function handleClick() {
+    navigate("/register");
+  }
+
   return userIsLoggedIn ? (
     <Navigate to="/home" />
   ) : (
-    <div className="logInpage">
+    <div className="logIn-page">
       <div className="logIn-logo"></div>
-      <div className="logInbox">
+      <div className="logIn-box">
         <div>
           <input
-            className= "inputText"
+            className= "logIn-input"
             placeholder="UserName"
             type="text"
             value={username}
@@ -34,7 +39,7 @@ const LoginComp = () => {
         </div>
         <div>
           <input
-            className={`inputText`}
+            className= "logIn-input"
             placeholder="Password"
             type="password"
             value={password}
@@ -43,12 +48,13 @@ const LoginComp = () => {
             }}
           />
         </div>
-        <div className="boxButton">
-        <button className="buttonCheckIn">
-            <a href="/register" className="buttonCheckIn-link">Check in</a>
+        <div className="logIn-btn-box">
+        <button className="logIn-btn-CheckIn" onClick={handleClick}>
+          Check In
+            {/* <a href="/register" className="logIn-btn-CheckIn-link">Check in</a> */}
           </button>
           <button
-            className="buttonLogIn"
+            className="logIn-btn-login"
             onClick={() => {
               dispatch(postLogin({ username, password }));
             }}
@@ -58,11 +64,11 @@ const LoginComp = () => {
         </div>
         {
           errorMessage && (
-            <span className="errorMessage" >{errorMessage}</span>
+            <span className="logIn-error-message" >{errorMessage}</span>
           )
         }
       </div>
-      <footer className="footerCopyRights"> &copy; SeleMiracleRun </footer>
+      <footer className="logIn-footerCopyRights"> &copy; SeleMiracleRun </footer>
     </div>
   );
 }
