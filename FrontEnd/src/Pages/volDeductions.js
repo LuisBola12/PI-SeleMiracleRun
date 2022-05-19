@@ -1,14 +1,16 @@
 import React from 'react';
+import '../App.css'
+import { CrudBenefits, CrudVolDeductions } from '../Components/CrudVolDeductions/CrudVolDeductions';
 import Navbar from '../Components/Navbar/Navbar';
-  
-const VolDeductions = () => {
+
+const  VolDeductions = () => {
   return (
     <>
-      <Navbar/>
-      <div className='page-content'>
-        <h1>Lista de deducciones voluntarias</h1>
-      </div>
-      <footer>&copy; Sele Miracle Run - UCR</footer> 
+        <Navbar/>
+        <div className = 'page-content'>
+          { <CrudVolDeductions/> }
+        </div>
+        <footer>&copy; Sele Miracle Run - UCR</footer> 
     </>
   );
 };
