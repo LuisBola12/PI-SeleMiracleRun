@@ -1,6 +1,7 @@
 import express from 'express';
 import config from './config';
-import productsRoutes from './routes/products.routes';
+import productsRoutes from './routes/seleMiracle.routes';
+import cors from "cors";
 
 const app = express();
 
@@ -8,6 +9,7 @@ const app = express();
 app.set('port',config.port);
 
 //Middlewares
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 

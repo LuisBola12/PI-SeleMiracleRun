@@ -5,7 +5,6 @@ const dbSettings = {
     password: 'SeleMiracleRunAdmin',
     server: '172.16.202.209',
     database: 'SeleMiracleRun',
-    encrypt: true,
     options:{
         encrypt: true,
         trustServerCertificate: true,

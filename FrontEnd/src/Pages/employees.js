@@ -2,7 +2,6 @@ import React from 'react';
 import Navbar from '../Components/Navbar/Navbar';
 import {CrudEmployee} from '../Components/CrudEmployees/CrudEmployee'
 const Employees = () => {
-    console.log("hola");
   return (
     <>
       <Navbar/>

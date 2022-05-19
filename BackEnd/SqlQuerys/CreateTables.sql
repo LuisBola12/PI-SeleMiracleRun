@@ -31,6 +31,10 @@ Create Table Periodo(
 	Tipo varchar(30),
 	primary key(Tipo)
 );
+Create Table Contrato(
+	Tipo varchar(30),
+	primary key(Tipo)
+);
 Create Table Proyecto(
 	Nombre varchar(50),
 	CedulaEmpleador varchar(15)not null,
@@ -88,4 +92,15 @@ Create Table PagoContieneBeneficios(
 	primary key(NumeroConsecutivo,CedulaEmpleador,NombreBeneficio,NombreProyecto),
 	foreign key(NumeroConsecutivo,CedulaEmpleador) references Pago(NumeroConsecutivo,CedulaEmpleador)on delete cascade,
 	foreign key(NombreProyecto,NombreBeneficio) references Beneficios(NombreProyecto,Nombre),
+);
+Create table EmpleadoYContratoSeAsocianAProyecto(
+	CedulaEmpleado varchar(15),
+	TipoContrato varchar(30),
+	NombreProyecto varchar(50),
+	FechaInicio date,
+	FechaFin date,
+	primary key(CedulaEmpleado,TipoContrato,NombreProyecto),
+	foreign key(CedulaEmpleado) references Empleado(Cedula),
+	foreign key(TipoContrato) references Contrato(Tipo),
+	foreign key(NombreProyecto) references Proyecto(Nombre)
 );

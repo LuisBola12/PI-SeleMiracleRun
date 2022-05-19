@@ -10,6 +10,7 @@ export const getUsers = async (req, res) => {
     res.send(e.message);
   }
 };
+
 export const createNewUser = async (req, res) => {
   const { Email, Contrasenia } = req.body;
   if (Email == null || Contrasenia == null) {
@@ -30,17 +31,29 @@ export const createNewUser = async (req, res) => {
     res.status(500).send(e.message);
   }
 };
+
 export const getUserByEmail= async (req,res) =>{
-    const{id} = req.params;
-    console.log(id);
+    const{Email} = req.params;
+    console.log(Email);
     try{
         const pool = await getConnection();
         const result = await pool.request()
-        .input('id',id)
+        .input('Email',Email)
         .query(queries.getUserByEmail);
         console.log(result);
         res.send(result);
     }catch(e){
         console.log(e);
     }
+};
+
+export const getPeriodos = async(req,res) =>{
+  try {
+    const pool = await getConnection();
+    const result = await pool.request().query(queries.getPeriodos);
+    res.json(result.recordset);
+  } catch (e) {
+    res.status(500);
+    res.send(e.message);
+  }
 };
