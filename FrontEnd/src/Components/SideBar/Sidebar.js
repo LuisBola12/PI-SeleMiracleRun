@@ -1,16 +1,15 @@
-import './style.css';
-
-
+import './Sidebar.css';
 import React, { useState, useEffect, useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
+import { useNavigate } from 'react-router-dom';
 
 
 export const Sidebar = (props) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <li className="nav1-item1">
-      <a href="#" className="menu1-button1" onClick={() => setOpen(!open)}>
+    <li className="sidebar-component">
+      <a href='#' className="sidebar-dropdown-icon" onClick={() => setOpen(!open)}>
         {props.icon}
       </a>
       {open && props.children}
@@ -19,52 +18,51 @@ export const Sidebar = (props) => {
 }
 
 const DropdownMenu = () => {
+  const navigate = useNavigate();
   const [activeMenu, setActiveMenu] = useState('main1');
   const [menuHeight, setMenuHeight] = useState(null);
   const dropdownRef = useRef(null);
+
+  const redirectToHome = () => {
+    navigate('/ProjectAdmin');
+  }
 
   useEffect(() => {
     setMenuHeight(dropdownRef.current?.firstChild.offsetHeight)
   }, [])
 
   function calcHeight(el) {
-    const height = el.offsetHeight;
+    const height = el.offsetHeight
+
     setMenuHeight(height);
   }
   function DropdownItem(props) {
+    const navigate = useNavigate();
+
     return (
-      <a href={props.url} className="menu1-item1" onClick={() => props.goToMenu && setActiveMenu(props.goToMenu)}>
-        <span className="icon1-button1"></span>
+      <button onClick={redirectToHome} className="sidebar-button" >
         {props.children}
-        <span className="icon1-right1"></span>
-      </a>
+      </button>
     );
   }
 
   return (
-    <div className="dropdown1" style={{ height: menuHeight }} ref={dropdownRef}>
+    <div className="sidebar-dropdown" style={{ height: menuHeight }} ref={dropdownRef}>
 
       <CSSTransition
         in={activeMenu === 'main1'}
         timeout={500}
-        classNames="menu1-primary1"
         unmountOnExit
         onEnter={calcHeight}>
-        <div className="menu1">
+        <div className="sidebar-menu">
 
-          <DropdownItem url='/projectAdmin'>
+          <button onClick={redirectToHome} className="sidebar-button" >
             Projects
-          </DropdownItem>
-
-          <DropdownItem >
+          </button>
+          <button onClick={redirectToHome} className="sidebar-button" >
             Settings
-          </DropdownItem>
-
+          </button>
         </div>
-
-
-
-
       </CSSTransition >
 
 

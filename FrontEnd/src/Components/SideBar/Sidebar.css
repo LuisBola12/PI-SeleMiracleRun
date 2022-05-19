@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora&display=swap');
+
+:root {
+  --bg: #133c54;
+  --bg-accent: #2d6b8d;
+  --text-color: #dadce1;
+  --nav-size: 60px;
+  --border: 1px solid #474a4d;
+  --border-radius: 8px;
+  --speed: 500ms;
+}
+
+.sidebar-component {
+  width: calc(var(--nav-size) * 0.8);
+  margin-right: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.sidebar-dropdown-icon svg {
+  fill: var(#fff);
+  width: 50px;
+  height: 50px;
+  color: white;
+}
+
+
+.sidebar-dropdown {
+  position: absolute;
+  margin-top: 22px;
+  margin-left: 84px;
+  top: 58px;
+  width: 250px;
+  height: 100px;
+  background-color: var(--bg);
+  transform: translateX(-45%);
+  border: var(--border);
+  border-bottom-left-radius: 0.5rem;
+  padding: 1rem;
+  overflow: hidden;
+  transition: height var(--speed) ease;
+}
+
+.sidebar-menu {
+  height: 300px;
+  width: 100%;
+  display: flex;
+  gap: 5%;
+  flex-direction: column;
+}
+
+
+.sidebar-button {
+  text-align: center;
+  background-color: #133c54;
+  color: white;
+  width: 99%;
+  height: 14%;
+  border: none;
+  border-radius: 1rem;
+
+
+}
+
+.sidebar-button:hover {
+  background-color: #15cdfc;
+}
