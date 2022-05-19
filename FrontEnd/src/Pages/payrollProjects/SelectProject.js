@@ -7,26 +7,20 @@ import { useNavigate } from 'react-router-dom';
 import '../../App.css'
 import './SelectProject.css'
 
-const database = [
-  { name: "Coca Cola", periodoDePago: 'semanal' },
-  { name: "Pepsi", periodoDePago: 'mensual' },
-  { name: "Radiadores Solceri", periodoDePago: 'quincenal' },
-]
+
 
 const employeesDatabase = ['Charlie', 'Jarod', 'Javier', 'Luis', 'Josef'];
 
 const SelectProject = () => {
   const navigate = useNavigate();
-  const { activeProject, setActiveProject } = useContext(ProjectContext);
-  const [data, setData] = useState(database);
+  const { activeProject, setActiveProject, projects, setProjects } = useContext(ProjectContext);
   const [viewModal, setViewModal] = useState(false);
-
 
   const handleCloseChild = () => {
     setViewModal(false);
   }
   const addNewEntry = (newEntry) => {
-    setData([...data, newEntry]);
+    setProjects([...projects, newEntry]);
   }
 
   const handleProjectSelection = (projectName) => {
@@ -55,7 +49,7 @@ const SelectProject = () => {
 
       <div className=" project-projectsRow">
         {
-          data.map((project) => {
+          projects.map((project) => {
             return (
               <div key={project.name} className='project-projectBox'>
                 <button
@@ -74,15 +68,9 @@ const SelectProject = () => {
         </div>
       </div>
 
-      {/* <div>
-        <button className="project-buttonCreate" onClick={() => printActiveProject()}>+</button>
-        <p className='project-AddNewProjectText'></p>
-      </div> */}
-
-
       <Modal show={viewModal} centered={true} dialogClassName='modal-90w'>
         <NewProjectForm cover={handleCloseChild} addNewEntry={addNewEntry}
-          actualData={data} employeesDatabase={employeesDatabase} />
+          actualData={projects} employeesDatabase={employeesDatabase} />
       </Modal>
 
 

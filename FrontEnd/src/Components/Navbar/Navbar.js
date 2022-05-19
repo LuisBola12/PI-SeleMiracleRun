@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Nav,
   NavLink,
@@ -6,15 +6,23 @@ import {
   NavMenu,
 } from "./NavbarElements";
 import logo from "./logo.png";
-import DropdownMenu, { Sidebar } from "../SideBar/Sidebar";
+import DropdownMenu, { Sidebar } from "../SideBar/Sidebar.js";
 import { ReactComponent as ListIcon } from '../SideBar/icons/list.svg';
+import ProjectContext from "../../Contexts/ProjectContext";
+import './Navbar.css'
+
 const Navbar = () => {
+  const { activeProject } = useContext(ProjectContext);
+
   return (
     <>
       <Nav>
         <img src={logo} alt="logo" />
         <Bars />
+
         <NavMenu>
+          <label className="navbar-activeProject">{activeProject}</label>
+
           <NavLink to="/home" activestyle='true'>
             Home
           </NavLink>

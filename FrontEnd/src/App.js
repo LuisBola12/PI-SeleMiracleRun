@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './Pages/home';
@@ -9,14 +9,19 @@ import Contracts from './Pages/contracts';
 import ProjectContext from './Contexts/ProjectContext';
 import SelectProject from './Pages/payrollProjects/SelectProject';
 
-
+const database = [
+  { name: "Coca Cola", periodoDePago: 'semanal' },
+  { name: "Pepsi", periodoDePago: 'mensual' },
+  { name: "Radiadores Solceri", periodoDePago: 'quincenal' },
+]
 function App() {
   const [activeProject, setActiveProject] = useState('Proyecto sin asignar');
+  const [projects, setProjects] = useState(database)
 
   return (
-    <ProjectContext.Provider value={{ activeProject, setActiveProject }}>
+    <ProjectContext.Provider value={{ activeProject, setActiveProject, projects, setProjects }
+    }>
       <Router>
-        {/* <Navbar/> */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="home" element={<Home />} />
@@ -27,7 +32,7 @@ function App() {
           <Route path="projectAdmin" element={<SelectProject />} />
         </Routes>
       </Router>
-    </ProjectContext.Provider>
+    </ProjectContext.Provider >
   );
 }
 

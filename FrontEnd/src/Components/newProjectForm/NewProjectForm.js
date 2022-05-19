@@ -9,22 +9,13 @@ import React, { useState } from 'react'
 import './NewProject.css'
 
 // import Multiselect from 'multiselect-react-dropdown'
-const optionss = [
-  { name: 'char', value: false },
-  { name: 'jo', value: false },
-  { name: 'ja', value: false },
-]
 
 
 
 const NewProjectForm = ({ cover, addNewEntry, actualData, employeesDatabase }) => {
 
   const [name, setName] = useState('');
-  const [employees, setEmployees] = useState(employeesDatabase);
   const [paymentPeriod, setPaymentPeriod] = useState('Mensual');
-  const [selectedEmployees, setSelectedEmployees] = useState([]);
-  const [options, settOptions] = useState(optionss);
-
   const [warning, setWarning] = useState('');
 
 
@@ -32,7 +23,7 @@ const NewProjectForm = ({ cover, addNewEntry, actualData, employeesDatabase }) =
     if (name && paymentPeriod) {
       const names = [];
       actualData.map((index) => {
-        names.push(index.name);
+        return names.push(index.name);
       })
       if (!names.includes(name)) {
         const newData = {
@@ -45,7 +36,7 @@ const NewProjectForm = ({ cover, addNewEntry, actualData, employeesDatabase }) =
         setPaymentPeriod("");
         cover();
       } else {
-        setWarning('*That benefit already exist')
+        setWarning('*That Project Name already exist')
       }
 
     }
