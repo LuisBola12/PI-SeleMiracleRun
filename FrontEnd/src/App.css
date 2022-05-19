@@ -54,7 +54,7 @@
   justify-content: Center;
   height: 100%;
   box-shadow: 0px 0px 10px 0px rgba(115, 115, 115, 0.55);
-  margin: 60px;
+  margin: 2.5%;
   border-radius: 1rem;
   min-height: 80vh;
 }
@@ -145,51 +145,60 @@ td {
   border-top-right-radius: 1rem;
   border-bottom-right-radius: 1rem;
 }
-.dropdown-Contract{
+
+.dropdown-Contract {
   border-style: solid;
   height: 55px;
   width: 500px;
-  padding:8px;
+  padding: 8px;
   text-align: center;
   border-radius: 0.25rem;
 }
 
-.form-group{
+.form-group {
   margin-top: 30px;
 }
-.forms-create-employee{
+
+.forms-create-employee {
   margin: 40px;
 }
-.user-head{
+
+.user-head {
   position: relative;
   right: 100px;
 }
-.user-img{
+
+.user-img {
   height: 300px;
   width: 300px;
   margin-top: 80px;
 }
-.user-tag{
+
+.user-tag {
   margin-top: 10px;
   text-align: center;
   font-size: 30px;
 }
-.employee-label{
+
+.employee-label {
   font-size: 25px;
   margin-right: 20px;
   width: 300px;
 }
-.employee-input{
+
+.employee-input {
   height: 55px;
   width: 500px;
   border-radius: 0.25rem;
 }
-.employee-input-address{
+
+.employee-input-address {
   height: 100px;
   width: 500px;
   border-radius: 0.25rem;
 }
-.submit-btn-employee{
+
+.submit-btn-employee {
   margin: 50px;
   background-color: darkgreen;
   padding: 10px;
@@ -200,7 +209,8 @@ td {
   height: 80px;
   width: 150px;
 }
-.back-btn-employee{
+
+.back-btn-employee {
   margin: 50px;
   background-color: darkred;
   padding: 10px;
@@ -211,28 +221,33 @@ td {
   height: 80px;
   width: 150px;
 }
-.submit-cancel-employee{
+
+.submit-cancel-employee {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.employee-address-div{
+
+.employee-address-div {
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 ::-webkit-input-placeholder {
   text-align: center;
 }
 
-:-moz-placeholder { /* Firefox 18- */
-  text-align: center;  
+:-moz-placeholder {
+  /* Firefox 18- */
+  text-align: center;
 }
 
-::-moz-placeholder {  /* Firefox 19+ */
-  text-align: center;  
+::-moz-placeholder {
+  /* Firefox 19+ */
+  text-align: center;
 }
 
-:-ms-input-placeholder {  
-  text-align: center; 
+:-ms-input-placeholder {
+  text-align: center;
 }
