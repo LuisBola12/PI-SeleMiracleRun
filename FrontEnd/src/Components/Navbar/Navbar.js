@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import {
   Nav,
   NavLink,
-  Bars,
   NavMenu,
 } from "./NavbarElements";
 import logo from "./logo.png";
@@ -18,8 +17,6 @@ const Navbar = () => {
     <>
       <Nav>
         <img src={logo} alt="logo" />
-        <Bars />
-
         <NavMenu>
           <label className="navbar-activeProject">{activeProject}</label>
 
@@ -43,7 +40,6 @@ const Navbar = () => {
         <Sidebar icon={<ListIcon />}>
           <DropdownMenu></DropdownMenu>
         </Sidebar>
-
       </Nav>
     </>
   );

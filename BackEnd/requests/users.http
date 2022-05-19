@@ -1,0 +1,17 @@
+@api = http://localhost:5000/users
+@apiEmployees = http://localhost:5000/employees
+
+GET {{api}}
+###
+POST {{api}}
+Content-Type: application/json
+
+{
+  "Email" : "e@example.com",
+  "Contrasenia" : "12345"
+}
+###
+GET {{api}}/h@example.com
+
+###
+GET {{apiEmployees}}
