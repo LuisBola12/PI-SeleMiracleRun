@@ -7,18 +7,20 @@ import {
   ModalFooter,
 } from "reactstrap";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import '../../App.css'
 import "bootstrap/dist/css/bootstrap.min.css";
 
-
 const database = [
-  { id: 1, name: "Gym", actualCost: 20000 },
-  { id: 2, name: "Transporte", actualCost: 300000 },
-  { id: 3, name: "Fisioterapia", actualCost: 40000 },
-
+  {
+    Nombre: '',
+    CostoActual: 0
+  }
 
 ];
+
+const projectName = 'Radiadores Solceri';
+const apiBenefits = `http://localhost:5000/benefits/${projectName}`
 
 export const CrudBenefits = () => {
   const [data, setData] = useState(database);
@@ -54,7 +56,22 @@ export const CrudBenefits = () => {
     }
   }
 
-  return (
+  const [infoReceived, setInfoReceived] = useState(false);
+  useEffect(() => {
+    const fetchSeleAPI = async () => {
+      try {
+        const response = await fetch(apiBenefits);
+        const newData = await response.json();
+        setData(newData);
+        console.log(newData)
+        setInfoReceived(true);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchSeleAPI();
+  }, []);
+  return !infoReceived ? <div className="loader" ></div > : (
     <>
       <Container className="content-container">
         <br />
@@ -66,8 +83,7 @@ export const CrudBenefits = () => {
         <table className="Table">
           <thead>
             <tr className="table-header">
-              <th className="table-left-border">#</th>
-              <th>Benefit</th>
+              <th className="table-left-border">Benefit </th>
               <th>Actual Cost</th>
               <th>Edit</th>
               <th className="table-right-border">Delete</th>
@@ -75,10 +91,9 @@ export const CrudBenefits = () => {
           </thead>
           <tbody>
             {data.map((element) => (
-              <tr key={element.id}>
-                <td className="tds">{element.id}</td>
-                <td>{element.name}</td>
-                <td>{element.actualCost} ₡</td>
+              <tr key={element.Nombre}>
+                <td>{element.Nombre}</td>
+                <td>{element.CostoActual} ₡</td>
                 <td>
                   <button className=" button"> Edit </button>
                 </td>
@@ -97,16 +112,6 @@ export const CrudBenefits = () => {
           </div>
         </ModalHeader>
         <ModalBody>
-          <FormGroup>
-            <label>#:</label>
-            <input
-              className="form-control"
-              readOnly
-              type="text"
-              value={data.length + 1}
-            ></input>
-          </FormGroup>
-
           <FormGroup>
             <label>Name:</label>
             <input
