@@ -16,9 +16,12 @@ const Navbar = () => {
   return (
     <>
       <Nav>
-        <img src={logo} alt="logo" />
-        <NavMenu>
+        <div className="nav-header">
+          <img src={logo} alt="logo" className="logo-img" />
           <label className="navbar-activeProject">{activeProject}</label>
+        </div>
+
+        <NavMenu>
 
           <NavLink to="/home" activestyle='true'>
             Home
