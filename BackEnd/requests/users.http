@@ -2,6 +2,8 @@
 @apiEmployees = http://localhost:5000/employees
 @apiBenefits = http://localhost:5000/benefits
 
+@apiVolDeductions = http://localhost:5000/volDeductions
+
 GET {{api}}
 ###
 POST {{api}}
@@ -16,6 +18,9 @@ GET {{api}}/h@example.com
 
 ###
 GET {{apiEmployees}}
+
+###
+GET  {{apiVolDeductions}}/Radiadores Solceri
 
 ###
 GET {{apiBenefits}}/Radiadores Solceri

@@ -6,13 +6,13 @@ import Navbar from '../Components/Navbar/Navbar';
 const  VolDeductions = () => {
   return (
     <>
-        <Navbar/>
+      <Navbar/>
         <div className = 'page-content'>
           { <CrudVolDeductions/> }
         </div>
-        <footer>&copy; Sele Miracle Run - UCR</footer> 
+      <footer>&copy; Sele Miracle Run - UCR</footer> 
     </>
   );
-};
-  
+};  
+
 export default VolDeductions;
