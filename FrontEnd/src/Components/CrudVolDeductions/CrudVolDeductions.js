@@ -49,7 +49,7 @@ export const CrudVolDeductions = () => {
     }
   }
 
-  const apiVolDeductions = `http://localhost:5000/volDeductions/${activeProject}`
+  const apiVolDeductions = `http://localhost:4000/volDeductions/${activeProject}`
 
   useEffect(() => {
     const fetchSeleAPI = async () => {

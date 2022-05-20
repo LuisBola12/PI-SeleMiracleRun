@@ -12,7 +12,7 @@ import './NewProject.css'
 
 
 
-const NewProjectForm = ({ cover, addNewEntry, actualData, employeesDatabase }) => {
+const NewProjectForm = ({ cover, addNewEntry, actualData }) => {
 
   const [name, setName] = useState('');
   const [paymentPeriod, setPaymentPeriod] = useState('Mensual');

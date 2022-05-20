@@ -22,7 +22,7 @@ export const CrudBenefits = () => {
   const { activeProject } = useContext(ProjectContext);
   const [infoReceived, setInfoReceived] = useState(false);
 
-  const apiBenefits = `http://localhost:5000/benefits/${activeProject}`
+  const apiBenefits = `http://localhost:4000/benefits/${activeProject}`
 
   useEffect(() => {
     const fetchSeleAPI = async () => {
