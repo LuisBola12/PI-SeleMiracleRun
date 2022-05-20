@@ -1,6 +1,7 @@
 import { Router } from "express";
-import { createNewUser, getUsers, getUserByEmail, getPeriodos} from "../controllers/users.controller";
-import {getEmployees} from '../controllers/employees.contoller'
+import { getProjectsByEmail } from "../controllers/projects.controller";
+import { createNewUser, getUsers, getUserByEmail, getPeriodos } from "../controllers/users.controller";
+import { getEmployees } from '../controllers/employees.contoller'
 import { getVolDeductions, createNewVolDeduction } from "../controllers/volDeductions.controller";
 import { getBenefits } from "../controllers/benefits.controller";
 
@@ -13,8 +14,9 @@ router.get('/users/:Email', getUserByEmail);
 // router.delete('/users',getUsers);
 // router.put('/users',getUsers);
 router.get('/employees', getEmployees);
+router.get('/projects/:Email', getProjectsByEmail);
+// router.post('/projects:User', createNewProjects);
 router.get('/benefits/:Proyecto', getBenefits);
-
 router.get('/volDeductions/:Proyecto', getVolDeductions);
 router.post('/volDeductions/:Proyecto', createNewVolDeduction);
 export default router;

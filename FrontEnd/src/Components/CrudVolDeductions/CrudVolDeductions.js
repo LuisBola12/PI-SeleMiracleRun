@@ -11,7 +11,7 @@ export const CrudVolDeductions = () => {
   const { activeProject } = useContext(ProjectContext);
   const [infoReceived, setInfoReceived] = useState(false);
 
-  const apiVolDeductions = `http://localhost:5000/volDeductions/${activeProject}`
+  const apiVolDeductions = `http://localhost:4000/volDeductions/${activeProject}`
 
   useEffect(() => {
     const fetchSeleAPI = async () => {
