@@ -1,16 +1,13 @@
 import {
-  Container,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  FormGroup,
-  ModalFooter,
+  Container
 } from "reactstrap";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import '../../App.css'
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BenefitsModal } from "./BenefitsModal";
+import ProjectContext from "../../Contexts/ProjectContext";
+
 
 const database = [
   {
@@ -20,13 +17,13 @@ const database = [
 
 ];
 
-const projectName = 'Radiadores Solceri';
-const apiBenefits = `http://localhost:5000/benefits/${projectName}`
-
 export const CrudBenefits = () => {
   const [data, setData] = useState(database);
-
+  const { activeProject } = useContext(ProjectContext);
   const [infoReceived, setInfoReceived] = useState(false);
+
+  const apiBenefits = `http://localhost:5000/benefits/${activeProject}`
+
   useEffect(() => {
     const fetchSeleAPI = async () => {
       try {
