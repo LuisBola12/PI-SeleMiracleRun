@@ -27,39 +27,9 @@ import history from "../../history";
 
     const [infoReceived,setInfoReceived]= useState(false);
     const [data, setData] = useState(database);
-    const [viewModal, setViewModal] = useState(false);
-    const [name, setName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [id, setId] = useState('');
-    const [contract, setContract] = useState('');
-    const [email, setEmail] = useState('');
-    const [netSalary, setNetSalary] = useState('');
-  
-    const addToTable = () => {
-        const newData = {
-            Name:name,
-            LastName:lastName,
-            Id:id,
-            Contract:contract,
-            Email:email,
-            NetSalary:netSalary
-        }
-        setData([...data, newData]);
-        resetCrud();
-    }
-    const resetCrud = () => {
-        setViewModal(false);
-        setName("");
-        setLastName("");
-        setId("");
-        setContract("");
-        setEmail("");
-        setNetSalary(0);
-    }
     useEffect(()=>{
       const fetchSeleAPI = async () =>{
         const seleUrl = "http://localhost:5000/employees";
-        var headers = {"Content-type": "application/json"}
         try {
           const response = await fetch(seleUrl);
           const newData = await response.json();

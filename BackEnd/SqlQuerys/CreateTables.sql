@@ -10,8 +10,6 @@ Create Table Empleado(
 	Nombre varchar(15) not null,
 	Apellido1 varchar(15) not null,
 	Apellido2 varchar(15) not null,
-	NombreServicio varchar(50),
-	SalarioPorHora int,
 	Telefono varchar(8),
 	Email varchar(50) check(Email Like '%@%'),
 	primary key(Cedula),
@@ -32,8 +30,9 @@ Create Table Periodo(
 	primary key(Tipo)
 );
 Create Table Contrato(
-	Tipo varchar(30),
-	primary key(Tipo)
+	TipoJornada varchar(30),
+	NombreServicio varchar(50),
+	primary key(TipoJornada)
 );
 Create Table Proyecto(
 	Nombre varchar(50),
@@ -49,12 +48,14 @@ Create Table DeduccionesObligatorias(
 	PorcentajeEmpleado float not null,
 	primary key(Nombre)
 );
-Create Table HorasTrabajadasPorDia(
-	Fecha Date,
+Create Table EmpleadoRegistraHorasEnProyecto(
 	CedulaEmpleado varchar(15),
+	NombreProyecto varchar(50),
 	Cantidad tinyint not null,
-	primary key(Fecha,CedulaEmpleado),
-	foreign key(CedulaEmpleado) references Empleado(Cedula) on delete cascade,
+	Fecha Date,
+	primary key(CedulaEmpleado,NombreProyecto),
+	foreign key(CedulaEmpleado) references Empleado(Cedula),
+	foreign key(NombreProyecto) references Proyecto(Nombre),
 );
 Create Table Beneficios(
 	Nombre varchar(50),
@@ -97,10 +98,12 @@ Create table EmpleadoYContratoSeAsocianAProyecto(
 	CedulaEmpleado varchar(15),
 	TipoContrato varchar(30),
 	NombreProyecto varchar(50),
+	SalarioPorHoras float,
 	FechaInicio date,
 	FechaFin date,
 	primary key(CedulaEmpleado,TipoContrato,NombreProyecto),
 	foreign key(CedulaEmpleado) references Empleado(Cedula),
-	foreign key(TipoContrato) references Contrato(Tipo),
+	foreign key(TipoContrato) references Contrato(TipoJornada),
 	foreign key(NombreProyecto) references Proyecto(Nombre)
 );
+
