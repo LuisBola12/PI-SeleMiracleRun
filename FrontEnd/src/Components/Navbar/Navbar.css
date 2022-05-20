@@ -1,6 +1,17 @@
 .navbar-activeProject {
   color: white;
-  font-size: 2vh;
-  margin-right: vh;
-  margin-left: -28vh;
+  display: flex;
+  font-size: 1.5vh;
+  align-items: center;
+  text-align: center;
+  width: 15vh;
+}
+
+.logo-img {
+  width: 30%;
+  height: 100%;
+}
+
+.nav-header {
+  display: flex;
 }
