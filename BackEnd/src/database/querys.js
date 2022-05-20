@@ -8,4 +8,7 @@ export const queries = {
     `SELECT Proyecto.[Nombre] FROM Empleador 
     JOIN Proyecto ON Proyecto.CedulaEmpleador = Empleador.Cedula 
     WHERE Empleador.Email =@Email`,
+  getVolDeductions: "Select * From DeduccionesVoluntarias Where NombreProyecto = @Proyecto",
+  createNewVolDeduction: "Insert into DeduccionesVoluntarias (Name, NombreProyecto) values(@Name, @Proyecto)",
+  getBenefits: "Select Nombre, CostoActual from Beneficios where NombreProyecto = @Proyecto",
 }
