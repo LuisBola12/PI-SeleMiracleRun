@@ -1,5 +1,5 @@
 import { Modal } from 'react-bootstrap'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import NewProjectForm from '../../Components/newProjectForm/NewProjectForm'
 import ProjectContext from '../../Contexts/ProjectContext'
 import { useNavigate } from 'react-router-dom';
@@ -9,13 +9,33 @@ import './SelectProject.css'
 
 
 
-const employeesDatabase = ['Charlie', 'Jarod', 'Javier', 'Luis', 'Josef'];
+
+const database = [
+  { Nombre: "Javier" }
+
+];
+
 
 const SelectProject = () => {
   const navigate = useNavigate();
-  const { activeProject, setActiveProject, projects, setProjects } = useContext(ProjectContext);
+  const { activeProject, setActiveProject } = useContext(ProjectContext);
   const [viewModal, setViewModal] = useState(false);
+  const [projects, setProjects] = useState(database);
 
+
+  useEffect(() => {
+    const fetchSeleAPI = async () => {
+      const seleUrl = "http://localhost:4000/projects/josefR@example.com";
+      try {
+        const response = await fetch(seleUrl);
+        const newData = await response.json();
+        setProjects(newData);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchSeleAPI();
+  }, []);
   const handleCloseChild = () => {
     setViewModal(false);
   }
@@ -38,9 +58,7 @@ const SelectProject = () => {
 
 
   return (
-
     < div className='project-style'>
-
       <div className='project-header'>
         <div className='project-logo'></div>
         <button onClick={handleBackButton} className='project-backButton'>X</button>
@@ -51,13 +69,13 @@ const SelectProject = () => {
         {
           projects.map((project) => {
             return (
-              <div key={project.name} className='project-projectBox'>
+              <div key={project.Nombre} className='project-projectBox'>
                 <button
 
-                  onClick={() => handleProjectSelection(project.name)} className='project-projectLogo'>
-                  {project.name.charAt(0).toLocaleUpperCase()}
+                  onClick={() => handleProjectSelection(project.Nombre)} className='project-projectLogo'>
+                  {project.Nombre.charAt(0).toLocaleUpperCase()}
                 </button>
-                <div className='project-projectName'>{project.name}</div>
+                <div className='project-projectName'>{project.Nombre}</div>
               </div>
             )
           })}
@@ -70,7 +88,7 @@ const SelectProject = () => {
 
       <Modal show={viewModal} centered={true} dialogClassName='modal-90w'>
         <NewProjectForm cover={handleCloseChild} addNewEntry={addNewEntry}
-          actualData={projects} employeesDatabase={employeesDatabase} />
+          actualData={projects} />
       </Modal>
 
 

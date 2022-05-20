@@ -13,19 +13,13 @@ import history from './history';
 import Login from './Pages/login'
 import Register from './Pages/register';
 
-const database = [
-  { name: "Coca Cola", periodoDePago: 'semanal' },
-  { name: "Pepsi", periodoDePago: 'mensual' },
-  { name: "Radiadores Solceri", periodoDePago: 'quincenal' },
-]
 
 
 function App() {
   const [activeProject, setActiveProject] = useState('Proyecto sin asignar');
-  const [projects, setProjects] = useState(database)
 
   return (
-    <ProjectContext.Provider value={{ activeProject, setActiveProject, projects, setProjects }
+    <ProjectContext.Provider value={{ activeProject, setActiveProject }
     }>
       <Router history={history}>
         <Routes>
