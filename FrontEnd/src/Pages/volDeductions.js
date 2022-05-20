@@ -1,6 +1,6 @@
 import React from 'react';
 import '../App.css'
-import { CrudBenefits, CrudVolDeductions } from '../Components/CrudVolDeductions/CrudVolDeductions';
+import { CrudVolDeductions } from '../Components/CrudVolDeductions/CrudVolDeductions';
 import Navbar from '../Components/Navbar/Navbar';
 
 const  VolDeductions = () => {
