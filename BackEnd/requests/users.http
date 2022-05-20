@@ -1,5 +1,6 @@
-@api = http://localhost:5000/users
-@apiEmployees = http://localhost:5000/employees
+@api = http://localhost:4000/users
+@apiEmployees = http://localhost:4000/employees
+@apiProjects = http://localhost:4000/projects
 
 GET {{api}}
 ###
@@ -15,3 +16,6 @@ GET {{api}}/h@example.com
 
 ###
 GET {{apiEmployees}}
+###
+GET {{apiProjects}}/josefR@example.com
+###
