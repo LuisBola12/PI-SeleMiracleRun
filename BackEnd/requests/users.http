@@ -37,3 +37,14 @@ Content-Type: application/json
   "NombreProyecto": "Radiadores Solceri",
   "CostoActual": 5000
 }
+
+###
+POST {{apiVolDeductions}}
+Content-Type: application/json
+
+{
+  "Nombre":"Prueba",
+  "NombreProyecto": "Radiadores Solceri",
+  "PorcentajeEmpleador": 0.0,
+  "PorcentajeEmpleado": 0.0
+}
