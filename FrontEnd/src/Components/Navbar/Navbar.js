@@ -15,11 +15,11 @@ const Navbar = () => {
 
   return (
     <>
+      <div>
       <Nav>
         <img src={logo} alt="logo" />
+        <label className="navbar-activeProject">{activeProject}</label>
         <NavMenu>
-          <label className="navbar-activeProject">{activeProject}</label>
-
           <NavLink to="/home" activestyle='true'>
             Home
           </NavLink>
@@ -41,6 +41,7 @@ const Navbar = () => {
           <DropdownMenu></DropdownMenu>
         </Sidebar>
       </Nav>
+      </div>
     </>
   );
 };

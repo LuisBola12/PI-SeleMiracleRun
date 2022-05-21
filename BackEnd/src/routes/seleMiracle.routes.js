@@ -11,5 +11,6 @@ router.get('/users/:Email',getUserByEmail);
 // router.delete('/users',getUsers);
 // router.put('/users',getUsers);
 router.get('/employees',getEmployees);
+router.post('/employees',postNewEmployee);
 
 export default router;
