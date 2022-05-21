@@ -1,8 +1,9 @@
 import { Modal } from 'react-bootstrap'
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import NewProjectForm from '../../Components/newProjectForm/NewProjectForm'
-import ProjectContext from '../../Contexts/ProjectContext'
 import { useNavigate } from 'react-router-dom';
+import { updateActiveProject } from '../../Slices/projectSlice/activeProjectSlice';
+import { useDispatch } from "react-redux";
 
 import '../../App.css'
 import './SelectProject.css'
@@ -11,17 +12,14 @@ import './SelectProject.css'
 
 
 const database = [
-  { Nombre: "Javier" }
-
 ];
 
 
 const SelectProject = () => {
   const navigate = useNavigate();
-  const { activeProject, setActiveProject } = useContext(ProjectContext);
+  const dispatch = useDispatch();
   const [viewModal, setViewModal] = useState(false);
   const [projects, setProjects] = useState(database);
-
 
   useEffect(() => {
     const fetchSeleAPI = async () => {
@@ -44,9 +42,8 @@ const SelectProject = () => {
   }
 
   const handleProjectSelection = (projectName) => {
-    console.log(`global:${activeProject}`);
     console.log(`El seleccionado:${projectName}`);
-    setActiveProject(projectName);
+    dispatch(updateActiveProject(projectName));
     navigate('/');
 
   }
@@ -58,7 +55,9 @@ const SelectProject = () => {
 
 
   return (
+
     < div className='project-style'>
+      {console.log(projects)}
       <div className='project-header'>
         <div className='project-logo'></div>
         <button onClick={handleBackButton} className='project-backButton'>X</button>
@@ -70,6 +69,7 @@ const SelectProject = () => {
           projects.map((project) => {
             return (
               <div key={project.Nombre} className='project-projectBox'>
+
                 <button
 
                   onClick={() => handleProjectSelection(project.Nombre)} className='project-projectLogo'>

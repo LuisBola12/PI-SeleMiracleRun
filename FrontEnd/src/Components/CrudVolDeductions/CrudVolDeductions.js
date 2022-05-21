@@ -10,7 +10,8 @@ import {
 import { useState, useEffect, useContext } from "react";
 import '../../App.css'
 import "bootstrap/dist/css/bootstrap.min.css";
-import ProjectContext from "../../Contexts/ProjectContext";
+import { useSelector } from "react-redux";
+
 
 //const database = [
 //  { id: 1, name: "Insurance"}
@@ -21,7 +22,8 @@ export const CrudVolDeductions = () => {
   const [viewModal, setViewModal] = useState(false);
   const [name, setName] = useState('');
   const [warning, setWarning] = useState('');
-  const { activeProject } = useContext(ProjectContext);
+  const activeProject = useSelector((state) => state.activeProject.projectName);
+
   const [infoReceived, setInfoReceived] = useState(false);
 
   const addToTable = () => {

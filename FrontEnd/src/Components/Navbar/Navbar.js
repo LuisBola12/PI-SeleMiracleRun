@@ -7,11 +7,13 @@ import {
 import logo from "./logo.png";
 import DropdownMenu, { Sidebar } from "../SideBar/Sidebar.js";
 import { ReactComponent as ListIcon } from '../SideBar/icons/list.svg';
-import ProjectContext from "../../Contexts/ProjectContext";
 import './Navbar.css'
+import { useSelector } from "react-redux";
+
 
 const Navbar = () => {
-  const { activeProject } = useContext(ProjectContext);
+  // const { activeProject } = useContext(ProjectContext);
+  const activeProject = useSelector((state) => state.activeProject.projectName);
 
   return (
     <>
