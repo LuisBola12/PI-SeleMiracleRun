@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useSelector } from "react-redux";
 import {
   Nav,
   NavLink,
@@ -12,7 +13,9 @@ import './Navbar.css'
 
 const Navbar = () => {
   const { activeProject } = useContext(ProjectContext);
-
+  const user = useSelector(
+    (state) => state.user.user
+  );
   return (
     <>
       <Nav>
@@ -20,7 +23,9 @@ const Navbar = () => {
           <img src={logo} alt="logo" className="logo-img" />
           <label className="navbar-activeProject">{activeProject}</label>
         </div>
-
+        <p>{user && user.email ? ` ¡Bienvenido ${user.email}!` : "¡Bienvenido!"}</p>
+        {console.log(user)}
+        {/* {console.log(user.email)} */}
         <NavMenu>
 
           <NavLink to="/home" activestyle='true'>

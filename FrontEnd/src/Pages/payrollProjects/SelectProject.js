@@ -3,6 +3,7 @@ import React, { useContext, useState, useEffect } from 'react'
 import NewProjectForm from '../../Components/newProjectForm/NewProjectForm'
 import ProjectContext from '../../Contexts/ProjectContext'
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from "react-redux";
 
 import '../../App.css'
 import './SelectProject.css'
@@ -22,6 +23,9 @@ const SelectProject = () => {
   const [viewModal, setViewModal] = useState(false);
   const [projects, setProjects] = useState(database);
 
+  const user = useSelector(
+    (state) => state.user.user
+  );
 
   useEffect(() => {
     const fetchSeleAPI = async () => {

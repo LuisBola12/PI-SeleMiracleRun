@@ -1,8 +1,9 @@
 import './Sidebar.css';
+import { useDispatch, useSelector } from "react-redux";
 import React, { useState, useEffect, useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
-import { useNavigate } from 'react-router-dom';
-
+import { Navigate, useNavigate} from "react-router-dom";
+import {logout} from "../../Slices/user/userSlice";
 
 export const Sidebar = (props) => {
   const [open, setOpen] = useState(false);
@@ -18,11 +19,11 @@ export const Sidebar = (props) => {
 }
 
 const DropdownMenu = () => {
-  const navigate = useNavigate();
+  let navigate = useNavigate();
   const [activeMenu, setActiveMenu] = useState('main1');
   const [menuHeight, setMenuHeight] = useState(null);
   const dropdownRef = useRef(null);
-
+  const dispatch = useDispatch();
   const redirectToProjectSelecion = () => {
     navigate('/ProjectAdmin');
   }
@@ -36,36 +37,36 @@ const DropdownMenu = () => {
 
     setMenuHeight(height);
   }
-  function DropdownItem(props) {
-    const navigate = useNavigate();
 
-    return (
-      <button onClick={redirectToProjectSelecion} className="sidebar-button" >
-        {props.children}
-      </button>
-    );
+  let navigateLogin = useNavigate();
+  const redirectToLogIn = () => {
+    dispatch(logout())
+    navigateLogin("/login");
   }
 
+  // function DropdownItem(props) {
+  //   return (
+  //     <button onClick={redirectToProjectSelecion} className="sidebar-button" >
+  //       {props.children}
+  //     </button>
+  //   );
+  // }
   return (
     <div className="sidebar-dropdown" style={{ height: menuHeight }} ref={dropdownRef}>
-
       <CSSTransition
         in={activeMenu === 'main1'}
         timeout={500}
         unmountOnExit
         onEnter={calcHeight}>
-        <div className="sidebar-menu">
-
-          <button onClick={redirectToProjectSelecion} className="sidebar-button" >
-            Projects
+        <div className="sidebar-menu">   
+            <button onClick={redirectToProjectSelecion} className="sidebar-button" >
+              Projects
           </button>
-          <button className="sidebar-button" >
-            Settings
-          </button>
+            <button onClick={redirectToLogIn} className="sidebar-button" >
+              Sign Out
+            </button>
         </div>
       </CSSTransition >
-
-
     </div >
   );
 }
