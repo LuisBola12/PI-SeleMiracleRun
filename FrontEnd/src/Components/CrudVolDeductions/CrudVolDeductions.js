@@ -1,6 +1,6 @@
 import { Container } from "reactstrap";
 
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import '../../App.css'
 import "bootstrap/dist/css/bootstrap.min.css";
 import { VolDeductionsModal } from "./VolDeductionsModal";
@@ -21,7 +21,6 @@ export const CrudVolDeductions = () => {
         const response = await fetch(apiVolDeductions);
         const newData = await response.json();
         setData(newData);
-        console.log(newData)
         setInfoReceived(true);
       } catch (error) {
         console.log(error);
@@ -59,8 +58,6 @@ export const CrudVolDeductions = () => {
           </tbody>
         </table>
       </Container>
-
     </>
   )
-
 };
