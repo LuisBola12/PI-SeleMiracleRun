@@ -31,7 +31,6 @@ Create Table Periodo(
 );
 Create Table Contrato(
 	TipoJornada varchar(30),
-	NombreServicio varchar(50),
 	primary key(TipoJornada)
 );
 Create Table Proyecto(
@@ -98,6 +97,7 @@ Create table EmpleadoYContratoSeAsocianAProyecto(
 	CedulaEmpleado varchar(15),
 	TipoContrato varchar(30),
 	NombreProyecto varchar(50),
+	NombreServicio varchar(50),
 	SalarioPorHoras float,
 	FechaInicio date,
 	FechaFin date,
@@ -107,3 +107,20 @@ Create table EmpleadoYContratoSeAsocianAProyecto(
 	foreign key(NombreProyecto) references Proyecto(Nombre)
 );
 
+SELECT * FROM Empleado;
+
+INSERT INTO Empleado values ('198761121','Jarod','Venegas','Alpizar','84581885','carlosSo@example.com');
+INSERT INTO Empleado values ('187618721','Carlos','Solorzano','Cerdas','84589816','jarodV@example.com');
+
+INSERT INTO Periodo values('Semanal');
+INSERT INTO Periodo values('Quincenal');
+INSERT INTO Periodo values('Mensual');
+
+select * from Proyecto;
+Insert into Proyecto values('Radiadores Solceri','121121121','Mensual');
+
+Insert into EmpleadoYContratoSeAsocianAProyecto(CedulaEmpleado,TipoContrato,NombreProyecto,SalarioPorHoras,FechaInicio,FechaFin) 
+values ('187612921','Medio Tiempo','Radiadores Solceri',7000,'2022-08-12','2025-05-12');
+
+
+Select e.Nombre, e.Apellido1, e.Apellido2, e.Cedula,e.Email, ecp.TipoContrato from  Empleado e inner join EmpleadoYContratoSeAsocianAProyecto ecp on e.Cedula = ecp.CedulaEmpleado AND ecp.NombreProyecto = 'Radiadores Solceri';

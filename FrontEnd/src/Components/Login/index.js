@@ -13,10 +13,13 @@ const LoginComp = () => {
   // To get the state of the user that intent to log in
   const userIsLoggedIn = useSelector((state) => state.user.userIsLoggedIn);
   const errorMessage = useSelector((state) => state.user.errorMessage);
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
+   
+  {console.log("userIsLoggedIn")}
+  {console.log(userIsLoggedIn)}
 
   let navigate = useNavigate();
-  function handleClick() {
+  const handleClick = () => {
     navigate("/register");
   }
 
@@ -58,7 +61,7 @@ const LoginComp = () => {
             Sign In
           </button>
           <button className="logIn-btn-CheckIn" onClick={handleClick}>
-          Sing Up
+            Sign Up
           </button>
         </div>
         {

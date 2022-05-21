@@ -9,18 +9,10 @@ import { BenefitsModal } from "./BenefitsModal";
 import { useSelector } from "react-redux";
 
 
-const database = [
-  {
-    Nombre: '',
-    CostoActual: 0
-  }
-
-];
-
 export const CrudBenefits = () => {
-  const [data, setData] = useState(database);
   const activeProject = useSelector((state) => state.activeProject.projectName);
 
+  const [data, setData] = useState([{}]);
   const [infoReceived, setInfoReceived] = useState(false);
 
   const apiBenefits = `http://localhost:4000/benefits/${activeProject}`
@@ -31,7 +23,6 @@ export const CrudBenefits = () => {
         const response = await fetch(apiBenefits);
         const newData = await response.json();
         setData(newData);
-        console.log(newData)
         setInfoReceived(true);
       } catch (error) {
         console.log(error);
