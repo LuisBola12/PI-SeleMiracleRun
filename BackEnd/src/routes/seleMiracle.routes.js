@@ -18,6 +18,6 @@ router.get('/projects/:Email', getProjectsByEmail);
 // router.post('/projects:User', createNewProjects);
 router.get('/benefits/:Proyecto', getBenefits);
 router.post('/benefits', createBenefit);
-router.get('/volDeductions/:Proyecto', getVolDeductions);
-router.post('/volDeductions/:Proyecto', createNewVolDeduction);
+router.get('/volDeductions/:NombreProyecto', getVolDeductions);
+router.post('/volDeductions', createNewVolDeduction);
 export default router;
