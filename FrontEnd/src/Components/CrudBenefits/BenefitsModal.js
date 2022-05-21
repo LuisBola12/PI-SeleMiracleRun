@@ -8,18 +8,40 @@ import {
 
 import { useState } from "react";
 import '../../App.css'
+import { useSelector } from "react-redux";
+
 
 export const BenefitsModal = ({ data, setData }) => {
   const [viewModal, setViewModal] = useState(false);
+  const activeProject = useSelector((state) => state.activeProject.projectName);
   const [name, setName] = useState('');
   const [cost, setCost] = useState(0);
   const [warning, setWarning] = useState('');
+
+  const apiBenefits = `http://localhost:4000/benefits`
+
+  const submitBenefit = async () => {
+    const postFetch = await fetch(apiBenefits, {
+      method: 'POST',
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        Nombre: name,
+        NombreProyecto: activeProject,
+        CostoActual: cost,
+      }),
+    });
+    console.log(postFetch);
+  }
+
+
 
   const addToTable = () => {
     if (name && cost) {
       const names = [];
       data.map((index) => {
-        names.push(index.Nombre);
+        return names.push(index.Nombre);
       })
       if (!names.includes(name)) {
         const newData = {
@@ -27,6 +49,7 @@ export const BenefitsModal = ({ data, setData }) => {
           CostoActual: cost,
         };
         setData([...data, newData]);
+        submitBenefit();
         setWarning('');
         setViewModal(false);
         setName("");
@@ -40,6 +63,8 @@ export const BenefitsModal = ({ data, setData }) => {
       setWarning('*Please enter all the values')
     }
   }
+
+
 
   return (
     <>

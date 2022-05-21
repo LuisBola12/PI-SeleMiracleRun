@@ -3,22 +3,22 @@ import { createSlice } from "@reduxjs/toolkit";
 import { userReducers } from "./reducers/reducers";
 
 const userSlice = createSlice({
-    name: 'user',
-    initialState: {
-        user: null,
-        userIsLoggedIn: false,
-        errorMessage: "",
-    },
+  name: 'user',
+  initialState: {
+    user: null,
+    userIsLoggedIn: false,
+    errorMessage: "",
+  },
 
-    reducers: userReducers,
+  reducers: userReducers,
 
-    extraReducers(builder) {
-        builder
-            .addCase(postLogin.fulfilled, onPostLoginFullfilled)
-            .addCase(postLogin.rejected, onPostLoginRejected)
-    }
+  extraReducers(builder) {
+    builder
+      .addCase(postLogin.fulfilled, onPostLoginFullfilled)
+      .addCase(postLogin.rejected, onPostLoginRejected)
+  }
 });
 
-export const { logout, login } = userSlice.actions;
+export const { logout } = userSlice.actions;
 
 export default userSlice.reducer;

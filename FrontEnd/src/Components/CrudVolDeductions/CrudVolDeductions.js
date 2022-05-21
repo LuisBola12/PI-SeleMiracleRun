@@ -4,11 +4,13 @@ import { useState, useEffect, useContext } from "react";
 import '../../App.css'
 import "bootstrap/dist/css/bootstrap.min.css";
 import { VolDeductionsModal } from "./VolDeductionsModal";
-import ProjectContext from "../../Contexts/ProjectContext";
+import { useSelector } from "react-redux";
+
 
 export const CrudVolDeductions = () => {
   const [data, setData] = useState([{}]);
-  const { activeProject } = useContext(ProjectContext);
+  const activeProject = useSelector((state) => state.activeProject.projectName);
+
   const [infoReceived, setInfoReceived] = useState(false);
 
   const apiVolDeductions = `http://localhost:4000/volDeductions/${activeProject}`
