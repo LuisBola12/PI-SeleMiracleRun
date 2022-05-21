@@ -1,7 +1,7 @@
 export const userReducers = {
-    logout: (state) => {
-        state.user = null;
-        state.isLoggedIn = false;
-        state.errorMessage = "";
-    },
+  logout: (state) => {
+    state.user = null;
+    state.userIsLoggedIn = false;
+    state.errorMessage = "";
+  },
 };

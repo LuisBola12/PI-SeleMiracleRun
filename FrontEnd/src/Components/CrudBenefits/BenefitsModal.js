@@ -6,13 +6,14 @@ import {
   ModalFooter,
 } from "reactstrap";
 
-import { useState, useContext } from "react";
+import { useState } from "react";
 import '../../App.css'
-import ProjectContext from "../../Contexts/ProjectContext";
+import { useSelector } from "react-redux";
+
 
 export const BenefitsModal = ({ data, setData }) => {
   const [viewModal, setViewModal] = useState(false);
-  const { activeProject } = useContext(ProjectContext);
+  const activeProject = useSelector((state) => state.activeProject.projectName);
   const [name, setName] = useState('');
   const [cost, setCost] = useState(0);
   const [warning, setWarning] = useState('');

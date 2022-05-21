@@ -27,8 +27,8 @@ const NewProjectForm = ({ cover, addNewEntry, actualData }) => {
       })
       if (!names.includes(name)) {
         const newData = {
-          name: name,
-          paymentPeriod: paymentPeriod,
+          Nombre: name,
+          TipoPeriodo: paymentPeriod,
         };
         addNewEntry(newData);
         setWarning('');

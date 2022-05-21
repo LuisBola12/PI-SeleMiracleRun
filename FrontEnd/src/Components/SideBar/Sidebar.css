@@ -49,9 +49,10 @@
   padding-bottom: 35px;
 }
 
-.sidebar-button-div{
+.sidebar-button-div {
   width: 100%;
 }
+
 .sidebar-button {
   height: var(--sidebar-btn-height);
   width: 100%;
@@ -59,7 +60,7 @@
   background-color: #133c54;
   color: white;
   border-radius: 1rem;
-  border: 3px solid #03293f99;
+  border: none;
 }
 
 .sidebar-button:hover {

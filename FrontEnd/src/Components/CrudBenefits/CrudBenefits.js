@@ -6,12 +6,13 @@ import { useState, useEffect, useContext } from "react";
 import '../../App.css'
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BenefitsModal } from "./BenefitsModal";
-import ProjectContext from "../../Contexts/ProjectContext";
+import { useSelector } from "react-redux";
 
 
 export const CrudBenefits = () => {
+  const activeProject = useSelector((state) => state.activeProject.projectName);
+
   const [data, setData] = useState([{}]);
-  const { activeProject } = useContext(ProjectContext);
   const [infoReceived, setInfoReceived] = useState(false);
 
   const apiBenefits = `http://localhost:4000/benefits/${activeProject}`
