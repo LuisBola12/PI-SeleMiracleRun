@@ -11,4 +11,5 @@ export const queries = {
   getVolDeductions: "Select * From DeduccionesVoluntarias Where NombreProyecto = @Proyecto",
   createNewVolDeduction: "Insert into DeduccionesVoluntarias (Name, NombreProyecto) values(@Name, @Proyecto)",
   getBenefits: "Select Nombre, CostoActual from Beneficios where NombreProyecto = @Proyecto",
+  createBenefit: "Insert into Beneficios (Nombre, NombreProyecto, CostoActual) values (@Nombre, @NombreProyecto ,@CostoActual)"
 }
