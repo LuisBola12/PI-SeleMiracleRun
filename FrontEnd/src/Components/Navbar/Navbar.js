@@ -18,6 +18,7 @@ const Navbar = () => {
   );
   return (
     <>
+      <div>
       <Nav>
         <div className="nav-header">
           <img src={logo} alt="logo" className="logo-img" />
@@ -49,6 +50,7 @@ const Navbar = () => {
           <DropdownMenu></DropdownMenu>
         </Sidebar>
       </Nav>
+      </div>
     </>
   );
 };

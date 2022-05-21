@@ -9,16 +9,8 @@ import { BenefitsModal } from "./BenefitsModal";
 import ProjectContext from "../../Contexts/ProjectContext";
 
 
-const database = [
-  {
-    Nombre: '',
-    CostoActual: 0
-  }
-
-];
-
 export const CrudBenefits = () => {
-  const [data, setData] = useState(database);
+  const [data, setData] = useState([{}]);
   const { activeProject } = useContext(ProjectContext);
   const [infoReceived, setInfoReceived] = useState(false);
 
@@ -30,7 +22,6 @@ export const CrudBenefits = () => {
         const response = await fetch(apiBenefits);
         const newData = await response.json();
         setData(newData);
-        console.log(newData)
         setInfoReceived(true);
       } catch (error) {
         console.log(error);

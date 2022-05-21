@@ -14,4 +14,5 @@ export const queries = {
   getAllEmployees: "Select * From Empleador",
   getAllEmployeesByID: "Select * From Empleador Where Cedula = @Cedula",
   createNewUser: "Insert into Empleador (Cedula, Nombre, Apellido1, Apellido2, Telefono, Email) values(@Cedula, @Nombre, @Apellido1, @Apellido2, @Telefono, @Email)",
+  createBenefit: "Insert into Beneficios (Nombre, NombreProyecto, CostoActual) values (@Nombre, @NombreProyecto ,@CostoActual)"
 }
