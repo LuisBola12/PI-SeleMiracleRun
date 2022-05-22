@@ -1,5 +1,4 @@
 import { Container } from "reactstrap";
-
 import { useState, useEffect } from "react";
 import '../../App.css'
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -10,13 +9,11 @@ import { useSelector } from "react-redux";
 export const CrudVolDeductions = () => {
   const [data, setData] = useState([{}]);
   const activeProject = useSelector((state) => state.activeProject.projectName);
-
   const [infoReceived, setInfoReceived] = useState(false);
-
   const apiVolDeductions = `http://localhost:4000/volDeductions/${activeProject}`
 
   useEffect(() => {
-    const fetchSeleAPI = async () => {
+    const getVolDeductions = async () => {
       try {
         const response = await fetch(apiVolDeductions);
         const newData = await response.json();
@@ -26,7 +23,7 @@ export const CrudVolDeductions = () => {
         console.log(error);
       }
     }
-    fetchSeleAPI();
+    getVolDeductions();
   }, []);
 
   return !infoReceived ? <div className="loader" ></div > : (
