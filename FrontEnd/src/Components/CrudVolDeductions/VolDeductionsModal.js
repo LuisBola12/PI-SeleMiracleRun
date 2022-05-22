@@ -13,7 +13,6 @@ export const VolDeductionsModal = ({ data, setData }) => {
   const [viewModal, setViewModal] = useState(false);
   const activeProject = useSelector((state) => state.activeProject.projectName);
   const [name, setName] = useState('');
-  const [warning, setWarning] = useState('');
   const apiVolDeductions = `http://localhost:4000/volDeductions`
 
   const submitVolDeduction = async () => {
@@ -42,16 +41,15 @@ export const VolDeductionsModal = ({ data, setData }) => {
         };
         setData([...data, newData]);
         submitVolDeduction();
-        setWarning('');
         setViewModal(false);
         setName("");
       } else {
-        setWarning('*That voluntary deduction already exist')
+        alert("That voluntary deduction already exist");
       }
 
     }
     else {
-      setWarning('*Please enter all the values')
+      alert("Please enter all the values");
     }
   }
 
@@ -79,7 +77,6 @@ export const VolDeductionsModal = ({ data, setData }) => {
           </FormGroup>
         </ModalBody>
         <ModalFooter>
-          <label className="warning-message">{warning}</label>
           <button
             className="button create-button"
             onClick={() => {
@@ -91,7 +88,6 @@ export const VolDeductionsModal = ({ data, setData }) => {
           <button className="button cancel-button" onClick={() => {
             setViewModal(false)
             setName("");
-            setWarning('');
           }}>
             Cancel
           </button>
