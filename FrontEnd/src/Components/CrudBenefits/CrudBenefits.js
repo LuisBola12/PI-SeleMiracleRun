@@ -11,7 +11,6 @@ import { useSelector } from "react-redux";
 
 export const CrudBenefits = () => {
   const activeProject = useSelector((state) => state.activeProject.projectName);
-
   const [data, setData] = useState([{}]);
   const [infoReceived, setInfoReceived] = useState(false);
 

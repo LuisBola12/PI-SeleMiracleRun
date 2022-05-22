@@ -25,7 +25,6 @@ export const queries = {
   // Employer queries
   getAllContracts: "Select TipoJornada from Contrato",
   addContractOfAnEmployee: "Insert into EmpleadoYContratoSeAsocianAProyecto(CedulaEmpleado,TipoContrato,NombreProyecto,NombreServicio,SalarioPorHoras,ValorDeServicio) values(@Cedula,@TipoJornada,@NombreProyecto,@NombreServicio,@SalarioPorHora,@FechaInicioContrato,@FechaFinContrato,@ValorServicio)",
-  getAllEmployees: "Select * From Empleador",
   getAllEmployeesByID: "Select * From Empleador Where Cedula = @Cedula",
   createNewUser: "Insert into Empleador (Cedula, Nombre, Apellido1, Apellido2, Telefono, Email) values(@Cedula, @Nombre, @Apellido1, @Apellido2, @Telefono, @Email)",
   createBenefit: "Insert into Beneficios (Nombre, NombreProyecto, CostoActual) values (@Nombre, @NombreProyecto ,@CostoActual)"

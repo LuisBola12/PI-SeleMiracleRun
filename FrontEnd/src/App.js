@@ -54,7 +54,7 @@ function App() {
           <Route path="contracts" element={<Contracts />} />
         </Route>
         <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
-          <Route path="employees/CreateNewEmployee" element={<CreateNewEmployee />} />
+          <Route path="employees/CreateEmployee" element={<CreateNewEmployee />} />
         </Route>
       </Routes>
     </Router>
