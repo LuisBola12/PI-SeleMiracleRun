@@ -34,3 +34,12 @@ GET {{apiBenefits}}/Radiadores Solceri
 
 ###
 GET {{apiContracts}}
+###
+POST {{apiBenefits}}
+Content-Type: application/json
+
+{
+  "Nombre":"Prueba",
+  "NombreProyecto": "Radiadores Solceri",
+  "CostoActual": 5000
+}

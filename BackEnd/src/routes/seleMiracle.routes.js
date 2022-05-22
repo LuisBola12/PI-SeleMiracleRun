@@ -3,8 +3,8 @@ import { getProjectsByEmail } from "../controllers/projects.controller";
 import { createNewUser, getUsers, getUserByEmail, getPeriodos } from "../controllers/users.controller";
 import { getEmployees, postNewEmployee} from '../controllers/employees.contoller'
 import { getVolDeductions, createNewVolDeduction } from "../controllers/volDeductions.controller";
-import { getBenefits } from "../controllers/benefits.controller";
 import { getTypeOfContracts } from "../controllers/contracts.controller";
+import { getBenefits, createBenefit } from "../controllers/benefits.controller";
 
 
 const router = Router();
@@ -20,6 +20,7 @@ router.post('/employees',postNewEmployee);
 router.get('/projects/:Email', getProjectsByEmail);
 // router.post('/projects:User', createNewProjects);
 router.get('/benefits/:Proyecto', getBenefits);
+router.post('/benefits', createBenefit);
 router.get('/volDeductions/:Proyecto', getVolDeductions);
 router.post('/volDeductions/:Proyecto', createNewVolDeduction);
 export default router;
