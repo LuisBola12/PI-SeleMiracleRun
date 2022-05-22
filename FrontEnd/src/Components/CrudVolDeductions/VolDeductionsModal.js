@@ -5,7 +5,6 @@ import {
   FormGroup,
   ModalFooter,
 } from "reactstrap";
-
 import { useState } from "react";
 import '../../App.css'
 import { useSelector } from "react-redux";
@@ -15,7 +14,6 @@ export const VolDeductionsModal = ({ data, setData }) => {
   const activeProject = useSelector((state) => state.activeProject.projectName);
   const [name, setName] = useState('');
   const [warning, setWarning] = useState('');
-
   const apiVolDeductions = `http://localhost:4000/volDeductions`
 
   const submitVolDeduction = async () => {
@@ -35,7 +33,7 @@ export const VolDeductionsModal = ({ data, setData }) => {
   }
 
   const addToTable = () => {
-    if (name) {
+    if (name && name.trim().length > 0) {
       const names = [];
       data.map((index) => {
         names.push(index.Nombre);
@@ -77,6 +75,7 @@ export const VolDeductionsModal = ({ data, setData }) => {
               className="form-control"
               type="text"
               value={name}
+              maxLength="50"
               onChange={(e) => setName(e.target.value)}
             ></input>
           </FormGroup>
