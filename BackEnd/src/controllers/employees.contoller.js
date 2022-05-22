@@ -1,5 +1,25 @@
 import { getConnection, sql, queries } from "../database";
 
+
+export const getEmployeeByID = async (req,res) => {
+  const{Cedula} = req.params;
+  if (Cedula == null || Cedula == "" ) {
+    const message = "Bad Request. Please Fill All Fields.";
+    return res.status(400).json({ msg: message });
+  }
+  try{
+      const pool = await getConnection();
+      const result = await pool.request()
+      .input('Cedula',Cedula)
+      .query(queries.getEmployeeByID);
+      console.log(result);
+      res.status(200).json(result.recordset);
+  }catch(e){
+      res.status(404);
+      res.send(e.message);
+  }
+}
+
 export const getEmployees = async (req, res) => {
   try {
     const { Proyecto } = req.params;
@@ -14,6 +34,23 @@ export const getEmployees = async (req, res) => {
     res.send(e.message);
   }
 };
+export const verifyEmployeeContractOnProject= async(req,res) =>{
+  try {
+    const {Cedula,Proyecto} = req.body;
+    console.log(Cedula,Proyecto)
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input("Cedula", Cedula)
+      .input("Proyecto", Proyecto)
+      .query(queries.verifyEmployeeContractProject);
+    res.json(result.recordset);
+  } catch (e) {
+    res.status(500);
+    res.send(e.message);
+  }
+
+}
 export const postNewEmployee = async (req, res) => {
   const date = new Date();
   const [month, day, year] = [
@@ -22,10 +59,11 @@ export const postNewEmployee = async (req, res) => {
     date.getFullYear(),
   ];
   const fecha = `${year}-${month + 1}-${day}`;
-  const {
+  let {
     NombreProyecto,
     Email,
     Contrasenia,
+    Roles,
     Nombre,
     Apellido1,
     Apellido2,
@@ -48,17 +86,18 @@ export const postNewEmployee = async (req, res) => {
   }
   const pool = await getConnection();
   try {
-    const result1 = await pool
+    const createUser = await pool
       .request()
       .input("Email", Email)
       .input("Contrasenia", Contrasenia)
+      .input("Roles", Roles)
       .query(queries.createNewUser);
+      console.log(`User Created${createUser}`);
   } catch (e) {
-    console.log("SE CE AL CREAR USUARIO")
     console.log(e);
   }
   try {
-    const result2 = await pool
+    const createEmployee = await pool
       .request()
       .input("Nombre", Nombre)
       .input("Apellido1", Apellido1)
@@ -66,13 +105,13 @@ export const postNewEmployee = async (req, res) => {
       .input("Cedula", Cedula)
       .input("Telefono", Telefono)
       .input("Email", Email)
-      .query(queries.createNewUser);
+      .query(queries.createNewEmployee);
+      console.log(`Employee Created${createEmployee}`);
   } catch (e) {
-    console.log("SE CE AL CREAR empleado")
     console.log(e);
   }
   try {
-    const result3 = await pool
+    const createContractForEmployee = await pool
       .request()
       .input("Cedula", Cedula)
       .input("NombreProyecto", NombreProyecto)
@@ -83,9 +122,10 @@ export const postNewEmployee = async (req, res) => {
       .input("NombreServicio", NombreServicio)
       .input("ValorServicio", ValorServicio)
       .query(queries.addContractOfAnEmployee);
+      console.log(`Contract of employee asociated 
+      to a proyect${createContractForEmployee}`);
   } catch (e) {
-    console.log("SE CE AL CREAR empleado-contrato-proyecto")
     console.log(e);
   }
-  res.status(200);
+  res.status(200).send();
 };

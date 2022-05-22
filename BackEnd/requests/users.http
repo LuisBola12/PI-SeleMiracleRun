@@ -1,5 +1,7 @@
 @apiUsers = http://localhost:4000/users
 @apiEmployees = http://localhost:4000/employees
+@apiEmployee = http://localhost:4000/employee
+@apiEmployeeContract = http://localhost:4000/employee/contract
 @apiProjects = http://localhost:4000/projects
 @apiBenefits = http://localhost:4000/benefits
 @apiVolDeductions = http://localhost:4000/volDeductions
@@ -37,11 +39,26 @@ Content-Type: application/json
   "Email": "josefR@example.com"
 }
 ###
+POST {{apiEmployeeContract}}
+Content-Type: application/json
+
+{
+  "Cedula": "187612921",
+  "Proyecto": "Radiadores Solceri"
+}
+
+###
+GET {{apiEmployee}}/187612921
+
+###
 GET {{apiEmployer}}
+
 ###
 GET {{apiUsers}}
+
 ###
 GET {{apiUsers}}/josefR@example.com
+
 ###
 GET {{apiEmployees}}/Radiadores Solceri
 
@@ -56,6 +73,7 @@ GET {{apiBenefits}}/Radiadores Solceri
 
 ###
 GET {{apiContracts}}
+
 ###
 POST {{apiBenefits}}
 Content-Type: application/json
@@ -85,4 +103,25 @@ Content-Type: application/json
   "NombreProyecto": "Radiadores Solceri",
   "PorcentajeEmpleador": 0.0,
   "PorcentajeEmpleado": 0.0
+}
+
+###
+POST {{apiEmployee}}
+Content-Type: application/json
+
+{
+  "NombreProyecto":"Radiadores Solceri",
+  "Email":"erickV@example.com",
+  "Contrasenia":"1234",
+  "Roles":"empleado",
+  "Nombre":"Erick",
+  "Apellido1":"Valverde",
+  "Apellido2":"Gonzales",
+  "Cedula":"187126112",
+  "Telefono":87126121,
+  "TipoJornada":"Por Horas",
+  "FechaFinContrato":"2025-09-19",
+  "SalarioPorHora":"6000",
+  "NombreServicio":"",
+  "ValorServicio":0
 }

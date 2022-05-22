@@ -18,13 +18,14 @@ export const CrudVolDeductions = () => {
         const response = await fetch(apiVolDeductions);
         const newData = await response.json();
         setData(newData);
+        console.log(newData);
         setInfoReceived(true);
       } catch (error) {
         console.log(error);
       }
     }
     getVolDeductions();
-  }, []);
+  },[]);
 
   return !infoReceived ? <div className="loader" ></div > : (
     <>
