@@ -1,11 +1,11 @@
 import { getConnection,sql,queries } from "../database";
 
 export const getVolDeductions = async (req, res) => {
-  const { Proyecto } = req.params;
+  const { NombreProyecto } = req.params;
   try {
     const pool = await getConnection();
     const result = await pool.request()
-      .input('Proyecto', Proyecto)
+      .input('NombreProyecto', NombreProyecto)
       .query(queries.getVolDeductions);
     res.json(result.recordset);
   } catch (e) {
@@ -15,9 +15,11 @@ export const getVolDeductions = async (req, res) => {
 };
 
 export const createNewVolDeduction = async (req, res) => {
-  const { Proyecto } = req.params;
-  const { Name } = req.body;
-  if (Name == null || Proyecto == null) {
+  const { NombreProyecto } = req.body;
+  const { Nombre } = req.body;
+  const { PorcentajeEmpleador } = req.body;
+  const { PorcentajeEmpleado } = req.body; 
+  if (Nombre == null || NombreProyecto == null) {
     const message = "Bad Request. Please Fill All Fields.";
     return res.status(400).json({ msg: message });
   }
@@ -25,11 +27,13 @@ export const createNewVolDeduction = async (req, res) => {
     const pool = await getConnection();
     const result = await pool
       .request()
-      .input('Proyecto', sql.VarChar, Proyecto)
-      .input("Name", sql.VarChar, Name)
-      .query(queries.createNewUser);
+      .input("Nombre", sql.VarChar, Nombre)
+      .input("NombreProyecto", sql.VarChar, NombreProyecto)
+      .input("PorcentajeEmpleador", sql.Float, PorcentajeEmpleador)
+      .input("PorcentajeEmpleado", sql.Float, PorcentajeEmpleado)
+      .query(queries.createNewVolDeduction);
     console.log(result);
-    res.json({ Proyecto, Name });
+    res.json({ Nombre, NombreProyecto, PorcentajeEmpleador, PorcentajeEmpleado});
   } catch (e) {
     console.log(`Error: ${e}`);
     res.status(500).send(e.message);

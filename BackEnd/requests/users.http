@@ -6,6 +6,8 @@
 @apiCreateEmployer =  http://localhost:4000/createEmployer
 @apiVerifyUser =  http://localhost:4000/verifyUser
 @apiEmployer =  http://localhost:4000/employer
+@apiContracts = http://localhost:4000/typeContracts
+
 POST {{apiUsers}}
 Content-Type: application/json
 
@@ -41,7 +43,8 @@ GET {{apiUsers}}
 ###
 GET {{apiUsers}}/josefR@example.com
 ###
-GET {{apiEmployees}}
+GET {{apiEmployees}}/Radiadores Solceri
+
 ###
 GET {{apiProjects}}/josefR@example.com
 
@@ -52,11 +55,34 @@ GET  {{apiVolDeductions}}/Radiadores Solceri
 GET {{apiBenefits}}/Radiadores Solceri
 
 ###
+GET {{apiContracts}}
+###
 POST {{apiBenefits}}
 Content-Type: application/json
 
 {
   "Nombre":"Prueba444",
   "NombreProyecto": "Radiadores Solceri",
-  "CostoActual": 5000
+  "CostoActual": 4000
+}
+
+###
+POST {{apiEmployees}}
+Content-Type: application/json
+
+{
+  "Nombre":"Prueba",
+  "NombreProyecto": "Radiadores Solceri",
+  "CostoActual": 4000
+}
+
+###
+POST {{apiVolDeductions}}
+Content-Type: application/json
+
+{
+  "Nombre":"Prueba",
+  "NombreProyecto": "Radiadores Solceri",
+  "PorcentajeEmpleador": 0.0,
+  "PorcentajeEmpleado": 0.0
 }

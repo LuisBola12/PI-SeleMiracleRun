@@ -1,8 +1,9 @@
 import { Router } from "express";
 import { getProjectsByEmail } from "../controllers/projects.controller";
-import { getEmployerByID , getUsers, getUserByEmail, verifyCredentials, registerNewUser, verifyUser } from "../controllers/users.controller";
-import { getEmployees } from '../controllers/employees.contoller'
+import { getEmployerByID , getUsers, getUserByEmail, verifyCredentials, registerNewUser } from "../controllers/users.controller";
+import { getEmployees, postNewEmployee} from '../controllers/employees.contoller'
 import { getVolDeductions, createNewVolDeduction } from "../controllers/volDeductions.controller";
+import { getTypeOfContracts } from "../controllers/contracts.controller";
 import { getBenefits, createBenefit } from "../controllers/benefits.controller";
 import { createNewEmployer, getEmployer } from "../controllers/employer.controller";
 
@@ -18,11 +19,13 @@ router.get('/employer/:Cedula', getEmployerByID);
 // router.get('/periodos',getPeriodos);
 // router.delete('/users',getUsers);
 // router.put('/users',getUsers);
-router.get('/employees', getEmployees);
+router.get('/typeContracts',getTypeOfContracts);
+router.get('/employees/:Proyecto', getEmployees);
+router.post('/employees',postNewEmployee);
 router.get('/projects/:Email', getProjectsByEmail);
 // router.post('/projects:User', createNewProjects);
 router.get('/benefits/:Proyecto', getBenefits);
 router.post('/benefits', createBenefit);
-router.get('/volDeductions/:Proyecto', getVolDeductions);
-router.post('/volDeductions/:Proyecto', createNewVolDeduction);
+router.get('/volDeductions/:NombreProyecto', getVolDeductions);
+router.post('/volDeductions', createNewVolDeduction);
 export default router;

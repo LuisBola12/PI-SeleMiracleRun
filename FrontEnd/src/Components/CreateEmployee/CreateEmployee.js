@@ -1,21 +1,73 @@
-import React, { useState } from "react";
-import { Button, FormGroup } from "reactstrap";
+import React, { useState,useEffect } from "react";
+import {Alert, FormGroup} from "reactstrap";
 import user_icon from "./user_icon2.png";
 import history from "../../history";
+import { useSelector } from 'react-redux';
 
 export const CreateEmployee = () => {
+  const activeProject = useSelector((state) => state.activeProject.projectName);
   const [email, setEmail] = useState("");
+  const [typeOfContracts,setTypeOfContracts] = useState();
+  const [contractsReceived,setContractsReceived] = useState(false);
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [lastname, setLastName] = useState("");
+  const [secondlastname, setSecondLastName] = useState("");
   const [id, setID] = useState("");
-  const [contract, setContract] = useState("Full Time");
+  const [contract, setContract] = useState("");
   const [hWage, setHWage] = useState("");
+  const [contractDeadline, setContractDeadline] = useState("");
+  const [serviceName, setServiceName] = useState("");
+  const [serviceValue, setserviceValue] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [address, setAddress] = useState("");
-  const submitEmployee = () =>{
-    const newEmployee = {email:email,password:password,name:name,lastname:lastname,id:id,contract:contract,hourlyWage:hWage,phoneNumber:phoneNumber,address:address};
-    console.log(newEmployee);
+  const [serviceCSS,setServiceCSS] = useState("forms-create-employee-service");
+  const [otherContractCSS,setOtherContractCSS] = useState("forms-create-employee-hwage");
+
+  const submitEmployee = async () =>{
+    if(email && password && name && lastname && secondlastname && id && contract){
+      const url = "http://localhost:4000/employees/";
+    try{
+      const postFetch = await fetch(url, {
+        method: 'POST',
+        headers: {
+            "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+          NombreProyecto:activeProject,
+          Email:email,
+          Contrasenia:password,
+          Nombre:name,
+          Apellido1:lastname,
+          Apellido2:secondlastname,
+          Cedula:id,
+          Telefono:phoneNumber,
+          TipoJornada:contract,
+          FechaFinContrato:contractDeadline,
+          SalarioPorHora:hWage,
+          NombreServicio:serviceName,
+          ValorServicio:serviceValue
+        }),
+      });
+      const response = await postFetch.json();
+    }catch(error){
+      console.log(error);
+    }
+    back();
+    }else{
+      console.log("Error");
+      alert("There are inputs that need to be filled in order to create an employee.");
+    }
+  }
+  const setContractOption = (e)=>{
+    console.log(e.target.value);
+    setContract(e.target.value);
+    if (e.target.value === "Servicios Profesionales") {
+      setOtherContractCSS("forms-create-employee-hwage")
+      setServiceCSS("forms-create-employee-service2")
+    } else {
+      setOtherContractCSS("forms-create-employee-hwage2")
+      setServiceCSS("forms-create-employee-service")
+    }
   }
   const resetAllStates = () =>{
     setEmail("");
@@ -26,14 +78,28 @@ export const CreateEmployee = () => {
     setContract("");
     setHWage("");
     setPhoneNumber("");
-    setAddress("");
+
   }
   const back = () =>{
     resetAllStates();
     history.push('/employees')
     history.go()
   }
-  return (
+  useEffect(() => {
+    const fetchTypeContracts = async () => {
+      const seleUrl = "http://localhost:4000/typeContracts";
+      try {
+        const response = await fetch(seleUrl);
+        const newData = await response.json();
+        setTypeOfContracts(newData);
+        setContractsReceived(true);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchTypeContracts();
+  }, []);
+  return !contractsReceived ? <div className="loader"></div> : (
     <>
       <div className="user-head">
         <img className="user-img" alt="user" src={user_icon}></img>
@@ -51,7 +117,7 @@ export const CreateEmployee = () => {
             placeholder="Enter First Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-          />
+            />
         </FormGroup>
         <FormGroup className="forms-create-employee">
           <label className="employee-label" htmlFor="last-name">
@@ -64,7 +130,20 @@ export const CreateEmployee = () => {
             placeholder="Enter Last Name"
             value={lastname}
             onChange={(e) => setLastName(e.target.value)}
-          />
+            />
+        </FormGroup>
+        <FormGroup className="forms-create-employee">
+          <label className="employee-label" htmlFor="last-name">
+            Second Last Name:{" "}
+          </label>
+          <input
+            className="employee-input"
+            type="text"
+            id="second-last-name"
+            placeholder="Enter Second Last Name"
+            value={secondlastname}
+            onChange={(e) => setSecondLastName(e.target.value)}
+            />
         </FormGroup>
         <FormGroup className="forms-create-employee">
           <label className="employee-label" htmlFor="id-card">
@@ -90,7 +169,7 @@ export const CreateEmployee = () => {
             placeholder="Enter an Email Address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-          />
+            />
         </FormGroup>
         <FormGroup className="forms-create-employee">
           <label className="employee-label" htmlFor="password">
@@ -103,6 +182,19 @@ export const CreateEmployee = () => {
             placeholder="Enter a Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            />
+        </FormGroup>
+        <FormGroup className="forms-create-employee">
+          <label className="employee-label" htmlFor="phone-number">
+            Phone Number:{" "}
+          </label>
+          <input
+            className="employee-input"
+            type="number"
+            id="phone-number"
+            placeholder="Enter a Phone Number"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
           />
         </FormGroup>
         <FormGroup className="forms-create-employee">
@@ -111,54 +203,66 @@ export const CreateEmployee = () => {
           </label>
           <select
             className="dropdown-Contract"
-            name="Contract"
-            id="Contract"
-            value={contract}
-            onChange={(e)=>setContract(e.target.value)}
-          >
-            <option value="Full Time">Full Time</option>
-            <option value="Part Time ">Part Time </option>
-            <option value="Hourly ">Hourly </option>
-            <option value="Professional Service ">
-              Professional Service 
-            </option>
+            onChange={(e)=>{
+              setContractOption(e);
+            }}
+            >
+            {typeOfContracts.map((element)=>(
+              <option key = {element.TipoJornada}value={element.TipoJornada}>{element.TipoJornada}</option>
+            ))}
           </select>
         </FormGroup>
         <FormGroup className="forms-create-employee">
           <label className="employee-label" htmlFor="hourly-wage">
+            Hired Until
+          </label>
+          <input
+            className="employee-hired-until"
+            type="date"
+            value={contractDeadline}
+            onChange={(e) => setContractDeadline(e.target.value)}
+          />
+        </FormGroup>
+        <FormGroup className={otherContractCSS}>
+          <label className="employee-label" htmlFor="hourly-wage">
             Hourly Wage:{" "}
           </label>
-
           <input
             className="employee-input"
-            type="text"
+            type="number"
             id="hourly-wage"
             placeholder="Enter a Hourly Wage"
             value={hWage}
             onChange={(e) => setHWage(e.target.value)}
           />
         </FormGroup>
-        <FormGroup className="forms-create-employee">
-          <label className="employee-label" htmlFor="phone-number">
-            Phone Number:{" "}
+        <FormGroup className={serviceCSS}>
+          <label className="employee-label" htmlFor="hourly-wage">
+             Service Name:{" "}
           </label>
           <input
             className="employee-input"
             type="text"
-            id="phone-number"
-            placeholder="Enter a Phone Number"
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
+            id="hourly-wage"
+            placeholder="Enter a Hourly Wage"
+            value={serviceName}
+            onChange={(e) => setServiceName(e.target.value)}
           />
         </FormGroup>
-        <FormGroup className="forms-create-employee">
-          <div className="employee-address-div">
-          <label className="employee-label" htmlFor="address">
-            Address:{" "}
+        <FormGroup className={serviceCSS}>
+          <label className="employee-label" htmlFor="hourly-wage">
+             Service Value:{" "}
           </label>
-          <textarea className= "employee-input-address" name="textarea" rows="5" cols="50" value={address} onChange={(e)=>{setAddress(e.target.value)}} placeholder = "Enter an Address">Write something here</textarea>
-          </div>
+          <input
+            className="employee-input"
+            type="number"
+            id="hourly-wage"
+            placeholder="Enter a Hourly Wage"
+            value={serviceValue}
+            onChange={(e) => setserviceValue(e.target.value)}
+          />
         </FormGroup>
+        
         <button className="submit-btn-employee" onClick={()=>{submitEmployee()}}>
           Submit
       </button>
