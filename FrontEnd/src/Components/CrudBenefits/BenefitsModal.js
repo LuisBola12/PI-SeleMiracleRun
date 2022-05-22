@@ -35,7 +35,7 @@ export const BenefitsModal = ({ data, setData }) => {
   }
 
   const addToTable = () => {
-    if (name && cost) {
+    if (name && cost && name.trim().length > 0) {
       const names = [];
       data.map((index) => {
         return names.push(index.Nombre);
