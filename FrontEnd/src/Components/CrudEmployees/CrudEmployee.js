@@ -1,24 +1,25 @@
 import {
   Container,
 } from "reactstrap";
-
-import { useState, useEffect,useContext} from "react";
+import { useState, useEffect} from "react";
 import '../../App.css'
 import "bootstrap/dist/css/bootstrap.min.css";
-import ProjectContext from "../../Contexts/ProjectContext";
 import history from "../../history";
+import { useSelector } from 'react-redux';
 
 export const CrudEmployee = () => {
 
   const [infoReceived, setInfoReceived] = useState(false);
-  const { activeProject } = useContext(ProjectContext);
+  const activeProject = useSelector((state) => state.activeProject.projectName);
   const [data, setData] = useState();
   useEffect(() => {
     const fetchSeleAPI = async () => {
-      const seleUrl = `http://localhost:5000/employees/${activeProject}`;
+      console.log(activeProject);
+      const seleUrl = `http://localhost:4000/employees/${activeProject}`;
       try {
         const response = await fetch(seleUrl);
         const newData = await response.json();
+        console.log(newData);
         setData(newData);
         setInfoReceived(true);
       } catch (error) {
@@ -27,7 +28,7 @@ export const CrudEmployee = () => {
     }
     fetchSeleAPI();
   }, []);
-  return !infoReceived ? <div class="loader"></div> : (
+  return !infoReceived ? <div className="loader"></div> : (
     <>
       <Container className="content-container">
         <br />
@@ -47,8 +48,8 @@ export const CrudEmployee = () => {
               <th>Last Name</th>
               <th>Second Last Name</th>
               <th>Id</th>
-              <th>Contract</th>
               <th>Email</th>
+              <th>Contract</th>
               <th>Net Salary</th>
               <th>Edit</th>
               <th className="table-right-border">Delete</th>

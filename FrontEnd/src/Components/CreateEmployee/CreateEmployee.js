@@ -1,9 +1,11 @@
 import React, { useState,useEffect } from "react";
-import { Button, FormGroup } from "reactstrap";
+import {Alert, FormGroup} from "reactstrap";
 import user_icon from "./user_icon2.png";
 import history from "../../history";
+import { useSelector } from 'react-redux';
 
 export const CreateEmployee = () => {
+  const activeProject = useSelector((state) => state.activeProject.projectName);
   const [email, setEmail] = useState("");
   const [typeOfContracts,setTypeOfContracts] = useState();
   const [contractsReceived,setContractsReceived] = useState(false);
@@ -12,7 +14,7 @@ export const CreateEmployee = () => {
   const [lastname, setLastName] = useState("");
   const [secondlastname, setSecondLastName] = useState("");
   const [id, setID] = useState("");
-  const [contract, setContract] = useState("Full Time");
+  const [contract, setContract] = useState("");
   const [hWage, setHWage] = useState("");
   const [contractDeadline, setContractDeadline] = useState("");
   const [serviceName, setServiceName] = useState("");
@@ -22,7 +24,8 @@ export const CreateEmployee = () => {
   const [otherContractCSS,setOtherContractCSS] = useState("forms-create-employee-hwage");
 
   const submitEmployee = async () =>{
-    const url = "http://localhost:5000/employees/";
+    if(email && password && name && lastname && secondlastname && id && contract){
+      const url = "http://localhost:4000/employees/";
     try{
       const postFetch = await fetch(url, {
         method: 'POST',
@@ -30,6 +33,7 @@ export const CreateEmployee = () => {
             "Content-type": "application/json",
         },
         body: JSON.stringify({
+          NombreProyecto:activeProject,
           Email:email,
           Contrasenia:password,
           Nombre:name,
@@ -49,6 +53,10 @@ export const CreateEmployee = () => {
       console.log(error);
     }
     back();
+    }else{
+      console.log("Error");
+      alert("There are inputs that need to be filled in order to create an employee.");
+    }
   }
   const setContractOption = (e)=>{
     console.log(e.target.value);
@@ -109,7 +117,7 @@ export const CreateEmployee = () => {
             placeholder="Enter First Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-          />
+            />
         </FormGroup>
         <FormGroup className="forms-create-employee">
           <label className="employee-label" htmlFor="last-name">
@@ -122,7 +130,7 @@ export const CreateEmployee = () => {
             placeholder="Enter Last Name"
             value={lastname}
             onChange={(e) => setLastName(e.target.value)}
-          />
+            />
         </FormGroup>
         <FormGroup className="forms-create-employee">
           <label className="employee-label" htmlFor="last-name">
@@ -135,7 +143,7 @@ export const CreateEmployee = () => {
             placeholder="Enter Second Last Name"
             value={secondlastname}
             onChange={(e) => setSecondLastName(e.target.value)}
-          />
+            />
         </FormGroup>
         <FormGroup className="forms-create-employee">
           <label className="employee-label" htmlFor="id-card">
@@ -161,7 +169,7 @@ export const CreateEmployee = () => {
             placeholder="Enter an Email Address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-          />
+            />
         </FormGroup>
         <FormGroup className="forms-create-employee">
           <label className="employee-label" htmlFor="password">
@@ -174,7 +182,7 @@ export const CreateEmployee = () => {
             placeholder="Enter a Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-          />
+            />
         </FormGroup>
         <FormGroup className="forms-create-employee">
           <label className="employee-label" htmlFor="phone-number">
@@ -182,7 +190,7 @@ export const CreateEmployee = () => {
           </label>
           <input
             className="employee-input"
-            type="text"
+            type="number"
             id="phone-number"
             placeholder="Enter a Phone Number"
             value={phoneNumber}
@@ -198,7 +206,7 @@ export const CreateEmployee = () => {
             onChange={(e)=>{
               setContractOption(e);
             }}
-          >
+            >
             {typeOfContracts.map((element)=>(
               <option key = {element.TipoJornada}value={element.TipoJornada}>{element.TipoJornada}</option>
             ))}
@@ -221,7 +229,7 @@ export const CreateEmployee = () => {
           </label>
           <input
             className="employee-input"
-            type="text"
+            type="number"
             id="hourly-wage"
             placeholder="Enter a Hourly Wage"
             value={hWage}
@@ -247,7 +255,7 @@ export const CreateEmployee = () => {
           </label>
           <input
             className="employee-input"
-            type="text"
+            type="number"
             id="hourly-wage"
             placeholder="Enter a Hourly Wage"
             value={serviceValue}
