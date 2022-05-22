@@ -62,7 +62,8 @@ export const CreateUser = () => {
               Apellido2 : lastname2, 
               Telefono : phoneNumber,
               Email : email,
-              Contrasenia: password
+              Contrasenia: password,
+              Roles: "admin"
           }),
       });
       console.log(registerFetch);
@@ -106,6 +107,7 @@ export const CreateUser = () => {
               <div className="register-title-atribute">First Name</div>
               <input
                 className="register-atribute-input"
+                maxLength="15"
                 type="text"
                 id="name"
                 placeholder="First Name"
@@ -117,6 +119,7 @@ export const CreateUser = () => {
           <div className="register-title-atribute">First Last Name</div>
             <input
               className="register-atribute-input"
+              maxLength="15"
               type="text"
               id="last-name"
               placeholder="First Last Name"
@@ -128,6 +131,7 @@ export const CreateUser = () => {
           <div className="register-title-atribute">Second Last Name</div>
             <input
               className="register-atribute-input"
+              maxLength="15"
               type="text"
               id="last-name"
               placeholder="Second Last Name"
@@ -141,6 +145,7 @@ export const CreateUser = () => {
           <div className="register-title-atribute">ID Card</div>
             <input
               className="register-atribute-input"
+              maxLength="15"
               type="text"
               id="id-card"
               placeholder="ID Card"
@@ -153,6 +158,7 @@ export const CreateUser = () => {
           <div className="register-title-atribute">Phone Number</div>
           <input
             className="register-atribute-input"
+            maxLength="8"
             type="text"
             id="phone-number"
             placeholder="Phone Number"
@@ -166,6 +172,7 @@ export const CreateUser = () => {
           <div className="register-title-atribute">Email</div>
             <input
               className="register-atribute-input"
+              maxLength="50"
               type="text"
               id="email"
               placeholder="Email Address"
@@ -177,6 +184,7 @@ export const CreateUser = () => {
           <div className="register-title-atribute">Password</div>
             <input
               className="register-atribute-input"
+              maxLength="20"
               type="text"
               id="password"
               placeholder="Password"

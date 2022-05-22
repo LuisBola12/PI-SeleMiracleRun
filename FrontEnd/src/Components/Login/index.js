@@ -32,7 +32,8 @@ const LoginComp = () => {
         <div>
           <input
             className= "logIn-input"
-            placeholder="UserName"
+            placeholder="Email"
+            maxLength="50"
             type="text"
             value={username}
             onChange={(e) => {
@@ -44,6 +45,7 @@ const LoginComp = () => {
           <input
             className= "logIn-input"
             placeholder="Password"
+            maxLength= "20"
             type="password"
             value={password}
             onChange={(e) => {

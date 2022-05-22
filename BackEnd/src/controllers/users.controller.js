@@ -108,7 +108,7 @@ export const getEmployerByID = async (req,res) =>{
 };
 
 export const registerNewUser = async (req, res) => {
-  const { Cedula, Nombre, Apellido1, Apellido2, Telefono, Email, Contrasenia } = req.body;
+  const { Cedula, Nombre, Apellido1, Apellido2, Telefono, Email, Contrasenia, Roles } = req.body;
 
   if (Cedula == null || Nombre == null || Apellido1 == null 
     || Apellido2 == null || Telefono == null || Email == null || Contrasenia == null) {
@@ -124,6 +124,7 @@ export const registerNewUser = async (req, res) => {
       .request()
       .input("Email", sql.VarChar, Email)
       .input("Contrasenia", sql.VarChar, Contrasenia)
+      .input("Roles", sql.VarChar, Roles)
       .query(queries.createNewUser);
       console.log(result);
   } catch (e) {
