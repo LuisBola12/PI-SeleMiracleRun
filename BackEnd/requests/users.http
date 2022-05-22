@@ -1,22 +1,45 @@
-@api = http://localhost:4000/users
+@apiUsers = http://localhost:4000/users
 @apiEmployees = http://localhost:4000/employees
 @apiProjects = http://localhost:4000/projects
 @apiBenefits = http://localhost:4000/benefits
-
 @apiVolDeductions = http://localhost:4000/volDeductions
-
-GET {{api}}
-###
-POST {{api}}
+@apiCreateEmployer =  http://localhost:4000/createEmployer
+@apiVerifyUser =  http://localhost:4000/verifyUser
+@apiEmployer =  http://localhost:4000/employer
+POST {{apiUsers}}
 Content-Type: application/json
 
 {
-  "Email" : "e@example.com",
-  "Contrasenia" : "12345"
+  "Email": "aroaefaefexample.com",
+  "Contrasenia": "fdef"
 }
 ###
-GET {{api}}/h@example.com
+POST {{apiCreateEmployer}}
+Content-Type: application/json
 
+{
+  "Cedula" : "8765434", 
+  "Nombre" : "prueba", 
+  "Apellido1" : "por favor", 
+  "Apellido2" : "funcione", 
+  "Telefono" : "12345567",
+  "Email" : "jklkjhg@qwert.com",
+  "Contrasenia": "123445"
+}
+###
+POST {{apiVerifyUser}}
+Content-Type: application/json
+
+{
+  "Cedula": "121121121",
+  "Email": "josefR@example.com"
+}
+###
+GET {{apiEmployer}}
+###
+GET {{apiUsers}}
+###
+GET {{apiUsers}}/josefR@example.com
 ###
 GET {{apiEmployees}}
 ###
@@ -33,7 +56,7 @@ POST {{apiBenefits}}
 Content-Type: application/json
 
 {
-  "Nombre":"Prueba",
+  "Nombre":"Prueba444",
   "NombreProyecto": "Radiadores Solceri",
   "CostoActual": 5000
 }

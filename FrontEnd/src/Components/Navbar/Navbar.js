@@ -26,7 +26,7 @@ const Navbar = () => {
             <img src={logo} alt="logo" className="logo-img" />
             <label className="navbar-activeProject">{activeProject}</label>
           </div>
-          <p>{user && user.email ? ` ¡Bienvenido ${user.email}!` : "¡Bienvenido!"}</p>
+          <p>{user && user.Email ? ` ¡Bienvenido ${user.Email}!` : "¡Bienvenido!"}</p>
           {console.log(user)}
           {/* {console.log(user.email)} */}
           <NavMenu>
