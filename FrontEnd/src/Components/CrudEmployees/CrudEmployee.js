@@ -1,35 +1,21 @@
 import {
   Container,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  FormGroup,
-  ModalFooter,
 } from "reactstrap";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect,useContext} from "react";
 import '../../App.css'
 import "bootstrap/dist/css/bootstrap.min.css";
+import ProjectContext from "../../Contexts/ProjectContext";
 import history from "../../history";
-
-
-const database = [
-  { Name: "Javier", LastName: "Molina", Id: "118020915", Contract: "Medio Tiempo", Email: "A@example.com", NetSalary: 800000 },
-  { Name: "Jarod", LastName: "Venegas", Id: "118020915", Contract: "Tiempo Completo", Email: "A@example.com", NetSalary: 600000 },
-  { Name: "Josef", LastName: "Ruzicka", Id: "118020915", Contract: "Servicios", Email: "A@example.com", NetSalary: 300000 },
-  { Name: "Charlie", LastName: "Solorzano", Id: "118020915", Contract: "Servicios", Email: "A@example.com", NetSalary: 1200000 },
-  { Name: "Luis", LastName: "Bolanos", Id: "118020915", Contract: "Tiempo Completo", Email: "A@example.com", NetSalary: 650000 },
-
-
-];
 
 export const CrudEmployee = () => {
 
   const [infoReceived, setInfoReceived] = useState(false);
-  const [data, setData] = useState(database);
+  const { activeProject } = useContext(ProjectContext);
+  const [data, setData] = useState();
   useEffect(() => {
     const fetchSeleAPI = async () => {
-      const seleUrl = "http://localhost:4000/employees";
+      const seleUrl = `http://localhost:5000/employees/${activeProject}`;
       try {
         const response = await fetch(seleUrl);
         const newData = await response.json();
