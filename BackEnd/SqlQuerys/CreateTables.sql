@@ -5,6 +5,7 @@ Create Table Usuarios(
 	Contrasenia varchar(20) not null,
 	primary key(Email),
 );
+
 Create Table Empleado(
 	Cedula varchar(15),
 	Nombre varchar(15) not null,
@@ -15,6 +16,7 @@ Create Table Empleado(
 	primary key(Cedula),
 	foreign key(Email) references Usuarios(Email) on update cascade on delete cascade
 );
+
 Create Table Empleador(
 	Cedula varchar(15),
 	Nombre varchar(15) not null,
