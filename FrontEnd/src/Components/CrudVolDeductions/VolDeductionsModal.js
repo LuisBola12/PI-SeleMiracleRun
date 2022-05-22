@@ -35,9 +35,7 @@ export const VolDeductionsModal = ({ data, setData }) => {
   const addToTable = () => {
     if (name && name.trim().length > 0) {
       const names = [];
-      data.map((index) => {
-        names.push(index.Nombre);
-      })
+      data.map((index) => names.push(index.Nombre))
       if (!names.includes(name)) {
         const newData = {
           Nombre: name,

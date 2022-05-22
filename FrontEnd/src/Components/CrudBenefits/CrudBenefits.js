@@ -22,13 +22,14 @@ export const CrudBenefits = () => {
         const response = await fetch(apiBenefits);
         const newData = await response.json();
         setData(newData);
+        console.log(newData);
         setInfoReceived(true);
       } catch (error) {
         console.log(error);
       }
     }
     getBenefits();
-  }, []);
+  },[]);
   return !infoReceived ? <div className="loader" ></div > : (
     <>
       <Container className="content-container">
