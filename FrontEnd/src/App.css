@@ -224,6 +224,12 @@ td {
   height: 80px;
   width: 150px;
 }
+.employee-hired-until{
+  height: 55px;
+  width: 500px;
+  border-radius: 0.25rem;
+  text-align: center;
+}
 
 .submit-cancel-employee {
   display: flex;
@@ -265,6 +271,20 @@ td {
   height: 120px;
   animation: spin 2s linear infinite;
   margin-top: 10%;
+}
+.forms-create-employee-hwage{
+  margin: 40px;
+  display: none;
+}
+.forms-create-employee-hwage2{
+  margin: 40px;
+}
+.forms-create-employee-service{
+  margin: 40px;
+  display: none;
+}
+.forms-create-employee-service2{
+  margin: 40px;
 }
 
 @keyframes spin {
