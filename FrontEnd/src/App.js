@@ -12,8 +12,7 @@ import history from './history';
 import Login from './Pages/login'
 import Register from './Pages/register';
 import PrivateRoute from './Components/PrivateRoute/index';
-
-
+import Unauthoraized from './Pages/Unauthoraized';
 
 function App() {
 
@@ -22,7 +21,7 @@ function App() {
 
     <Router history={history}>
       <Routes>
-        {/* <Route path="/" element={<Home />} />
+          {/* <Route path="/" element={<Home />} />
           <Route path="home" element={<Home />} />
           <Route path="benefits" element={<Benefits />} />
           <Route path="employees" element={<Employees />} />
@@ -31,6 +30,7 @@ function App() {
           <Route path="projectAdmin" element={<SelectProject />} />
           <Route path="employees/CreateNewEmployee" element={<CreateNewEmployee />} /> */}
         <Route path="login" element={<Login />} />
+        <Route path="no-autorizado" element={<Unauthoraized />} />
         <Route path="register" element={<Register />} />
         <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
           <Route path="home" element={<Home />} />

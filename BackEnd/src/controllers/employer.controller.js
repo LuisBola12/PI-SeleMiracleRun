@@ -3,7 +3,7 @@ import { getConnection,sql,queries } from "../database";
 export const getEmployer = async (req, res) => {
   try {
     const pool = await getConnection();
-    const result = await pool.request().query(queries.getAllEmployees);
+    const result = await pool.request().query(queries.getAllEmployers);
     res.json(result.recordset);
   } catch (e) {
     res.status(500);
@@ -13,36 +13,29 @@ export const getEmployer = async (req, res) => {
 
 export const createNewEmployer = async (req, res) => {
   const { Cedula, Nombre, Apellido1, Apellido2, Telefono, Email } = req.body;
-  if (Cedula == null || Nombre == null || Apellido1 == null || Apellido2 == null || Email == null || Nombre == null) {
+  if (Cedula == null || Nombre == null || Apellido1 == null 
+      || Apellido2 == null || Telefono == null || Email == null) {
+
     const message = "Bad Request. Please Fill All Fields.";
     return res.status(400).json({ msg: message });
+
   }
+
   try {
     const pool = await getConnection();
     const result = await pool
       .request()
+      .input("Cedula", sql.VarChar, Cedula)
+      .input("Nombre", sql.VarChar, Nombre)
+      .input("Apellido1", sql.VarChar, Apellido1)
+      .input("Apellido2", sql.VarChar, Apellido2)
+      .input("Telefono", sql.VarChar, Telefono)
       .input("Email", sql.VarChar, Email)
-      .input("Contrasenia", sql.VarChar, Contrasenia)
-      .query(queries.createNewUser);
+      .query(queries.createNewEmployer);
     console.log(result);
-    res.json({ Email, Contrasenia });
+    res.json({ Cedula, Nombre, Apellido1, Apellido2, Telefono, Email });
   } catch (e) {
     console.log(`Error: ${e}`);
     res.status(500).send(e.message);
   }
-};
-
-export const getEmployerByID= async (req,res) =>{
-    const{Cedula} = req.params;
-    console.log(Email);
-    try{
-        const pool = await getConnection();
-        const result = await pool.request()
-        .input('Cedula',Cedula)
-        .query(queries.getAllEmployeesByID);
-        console.log(result);
-        res.send(result);
-    }catch(e){
-        console.log(e);
-    }
 };
