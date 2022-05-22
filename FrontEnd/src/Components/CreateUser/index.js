@@ -13,10 +13,67 @@ export const CreateUser = () => {
   const [lastname2, setLastName2] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
+  const verifyUser = async (Email) => {
+    const seleUrl = `http://localhost:4000/users/${Email}`;
+    try {
+      const response = await fetch(seleUrl);
+      const newData = await response.json();
+      if(newData.length === 1){
+        return false;
+      }else{
+        return true;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const verifyEmployee = async (Cedula) => {
+    const seleUrl = `http://localhost:4000/employer/${Cedula}`;
+    try {
+      const response = await fetch(seleUrl);
+      const newData = await response.json();
+      if(newData.length === 1){
+        return false;
+      }else{
+        return true;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const registerUser = async () => {
+    const user = await verifyUser(email);
+    const employee = await verifyEmployee(id);
+    console.log(`${user} y ${employee}`)
+    if( user === true && employee === true ){
+      
+      const registerFetch = await fetch('http://localhost:4000/createEmployer', 
+      {
+          method: 'POST',
+          headers: {
+              "Content-type": "application/json",
+          },
+          body: JSON.stringify({
+              Cedula : id, 
+              Nombre : name, 
+              Apellido1 : lastname1, 
+              Apellido2 : lastname2, 
+              Telefono : phoneNumber,
+              Email : email,
+              Contrasenia: password,
+              Roles: "admin"
+          }),
+      });
+      console.log(registerFetch);
+    }
+  }
 
   const submitEmployee = () =>{
-    const newEmployee = {email:email,password:password,name:name,lastname1:lastname1,lastname2:lastname2,id:id,phoneNumber:phoneNumber};
+    const newEmployee = {email:email, password:password, name:name, lastname1:lastname1, lastname2:lastname2, id:id, phoneNumber:phoneNumber};
     console.log(newEmployee);
+    registerUser();
   }
 
   const resetAllStates = () =>{
@@ -50,6 +107,7 @@ export const CreateUser = () => {
               <div className="register-title-atribute">First Name</div>
               <input
                 className="register-atribute-input"
+                maxLength="15"
                 type="text"
                 id="name"
                 placeholder="First Name"
@@ -61,6 +119,7 @@ export const CreateUser = () => {
           <div className="register-title-atribute">First Last Name</div>
             <input
               className="register-atribute-input"
+              maxLength="15"
               type="text"
               id="last-name"
               placeholder="First Last Name"
@@ -72,6 +131,7 @@ export const CreateUser = () => {
           <div className="register-title-atribute">Second Last Name</div>
             <input
               className="register-atribute-input"
+              maxLength="15"
               type="text"
               id="last-name"
               placeholder="Second Last Name"
@@ -85,6 +145,7 @@ export const CreateUser = () => {
           <div className="register-title-atribute">ID Card</div>
             <input
               className="register-atribute-input"
+              maxLength="15"
               type="text"
               id="id-card"
               placeholder="ID Card"
@@ -97,6 +158,7 @@ export const CreateUser = () => {
           <div className="register-title-atribute">Phone Number</div>
           <input
             className="register-atribute-input"
+            maxLength="8"
             type="text"
             id="phone-number"
             placeholder="Phone Number"
@@ -110,6 +172,7 @@ export const CreateUser = () => {
           <div className="register-title-atribute">Email</div>
             <input
               className="register-atribute-input"
+              maxLength="50"
               type="text"
               id="email"
               placeholder="Email Address"
@@ -121,6 +184,7 @@ export const CreateUser = () => {
           <div className="register-title-atribute">Password</div>
             <input
               className="register-atribute-input"
+              maxLength="20"
               type="text"
               id="password"
               placeholder="Password"
@@ -137,10 +201,6 @@ export const CreateUser = () => {
             Cancel
           </button>
         </div>
-        
-      {/* <button className="back-btn-employee" onClick={()=>{back()}}>
-          Back
-      </button> */}
       </div>
       <footer className="register-footerCopyRights"> &copy; SeleMiracleRun </footer>
     </div>

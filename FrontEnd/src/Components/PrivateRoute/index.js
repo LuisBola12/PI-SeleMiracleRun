@@ -8,12 +8,24 @@ export default function PrivateRoute({
  allowedRoles,
 }) {
  const userState = useSelector((state) => state.user);
+ 
+
     if (!userState.userIsLoggedIn) {
         return <Navigate to={redirectPath} replace />;
     }
 
-    if (_.intersection(userState.user.roles, allowedRoles).length === 0) {
+    if (userState.user.Roles !== allowedRoles[0]) {
         return <Navigate to={"/no-autorizado"} replace />;
     }
-        return children || <Outlet />;
+
+    if (userState.user.Roles === null) {
+        return <Navigate to={"/no-autorizado"} replace />;
+    }
+
+    return children || <Outlet />;
 }
+
+// if (_.intersection(userState.user.Roles, allowedRoles).length === 0) {
+//     return <Navigate to={"/no-autorizado"} replace />;
+// }
+//     return children || <Outlet />;
