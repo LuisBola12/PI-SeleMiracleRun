@@ -17,7 +17,6 @@ export const BenefitsModal = ({ data, setData }) => {
   const [name, setName] = useState('');
   const [cost, setCost] = useState(0);
   const [warning, setWarning] = useState('');
-
   const apiBenefits = `http://localhost:4000/benefits`
 
   const submitBenefit = async () => {
@@ -35,10 +34,8 @@ export const BenefitsModal = ({ data, setData }) => {
     console.log(postFetch);
   }
 
-
-
   const addToTable = () => {
-    if (name && cost) {
+    if (name && cost && name.trim().length > 0) {
       const names = [];
       data.map((index) => {
         return names.push(index.Nombre);
@@ -64,8 +61,6 @@ export const BenefitsModal = ({ data, setData }) => {
     }
   }
 
-
-
   return (
     <>
       <button className="create-button" onClick={() => setViewModal(true)}>
@@ -83,6 +78,7 @@ export const BenefitsModal = ({ data, setData }) => {
             <input
               className="form-control"
               type="text"
+              maxLength="50"
               value={name}
               onChange={(e) => setName(e.target.value)}
             ></input>
