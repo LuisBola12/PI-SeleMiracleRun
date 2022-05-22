@@ -17,7 +17,6 @@ export const BenefitsModal = ({ data, setData }) => {
   const [name, setName] = useState('');
   const [cost, setCost] = useState(0);
   const [warning, setWarning] = useState('');
-
   const apiBenefits = `http://localhost:4000/benefits`
 
   const submitBenefit = async () => {
@@ -34,8 +33,6 @@ export const BenefitsModal = ({ data, setData }) => {
     });
     console.log(postFetch);
   }
-
-
 
   const addToTable = () => {
     if (name && cost) {
@@ -63,8 +60,6 @@ export const BenefitsModal = ({ data, setData }) => {
       setWarning('*Please enter all the values')
     }
   }
-
-
 
   return (
     <>

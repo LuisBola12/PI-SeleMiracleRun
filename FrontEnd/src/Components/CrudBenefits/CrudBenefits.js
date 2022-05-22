@@ -2,7 +2,7 @@ import {
   Container
 } from "reactstrap";
 
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import '../../App.css'
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BenefitsModal } from "./BenefitsModal";
@@ -18,7 +18,7 @@ export const CrudBenefits = () => {
   const apiBenefits = `http://localhost:4000/benefits/${activeProject}`
 
   useEffect(() => {
-    const fetchSeleAPI = async () => {
+    const getBenefits = async () => {
       try {
         const response = await fetch(apiBenefits);
         const newData = await response.json();
@@ -28,7 +28,7 @@ export const CrudBenefits = () => {
         console.log(error);
       }
     }
-    fetchSeleAPI();
+    getBenefits();
   }, []);
   return !infoReceived ? <div className="loader" ></div > : (
     <>
@@ -64,5 +64,4 @@ export const CrudBenefits = () => {
 
     </>
   )
-
 };
