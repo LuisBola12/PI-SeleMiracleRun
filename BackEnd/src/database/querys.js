@@ -25,7 +25,11 @@ export const queries = {
     JOIN Proyecto ON Proyecto.CedulaEmpleador = Empleador.Cedula 
     WHERE Empleador.Email =@Email`,
   createProject:
-    `INSERT into Proyecto(Nombre,CedulaEmpleador,TipoPeriodo) VALUES (@Nombre, @CedulaEmpleador, @Periodo)`,
+    `DECLARE @cedulaObtenida VARCHAR(9);
+    SELECT  @cedulaObtenida = Empleador.Cedula FROM Empleador
+    JOIN Usuarios on Empleador.Email = Usuarios.Email
+    WHERE Empleador.Email =  @Email
+    INSERT into Proyecto(Nombre,CedulaEmpleador,TipoPeriodo) values (@Nombre,@cedulaObtenida, @Periodo)`,
 
   // Voluntary Deduction queries
   getVolDeductions: "Select * From DeduccionesVoluntarias Where NombreProyecto = @NombreProyecto",

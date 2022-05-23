@@ -15,8 +15,8 @@ export const getProjectsByEmail = async (req, res) => {
 
 
 export const createProject = async (req, res) => {
-  const { Nombre, CedulaEmpleador, Periodo } = req.body;
-  if (Nombre == null || CedulaEmpleador == null || Periodo == null) {
+  const { Nombre, Periodo, Email } = req.body;
+  if (Nombre == null || Periodo == null || Email == null) {
     const message = "Bad Request. Please Fill All Fields.";
     return res.status(400).json({ msg: message });
   }
@@ -25,11 +25,11 @@ export const createProject = async (req, res) => {
     const result = await pool
       .request()
       .input("Nombre", Nombre)
-      .input("CedulaEmpleador", sql.VarChar, CedulaEmpleador)
       .input("Periodo", sql.VarChar, Periodo)
+      .input("Email", sql.VarChar, Email)
       .query(queries.createProject);
     console.log(result);
-    res.json({ Nombre, CedulaEmpleador, Periodo });
+    res.json({ Nombre, Periodo, Email });
   } catch (e) {
     console.log(`Error: ${e}`);
     res.status(500).send(e.message);

@@ -133,6 +133,6 @@ Content-Type: application/json
 
 {
   "Nombre":"Pepsi",
-  "CedulaEmpleador": "121121121",
-  "Periodo":"Mensual"
+  "Periodo":"Mensual",
+  "Email":"josefR@example.com"
 }
