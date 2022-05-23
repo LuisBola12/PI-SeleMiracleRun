@@ -10,6 +10,7 @@
 @apiEmployer =  http://localhost:4000/employer
 @apiContracts = http://localhost:4000/typeContracts
 
+
 POST {{apiUsers}}
 Content-Type: application/json
 
@@ -124,4 +125,14 @@ Content-Type: application/json
   "SalarioPorHora":"6000",
   "NombreServicio":"",
   "ValorServicio":0
+}
+
+###
+POST {{apiProjects}}
+Content-Type: application/json
+
+{
+  "Nombre":"Pepsi",
+  "CedulaEmpleador": "121121121",
+  "Periodo":"Mensual"
 }
