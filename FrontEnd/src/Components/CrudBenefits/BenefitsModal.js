@@ -16,7 +16,6 @@ export const BenefitsModal = ({ data, setData }) => {
   const activeProject = useSelector((state) => state.activeProject.projectName);
   const [name, setName] = useState('');
   const [cost, setCost] = useState(0);
-  const [warning, setWarning] = useState('');
   const apiBenefits = `http://localhost:4000/benefits`
 
   const submitBenefit = async () => {
@@ -47,17 +46,16 @@ export const BenefitsModal = ({ data, setData }) => {
         };
         setData([...data, newData]);
         submitBenefit();
-        setWarning('');
         setViewModal(false);
         setName("");
         setCost("");
       } else {
-        setWarning('*That benefit already exist')
+        alert('That benefit already exist')
       }
 
     }
     else {
-      setWarning('*Please enter all the values')
+      alert('Please enter all the values')
     }
   }
 
@@ -95,7 +93,6 @@ export const BenefitsModal = ({ data, setData }) => {
           </FormGroup>
         </ModalBody>
         <ModalFooter>
-          <label className="warning-message">{warning}</label>
           <button
             className="button create-button"
             onClick={() => {
@@ -108,7 +105,6 @@ export const BenefitsModal = ({ data, setData }) => {
             setViewModal(false)
             setName("");
             setCost("");
-            setWarning('');
           }}>
             Cancel
           </button>
