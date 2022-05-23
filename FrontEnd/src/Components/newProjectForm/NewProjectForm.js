@@ -8,7 +8,6 @@ import {
 import React, { useState } from 'react'
 import './NewProject.css'
 
-// import Multiselect from 'multiselect-react-dropdown'
 
 
 
@@ -16,6 +15,7 @@ const NewProjectForm = ({ cover, addNewEntry, actualData }) => {
 
   const [name, setName] = useState('');
   const [paymentPeriod, setPaymentPeriod] = useState('Mensual');
+
   const [warning, setWarning] = useState('');
 
 
@@ -73,27 +73,6 @@ const NewProjectForm = ({ cover, addNewEntry, actualData }) => {
             <option >Semanal</option>
           </Form.Select>
         </FormGroup>
-
-        {/* <FormGroup className='modal-element'>
-          <label className='modal-element'>Empleados:</label>
-          <Multiselect
-            isObject={false}
-            onKeyPressFn={function noRefCheck() { }}
-            onRemove={(event) => {
-              setSelectedEmployees(event);
-              console.log({ selectedEmployees })
-
-            }}
-            onSearch={function noRefCheck() { }}
-            onSelect={(event) => {
-              setSelectedEmployees(event);
-              console.log({ selectedEmployees })
-            }}
-            options={employees}
-          />
-        </FormGroup> */}
-
-
 
 
       </ModalBody>
