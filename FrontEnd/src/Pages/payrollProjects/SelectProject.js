@@ -3,8 +3,7 @@ import React, { useState, useEffect } from 'react'
 import NewProjectForm from '../../Components/newProjectForm/NewProjectForm'
 import { useNavigate } from 'react-router-dom';
 import { updateActiveProject } from '../../Slices/projectSlice/activeProjectSlice';
-import { useDispatch } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
 import '../../App.css'
 import './SelectProject.css'
 
@@ -16,6 +15,7 @@ const database = [
 
 
 const SelectProject = () => {
+  const emailFromUser = useSelector((state) => state.user.user.Email);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [viewModal, setViewModal] = useState(false);
@@ -23,7 +23,7 @@ const SelectProject = () => {
 
   useEffect(() => {
     const fetchSeleAPI = async () => {
-      const seleUrl = "http://localhost:4000/projects/josefR@example.com";
+      const seleUrl = `http://localhost:4000/projects/${emailFromUser}`;
       try {
         const response = await fetch(seleUrl);
         const newData = await response.json();
