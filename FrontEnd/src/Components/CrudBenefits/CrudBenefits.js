@@ -1,35 +1,13 @@
 import {
   Container
 } from "reactstrap";
-
-import { useState, useEffect } from "react";
 import '../../App.css'
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BenefitsModal } from "./BenefitsModal";
-import { useSelector } from "react-redux";
-
+import { useGetBenefitsFromDatabase } from "./useGetBenefitsFromDatabase";
 
 export const CrudBenefits = () => {
-  const activeProject = useSelector((state) => state.activeProject.projectName);
-  const [data, setData] = useState([{}]);
-  const [infoReceived, setInfoReceived] = useState(false);
-
-  const apiBenefits = `http://localhost:4000/benefits/${activeProject}`
-
-  useEffect(() => {
-    const getBenefits = async () => {
-      try {
-        const response = await fetch(apiBenefits);
-        const newData = await response.json();
-        setData(newData);
-        console.log(newData);
-        setInfoReceived(true);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    getBenefits();
-  },[]);
+  const { data, setData, infoReceived } = useGetBenefitsFromDatabase();
   return !infoReceived ? <div className="loader" ></div > : (
     <>
       <Container className="content-container">
@@ -61,7 +39,6 @@ export const CrudBenefits = () => {
           </tbody>
         </table>
       </Container>
-
     </>
   )
 };
