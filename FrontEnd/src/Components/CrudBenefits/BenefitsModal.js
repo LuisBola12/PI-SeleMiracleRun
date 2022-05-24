@@ -5,67 +5,11 @@ import {
   FormGroup,
   ModalFooter,
 } from "reactstrap";
-
-import { useState } from "react";
 import '../../App.css'
-import { useSelector } from "react-redux";
-
+import { usePostToDatabase } from "./usePostToDatabase";
 
 export const BenefitsModal = ({ data, setData }) => {
-  const [viewModal, setViewModal] = useState(false);
-  const activeProject = useSelector((state) => state.activeProject.projectName);
-  const [name, setName] = useState('');
-  const [cost, setCost] = useState(0);
-  const [warning, setWarning] = useState('');
-
-  const apiBenefits = `http://localhost:4000/benefits`
-
-  const submitBenefit = async () => {
-    const postFetch = await fetch(apiBenefits, {
-      method: 'POST',
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({
-        Nombre: name,
-        NombreProyecto: activeProject,
-        CostoActual: cost,
-      }),
-    });
-    console.log(postFetch);
-  }
-
-
-
-  const addToTable = () => {
-    if (name && cost) {
-      const names = [];
-      data.map((index) => {
-        return names.push(index.Nombre);
-      })
-      if (!names.includes(name)) {
-        const newData = {
-          Nombre: name,
-          CostoActual: cost,
-        };
-        setData([...data, newData]);
-        submitBenefit();
-        setWarning('');
-        setViewModal(false);
-        setName("");
-        setCost("");
-      } else {
-        setWarning('*That benefit already exist')
-      }
-
-    }
-    else {
-      setWarning('*Please enter all the values')
-    }
-  }
-
-
-
+  const { name, setName, cost, setCost, viewModal, setViewModal, addToTable } = usePostToDatabase(data, setData);
   return (
     <>
       <button className="create-button" onClick={() => setViewModal(true)}>
@@ -83,6 +27,7 @@ export const BenefitsModal = ({ data, setData }) => {
             <input
               className="form-control"
               type="text"
+              maxLength="50"
               value={name}
               onChange={(e) => setName(e.target.value)}
             ></input>
@@ -99,7 +44,6 @@ export const BenefitsModal = ({ data, setData }) => {
           </FormGroup>
         </ModalBody>
         <ModalFooter>
-          <label className="warning-message">{warning}</label>
           <button
             className="button create-button"
             onClick={() => {
@@ -112,7 +56,6 @@ export const BenefitsModal = ({ data, setData }) => {
             setViewModal(false)
             setName("");
             setCost("");
-            setWarning('');
           }}>
             Cancel
           </button>

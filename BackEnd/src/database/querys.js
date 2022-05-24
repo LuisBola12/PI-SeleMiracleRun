@@ -8,7 +8,16 @@ export const queries = {
   
   // Payroll period queries
   getPeriodos: "Select * from Periodo",
+
+
+  //Employees
   getAllEmployees: "Select e.Nombre, e.Apellido1, e.Apellido2, e.Cedula,e.Email, ecp.TipoContrato from  Empleado e inner join EmpleadoYContratoSeAsocianAProyecto ecp on e.Cedula = ecp.CedulaEmpleado and ecp.NombreProyecto = @Proyecto;",
+  getEmployeeByID: "Select * From Empleado Where Cedula = @Cedula",
+  verifyEmployeeContractProject: "Select * from EmpleadoYContratoSeAsocianAProyecto ecp where ecp.CedulaEmpleado = @Cedula AND ecp.NombreProyecto = @Proyecto",
+  addContractOfAnEmployee: 
+  `Insert into EmpleadoYContratoSeAsocianAProyecto 
+  values(@Cedula,@TipoJornada,@NombreProyecto,@NombreServicio,@SalarioPorHora,
+    @FechaInicioContrato,@FechaFinContrato,@ValorServicio)`,
   
   // Project queries
   getProjectsByEmail:
@@ -28,7 +37,6 @@ export const queries = {
   
   // Employer queries
   getAllContracts: "Select TipoJornada from Contrato",
-  addContractOfAnEmployee: "Insert into EmpleadoYContratoSeAsocianAProyecto(CedulaEmpleado,TipoContrato,NombreProyecto,NombreServicio,SalarioPorHoras,ValorDeServicio) values(@Cedula,@TipoJornada,@NombreProyecto,@NombreServicio,@SalarioPorHora,@FechaInicioContrato,@FechaFinContrato,@ValorServicio)",
   getAllEmployeesByID: "Select * From Empleador Where Cedula = @Cedula",
   createBenefit: "Insert into Beneficios (Nombre, NombreProyecto, CostoActual) values (@Nombre, @NombreProyecto ,@CostoActual)"
 }

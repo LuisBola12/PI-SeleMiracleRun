@@ -5,7 +5,6 @@ import {
   FormGroup,
   ModalFooter,
 } from "reactstrap";
-
 import { useState } from "react";
 import '../../App.css'
 import { useSelector } from "react-redux";
@@ -14,8 +13,6 @@ export const VolDeductionsModal = ({ data, setData }) => {
   const [viewModal, setViewModal] = useState(false);
   const activeProject = useSelector((state) => state.activeProject.projectName);
   const [name, setName] = useState('');
-  const [warning, setWarning] = useState('');
-
   const apiVolDeductions = `http://localhost:4000/volDeductions`
 
   const submitVolDeduction = async () => {
@@ -35,27 +32,24 @@ export const VolDeductionsModal = ({ data, setData }) => {
   }
 
   const addToTable = () => {
-    if (name) {
+    if (name && name.trim().length > 0) {
       const names = [];
-      data.map((index) => {
-        names.push(index.Nombre);
-      })
+      data.map((index) => names.push(index.Nombre))
       if (!names.includes(name)) {
         const newData = {
           Nombre: name,
         };
         setData([...data, newData]);
         submitVolDeduction();
-        setWarning('');
         setViewModal(false);
         setName("");
       } else {
-        setWarning('*That voluntary deduction already exist')
+        alert("That voluntary deduction already exist");
       }
 
     }
     else {
-      setWarning('*Please enter all the values')
+      alert("Please enter all the values");
     }
   }
 
@@ -77,12 +71,12 @@ export const VolDeductionsModal = ({ data, setData }) => {
               className="form-control"
               type="text"
               value={name}
+              maxLength="50"
               onChange={(e) => setName(e.target.value)}
             ></input>
           </FormGroup>
         </ModalBody>
         <ModalFooter>
-          <label className="warning-message">{warning}</label>
           <button
             className="button create-button"
             onClick={() => {
@@ -94,7 +88,6 @@ export const VolDeductionsModal = ({ data, setData }) => {
           <button className="button cancel-button" onClick={() => {
             setViewModal(false)
             setName("");
-            setWarning('');
           }}>
             Cancel
           </button>

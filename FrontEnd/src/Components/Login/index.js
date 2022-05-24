@@ -15,8 +15,8 @@ const LoginComp = () => {
   const errorMessage = useSelector((state) => state.user.errorMessage);
   const dispatch = useDispatch();
    
-  {console.log("userIsLoggedIn")}
-  {console.log(userIsLoggedIn)}
+  console.log("userIsLoggedIn")
+  console.log(userIsLoggedIn)
 
   let navigate = useNavigate();
   const handleClick = () => {

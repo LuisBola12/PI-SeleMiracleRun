@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from "react";
-import {Alert, FormGroup} from "reactstrap";
+import {FormGroup} from "reactstrap";
 import user_icon from "./user_icon2.png";
 import history from "../../history";
 import { useSelector } from 'react-redux';
@@ -23,40 +23,102 @@ export const CreateEmployee = () => {
   const [serviceCSS,setServiceCSS] = useState("forms-create-employee-service");
   const [otherContractCSS,setOtherContractCSS] = useState("forms-create-employee-hwage");
 
-  const submitEmployee = async () =>{
-    if(email && password && name && lastname && secondlastname && id && contract){
-      const url = "http://localhost:4000/employees/";
+
+  const verifyUser = async (Email) => {
+    const seleUrl = `http://localhost:4000/users/${email}`;
+    try {
+      const response = await fetch(seleUrl);
+      const newData = await response.json();
+      if(newData.length === 1){
+        return false;
+      }else{
+        return true;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const verifyEmployee = async (Cedula) => {
+    const seleUrl = `http://localhost:4000/employee/${id}`;
+    try {
+      const response = await fetch(seleUrl);
+      const newData = await response.json();
+      if(newData.length === 1){
+        return false;
+      }else{
+        return true;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const verifyEmployeeProject = async () =>{
+    const seleUrl = "http://localhost:4000/employee/contract";
+    console.log(activeProject);
     try{
-      const postFetch = await fetch(url, {
+      const postFetch = await fetch(seleUrl, {
         method: 'POST',
         headers: {
-            "Content-type": "application/json",
+          "Content-type": "application/json",
         },
         body: JSON.stringify({
-          NombreProyecto:activeProject,
-          Email:email,
-          Contrasenia:password,
-          Nombre:name,
-          Apellido1:lastname,
-          Apellido2:secondlastname,
-          Cedula:id,
-          Telefono:phoneNumber,
-          TipoJornada:contract,
-          FechaFinContrato:contractDeadline,
-          SalarioPorHora:hWage,
-          NombreServicio:serviceName,
-          ValorServicio:serviceValue
+          Cedula: id,
+          Proyecto: activeProject,
         }),
       });
-      const response = await postFetch.json();
+      const newData = await postFetch.json();
+      console.log(newData);
+      if(newData.length === 1){
+        return false;
+      }else{
+        return true;
+      }
     }catch(error){
       console.log(error);
     }
-    back();
+  }
+
+  const submitEmployee = async () =>{
+    const user = await verifyUser();
+    const employee = await verifyEmployee();
+    const employeeContract = await verifyEmployeeProject();
+    if(email && email.trim().length>0 && password && password.trim().length>0
+    && name && name.trim().length>0 && lastname && lastname.trim().length>0 
+    && secondlastname.trim().length>0 &&secondlastname && id && contract){ 
+      if( user === true && employee === true && employeeContract === true){
+        const createEmployeeFetch= await fetch('http://localhost:4000/employee', {
+            method: 'POST',
+            headers: {
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+              NombreProyecto:activeProject,
+              Email:email,
+              Contrasenia:password,
+              Nombre:name,
+              Apellido1:lastname,
+              Apellido2:secondlastname,
+              Cedula:id,
+              Telefono:phoneNumber,
+              TipoJornada:contract,
+              FechaFinContrato:contractDeadline,
+              SalarioPorHora:hWage,
+              NombreServicio:serviceName,
+              ValorServicio:serviceValue,
+            }),
+        });
+        console.log(createEmployeeFetch);
+      }else{
+        alert("There is already an user with those credentials.")
+      }
     }else{
-      console.log("Error");
       alert("There are inputs that need to be filled in order to create an employee.");
     }
+    resetAllStates();
+    history.push('/employees')
+    history.go()
   }
   const setContractOption = (e)=>{
     console.log(e.target.value);
@@ -114,6 +176,7 @@ export const CreateEmployee = () => {
             className="employee-input"
             type="text"
             id="name"
+            maxLength={15}
             placeholder="Enter First Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -129,6 +192,7 @@ export const CreateEmployee = () => {
             id="last-name"
             placeholder="Enter Last Name"
             value={lastname}
+            maxLength={15}
             onChange={(e) => setLastName(e.target.value)}
             />
         </FormGroup>
@@ -142,6 +206,7 @@ export const CreateEmployee = () => {
             id="second-last-name"
             placeholder="Enter Second Last Name"
             value={secondlastname}
+            maxLength={15}
             onChange={(e) => setSecondLastName(e.target.value)}
             />
         </FormGroup>
@@ -155,6 +220,7 @@ export const CreateEmployee = () => {
             id="id-card"
             placeholder="Enter an ID Card"
             value={id}
+            maxLength={15}
             onChange={(e) => setID(e.target.value)}
           />
         </FormGroup>
@@ -168,6 +234,7 @@ export const CreateEmployee = () => {
             id="email"
             placeholder="Enter an Email Address"
             value={email}
+            maxLength={50}
             onChange={(e) => setEmail(e.target.value)}
             />
         </FormGroup>
@@ -181,6 +248,7 @@ export const CreateEmployee = () => {
             id="password"
             placeholder="Enter a Password"
             value={password}
+            maxLength={20}
             onChange={(e) => setPassword(e.target.value)}
             />
         </FormGroup>
@@ -246,6 +314,7 @@ export const CreateEmployee = () => {
             id="hourly-wage"
             placeholder="Enter a Hourly Wage"
             value={serviceName}
+            maxLength={50}
             onChange={(e) => setServiceName(e.target.value)}
           />
         </FormGroup>
