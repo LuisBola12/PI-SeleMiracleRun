@@ -6,7 +6,6 @@ export const useFetch = (url, setData) => {
 
   useEffect(() => {
     const getData = async () => {
-      console.log('ho')
       try {
         const response = await fetch(url);
         if (!response.ok) {
