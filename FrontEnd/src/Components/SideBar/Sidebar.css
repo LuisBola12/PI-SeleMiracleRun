@@ -66,3 +66,14 @@
 .sidebar-button:hover {
   background-color: #114c6d;
 }
+
+/* .sidebar-activeProject{
+  padding-left: 1vh;
+  padding-right: 1vh;
+  text-align: center;
+  color: white;
+  border-radius: 15px;
+  font-weight: bold;
+  font-size: 3vh;
+  background: #298588;
+} */

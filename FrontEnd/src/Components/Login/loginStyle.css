@@ -1,5 +1,15 @@
+.logIn-email-div{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.logIn-password-div{
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .logIn-input{
-    width: 65vh;
+    width: 60vh;
     height: 8vh;
     border-radius: 1.2vh;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -10,13 +20,14 @@
     outline: none;
 }
 
+
 .logIn-input:hover{
     background-color: #cdcdcd;
 }
 
 .logIn-btn-login{
     /* width: 78vh; */
-    width: 27vh;
+    width: 60vh;
     height: 8vh;
     border-radius: 1.2vh;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -25,6 +36,7 @@
     font-size: 4vh;
     background: #47b8bc;
     border: 0vh;
+    margin-bottom: 4vh;
 }
 
 .logIn-btn-login:hover{
@@ -33,8 +45,7 @@
 }
 
 .logIn-btn-CheckIn{
-    /* width: 78vh; */
-    width: 27vh;
+    width: 40vh;
     height: 8vh;
     border-radius: 1.2vh;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -44,6 +55,7 @@
     background: #3673be;
     border: 0vh;
     text-decoration: none;
+    margin-top: 5vh;
 }
 
 .logIn-btn-CheckIn:hover{
@@ -51,53 +63,33 @@
     /* box-shadow: 0px 5px 10px 0px rgb(255, 255, 255); */
 }
 
-.logIn-btn-CheckIn-link{
-    width: 27vh;
-    height: 8vh;
-    display: block;
-    border-radius: 1.2vh;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-weight: bold;
-    color: white;
-    font-size: 4vh;
-    background: #3673be;
-    border: 0vh;
-    text-decoration: none;
-    padding-top:3%;
-}
-
-.logIn-btn-CheckIn-link:hover{
-    background: #4b8bda;
-    color: white;
-    /* box-shadow: 0px 5px 10px 0px rgb(255, 255, 255); */
-}
-
 .logIn-box{
     display: flex;
     flex-direction: column;
-    gap: 6vh;
-    width: 95vh;
-    height: 60vh;
+    justify-content: center;
+    gap: 3vh;
+    width: 65vh;
+    height: 65vh;
     /* padding-top: 8.5vh; */
     border-radius:1.5vh;
-    /* box-shadow: 0px 0px 8px 0px rgba(87, 87, 87, 0.55); */
+    /* background-color:#d29403; */
+    box-shadow: 0px 0px 10px 0px #051d2c;
     /* margin-top: 13vh; */
-    margin-left: auto;
-    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .logIn-page{
-    text-align: center;
+    display: flex;
     height: 100vh;
+    gap: 15vh;
+    justify-content: center;
     /* border: 1px solid black; */
     background-color: #133c54;
 }
 
 .logIn-btn-box{
-    display: flex;
-    flex-direction: row;
-    gap: 5vh;
-    justify-content: center;
+    text-align: center;
 }
 
 
@@ -111,8 +103,8 @@
 .logIn-error-message{
     color: red;
     text-align: center;
+    margin-top: 5vh;
     font-family: Roboto;
-
 }
 
 .logIn-logo {
@@ -120,8 +112,46 @@
     background-image: url(logo.png);
     background-repeat: no-repeat;
     background-size: contain;
-    width: 35vh;
-    height: 35vh;
-    margin-left: auto;
-    margin-right: auto;
+    width: 20vh;
+    height: 20vh;
+    /* border: 1px solid black; */
+}
+
+.logIn-logo-box{
+    /* border: 1px solid black; */
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 95vh;
+    height: 75vh;
+    /* margin-left: 50vh; */
+
+}
+
+.linea-horizontal{
+    background: #03121c;
+    width: 60vh;
+    border: 1.2px solid #03121c;
+    transform: translate(4%,0%);
+}
+
+.logIn-AppName{
+    color: white;
+    font-size: 6.5vh;
+    margin-left: 8vh;
+    /* border: 1px solid black; */
+    margin-top: auto;
+    margin-bottom: auto;
+    font-weight: 600;
+}
+
+.logIn-text{
+    margin-top: 4vh;
+    color: white;
+    font-size: 2.8vh;
+    text-align: justify;
+}
+
+.logIn-logo-AppName{
+    display: flex;
+    /* border: 1px solid black; */
 }
