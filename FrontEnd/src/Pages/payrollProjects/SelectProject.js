@@ -6,6 +6,7 @@ import { updateActiveProject } from '../../Slices/projectSlice/activeProjectSlic
 import { useDispatch, useSelector } from "react-redux";
 import '../../App.css'
 import './SelectProject.css'
+import { useFetch } from '../../shared/hooks/useFetch';
 
 
 
@@ -20,20 +21,7 @@ const SelectProject = () => {
   const dispatch = useDispatch();
   const [viewModal, setViewModal] = useState(false);
   const [projects, setProjects] = useState(database);
-
-  useEffect(() => {
-    const loadProjects = async () => {
-      const seleUrl = `http://localhost:4000/projects/${emailFromUser}`;
-      try {
-        const response = await fetch(seleUrl);
-        const newData = await response.json();
-        setProjects(newData);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    loadProjects();
-  }, []);
+  const { loading, error } = useFetch(`http://localhost:4000/projects/${emailFromUser}`, setProjects);
 
   const submitNewProject = async (name, paymentPeriod) => {
     const postFetch = await fetch("http://localhost:4000/projects", {
@@ -82,7 +70,7 @@ const SelectProject = () => {
 
 
       <div className=" project-projectsRow">
-        {
+        {!loading && error == null ?
           projects.map((project) => {
             return (
               <div key={project.Nombre} className='project-projectBox'>
@@ -94,7 +82,9 @@ const SelectProject = () => {
                 <div className='project-projectName'>{project.Nombre}</div>
               </div>
             )
-          })}
+          })
+          : null
+        }
 
         <div>
           <button className="project-buttonCreate" onClick={() => setViewModal(true)}>+</button>
