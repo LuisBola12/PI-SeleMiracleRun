@@ -131,10 +131,6 @@ td {
   padding-top: 25px;
 }
 
-.modal-window {
-  
-}
-
 .table-left-border {
   border-top-left-radius: 1rem;
   border-bottom-left-radius: 1rem;
@@ -220,7 +216,8 @@ td {
   height: 80px;
   width: 150px;
 }
-.employee-hired-until{
+
+.employee-hired-until {
   height: 55px;
   width: 500px;
   border-radius: 0.25rem;
@@ -268,18 +265,22 @@ td {
   animation: spin 2s linear infinite;
   margin-top: 10%;
 }
-.forms-create-employee-hwage{
+
+.forms-create-employee-hwage {
   margin: 40px;
   display: none;
 }
-.forms-create-employee-hwage2{
+
+.forms-create-employee-hwage2 {
   margin: 40px;
 }
-.forms-create-employee-service{
+
+.forms-create-employee-service {
   margin: 40px;
   display: none;
 }
-.forms-create-employee-service2{
+
+.forms-create-employee-service2 {
   margin: 40px;
 }
 

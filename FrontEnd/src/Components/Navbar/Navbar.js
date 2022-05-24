@@ -31,15 +31,18 @@ const Navbar = () => {
               Voluntary Deductions
             </NavLink>
           </NavMenu>
-          <div className="navbar-project-user">
-            <div className="activeProject">{activeProject}</div>
-            <div className="activeUser">{user.Email.charAt(0).toLocaleUpperCase()}</div>
+          <div className="navbar-corner">
+            <div className="navbar-project-user">
+              <div className="activeProject">{activeProject}</div>
+              <div className="activeUser">{user.Email.charAt(0).toLocaleUpperCase()}</div>
+            </div>
+            <Sidebar icon={<ListIcon />}>
+              <DropdownMenu></DropdownMenu>
+            </Sidebar>
           </div>
-          <Sidebar icon={<ListIcon />}>
-            <DropdownMenu></DropdownMenu>
-          </Sidebar>
+
         </Nav>
-        
+
       </div>
     </>
   );

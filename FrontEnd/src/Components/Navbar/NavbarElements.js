@@ -8,6 +8,9 @@ export const Nav = styled.nav`
   justify-content: space-between;
   padding: 0.5rem calc((100vw-1000px)/2);
   z-index: 10;
+  @media screen and (max-width: 768px) {
+    flex-direction:column;
+  }
 `;
 
 export const NavLink = styled(Link)`
@@ -31,6 +34,6 @@ export const NavMenu = styled.div`
   margin-left: 180px;
   margin-left: 12.2%;
   @media screen and (max-width: 768px) {
-    display: none;
+    flex-direction:column;
   }
 `;
