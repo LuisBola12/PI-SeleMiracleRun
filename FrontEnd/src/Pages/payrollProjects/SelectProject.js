@@ -3,8 +3,7 @@ import React, { useState, useEffect } from 'react'
 import NewProjectForm from '../../Components/newProjectForm/NewProjectForm'
 import { useNavigate } from 'react-router-dom';
 import { updateActiveProject } from '../../Slices/projectSlice/activeProjectSlice';
-import { useDispatch } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
 import '../../App.css'
 import './SelectProject.css'
 
@@ -16,14 +15,15 @@ const database = [
 
 
 const SelectProject = () => {
+  const emailFromUser = useSelector((state) => state.user.user.Email);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [viewModal, setViewModal] = useState(false);
   const [projects, setProjects] = useState(database);
 
   useEffect(() => {
-    const fetchSeleAPI = async () => {
-      const seleUrl = "http://localhost:4000/projects/josefR@example.com";
+    const loadProjects = async () => {
+      const seleUrl = `http://localhost:4000/projects/${emailFromUser}`;
       try {
         const response = await fetch(seleUrl);
         const newData = await response.json();
@@ -32,13 +32,32 @@ const SelectProject = () => {
         console.log(error);
       }
     }
-    fetchSeleAPI();
+    loadProjects();
   }, []);
+
+  const submitNewProject = async (name, paymentPeriod) => {
+    const postFetch = await fetch("http://localhost:4000/projects", {
+      method: 'POST',
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        Nombre: name,
+        Periodo: paymentPeriod,
+        Email: emailFromUser,
+      }),
+    });
+    console.log(postFetch);
+  }
+
   const handleCloseChild = () => {
     setViewModal(false);
   }
+
+
   const addNewEntry = (newEntry) => {
     setProjects([...projects, newEntry]);
+    submitNewProject(newEntry.Nombre, newEntry.TipoPeriodo);
   }
 
   const handleProjectSelection = (projectName) => {
@@ -48,9 +67,7 @@ const SelectProject = () => {
 
   }
 
-  const handleBackButton = () => {
-    navigate(-1);
-  }
+
 
 
 
@@ -60,7 +77,7 @@ const SelectProject = () => {
       {console.log(projects)}
       <div className='project-header'>
         <div className='project-logo'></div>
-        <button onClick={handleBackButton} className='project-backButton'>X</button>
+        <button onClick={() => navigate(-1)} className='project-backButton'>X</button>
       </div>
 
 
