@@ -21,11 +21,11 @@ const Navbar = () => {
         <Nav>
           <div className="navBar-logo"></div>
           <NavMenu>
-            <NavLink to="/benefits" activestyle='true'>
-              Benefits
-            </NavLink>
             <NavLink to="/employees" activestyle='true'>
               Employees
+            </NavLink>
+            <NavLink to="/benefits" activestyle='true'>
+              Benefits
             </NavLink>
             <NavLink to="/volDeductions" activestyle='true'>
               Voluntary Deductions

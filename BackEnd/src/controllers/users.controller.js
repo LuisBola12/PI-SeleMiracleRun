@@ -37,15 +37,18 @@ export const createNewUser = async (req, res) => {
 
 export const verifyCredentials = async (req, res) => {
   const { Email, Contrasenia } = req.body;
-
+  console.log(Email);
+  console.log(Contrasenia);
   if (Email == null || Contrasenia == null) {
     const message = "Please Fill All Fields.";
     return res.status(400).send({errorMsg: message });
+    console.log(message);
   }
 
   if (Email == "" || Contrasenia == "") {
     const message = "Please Fill All Fields.";
     return res.status(400).send({errorMsg: message });
+    console.log(message);
   }
   
   try {
@@ -56,7 +59,7 @@ export const verifyCredentials = async (req, res) => {
       .input("Email", sql.VarChar, Email)
       .input("Contrasenia", sql.VarChar, Contrasenia)
       .query(queries.verifyCredentials);
-    console.log(result);
+      console.log(result);
       if(result.recordset.length == 0){
         console.log(`Tamano: ${result.recordset.length}`);
         res.status(400).send({errorMsg: message });

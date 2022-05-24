@@ -33,10 +33,7 @@ function App() {
         <Route path="no-autorizado" element={<Unauthoraized />} />
         <Route path="register" element={<Register />} />
         <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
-          <Route path="home" element={<Home />} />
-        </Route>
-        <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<SelectProject />} />
         </Route>
         <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
           <Route path="benefits" element={<Benefits />} />
