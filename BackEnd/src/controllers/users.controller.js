@@ -37,15 +37,18 @@ export const createNewUser = async (req, res) => {
 
 export const verifyCredentials = async (req, res) => {
   const { Email, Contrasenia } = req.body;
-
+  console.log(Email);
+  console.log(Contrasenia);
   if (Email == null || Contrasenia == null) {
     const message = "Please Fill All Fields.";
     return res.status(400).send({errorMsg: message });
+    console.log(message);
   }
 
   if (Email == "" || Contrasenia == "") {
     const message = "Please Fill All Fields.";
     return res.status(400).send({errorMsg: message });
+    console.log(message);
   }
   
   try {
@@ -56,7 +59,7 @@ export const verifyCredentials = async (req, res) => {
       .input("Email", sql.VarChar, Email)
       .input("Contrasenia", sql.VarChar, Contrasenia)
       .query(queries.verifyCredentials);
-    console.log(result);
+      console.log(result);
       if(result.recordset.length == 0){
         console.log(`Tamano: ${result.recordset.length}`);
         res.status(400).send({errorMsg: message });
@@ -72,7 +75,7 @@ export const verifyCredentials = async (req, res) => {
 export const getUserByEmail= async (req,res) =>{
     const { Email } = req.params;
     if (Email == null || Email == "" ) {
-      const message = "Bad Request. Please Fill All Fields.";
+      const message = "Please Fill All Fields.";
       return res.status(400).json({ msg: message });
     }
     console.log(Email);
@@ -91,7 +94,7 @@ export const getUserByEmail= async (req,res) =>{
 export const getEmployerByID = async (req,res) =>{
   const{Cedula} = req.params;
   if (Cedula == null || Cedula == "" ) {
-    const message = "Bad Request. Please Fill All Fields.";
+    const message = "Please Fill All Fields.";
     return res.status(400).json({ msg: message });
   }
   try{
@@ -113,9 +116,15 @@ export const registerNewUser = async (req, res) => {
   if (Cedula == null || Nombre == null || Apellido1 == null 
     || Apellido2 == null || Telefono == null || Email == null || Contrasenia == null) {
 
-  const message = "Bad Request. Please Fill All Fields.";
+  const message = "Please Fill All Fields.";
   return res.status(400).json({ msg: message });
+}
 
+if (Cedula == "" || Nombre == "" || Apellido1 == "" 
+  || Apellido2 == "" || Telefono == "" || Email == "" || Contrasenia == "") {
+
+const message = "Please Fill All Fields.";
+return res.status(400).json({ msg: message });
 }
   
   try {

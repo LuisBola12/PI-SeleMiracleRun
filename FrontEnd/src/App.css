@@ -7,7 +7,6 @@
   padding: 0;
 }
 
-
 .App {
   text-align: center;
 }
@@ -52,7 +51,7 @@
 .page-content {
   display: flex;
   justify-content: Center;
-  height: 100%;
+  min-height: 100vh;
   box-shadow: 0px 0px 10px 0px rgba(115, 115, 115, 0.55);
   margin: 2.5%;
   border-radius: 1rem;
@@ -60,7 +59,7 @@
 }
 
 .content-container {
-  margin-top: 50px;
+  margin-top: 30px;
 }
 
 .button {
@@ -115,11 +114,11 @@ table {
   text-align: center;
   height: 300px;
   margin-bottom: 100px;
+  width: 100%;
 }
 
 th {
   text-align: center;
-  width: 400px;
   margin-bottom: 20px;
   background-color: #133c54;
   color: white;
@@ -131,13 +130,6 @@ th {
 td {
   padding-top: 25px;
 }
-
-.modal-window {
-  padding-top: 250px;
-}
-
-
-
 
 .table-left-border {
   border-top-left-radius: 1rem;
@@ -224,7 +216,8 @@ td {
   height: 80px;
   width: 150px;
 }
-.employee-hired-until{
+
+.employee-hired-until {
   height: 55px;
   width: 500px;
   border-radius: 0.25rem;
@@ -272,18 +265,22 @@ td {
   animation: spin 2s linear infinite;
   margin-top: 10%;
 }
-.forms-create-employee-hwage{
+
+.forms-create-employee-hwage {
   margin: 40px;
   display: none;
 }
-.forms-create-employee-hwage2{
+
+.forms-create-employee-hwage2 {
   margin: 40px;
 }
-.forms-create-employee-service{
+
+.forms-create-employee-service {
   margin: 40px;
   display: none;
 }
-.forms-create-employee-service2{
+
+.forms-create-employee-service2 {
   margin: 40px;
 }
 

@@ -25,8 +25,10 @@ const DropdownMenu = () => {
   const dropdownRef = useRef(null);
   const dispatch = useDispatch();
   const redirectToProjectSelecion = () => {
-    navigate('/ProjectAdmin');
+    navigate('/');
   }
+
+  const activeProject = useSelector((state) => state.activeProject.projectName);
 
   useEffect(() => {
     setMenuHeight(dropdownRef.current?.firstChild.offsetHeight)
@@ -58,13 +60,14 @@ const DropdownMenu = () => {
         timeout={500}
         unmountOnExit
         onEnter={calcHeight}>
-        <div className="sidebar-menu">   
+        <div className="sidebar-menu">
             <button onClick={redirectToProjectSelecion} className="sidebar-button" >
               Projects
           </button>
             <button onClick={redirectToLogIn} className="sidebar-button" >
               Sign Out
             </button>
+            
         </div>
       </CSSTransition >
     </div >

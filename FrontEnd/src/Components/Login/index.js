@@ -6,7 +6,7 @@ import './loginStyle.css';
 
 const LoginComp = () => {
   // Data of the username
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   // Data of the password
   const [password, setPassword] = useState("");
 
@@ -24,24 +24,33 @@ const LoginComp = () => {
   }
 
   return userIsLoggedIn ? (
-    <Navigate to="/home" />
+    <Navigate to="/" />
   ) : (
     <div className="logIn-page">
-      <div className="logIn-logo"></div>
+      <div className="logIn-logo-box">
+        <div className="logIn-logo-AppName">
+          <div className="logIn-logo"></div>
+          <div className="logIn-AppName">Sistema Planillas</div>
+        </div>
+        <p  className="logIn-text"> Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+                                    when an unknown printer took a galley of type and scrambled it to make a type 
+                                    specimen book.</p>
+      </div>
       <div className="logIn-box">
-        <div>
+        <div className="logIn-email-div">
           <input
             className= "logIn-input"
             placeholder="Email"
             maxLength="50"
             type="text"
-            value={username}
+            value={email}
             onChange={(e) => {
-              setUsername(e.target.value);
+              setEmail(e.target.value);
             }}
           />
         </div>
-        <div>
+        <div className="logIn-password-div">
           <input
             className= "logIn-input"
             placeholder="Password"
@@ -57,20 +66,21 @@ const LoginComp = () => {
           <button
             className="logIn-btn-login"
             onClick={() => {
-              dispatch(postLogin({ username, password }));
+            dispatch(postLogin({ email, password }));
             }}
           >
             Sign In
           </button>
+          {
+          errorMessage && (
+            <span className="logIn-error-message" >{errorMessage}</span>
+          )
+          }
+          <hr className="linea-horizontal"></hr>
           <button className="logIn-btn-CheckIn" onClick={handleClick}>
             Sign Up
           </button>
         </div>
-        {
-          errorMessage && (
-            <span className="logIn-error-message" >{errorMessage}</span>
-          )
-        }
       </div>
       <footer className="logIn-footerCopyRights"> &copy; SeleMiracleRun </footer>
     </div>

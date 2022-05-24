@@ -27,14 +27,15 @@
 
 .sidebar-dropdown {
   position: absolute;
-  margin-top: 22px;
-  margin-left: 83px;
+  margin-top: 15px;
+  margin-left: 65px;
   top: 58px;
   width: 250px;
   height: calc(var(--sidebar-btn-height) * 4);
-  background-color: #133c54;
+  background-color: #083148;
+  box-shadow: 0px 0px 10px 0px #051d2c;
   transform: translateX(-45%);
-  border-bottom-left-radius: 0.5rem;
+  border-radius: 0.5rem;
   padding: 1rem;
   overflow: hidden;
   transition: height var(--speed) ease;
@@ -66,3 +67,14 @@
 .sidebar-button:hover {
   background-color: #114c6d;
 }
+
+/* .sidebar-activeProject{
+  padding-left: 1vh;
+  padding-right: 1vh;
+  text-align: center;
+  color: white;
+  border-radius: 15px;
+  font-weight: bold;
+  font-size: 3vh;
+  background: #298588;
+} */

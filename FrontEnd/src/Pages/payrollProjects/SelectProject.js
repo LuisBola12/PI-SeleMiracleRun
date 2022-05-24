@@ -63,7 +63,7 @@ const SelectProject = () => {
   const handleProjectSelection = (projectName) => {
     console.log(`El seleccionado:${projectName}`);
     dispatch(updateActiveProject(projectName));
-    navigate('/');
+    navigate('/employees');
 
   }
 
@@ -88,7 +88,6 @@ const SelectProject = () => {
               <div key={project.Nombre} className='project-projectBox'>
 
                 <button
-
                   onClick={() => handleProjectSelection(project.Nombre)} className='project-projectLogo'>
                   {project.Nombre.charAt(0).toLocaleUpperCase()}
                 </button>
