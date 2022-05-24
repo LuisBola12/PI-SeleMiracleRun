@@ -8,13 +8,13 @@ import { getBenefits, createBenefit } from "../controllers/benefits.controller";
 import { createNewEmployer, getEmployer } from "../controllers/employer.controller";
 
 const router = Router();
-router.get('/users', getUsers);
+// router.get('/users', getUsers);
 // router.post('/users/CreateUser', createNewUser);
 router.post('/createEmployer', registerNewUser);
 router.get('/users/:Email', getUserByEmail);
 router.post('/users', verifyCredentials);
-router.get('/employer', getEmployer);
-router.get('/employer', createNewEmployer);
+// router.get('/employer', getEmployer);
+// router.get('/employer', createNewEmployer);
 router.get('/employer/:Cedula', getEmployerByID);
 // router.get('/periodos',getPeriodos);
 // router.delete('/users',getUsers);

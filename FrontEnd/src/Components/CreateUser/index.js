@@ -12,6 +12,7 @@ export const CreateUser = () => {
   const [lastname1, setLastName1] = useState("");
   const [lastname2, setLastName2] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const verifyUser = async (Email) => {
     const seleUrl = `http://localhost:4000/users/${Email}`;
@@ -19,12 +20,13 @@ export const CreateUser = () => {
       const response = await fetch(seleUrl);
       const newData = await response.json();
       if(newData.length === 1){
+        setErrorMessage("User alredy in use");
         return false;
       }else{
         return true;
       }
     } catch (error) {
-      console.log(error);
+      setErrorMessage("Please Fill All Fields.");
     }
   }
 
@@ -33,13 +35,14 @@ export const CreateUser = () => {
     try {
       const response = await fetch(seleUrl);
       const newData = await response.json();
-      if(newData.length === 1){
+      if(newData.length === 1 || response.status === 400){
+        setErrorMessage("User alredy in use");
         return false;
       }else{
         return true;
       }
     } catch (error) {
-      console.log(error);
+      setErrorMessage("Please Fill All Fields.");
     }
   }
 
@@ -195,12 +198,17 @@ export const CreateUser = () => {
         </div>
         <div className="register-submit-btn-box">
           <button className="register-submit-btn" onClick={()=>{submitEmployee()}}>
-            Submit
+            Sign Up
           </button>
-          <button className="register-submit-cancel" onClick={handleClick}>
+          <button className="register-cancel" onClick={handleClick}>
             Cancel
           </button>
         </div>
+          {
+          errorMessage && (
+            <span className="register-errorMessage">{errorMessage}</span>
+          )
+          }
       </div>
       <footer className="register-footerCopyRights"> &copy; SeleMiracleRun </footer>
     </div>

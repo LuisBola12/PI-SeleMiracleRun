@@ -27,9 +27,18 @@ const LoginComp = () => {
     <Navigate to="/home" />
   ) : (
     <div className="logIn-page">
-      <div className="logIn-logo"></div>
+      <div className="logIn-logo-box">
+        <div className="logIn-logo-AppName">
+          <div className="logIn-logo"></div>
+          <div className="logIn-AppName">Sistema Planillas</div>
+        </div>
+        <p  className="logIn-text"> Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+                                    when an unknown printer took a galley of type and scrambled it to make a type 
+                                    specimen book.</p>
+      </div>
       <div className="logIn-box">
-        <div>
+        <div className="logIn-email-div">
           <input
             className= "logIn-input"
             placeholder="Email"
@@ -41,7 +50,7 @@ const LoginComp = () => {
             }}
           />
         </div>
-        <div>
+        <div className="logIn-password-div">
           <input
             className= "logIn-input"
             placeholder="Password"
@@ -62,15 +71,16 @@ const LoginComp = () => {
           >
             Sign In
           </button>
+          {
+          errorMessage && (
+            <span className="logIn-error-message" >{errorMessage}</span>
+          )
+          }
+          <hr className="linea-horizontal"></hr>
           <button className="logIn-btn-CheckIn" onClick={handleClick}>
             Sign Up
           </button>
         </div>
-        {
-          errorMessage && (
-            <span className="logIn-error-message" >{errorMessage}</span>
-          )
-        }
       </div>
       <footer className="logIn-footerCopyRights"> &copy; SeleMiracleRun </footer>
     </div>
