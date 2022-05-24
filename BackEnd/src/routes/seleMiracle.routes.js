@@ -10,15 +10,12 @@ import { createNewEmployer, getEmployer } from "../controllers/employer.controll
 const router = Router();
 
 //Users
-router.get('/users', getUsers);
 router.get('/users/:Email', getUserByEmail);
 router.post('/users', verifyCredentials);
 
 
 //Employer
 router.post('/createEmployer', registerNewUser);
-router.get('/employer', getEmployer);
-// router.get('/employer', createNewEmployer);
 router.get('/employer/:Cedula', getEmployerByID);
 
 //Periodos
