@@ -20,7 +20,6 @@ export const usePostToDatabase = (data, setData) => {
         CostoActual: cost,
       }),
     });
-    console.log(postFetch);
   }
 
   const addToTable = () => {

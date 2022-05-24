@@ -14,12 +14,10 @@ export const CrudEmployee = () => {
   const [data, setData] = useState();
   useEffect(() => {
     const fetchSeleAPI = async () => {
-      console.log(activeProject);
       const seleUrl = `http://localhost:4000/employee/${activeProject}`;
       try {
         const response = await fetch(seleUrl);
         const newData = await response.json();
-        console.log(newData);
         setData(newData);
         setInfoReceived(true);
       } catch (error) {
@@ -27,7 +25,7 @@ export const CrudEmployee = () => {
       }
     }
     fetchSeleAPI();
-  },[]);
+  }, []);
   return !infoReceived ? <div className="loader"></div> : (
     <>
       <Container className="content-container">

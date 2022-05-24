@@ -6,7 +6,6 @@ const getBenefits = async (apiGetBenefits, setData, setInfoReceived) => {
     const response = await fetch(apiGetBenefits);
     const newData = await response.json();
     setData(newData);
-    console.log(newData);
     setInfoReceived(true);
   } catch (error) {
     console.log(error);

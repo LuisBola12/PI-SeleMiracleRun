@@ -47,7 +47,6 @@ const SelectProject = () => {
         Email: emailFromUser,
       }),
     });
-    console.log(postFetch);
   }
 
   const handleCloseChild = () => {
@@ -61,7 +60,6 @@ const SelectProject = () => {
   }
 
   const handleProjectSelection = (projectName) => {
-    console.log(`El seleccionado:${projectName}`);
     dispatch(updateActiveProject(projectName));
     navigate('/employees');
 
@@ -74,7 +72,6 @@ const SelectProject = () => {
   return (
 
     < div className='project-style'>
-      {console.log(projects)}
       <div className='project-header'>
         <div className='project-logo'></div>
         <button onClick={() => navigate(-1)} className='project-backButton'>X</button>

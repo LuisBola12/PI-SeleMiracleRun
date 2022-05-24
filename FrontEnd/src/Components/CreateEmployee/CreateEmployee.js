@@ -1,5 +1,5 @@
-import React, { useState,useEffect } from "react";
-import {FormGroup} from "reactstrap";
+import React, { useState, useEffect } from "react";
+import { FormGroup } from "reactstrap";
 import user_icon from "./user_icon2.png";
 import history from "../../history";
 import { useSelector } from 'react-redux';
@@ -7,8 +7,8 @@ import { useSelector } from 'react-redux';
 export const CreateEmployee = () => {
   const activeProject = useSelector((state) => state.activeProject.projectName);
   const [email, setEmail] = useState("");
-  const [typeOfContracts,setTypeOfContracts] = useState();
-  const [contractsReceived,setContractsReceived] = useState(false);
+  const [typeOfContracts, setTypeOfContracts] = useState();
+  const [contractsReceived, setContractsReceived] = useState(false);
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [lastname, setLastName] = useState("");
@@ -20,8 +20,8 @@ export const CreateEmployee = () => {
   const [serviceName, setServiceName] = useState("");
   const [serviceValue, setserviceValue] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [serviceCSS,setServiceCSS] = useState("forms-create-employee-service");
-  const [otherContractCSS,setOtherContractCSS] = useState("forms-create-employee-hwage");
+  const [serviceCSS, setServiceCSS] = useState("forms-create-employee-service");
+  const [otherContractCSS, setOtherContractCSS] = useState("forms-create-employee-hwage");
 
 
   const verifyUser = async (Email) => {
@@ -29,9 +29,9 @@ export const CreateEmployee = () => {
     try {
       const response = await fetch(seleUrl);
       const newData = await response.json();
-      if(newData.length === 1){
+      if (newData.length === 1) {
         return false;
-      }else{
+      } else {
         return true;
       }
     } catch (error) {
@@ -44,9 +44,9 @@ export const CreateEmployee = () => {
     try {
       const response = await fetch(seleUrl);
       const newData = await response.json();
-      if(newData.length === 1){
+      if (newData.length === 1) {
         return false;
-      }else{
+      } else {
         return true;
       }
     } catch (error) {
@@ -54,10 +54,9 @@ export const CreateEmployee = () => {
     }
   }
 
-  const verifyEmployeeProject = async () =>{
+  const verifyEmployeeProject = async () => {
     const seleUrl = "http://localhost:4000/employee/contract";
-    console.log(activeProject);
-    try{
+    try {
       const postFetch = await fetch(seleUrl, {
         method: 'POST',
         headers: {
@@ -69,59 +68,56 @@ export const CreateEmployee = () => {
         }),
       });
       const newData = await postFetch.json();
-      console.log(newData);
-      if(newData.length === 1){
+      if (newData.length === 1) {
         return false;
-      }else{
+      } else {
         return true;
       }
-    }catch(error){
+    } catch (error) {
       console.log(error);
     }
   }
 
-  const submitEmployee = async () =>{
+  const submitEmployee = async () => {
     const user = await verifyUser();
     const employee = await verifyEmployee();
     const employeeContract = await verifyEmployeeProject();
-    if(email && email.trim().length>0 && password && password.trim().length>0
-    && name && name.trim().length>0 && lastname && lastname.trim().length>0 
-    && secondlastname.trim().length>0 &&secondlastname && id && contract){ 
-      if( user === true && employee === true && employeeContract === true){
-        const createEmployeeFetch= await fetch('http://localhost:4000/employee', {
-            method: 'POST',
-            headers: {
-                "Content-type": "application/json",
-            },
-            body: JSON.stringify({
-              NombreProyecto:activeProject,
-              Email:email,
-              Contrasenia:password,
-              Nombre:name,
-              Apellido1:lastname,
-              Apellido2:secondlastname,
-              Cedula:id,
-              Telefono:phoneNumber,
-              TipoJornada:contract,
-              FechaFinContrato:contractDeadline,
-              SalarioPorHora:hWage,
-              NombreServicio:serviceName,
-              ValorServicio:serviceValue,
-            }),
+    if (email && email.trim().length > 0 && password && password.trim().length > 0
+      && name && name.trim().length > 0 && lastname && lastname.trim().length > 0
+      && secondlastname.trim().length > 0 && secondlastname && id && contract) {
+      if (user === true && employee === true && employeeContract === true) {
+        const createEmployeeFetch = await fetch('http://localhost:4000/employee', {
+          method: 'POST',
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({
+            NombreProyecto: activeProject,
+            Email: email,
+            Contrasenia: password,
+            Nombre: name,
+            Apellido1: lastname,
+            Apellido2: secondlastname,
+            Cedula: id,
+            Telefono: phoneNumber,
+            TipoJornada: contract,
+            FechaFinContrato: contractDeadline,
+            SalarioPorHora: hWage,
+            NombreServicio: serviceName,
+            ValorServicio: serviceValue,
+          }),
         });
-        console.log(createEmployeeFetch);
-      }else{
+      } else {
         alert("There is already an user with those credentials.")
       }
-    }else{
+    } else {
       alert("There are inputs that need to be filled in order to create an employee.");
     }
     resetAllStates();
     history.push('/employees')
     history.go()
   }
-  const setContractOption = (e)=>{
-    console.log(e.target.value);
+  const setContractOption = (e) => {
     setContract(e.target.value);
     if (e.target.value === "Servicios Profesionales") {
       setOtherContractCSS("forms-create-employee-hwage")
@@ -131,7 +127,7 @@ export const CreateEmployee = () => {
       setServiceCSS("forms-create-employee-service")
     }
   }
-  const resetAllStates = () =>{
+  const resetAllStates = () => {
     setEmail("");
     setPassword("");
     setName("");
@@ -142,7 +138,7 @@ export const CreateEmployee = () => {
     setPhoneNumber("");
 
   }
-  const back = () =>{
+  const back = () => {
     resetAllStates();
     history.push('/employees')
     history.go()
@@ -180,7 +176,7 @@ export const CreateEmployee = () => {
             placeholder="Enter First Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            />
+          />
         </FormGroup>
         <FormGroup className="forms-create-employee">
           <label className="employee-label" htmlFor="last-name">
@@ -194,7 +190,7 @@ export const CreateEmployee = () => {
             value={lastname}
             maxLength={15}
             onChange={(e) => setLastName(e.target.value)}
-            />
+          />
         </FormGroup>
         <FormGroup className="forms-create-employee">
           <label className="employee-label" htmlFor="last-name">
@@ -208,7 +204,7 @@ export const CreateEmployee = () => {
             value={secondlastname}
             maxLength={15}
             onChange={(e) => setSecondLastName(e.target.value)}
-            />
+          />
         </FormGroup>
         <FormGroup className="forms-create-employee">
           <label className="employee-label" htmlFor="id-card">
@@ -236,7 +232,7 @@ export const CreateEmployee = () => {
             value={email}
             maxLength={50}
             onChange={(e) => setEmail(e.target.value)}
-            />
+          />
         </FormGroup>
         <FormGroup className="forms-create-employee">
           <label className="employee-label" htmlFor="password">
@@ -250,7 +246,7 @@ export const CreateEmployee = () => {
             value={password}
             maxLength={20}
             onChange={(e) => setPassword(e.target.value)}
-            />
+          />
         </FormGroup>
         <FormGroup className="forms-create-employee">
           <label className="employee-label" htmlFor="phone-number">
@@ -271,12 +267,12 @@ export const CreateEmployee = () => {
           </label>
           <select
             className="dropdown-Contract"
-            onChange={(e)=>{
+            onChange={(e) => {
               setContractOption(e);
             }}
-            >
-            {typeOfContracts.map((element)=>(
-              <option key = {element.TipoJornada}value={element.TipoJornada}>{element.TipoJornada}</option>
+          >
+            {typeOfContracts.map((element) => (
+              <option key={element.TipoJornada} value={element.TipoJornada}>{element.TipoJornada}</option>
             ))}
           </select>
         </FormGroup>
@@ -306,7 +302,7 @@ export const CreateEmployee = () => {
         </FormGroup>
         <FormGroup className={serviceCSS}>
           <label className="employee-label" htmlFor="hourly-wage">
-             Service Name:{" "}
+            Service Name:{" "}
           </label>
           <input
             className="employee-input"
@@ -320,7 +316,7 @@ export const CreateEmployee = () => {
         </FormGroup>
         <FormGroup className={serviceCSS}>
           <label className="employee-label" htmlFor="hourly-wage">
-             Service Value:{" "}
+            Service Value:{" "}
           </label>
           <input
             className="employee-input"
@@ -331,13 +327,13 @@ export const CreateEmployee = () => {
             onChange={(e) => setserviceValue(e.target.value)}
           />
         </FormGroup>
-        
-        <button className="submit-btn-employee" onClick={()=>{submitEmployee()}}>
+
+        <button className="submit-btn-employee" onClick={() => { submitEmployee() }}>
           Submit
-      </button>
-      <button className="back-btn-employee" onClick={()=>{back()}}>
+        </button>
+        <button className="back-btn-employee" onClick={() => { back() }}>
           Back
-      </button>
+        </button>
       </div>
       <div className="submit-cancel-employee">
       </div>
