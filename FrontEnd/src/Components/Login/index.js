@@ -6,7 +6,7 @@ import './loginStyle.css';
 
 const LoginComp = () => {
   // Data of the username
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   // Data of the password
   const [password, setPassword] = useState("");
 
@@ -24,7 +24,7 @@ const LoginComp = () => {
   }
 
   return userIsLoggedIn ? (
-    <Navigate to="/home" />
+    <Navigate to="/" />
   ) : (
     <div className="logIn-page">
       <div className="logIn-logo-box">
@@ -44,9 +44,9 @@ const LoginComp = () => {
             placeholder="Email"
             maxLength="50"
             type="text"
-            value={username}
+            value={email}
             onChange={(e) => {
-              setUsername(e.target.value);
+              setEmail(e.target.value);
             }}
           />
         </div>
@@ -66,7 +66,7 @@ const LoginComp = () => {
           <button
             className="logIn-btn-login"
             onClick={() => {
-              dispatch(postLogin({ username, password }));
+            dispatch(postLogin({ email, password }));
             }}
           >
             Sign In

@@ -1,82 +1,23 @@
-import React, { useState } from "react";
 import { FormGroup } from "reactstrap";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { postLogin } from "../../Slices/user/requests/postLogin";
+import { usePostUserFromDatabase } from "./usePostUserFromDatabase";
 import './createUserStyle.css';
-// import history from "../../history";
 
 export const CreateUser = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [id, setID] = useState("");
-  const [name, setName] = useState("");
-  const [lastname1, setLastName1] = useState("");
-  const [lastname2, setLastName2] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const {registerUser, email, setEmail, password, setPassword, 
+        name, setName, lastname1, setLastName1, lastname2, setLastName2, 
+        id, setID, phoneNumber, setPhoneNumber, errorMessage, setErrorMessage} = usePostUserFromDatabase();
 
-  const verifyUser = async (Email) => {
-    const seleUrl = `http://localhost:4000/users/${Email}`;
-    try {
-      const response = await fetch(seleUrl);
-      const newData = await response.json();
-      if(newData.length === 1){
-        setErrorMessage("User alredy in use");
-        return false;
-      }else{
-        return true;
-      }
-    } catch (error) {
-      setErrorMessage("Please Fill All Fields.");
+  const dispatch = useDispatch();
+  const submitEmployee = async () =>{
+    const prueba = await registerUser();
+    if(prueba === true){
+      dispatch(postLogin({ email, password }));
+      navigate("/");
     }
-  }
-
-  const verifyEmployee = async (Cedula) => {
-    const seleUrl = `http://localhost:4000/employer/${Cedula}`;
-    try {
-      const response = await fetch(seleUrl);
-      const newData = await response.json();
-      if(newData.length === 1 || response.status === 400){
-        setErrorMessage("User alredy in use");
-        return false;
-      }else{
-        return true;
-      }
-    } catch (error) {
-      setErrorMessage("Please Fill All Fields.");
-    }
-  }
-
-  const registerUser = async () => {
-    const user = await verifyUser(email);
-    const employee = await verifyEmployee(id);
-    console.log(`${user} y ${employee}`)
-    if( user === true && employee === true ){
-      
-      const registerFetch = await fetch('http://localhost:4000/createEmployer', 
-      {
-          method: 'POST',
-          headers: {
-              "Content-type": "application/json",
-          },
-          body: JSON.stringify({
-              Cedula : id, 
-              Nombre : name, 
-              Apellido1 : lastname1, 
-              Apellido2 : lastname2, 
-              Telefono : phoneNumber,
-              Email : email,
-              Contrasenia: password,
-              Roles: "admin"
-          }),
-      });
-      console.log(registerFetch);
-    }
-  }
-
-  const submitEmployee = () =>{
-    const newEmployee = {email:email, password:password, name:name, lastname1:lastname1, lastname2:lastname2, id:id, phoneNumber:phoneNumber};
-    console.log(newEmployee);
-    registerUser();
+    setErrorMessage("");
   }
 
   const resetAllStates = () =>{
@@ -87,6 +28,7 @@ export const CreateUser = () => {
     setLastName2("");
     setID("");
     setPhoneNumber("");
+    setErrorMessage("");
   }
 
   let navigate = useNavigate();
@@ -188,7 +130,7 @@ export const CreateUser = () => {
             <input
               className="register-atribute-input"
               maxLength="20"
-              type="text"
+              type="password"
               id="password"
               placeholder="Password"
               value={password}

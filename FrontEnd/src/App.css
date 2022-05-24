@@ -59,7 +59,7 @@
 }
 
 .content-container {
-  margin-top: 50px;
+  margin-top: 30px;
 }
 
 .button {
@@ -114,11 +114,11 @@ table {
   text-align: center;
   height: 300px;
   margin-bottom: 100px;
+  width: 100%;
 }
 
 th {
   text-align: center;
-  width: 400px;
   margin-bottom: 20px;
   background-color: #133c54;
   color: white;
@@ -132,11 +132,8 @@ td {
 }
 
 .modal-window {
-  padding-top: 250px;
+  
 }
-
-
-
 
 .table-left-border {
   border-top-left-radius: 1rem;

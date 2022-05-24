@@ -25,7 +25,7 @@ const DropdownMenu = () => {
   const dropdownRef = useRef(null);
   const dispatch = useDispatch();
   const redirectToProjectSelecion = () => {
-    navigate('/ProjectAdmin');
+    navigate('/');
   }
 
   const activeProject = useSelector((state) => state.activeProject.projectName);
@@ -61,7 +61,6 @@ const DropdownMenu = () => {
         unmountOnExit
         onEnter={calcHeight}>
         <div className="sidebar-menu">
-        {/* <div className="sidebar-activeProject">{activeProject}</div>    */}
             <button onClick={redirectToProjectSelecion} className="sidebar-button" >
               Projects
           </button>
