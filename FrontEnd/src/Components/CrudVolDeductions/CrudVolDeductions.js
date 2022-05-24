@@ -1,32 +1,11 @@
 import { Container } from "reactstrap";
-import { useState, useEffect } from "react";
 import '../../App.css'
 import "bootstrap/dist/css/bootstrap.min.css";
 import { VolDeductionsModal } from "./VolDeductionsModal";
-import { useSelector } from "react-redux";
-
+import { useGetVolDeductionsFromDatabase } from "./useGetVolDeductionsFromDatabase";
 
 export const CrudVolDeductions = () => {
-  const [data, setData] = useState([{}]);
-  const activeProject = useSelector((state) => state.activeProject.projectName);
-  const [infoReceived, setInfoReceived] = useState(false);
-  const apiVolDeductions = `http://localhost:4000/volDeductions/${activeProject}`
-
-  useEffect(() => {
-    const getVolDeductions = async () => {
-      try {
-        const response = await fetch(apiVolDeductions);
-        const newData = await response.json();
-        setData(newData);
-        console.log(newData);
-        setInfoReceived(true);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    getVolDeductions();
-  },[]);
-
+  const { data, setData, infoReceived } = useGetVolDeductionsFromDatabase();
   return !infoReceived ? <div className="loader" ></div > : (
     <>
       <Container className="content-container">

@@ -5,54 +5,11 @@ import {
   FormGroup,
   ModalFooter,
 } from "reactstrap";
-import { useState } from "react";
 import '../../App.css'
-import { useSelector } from "react-redux";
+import { usePostToDatabase } from "./usePostToDatabase";
 
 export const VolDeductionsModal = ({ data, setData }) => {
-  const [viewModal, setViewModal] = useState(false);
-  const activeProject = useSelector((state) => state.activeProject.projectName);
-  const [name, setName] = useState('');
-  const apiVolDeductions = `http://localhost:4000/volDeductions`
-
-  const submitVolDeduction = async () => {
-    const postFetch = await fetch(apiVolDeductions, {
-      method: 'POST',
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({
-        Nombre: name,
-        NombreProyecto: activeProject,
-        PorcentajeEmpleador: 0.0,
-        PorcentajeEmpleado: 0.0,
-      }),
-    });
-    console.log(postFetch);
-  }
-
-  const addToTable = () => {
-    if (name && name.trim().length > 0) {
-      const names = [];
-      data.map((index) => names.push(index.Nombre))
-      if (!names.includes(name)) {
-        const newData = {
-          Nombre: name,
-        };
-        setData([...data, newData]);
-        submitVolDeduction();
-        setViewModal(false);
-        setName("");
-      } else {
-        alert("That voluntary deduction already exist");
-      }
-
-    }
-    else {
-      alert("Please enter all the values");
-    }
-  }
-
+  const { name, setName, viewModal, setViewModal, addToTable } = usePostToDatabase(data, setData);
   return (
     <>
       <button className="create-button" onClick={() => setViewModal(true)}>
