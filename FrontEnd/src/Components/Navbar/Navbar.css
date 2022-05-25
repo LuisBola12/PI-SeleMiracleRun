@@ -47,8 +47,6 @@ padding-right: 1vh; */
 }
 
 
-
-
 @media (max-height:868px) {
   .navBar-logo {
     width: 6rem;
@@ -97,6 +95,7 @@ padding-right: 1vh; */
     line-height: 4rem;
     border-radius: 8px;
     font-size: 1.1rem;
+    text-align: center;
     height: 7vh;
   }
 

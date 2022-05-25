@@ -4,4 +4,9 @@ export const userReducers = {
     state.userIsLoggedIn = false;
     state.errorMessage = "";
   },
+
+  resetErrorMsg: (state) => {
+    state.errorMessage = "";
+  },
+
 };

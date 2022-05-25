@@ -22,7 +22,6 @@ export const postLogin = createAsyncThunk('usuarios/postLogin', async (credentia
 const getData = (userData, loginFetch) => {
 
   if (loginFetch.status === 200) {
-    console.log(userData.errorMsg);
     return userData;
   } else {
     return {
@@ -40,10 +39,12 @@ export const onPostLoginFullfilled = (state, action) => {
   } else {
     state.userIsLoggedIn = true;
     state.user = action.payload;
+    state.errorMessage = "";
   }
 };
 
 export const onPostLoginRejected = (state) => {
   state.userIsLoggedIn = false;
   state.user = null;
+  state.errorMessage = "Please Fill All Fields.";
 };

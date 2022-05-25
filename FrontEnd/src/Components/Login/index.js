@@ -5,19 +5,20 @@ import { useState } from "react";
 import './loginStyle.css';
 
 const LoginComp = () => {
-  // Data of the username
   const [email, setEmail] = useState("");
-  // Data of the password
   const [password, setPassword] = useState("");
 
-  // To get the state of the user that intent to log in
   const userIsLoggedIn = useSelector((state) => state.user.userIsLoggedIn);
   const errorMessage = useSelector((state) => state.user.errorMessage);
   const dispatch = useDispatch();
 
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const handleClick = () => {
     navigate("/register");
+  }
+
+  const logBtn = async () => {
+    dispatch(postLogin({ email, password }));
   }
 
   return userIsLoggedIn ? (
@@ -62,10 +63,8 @@ const LoginComp = () => {
         <div className="logIn-btn-box">
           <button
             className="logIn-btn-login"
-            onClick={() => {
-              dispatch(postLogin({ email, password }));
-            }}
-          >
+            onClick={logBtn}
+            >
             Sign In
           </button>
           {
