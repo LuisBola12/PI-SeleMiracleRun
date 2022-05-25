@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { postLogin } from "../../Slices/user/requests/postLogin";
 import { usePostUserFromDatabase } from "./usePostUserFromDatabase";
+import { resetErrorMsg } from "../../Slices/user/userSlice";
+
 import './createUserStyle.css';
 
 export const CreateUser = () => {
@@ -12,12 +14,14 @@ export const CreateUser = () => {
 
   const dispatch = useDispatch();
   const submitEmployee = async () =>{
+    if(errorMessage !== ""){
+      setErrorMessage("");
+    }
     const prueba = await registerUser();
     if(prueba === true){
       dispatch(postLogin({ email, password }));
       navigate("/");
     }
-    setErrorMessage("");
   }
 
   const resetAllStates = () =>{
@@ -33,6 +37,7 @@ export const CreateUser = () => {
 
   let navigate = useNavigate();
   function handleClick() {
+    dispatch(resetErrorMsg());
     resetAllStates();
     navigate("/login");
   }
@@ -66,7 +71,7 @@ export const CreateUser = () => {
               className="register-atribute-input"
               maxLength="15"
               type="text"
-              id="last-name"
+              id="last-name1"
               placeholder="First Last Name"
               value={lastname1}
               onChange={(e) => setLastName1(e.target.value)}
@@ -78,7 +83,7 @@ export const CreateUser = () => {
               className="register-atribute-input"
               maxLength="15"
               type="text"
-              id="last-name"
+              id="last-name2"
               placeholder="Second Last Name"
               value={lastname2}
               onChange={(e) => setLastName2(e.target.value)}
