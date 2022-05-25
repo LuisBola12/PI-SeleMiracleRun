@@ -16,7 +16,7 @@ const submitNewProject = async (name, paymentPeriod, emailFromUser) => {
 }
 
 
-export const useAddNewProject = (cover, actualData, setActualData) => {
+export const useAddNewProject = (actualData, setActualData) => {
 
   const [name, setName] = useState('');
   const [paymentPeriod, setPaymentPeriod] = useState('Mensual');

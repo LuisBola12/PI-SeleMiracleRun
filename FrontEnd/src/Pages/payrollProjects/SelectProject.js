@@ -1,6 +1,5 @@
-import { Modal } from 'react-bootstrap'
-import React, { useState } from 'react'
-import NewProjectForm from '../../Components/newProjectForm/NewProjectForm'
+import React from 'react'
+import NewProjectForm from '../../Components/ProjectsComponents/NewProjectForm'
 import { useNavigate } from 'react-router-dom';
 import '../../App.css'
 import './SelectProject.css'
@@ -10,23 +9,16 @@ import { useProjectsData } from './useProjectsData';
 
 const SelectProject = () => {
   const navigate = useNavigate();
-
-  const [viewModal, setViewModal] = useState(false);
   const { projects, setProjects, handleProjectSelection, loading, error } = useProjectsData();
 
 
-  const handleCloseChild = () => {
-    setViewModal(false);
-  }
 
   return (
-
     < div className='project-style'>
       <div className='project-header'>
         <div className='project-logo'></div>
-        <button onClick={() => navigate(-1)} className='project-backButton'>X</button>
+        <button className='project-backButton' onClick={() => { navigate(-1) }}>X</button>
       </div>
-
 
       <div className=" project-projectsRow">
         {!loading && error == null ?
@@ -46,16 +38,9 @@ const SelectProject = () => {
         }
 
         <div>
-          <button className="project-buttonCreate" onClick={() => setViewModal(true)}>+</button>
-          <p className='project-AddNewProjectText'>Add new Project</p>
+          <NewProjectForm actualData={projects} setActualData={setProjects} />
         </div>
       </div>
-
-      <Modal show={viewModal} centered={true} dialogClassName='modal-90w'>
-        <NewProjectForm cover={handleCloseChild} actualData={projects} setActualData={setProjects} />
-      </Modal>
-
-
 
     </div >
 
