@@ -1,5 +1,4 @@
 :root {
-
   --unselectedText: white;
   --seletedTextColor: rgb(207, 202, 202);
 
@@ -10,8 +9,6 @@
   --addButtonBackgroundUnselected: #3673be;
   --addButtonBacgroundSelected: #2760a6;
   --selectedBorderColor: rgb(207, 202, 202);
-
-
 
 }
 
