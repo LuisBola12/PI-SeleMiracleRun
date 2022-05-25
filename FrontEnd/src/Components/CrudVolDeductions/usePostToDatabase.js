@@ -20,7 +20,6 @@ export const usePostToDatabase = (data, setData) => {
         PorcentajeEmpleado: 0.0,
       }),
     });
-    console.log(postFetch);
   }
 
   const addToTable = () => {

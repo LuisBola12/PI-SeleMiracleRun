@@ -6,7 +6,6 @@ const getVolDeductions = async (apiGetVolDeductions, setData, setInfoReceived) =
     const response = await fetch(apiGetVolDeductions);
     const newData = await response.json();
     setData(newData);
-    console.log(newData);
     setInfoReceived(true);
   } catch (error) {
     console.log(error);

@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { postLogin } from "../../Slices/user/requests/postLogin";
-import { Navigate, useNavigate} from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import './loginStyle.css';
 
@@ -14,9 +14,6 @@ const LoginComp = () => {
   const userIsLoggedIn = useSelector((state) => state.user.userIsLoggedIn);
   const errorMessage = useSelector((state) => state.user.errorMessage);
   const dispatch = useDispatch();
-   
-  console.log("userIsLoggedIn")
-  console.log(userIsLoggedIn)
 
   let navigate = useNavigate();
   const handleClick = () => {
@@ -32,15 +29,15 @@ const LoginComp = () => {
           <div className="logIn-logo"></div>
           <div className="logIn-AppName">Sistema Planillas</div>
         </div>
-        <p  className="logIn-text"> Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                                    when an unknown printer took a galley of type and scrambled it to make a type 
-                                    specimen book.</p>
+        <p className="logIn-text"> Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+          Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+          when an unknown printer took a galley of type and scrambled it to make a type
+          specimen book.</p>
       </div>
       <div className="logIn-box">
         <div className="logIn-email-div">
           <input
-            className= "logIn-input"
+            className="logIn-input"
             placeholder="Email"
             maxLength="50"
             type="text"
@@ -52,9 +49,9 @@ const LoginComp = () => {
         </div>
         <div className="logIn-password-div">
           <input
-            className= "logIn-input"
+            className="logIn-input"
             placeholder="Password"
-            maxLength= "20"
+            maxLength="20"
             type="password"
             value={password}
             onChange={(e) => {
@@ -66,15 +63,15 @@ const LoginComp = () => {
           <button
             className="logIn-btn-login"
             onClick={() => {
-            dispatch(postLogin({ email, password }));
+              dispatch(postLogin({ email, password }));
             }}
           >
             Sign In
           </button>
           {
-          errorMessage && (
-            <span className="logIn-error-message" >{errorMessage}</span>
-          )
+            errorMessage && (
+              <span className="logIn-error-message" >{errorMessage}</span>
+            )
           }
           <hr className="linea-horizontal"></hr>
           <button className="logIn-btn-CheckIn" onClick={handleClick}>
@@ -86,5 +83,5 @@ const LoginComp = () => {
     </div>
   );
 }
-  
+
 export default LoginComp;

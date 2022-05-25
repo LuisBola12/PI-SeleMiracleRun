@@ -1,22 +1,22 @@
 import { getConnection, sql, queries } from "../database";
 
 
-export const getEmployeeByID = async (req,res) => {
-  const{Cedula} = req.params;
-  if (Cedula == null || Cedula == "" ) {
+export const getEmployeeByID = async (req, res) => {
+  const { Cedula } = req.params;
+  if (Cedula == null || Cedula == "") {
     const message = "Bad Request. Please Fill All Fields.";
     return res.status(400).json({ msg: message });
   }
-  try{
-      const pool = await getConnection();
-      const result = await pool.request()
-      .input('Cedula',Cedula)
+  try {
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input('Cedula', Cedula)
       .query(queries.getEmployeeByID);
-      console.log(result);
-      res.status(200).json(result.recordset);
-  }catch(e){
-      res.status(404);
-      res.send(e.message);
+    console.log(result);
+    res.status(200).json(result.recordset);
+  } catch (e) {
+    res.status(404);
+    res.send(e.message);
   }
 }
 
@@ -34,10 +34,9 @@ export const getEmployees = async (req, res) => {
     res.send(e.message);
   }
 };
-export const verifyEmployeeContractOnProject= async(req,res) =>{
+export const verifyEmployeeContractOnProject = async (req, res) => {
   try {
-    const {Cedula,Proyecto} = req.body;
-    console.log(Cedula,Proyecto)
+    const { Cedula, Proyecto } = req.body;
     const pool = await getConnection();
     const result = await pool
       .request()
@@ -92,7 +91,6 @@ export const postNewEmployee = async (req, res) => {
       .input("Contrasenia", Contrasenia)
       .input("Roles", Roles)
       .query(queries.createNewUser);
-      console.log(`User Created${createUser}`);
   } catch (e) {
     console.log(e);
   }
@@ -106,7 +104,6 @@ export const postNewEmployee = async (req, res) => {
       .input("Telefono", Telefono)
       .input("Email", Email)
       .query(queries.createNewEmployee);
-      console.log(`Employee Created${createEmployee}`);
   } catch (e) {
     console.log(e);
   }
@@ -122,8 +119,6 @@ export const postNewEmployee = async (req, res) => {
       .input("NombreServicio", NombreServicio)
       .input("ValorServicio", ValorServicio)
       .query(queries.addContractOfAnEmployee);
-      console.log(`Contract of employee asociated 
-      to a proyect${createContractForEmployee}`);
   } catch (e) {
     console.log(e);
   }
