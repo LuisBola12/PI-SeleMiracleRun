@@ -1,7 +1,9 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import userSlice from "./Slices/user/userSlice";
 import activeProjectSlice from "./Slices/projectSlice/activeProjectSlice";
-import storage from "redux-persist/lib/storage";
+import storageSession from 'redux-persist/lib/storage/session'
+
+
 import { persistReducer } from "redux-persist";
 
 const reducers = combineReducers({
@@ -11,7 +13,7 @@ const reducers = combineReducers({
 
 const rootPersistConfig = {
   key: "root",
-  storage,
+  storage: storageSession,
 };
 
 const persistedReducer = persistReducer(rootPersistConfig, reducers);

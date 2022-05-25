@@ -4,20 +4,29 @@ import { useNavigate } from 'react-router-dom';
 import '../../App.css'
 import './SelectProject.css'
 import { useProjectsData } from './useProjectsData';
-
-
+import { useSelector,useDispatch } from 'react-redux';
+import {logout} from "../../Slices/user/userSlice";
 
 const SelectProject = () => {
   const navigate = useNavigate();
   const { projects, setProjects, handleProjectSelection, loading, error } = useProjectsData();
+  const activeProject = useSelector((state) => state.activeProject.projectName);
+  const dispatch = useDispatch();
 
-
-
+  
   return (
     < div className='project-style'>
       <div className='project-header'>
         <div className='project-logo'></div>
-        <button className='project-backButton' onClick={() => { navigate(-1) }}>X</button>
+        <button className='project-backButton' onClick={() => { 
+          console.log(`projecto ${activeProject}`)
+          if(activeProject === ""){
+            dispatch(logout());
+            navigate("/Login");
+          }else{
+            navigate(-1);
+          }
+          }}>X</button>
       </div>
 
       <div className=" project-projectsRow">
