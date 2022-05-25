@@ -20,7 +20,6 @@ export const useProjectsData = () => {
 
 
   const handleProjectSelection = (projectName) => {
-    console.log(`El seleccionado:${projectName}`);
     dispatch(updateActiveProject(projectName));
     navigate('/employees');
 

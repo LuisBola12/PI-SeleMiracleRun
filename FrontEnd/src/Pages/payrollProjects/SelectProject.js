@@ -19,7 +19,6 @@ const SelectProject = () => {
       <div className='project-header'>
         <div className='project-logo'></div>
         <button className='project-backButton' onClick={() => { 
-          console.log(`projecto ${activeProject}`)
           if(activeProject === ""){
             dispatch(logout());
             navigate("/Login");

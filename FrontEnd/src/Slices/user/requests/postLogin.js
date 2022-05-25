@@ -24,7 +24,6 @@ const getData = (userData, loginFetch) => {
   if (loginFetch.status === 200) {
     return userData;
   } else {
-    console.log(userData.errorMsg);
     return {
       error: true,
       message: userData.errorMsg,
