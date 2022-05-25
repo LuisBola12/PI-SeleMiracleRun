@@ -6,20 +6,7 @@ import { updateActiveProject } from '../../Slices/projectSlice/activeProjectSlic
 
 
 
-const submitNewProject = async (name, paymentPeriod, emailFromUser) => {
-  const postFetch = await fetch("http://localhost:4000/projects", {
-    method: 'POST',
-    headers: {
-      "Content-type": "application/json",
-    },
-    body: JSON.stringify({
-      Nombre: name,
-      Periodo: paymentPeriod,
-      Email: emailFromUser,
-    }),
-  });
-  console.log(postFetch);
-}
+
 
 
 export const useProjectsData = () => {
@@ -30,10 +17,7 @@ export const useProjectsData = () => {
   const navigate = useNavigate();
 
 
-  const addNewEntry = (newEntry) => {
-    setProjects([...projects, newEntry]);
-    submitNewProject(newEntry.Nombre, newEntry.TipoPeriodo, emailFromUser, loading, error);
-  }
+
 
   const handleProjectSelection = (projectName) => {
     console.log(`El seleccionado:${projectName}`);
@@ -42,5 +26,10 @@ export const useProjectsData = () => {
 
   }
 
-  return { projects, setProjects, submitNewProject, addNewEntry, handleProjectSelection }
+
+  return {
+    projects, setProjects,
+    handleProjectSelection,
+    loading, error
+  }
 }

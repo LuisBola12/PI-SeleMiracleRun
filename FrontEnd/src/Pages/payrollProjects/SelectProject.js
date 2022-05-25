@@ -12,8 +12,7 @@ const SelectProject = () => {
   const navigate = useNavigate();
 
   const [viewModal, setViewModal] = useState(false);
-  const { projects, handleProjectSelection, addNewEntry, loading, error } = useProjectsData();
-
+  const { projects, setProjects, handleProjectSelection, loading, error } = useProjectsData();
 
 
   const handleCloseChild = () => {
@@ -23,7 +22,6 @@ const SelectProject = () => {
   return (
 
     < div className='project-style'>
-      {console.log(projects)}
       <div className='project-header'>
         <div className='project-logo'></div>
         <button onClick={() => navigate(-1)} className='project-backButton'>X</button>
@@ -54,8 +52,7 @@ const SelectProject = () => {
       </div>
 
       <Modal show={viewModal} centered={true} dialogClassName='modal-90w'>
-        <NewProjectForm cover={handleCloseChild} addNewEntry={addNewEntry}
-          actualData={projects} />
+        <NewProjectForm cover={handleCloseChild} actualData={projects} setActualData={setProjects} />
       </Modal>
 
 

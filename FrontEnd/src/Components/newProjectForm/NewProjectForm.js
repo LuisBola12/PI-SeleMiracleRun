@@ -5,45 +5,15 @@ import {
   FormGroup,
   Form
 } from 'react-bootstrap'
-import React, { useState } from 'react'
+import React from 'react'
 import './NewProject.css'
+import { useAddNewProject } from './useAddNewProject';
 
 
 
+const NewProjectForm = ({ cover, actualData, setActualData, }) => {
 
-const NewProjectForm = ({ cover, addNewEntry, actualData }) => {
-
-  const [name, setName] = useState('');
-  const [paymentPeriod, setPaymentPeriod] = useState('Mensual');
-
-  const [warning, setWarning] = useState('');
-
-
-  const addToTable = () => {
-    if (name && paymentPeriod) {
-      const names = [];
-      actualData.map((index) => {
-        return names.push(index.name);
-      })
-      if (!names.includes(name)) {
-        const newData = {
-          Nombre: name,
-          TipoPeriodo: paymentPeriod,
-        };
-        addNewEntry(newData);
-        setWarning('');
-        setName("");
-        setPaymentPeriod("");
-        cover();
-      } else {
-        setWarning('*That Project Name already exist')
-      }
-
-    }
-    else {
-      setWarning('*Please enter all the values')
-    }
-  }
+  const { addToTable, name, setName, setPaymentPeriod, warning, setWarning } = useAddNewProject(cover, actualData, setActualData);
 
   return (
 
@@ -82,7 +52,7 @@ const NewProjectForm = ({ cover, addNewEntry, actualData }) => {
         <button
           className="button create-button"
           onClick={() => {
-            addToTable();
+            addToTable(cover);
           }}
         >
           Insert
