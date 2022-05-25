@@ -240,7 +240,7 @@ export const CreateEmployee = () => {
           </label>
           <input
             className="employee-input"
-            type="text"
+            type="password"
             id="password"
             placeholder="Enter a Password"
             value={password}
@@ -307,8 +307,7 @@ export const CreateEmployee = () => {
           <input
             className="employee-input"
             type="text"
-            id="hourly-wage"
-            placeholder="Enter a Hourly Wage"
+            placeholder="Enter a Service Name"
             value={serviceName}
             maxLength={50}
             onChange={(e) => setServiceName(e.target.value)}
@@ -321,8 +320,7 @@ export const CreateEmployee = () => {
           <input
             className="employee-input"
             type="number"
-            id="hourly-wage"
-            placeholder="Enter a Hourly Wage"
+            placeholder="Enter a Service Value"
             value={serviceValue}
             onChange={(e) => setserviceValue(e.target.value)}
           />

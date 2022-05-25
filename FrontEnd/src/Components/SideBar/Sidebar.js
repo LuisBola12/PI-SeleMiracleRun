@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { Navigate, useNavigate} from "react-router-dom";
 import {logout} from "../../Slices/user/userSlice";
+import {resetProject} from "../../Slices/projectSlice/activeProjectSlice"
 
 export const Sidebar = (props) => {
   const [open, setOpen] = useState(false);
@@ -43,6 +44,7 @@ const DropdownMenu = () => {
   let navigateLogin = useNavigate();
   const redirectToLogIn = () => {
     dispatch(logout())
+    dispatch(resetProject())
     navigateLogin("/login");
   }
 

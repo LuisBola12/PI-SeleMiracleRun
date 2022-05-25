@@ -185,6 +185,7 @@ td {
   height: 55px;
   width: 500px;
   border-radius: 0.25rem;
+  text-align: center;
 }
 
 .employee-input-address {
