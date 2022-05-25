@@ -2,7 +2,7 @@ import './Sidebar.css';
 import { useDispatch, useSelector } from "react-redux";
 import React, { useState, useEffect, useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
-import { Navigate, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {logout} from "../../Slices/user/userSlice";
 import {resetProject} from "../../Slices/projectSlice/activeProjectSlice"
 

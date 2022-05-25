@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { postLogin } from "../../Slices/user/requests/postLogin";
-import { resetErrorMsg } from "../../Slices/user/userSlice";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import './loginStyle.css';
+
 const LoginComp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

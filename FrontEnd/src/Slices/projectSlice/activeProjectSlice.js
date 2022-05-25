@@ -1,5 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { userReducers } from "../user/reducers/reducers";
+import { createSlice } from "@reduxjs/toolkit";
 
 const activeProjectSlice = createSlice({
   name: 'activeProjectSlice',
