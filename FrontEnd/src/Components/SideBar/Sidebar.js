@@ -1,5 +1,5 @@
 import './Sidebar.css';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import React, { useState, useEffect, useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import {useNavigate} from "react-router-dom";
@@ -21,15 +21,13 @@ export const Sidebar = (props) => {
 
 const DropdownMenu = () => {
   let navigate = useNavigate();
-  const [activeMenu, setActiveMenu] = useState('main1');
+  const activeMenu = "main";
   const [menuHeight, setMenuHeight] = useState(null);
   const dropdownRef = useRef(null);
   const dispatch = useDispatch();
   const redirectToProjectSelecion = () => {
     navigate('/');
   }
-
-  const activeProject = useSelector((state) => state.activeProject.projectName);
 
   useEffect(() => {
     setMenuHeight(dropdownRef.current?.firstChild.offsetHeight)
@@ -47,18 +45,10 @@ const DropdownMenu = () => {
     dispatch(resetProject())
     navigateLogin("/login");
   }
-
-  // function DropdownItem(props) {
-  //   return (
-  //     <button onClick={redirectToProjectSelecion} className="sidebar-button" >
-  //       {props.children}
-  //     </button>
-  //   );
-  // }
   return (
     <div className="sidebar-dropdown" style={{ height: menuHeight }} ref={dropdownRef}>
       <CSSTransition
-        in={activeMenu === 'main1'}
+        in={activeMenu === 'main'}
         timeout={500}
         unmountOnExit
         onEnter={calcHeight}>
