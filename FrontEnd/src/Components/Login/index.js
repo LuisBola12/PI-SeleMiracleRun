@@ -28,12 +28,13 @@ const LoginComp = () => {
       <div className="logIn-logo-box">
         <div className="logIn-logo-AppName">
           <div className="logIn-logo"></div>
-          <div className="logIn-AppName">Sistema Planillas</div>
+          <div className="logIn-AppName">Playroll System</div>
         </div>
-        <p className="logIn-text"> Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-          Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-          when an unknown printer took a galley of type and scrambled it to make a type
-          specimen book.</p>
+        <p className="logIn-text">  Our payroll system seeks to help manage your payments
+                                    in an autonomous and simplified way, making sure to 
+                                    accomplish the disposals of the worker's law, as well 
+                                    as those benefits and needs that the employee requests.
+        </p>
       </div>
       <div className="logIn-box">
         <div className="logIn-email-div">
