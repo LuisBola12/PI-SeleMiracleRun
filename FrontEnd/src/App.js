@@ -12,6 +12,8 @@ import Login from './Pages/login'
 import Register from './Pages/register';
 import PrivateRoute from './Components/PrivateRoute/index';
 import Unauthoraized from './Pages/Unauthoraized';
+import { CreateNewBenefit } from './Pages/CreateNewBenefit';
+
 
 function App() {
 
@@ -43,6 +45,9 @@ function App() {
         </Route>
         <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
           <Route path="employees/CreateEmployee" element={<CreateNewEmployee />} />
+        </Route>
+        <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
+          <Route path="benefits/CreateBenefit" element={<CreateNewBenefit />} />
         </Route>
       </Routes>
     </Router>

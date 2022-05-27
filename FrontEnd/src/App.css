@@ -78,16 +78,17 @@
 
 }
 
-.button:hover {
-  color: #15cdfc;
-}
 
 .create-button:hover {
-  color: #15cdfc;
+  background-color: rgb(3, 119, 3);
 }
 
 .cancel-button {
   background-color: darkred;
+}
+
+.cancel-button:hover {
+  background-color: rgb(172, 1, 1);
 }
 
 .create-button {
