@@ -1,0 +1,177 @@
+//  <div className="user-head">
+//         <img className="user-img" alt="user" src={user_icon}></img>
+//         <p className="user-tag">New Employee</p>
+//       </div>
+//       <div className="form-group">
+//         <FormGroup className="forms-create-employee">
+//           <label className="employee-label" htmlFor="name">
+//             First Name:{" "}
+//           </label>
+//           <input
+//             className="employee-input"
+//             type="text"
+//             id="name"
+//             maxLength={15}
+//             placeholder="Enter First Name"
+//             value={name}
+//             onChange={(e) => setName(e.target.value)}
+//           />
+//         </FormGroup>
+//         <FormGroup className="forms-create-employee">
+//           <label className="employee-label" htmlFor="last-name">
+//             Last Name:{" "}
+//           </label>
+//           <input
+//             className="employee-input"
+//             type="text"
+//             id="last-name"
+//             placeholder="Enter Last Name"
+//             value={lastname}
+//             maxLength={15}
+//             onChange={(e) => setLastName(e.target.value)}
+//           />
+//         </FormGroup>
+//         <FormGroup className="forms-create-employee">
+//           <label className="employee-label" htmlFor="last-name">
+//             Second Last Name:{" "}
+//           </label>
+//           <input
+//             className="employee-input"
+//             type="text"
+//             id="second-last-name"
+//             placeholder="Enter Second Last Name"
+//             value={secondlastname}
+//             maxLength={15}
+//             onChange={(e) => setSecondLastName(e.target.value)}
+//           />
+//         </FormGroup>
+//         <FormGroup className="forms-create-employee">
+//           <label className="employee-label" htmlFor="id-card">
+//             ID Card:{" "}
+//           </label>
+//           <input
+//             className="employee-input"
+//             type="text"
+//             id="id-card"
+//             placeholder="Enter an ID Card"
+//             value={id}
+//             maxLength={15}
+//             onChange={(e) => setID(e.target.value)}
+//           />
+//         </FormGroup>
+//         <FormGroup className="forms-create-employee">
+//           <label className="employee-label" htmlFor="email">
+//             Email:{" "}
+//           </label>
+//           <input
+//             className="employee-input"
+//             type="text"
+//             id="email"
+//             placeholder="Enter an Email Address"
+//             value={email}
+//             maxLength={50}
+//             onChange={(e) => setEmail(e.target.value)}
+//           />
+//         </FormGroup>
+//         <FormGroup className="forms-create-employee">
+//           <label className="employee-label" htmlFor="password">
+//             Password:{" "}
+//           </label>
+//           <input
+//             className="employee-input"
+//             type="password"
+//             id="password"
+//             placeholder="Enter a Password"
+//             value={password}
+//             maxLength={20}
+//             onChange={(e) => setPassword(e.target.value)}
+//           />
+//         </FormGroup>
+//         <FormGroup className="forms-create-employee">
+//           <label className="employee-label" htmlFor="phone-number">
+//             Phone Number:{" "}
+//           </label>
+//           <input
+//             className="employee-input"
+//             type="number"
+//             id="phone-number"
+//             placeholder="Enter a Phone Number"
+//             value={phoneNumber}
+//             onChange={(e) => setPhoneNumber(e.target.value)}
+//           />
+//         </FormGroup>
+//         <FormGroup className="forms-create-employee">
+//           <label className="employee-label" htmlFor="contract">
+//             Type of Contract:{" "}
+//           </label>
+//           <select
+//             className="dropdown-Contract"
+//             onChange={(e) => {
+//               setContractOption(e);
+//             }}
+//           >
+//             {typeOfContracts.map((element) => (
+//               <option key={element.TipoJornada} value={element.TipoJornada}>{element.TipoJornada}</option>
+//             ))}
+//           </select>
+//         </FormGroup>
+//         <FormGroup className="forms-create-employee">
+//           <label className="employee-label" htmlFor="hourly-wage">
+//             Hired Until
+//           </label>
+//           <input
+//             className="employee-hired-until"
+//             type="date"
+//             value={contractDeadline}
+//             onChange={(e) => setContractDeadline(e.target.value)}
+//           />
+//         </FormGroup>
+//         <FormGroup className={otherContractCSS}>
+//           <label className="employee-label" htmlFor="hourly-wage">
+//             Hourly Wage:{" "}
+//           </label>
+//           <input
+//             className="employee-input"
+//             type="number"
+//             id="hourly-wage"
+//             placeholder="Enter a Hourly Wage"
+//             value={hWage}
+//             onChange={(e) => setHWage(e.target.value)}
+//           />
+//         </FormGroup>
+//         <FormGroup className={serviceCSS}>
+//           <label className="employee-label" htmlFor="hourly-wage">
+//             Service Name:{" "}
+//           </label>
+//           <input
+//             className="employee-input"
+//             type="text"
+//             placeholder="Enter a Service Name"
+//             value={serviceName}
+//             maxLength={50}
+//             onChange={(e) => setServiceName(e.target.value)}
+//           />
+//         </FormGroup>
+//         <FormGroup className={serviceCSS}>
+//           <label className="employee-label" htmlFor="hourly-wage">
+//             Service Value:{" "}
+//           </label>
+//           <input
+//             className="employee-input"
+//             type="number"
+//             placeholder="Enter a Service Value"
+//             value={serviceValue}
+//             onChange={(e) => setserviceValue(e.target.value)}
+//           />
+//         </FormGroup>
+
+//         <button className="submit-btn-employee" onClick={() => { submitEmployee() }}>
+//           Submit
+//         </button>
+//         <button className="back-btn-employee" onClick={() => { back() }}>
+//           Back
+//         </button>
+//       </div>
+//       <div className="submit-cancel-employee">
+//       </div>
+      
