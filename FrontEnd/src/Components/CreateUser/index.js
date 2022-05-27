@@ -5,7 +5,7 @@ import { postLogin } from "../../Slices/user/requests/postLogin";
 import { usePostUserFromDatabase } from "./usePostUserFromDatabase";
 import { resetErrorMsg } from "../../Slices/user/userSlice";
 
-import './createUserStyle.css';
+import './createUserStyle.scss';
 
 export const CreateUser = () => {
   const {registerUser, email, setEmail, password, setPassword, 
@@ -56,7 +56,7 @@ export const CreateUser = () => {
           <FormGroup>
               <div className="register-title-atribute">First Name</div>
               <input
-                className="register-atribute-input"
+                className="register-atribute-input-name"
                 maxLength="15"
                 type="text"
                 id="name"
@@ -68,7 +68,7 @@ export const CreateUser = () => {
           <FormGroup>
           <div className="register-title-atribute">First Last Name</div>
             <input
-              className="register-atribute-input"
+              className="register-atribute-input-name"
               maxLength="15"
               type="text"
               id="last-name1"
@@ -80,7 +80,7 @@ export const CreateUser = () => {
           <FormGroup>
           <div className="register-title-atribute">Second Last Name</div>
             <input
-              className="register-atribute-input"
+              className="register-atribute-input-name"
               maxLength="15"
               type="text"
               id="last-name2"
@@ -94,7 +94,7 @@ export const CreateUser = () => {
           <FormGroup>
           <div className="register-title-atribute">ID Card</div>
             <input
-              className="register-atribute-input"
+              className="register-atribute-input-id"
               maxLength="15"
               type="text"
               id="id-card"
@@ -105,23 +105,23 @@ export const CreateUser = () => {
           </FormGroup>
 
           <FormGroup>
-          <div className="register-title-atribute">Phone Number</div>
           <input
-            className="register-atribute-input"
+            className="register-atribute-input-id"
             maxLength="8"
             type="text"
             id="phone-number"
-            placeholder="Phone Number"
+            placeholder=" "
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
           />
+           <label for="phone-number" className="register-label">Phone Number</label>
         </FormGroup>
         </div>
         <div className="register-email-password">
           <FormGroup>
           <div className="register-title-atribute">Email</div>
             <input
-              className="register-atribute-input"
+              className="register-atribute-input-email"
               maxLength="50"
               type="text"
               id="email"
@@ -133,7 +133,7 @@ export const CreateUser = () => {
           <FormGroup>
           <div className="register-title-atribute">Password</div>
             <input
-              className="register-atribute-input"
+              className="register-atribute-input-email"
               maxLength="20"
               type="password"
               id="password"
