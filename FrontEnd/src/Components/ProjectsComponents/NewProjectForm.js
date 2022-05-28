@@ -7,7 +7,7 @@ import { useAddNewProject } from './useAddNewProject';
 
 const NewProjectForm = ({ actualData, setActualData, }) => {
   const [viewModal, setViewModal] = useState(false);
-  const { addToTable, name, setName, setPaymentPeriod, warning, setWarning } = useAddNewProject(actualData, setActualData);
+  const { addToTable, name, setName, setPaymentPeriod, warning, setWarning, benefitsMaxAmount, setBenefitsMaxAmount, maxQuantityOfBenefits, setMaxQuantityOfBenefits } = useAddNewProject(actualData, setActualData);
 
   return (
     <>
@@ -42,6 +42,29 @@ const NewProjectForm = ({ actualData, setActualData, }) => {
               <option >Semanal</option>
             </Form.Select>
           </FormGroup>
+
+          <FormGroup className='modal-element'>
+            <label className='modal-element'>Max Quantity of Benefits Per Employee</label>
+            <input
+              className="form-control"
+              type="number"
+              placeholder='0'
+              value={maxQuantityOfBenefits}
+              onChange={(e) => setMaxQuantityOfBenefits(e.target.value)}
+            ></input>
+          </FormGroup>
+
+          <FormGroup className='modal-element'>
+            <label className='modal-element'>Max Money In Benefits Per Employe</label>
+            <input
+              className="form-control"
+              type="number"
+              placeholder='0'
+              value={benefitsMaxAmount}
+              onChange={(e) => setBenefitsMaxAmount(e.target.value)}
+            ></input>
+          </FormGroup>
+
 
 
         </ModalBody>

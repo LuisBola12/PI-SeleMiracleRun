@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useSelector } from "react-redux";
+
+
 const submitNewProject = async (name, paymentPeriod, emailFromUser) => {
   const postFetch = await fetch("http://localhost:4000/projects", {
     method: 'POST',
@@ -22,7 +24,9 @@ export const useAddNewProject = (actualData, setActualData) => {
   const [paymentPeriod, setPaymentPeriod] = useState('Mensual');
   const [warning, setWarning,] = useState('');
   const emailFromUser = useSelector((state) => state.user.user.Email);
+  const [benefitsMaxAmount, setBenefitsMaxAmount] = useState();
 
+  const [maxQuantityOfBenefits, setMaxQuantityOfBenefits] = useState();
 
   const addNewEntry = (newEntry) => {
     setActualData([...actualData, newEntry]);
@@ -60,6 +64,7 @@ export const useAddNewProject = (actualData, setActualData) => {
     name, setName,
     paymentPeriod, setPaymentPeriod,
     warning, setWarning,
-    addToTable
+    addToTable,
+    benefitsMaxAmount, setBenefitsMaxAmount
   }
 }
