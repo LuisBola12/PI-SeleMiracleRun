@@ -29,7 +29,8 @@ export const CreateEmployee = () => {
         document.getElementById("error-email-input").innerHTML = "You must enter a valid format for an email.";
         document.getElementById("email-employee").style.borderColor = "red";
       }else{
-        document.getElementById("email-employee").style.borderColor = "black";
+        document.getElementById("error-email-input").style.display = "";
+        document.getElementById("email-employee").style.borderColor = "gray";
         validCount++;
       }
     }else{
@@ -43,9 +44,11 @@ export const CreateEmployee = () => {
         document.getElementById("error-password-input").style.display = "inline";
         document.getElementById("error-password-input").innerHTML = "Password must be 6 characters longer and have at least 2 words.";
         document.getElementById("password-employee").style.borderColor = "red";
+      }else{
+        document.getElementById("error-password-input").style.display = "";
+        document.getElementById("password-employee").style.borderColor = "gray";
+        validCount++;
       }
-      document.getElementById("password-employee").style.borderColor = "black";
-      validCount++;
     }else{
       document.getElementById("error-password-input").style.display = "inline";
       document.getElementById("error-password-input").innerHTML = "Please enter a password.";
@@ -57,7 +60,8 @@ export const CreateEmployee = () => {
       document.getElementById("error-name-input").innerHTML = "Please enter a name.";
       document.getElementById("name-employee").style.borderColor = "red";
     }else{
-      document.getElementById("name-employee").style.borderColor = "black";
+      document.getElementById("error-name-input").style.display = "";
+      document.getElementById("name-employee").style.borderColor = "gray";
       validCount++;
     }
   
@@ -66,7 +70,8 @@ export const CreateEmployee = () => {
       document.getElementById("error-first-lastname-input").innerHTML = "Please enter a first last name.";
       document.getElementById("first-last-name-employee").style.borderColor = "red";
     }else{
-      document.getElementById("first-last-name-employee").style.borderColor = "black";
+      document.getElementById("error-first-lastname-input").style.display = "";
+      document.getElementById("first-last-name-employee").style.borderColor = "gray";
       validCount++;
     }
   
@@ -75,24 +80,28 @@ export const CreateEmployee = () => {
       document.getElementById("error-second-lastname-input").innerHTML = "Please enter a second last name.";
       document.getElementById("second-last-name-employee").style.borderColor = "red";
     }else{
-      document.getElementById("second-last-name-employee").style.borderColor = "black";
+      document.getElementById("error-second-lastname-input").style.display = "";
+      document.getElementById("second-last-name-employee").style.borderColor = "gray";
       validCount++;
     }
     if(id){
       if(!validateId(id)){
         document.getElementById("error-id-employee").style.display = "inline";
-        document.getElementById("error-id-employee").innerHTML = "Id must follow the Costa Rica formt.";
+        document.getElementById("error-id-employee").innerHTML = "Id must follow the Costa Rican format.";
         document.getElementById("id-employee").style.borderColor = "red";
+      }else{
+        document.getElementById("error-id-employee").style.display = "";
+        document.getElementById("id-employee").style.borderColor = "gray";
+        validCount++;
       }
-      document.getElementById("id-employee").style.borderColor = "black";
-      validCount++;
     }else{
       document.getElementById("error-id-employee").style.display = "inline";
       document.getElementById("error-id-employee").innerHTML = "Please enter an Id.";
       document.getElementById("id-employee").style.borderColor = "red";
     }
     if(contract){
-      document.getElementById("contract-employee").style.borderColor = "black";
+      document.getElementById("error-contract-input").style.display = "";
+      document.getElementById("contract-employee").style.borderColor = "gray";
       validCount++;
     }else{
       document.getElementById("error-contract-input").style.display = "inline";
@@ -244,9 +253,9 @@ export const CreateEmployee = () => {
   return !contractsReceived ? <div className="loader"></div> : (
     <>
       <div className="employees-form">
-        <div className="form-title-employee">
+        <div className="form-title-bar">
           <div className="image-employee"></div>
-          Create Employee
+          <div className="form-title-employee"> Create Employee </div>
         </div>
         <div className="form-name-employee">
           <div>
@@ -386,12 +395,12 @@ export const CreateEmployee = () => {
                   <label for="service-name-employee" className="animated-input-employee-other-contract__label">Hourly Wage</label>
             </div>
         </div>
-        <div className="buttons">
-          <button className="create-benefit-btn" 
+        <div className="buttons-employee">
+          <button className="create-employee-btn" 
           onClick={()=>{validateAll()}}>
             create
           </button>
-          <button className="cancel-benefit-btn" >
+          <button className="cancel-employee-btn" >
             cancel
           </button>
         </div>
