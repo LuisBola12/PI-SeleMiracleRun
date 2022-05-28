@@ -37,6 +37,7 @@ export const queries = {
 
   // Benefit queries
   getBenefits: "Select Nombre, CostoActual from Beneficios where NombreProyecto = @Proyecto",
+  getBenefitsByName: "select Nombre from Beneficios where Nombre = @Nombre and NombreProyecto = @Proyecto",
   getAllEmployers: "Select * From Empleador",
   getEmployerByID: "Select * From Empleador Where Cedula = @Cedula",
   createNewEmployer: "Insert into Empleador (Cedula, Nombre, Apellido1, Apellido2, Telefono, Email) values(@Cedula, @Nombre, @Apellido1, @Apellido2, @Telefono, @Email)",

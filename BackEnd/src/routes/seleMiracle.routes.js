@@ -4,7 +4,7 @@ import { getEmployerByID, getUsers, getUserByEmail, verifyCredentials, registerN
 import { getEmployees, postNewEmployee, getEmployeeByID, verifyEmployeeContractOnProject } from '../controllers/employees.contoller'
 import { getVolDeductions, createNewVolDeduction } from "../controllers/volDeductions.controller";
 import { getTypeOfContracts } from "../controllers/contracts.controller";
-import { getBenefits, createBenefit } from "../controllers/benefits.controller";
+import { getBenefits, createBenefit, getBenefitsByName } from "../controllers/benefits.controller";
 import { createNewEmployer, getEmployer } from "../controllers/employer.controller";
 
 const router = Router();
@@ -40,6 +40,7 @@ router.post('/projects', createProject);
 
 //Benefits
 router.get('/benefits/:Proyecto', getBenefits);
+router.get('/benefits/:Proyecto/:Nombre', getBenefitsByName);
 router.post('/benefits', createBenefit);
 
 
