@@ -47,6 +47,12 @@
     margin-top: 8rem;
 }
 
+.register-form-full-name {
+    justify-content: center;
+    display: flex;
+    gap: 0.6rem;
+}
+
 .register-animated-input-name {
   position: relative;
   width: 12rem;
@@ -118,6 +124,13 @@
     margin: 0px;
   }
 }
+
+.register-form-id-phone{
+    justify-content: center;
+    display: flex;
+    gap: 0.6rem;
+}
+
 .register-animated-input-id-phone {
     position: relative;
     width: 18.3rem;
@@ -189,6 +202,12 @@
     font-size: 0px;
     margin: 0px;
   }
+}
+
+.register-form-email-password{
+    justify-content: center;
+    display: flex;
+    gap: 0.6rem;
 }
 
 .register-animated-input-email {
@@ -264,30 +283,10 @@
   }
 }
 
-///////////////////////-------------------------------------------
-
-.errorForm{
+.register-error{
     color: #D8000C;
-    margin-top: 50px;
     text-align: center;
-    display: none;
-}
-
-.register-form-full-name {
-    justify-content: center;
-    display: flex;
-    gap: 0.6rem;
-}
-
-.register-form-id-phone{
-    justify-content: center;
-    display: flex;
-    gap: 0.6rem;
-}
-.register-form-email-password{
-    justify-content: center;
-    display: flex;
-    gap: 0.6rem;
+   font-size: 0.7rem;
 }
 
 .register-btn-box {
@@ -332,7 +331,7 @@
     box-shadow: 0px 2px 8px 0px rgba(62, 62, 62, 0.55);
   }
 
-.logIn-footerCopyRights{
+.register-footerCopyRights{
     position: absolute;
     bottom: 0;
     color: #133c54;
