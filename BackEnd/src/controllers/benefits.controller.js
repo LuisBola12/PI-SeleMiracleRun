@@ -14,6 +14,21 @@ export const getBenefits = async (req, res) => {
   }
 };
 
+export const getBenefitsByName = async (req, res) => {
+  const { Proyecto, Nombre } = req.params;
+  try {
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input('Nombre', Nombre)
+      .input('Proyecto', Proyecto)
+      .query(queries.getBenefitsByName);
+    res.json(result.recordset);
+  } catch (e) {
+    res.status(500);
+    res.send(e.message);
+  }
+};
+
 export const createBenefit = async (req, res) => {
   const { Nombre, NombreProyecto, CostoActual } = req.body;
   if (Nombre == null || CostoActual == null || NombreProyecto == null) {

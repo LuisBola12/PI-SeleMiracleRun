@@ -70,7 +70,7 @@ GET {{apiProjects}}/josefR@example.com
 GET  {{apiVolDeductions}}/Radiadores Solceri
 
 ###
-GET {{apiBenefits}}/Radiadores Solceri
+GET {{apiBenefits}}/Taquería Milagro/Prueba2
 
 ###
 GET {{apiContracts}}

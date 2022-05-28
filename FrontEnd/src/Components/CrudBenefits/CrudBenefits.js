@@ -3,16 +3,25 @@ import {
 } from "reactstrap";
 import '../../App.css'
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BenefitsModal } from "./BenefitsModal";
 import { useGetBenefitsFromDatabase } from "./useGetBenefitsFromDatabase";
+import { useNavigate } from "react-router-dom";
+
+
+
 
 export const CrudBenefits = () => {
-  const { data, setData, infoReceived } = useGetBenefitsFromDatabase();
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate("/benefits/CreateBenefit")
+  }
+  const { data, infoReceived } = useGetBenefitsFromDatabase();
   return !infoReceived ? <div className="loader" ></div > : (
     <>
       <Container className="content-container">
         <br />
-        <BenefitsModal data={data} setData={setData} />
+        <button className="create-button"
+          onClick={handleClick}
+        >Create New Benefit</button>
         <br />
         <table className="Table">
           <thead>
