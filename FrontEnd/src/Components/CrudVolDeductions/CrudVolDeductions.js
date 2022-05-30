@@ -1,16 +1,22 @@
 import { Container } from "reactstrap";
 import '../../App.css'
 import "bootstrap/dist/css/bootstrap.min.css";
-import { VolDeductionsModal } from "./VolDeductionsModal";
 import { useGetVolDeductionsFromDatabase } from "./useGetVolDeductionsFromDatabase";
+import { useNavigate } from "react-router-dom";
 
 export const CrudVolDeductions = () => {
-  const { data, setData, infoReceived } = useGetVolDeductionsFromDatabase();
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate("/volDeductions/CreateVolDeductions")
+  }
+  const { data, infoReceived } = useGetVolDeductionsFromDatabase();
   return !infoReceived ? <div className="loader" ></div > : (
     <>
       <Container className="content-container">
         <br />
-        <VolDeductionsModal data={data} setData={setData} />
+        <button className="create-button"
+          onClick={handleClick}
+        >Create New Voluntary Deduction</button><br />
         <br />
         <table className="Table">
           <thead>
