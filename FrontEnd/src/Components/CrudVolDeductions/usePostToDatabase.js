@@ -22,6 +22,6 @@ export const usePostToDatabase = (data, setData) => {
   }
 
   return {
-    name, setName, cost, setCost, submitBenefit
+    name, setName, cost, setCost, submitVolDeduction
   }
 }
