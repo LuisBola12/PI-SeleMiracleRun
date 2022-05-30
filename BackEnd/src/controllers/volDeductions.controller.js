@@ -14,12 +14,24 @@ export const getVolDeductions = async (req, res) => {
   }
 };
 
+export const getVolDeductionsByName = async (req, res) => {
+  const { NombreProyecto, Nombre } = req.params;
+  try {
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input('Nombre', Nombre)
+      .input('NombreProyecto', NombreProyecto)
+      .query(queries.getVolDeductionsByName);
+    res.json(result.recordset);
+  } catch (e) {
+    res.status(500);
+    res.send(e.message);
+  }
+};
+
 export const createNewVolDeduction = async (req, res) => {
-  const { NombreProyecto } = req.body;
-  const { Nombre } = req.body;
-  const { PorcentajeEmpleador } = req.body;
-  const { PorcentajeEmpleado } = req.body; 
-  if (Nombre == null || NombreProyecto == null) {
+  const { Nombre, NombreProyecto, Costo } = req.body;
+  if (Nombre == null || NombreProyecto == null || Costo == null) {
     const message = "Bad Request. Please Fill All Fields.";
     return res.status(400).json({ msg: message });
   }
@@ -29,11 +41,10 @@ export const createNewVolDeduction = async (req, res) => {
       .request()
       .input("Nombre", sql.VarChar, Nombre)
       .input("NombreProyecto", sql.VarChar, NombreProyecto)
-      .input("PorcentajeEmpleador", sql.Float, PorcentajeEmpleador)
-      .input("PorcentajeEmpleado", sql.Float, PorcentajeEmpleado)
+      .input("Costo", sql.Int, Costo)
       .query(queries.createNewVolDeduction);
     console.log(result);
-    res.json({ Nombre, NombreProyecto, PorcentajeEmpleador, PorcentajeEmpleado});
+    res.json({ Nombre, Costo});
   } catch (e) {
     console.log(`Error: ${e}`);
     res.status(500).send(e.message);
