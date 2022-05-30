@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { FormGroup } from "reactstrap";
-import user_icon from "./user_icon2.png";
 import history from "../../history";
 import { useSelector } from 'react-redux';
+import './CreateEmployeesStyle.scss'
+import { validateEmail, validateId, validateName, validatePassword } from './../../Validate';
 
 export const CreateEmployee = () => {
   const activeProject = useSelector((state) => state.activeProject.projectName);
@@ -23,7 +23,76 @@ export const CreateEmployee = () => {
   const [serviceCSS, setServiceCSS] = useState("forms-create-employee-service");
   const [otherContractCSS, setOtherContractCSS] = useState("forms-create-employee-hwage");
 
-
+  const validateForm = () =>{
+    let validCount =0;
+    if(email){
+      if(!validateEmail(email)){
+        document.getElementById("email-employee").display = "inline";
+        document.getElementById("email-employee").innerHTML = "You must enter a valid format for an email.";
+        document.getElementById("error-email-input").style.borderColor = "red";
+      }
+      document.getElementById("email-employee").style.borderColor = "black";
+      validCount++;
+    }else{
+      document.getElementById("email-employee").style.borderColor = "red";
+    }
+    if(password){
+      if(!validatePassword(password)){
+        document.getElementById("error-password-input").display = "inline";
+        document.getElementById("error-password-input").innerHTML = "Password must be 6 characters longer and have at least 2 words.";
+        document.getElementById("password-employee").style.borderColor = "red";
+      }
+      document.getElementById("password-employee").style.borderColor = "black";
+      validCount++;
+    }else{
+      document.getElementById("password-employee").style.borderColor = "red";
+    }
+    if(!validateName(name)){
+      document.getElementById("error-name-input").display = "inline";
+      document.getElementById("error-name-input").innerHTML = "Please enter a name.";
+      document.getElementById("name-employee").style.borderColor = "red";
+    }else{
+      document.getElementById("name-employee").style.borderColor = "black";
+      validCount++;
+    }
+    if(!validateName(lastname)){
+      document.getElementById("error-first-lastname-input").display = "inline";
+      document.getElementById("error-first-lastname-input").innerHTML = "Please enter a first last name.";
+      document.getElementById("first-last-name-employee").style.borderColor = "red";
+    }else{
+      document.getElementById("first-last-name-employee").style.borderColor = "black";
+      validCount++;
+    }
+    if(!validateName(secondlastname)){
+      document.getElementById("error-second-lastname-input").display = "inline";
+      document.getElementById("error-second-lastname-input").innerHTML = "Please enter a second last name.";
+      document.getElementById("second-last-name-employee").style.borderColor = "red";
+    }else{
+      document.getElementById("second-last-name-employee").style.borderColor = "black";
+      validCount++;
+    }
+    if(id){
+      if(!validateId(id)){
+        document.getElementById("error-id-employee").display = "inline";
+        document.getElementById("error-id-employee").innerHTML = "Id must follow the Costa Rica formt.";
+        document.getElementById("id-employee").style.borderColor = "red";
+      }
+      document.getElementById("id-employee").style.borderColor = "black";
+      validCount++;
+    }else{
+      document.getElementById("error-id-employee").display = "inline";
+      document.getElementById("error-id-employee").innerHTML = "Please enter an Id.";
+      document.getElementById("id-employee").style.borderColor = "red";
+    }
+    if(contract){
+      document.getElementById("contract-employee").style.borderColor = "black";
+      validCount++;
+    }else{
+      document.getElementById("error-contract-input").display = "inline";
+      document.getElementById("error-contract-input").innerHTML = "Please enter a Type of Contract.";
+      document.getElementById("contract-employee").style.borderColor = "red";
+    }
+  }
   const verifyUser = async (Email) => {
     const seleUrl = `http://localhost:4000/users/${email}`;
     try {
@@ -159,182 +228,96 @@ export const CreateEmployee = () => {
   }, []);
   return !contractsReceived ? <div className="loader"></div> : (
     <>
-      <div className="user-head">
-        <img className="user-img" alt="user" src={user_icon}></img>
-        <p className="user-tag">New Employee</p>
-      </div>
-      <div className="form-group">
-        <FormGroup className="forms-create-employee">
-          <label className="employee-label" htmlFor="name">
-            First Name:{" "}
-          </label>
-          <input
-            className="employee-input"
-            type="text"
-            id="name"
-            maxLength={15}
-            placeholder="Enter First Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </FormGroup>
-        <FormGroup className="forms-create-employee">
-          <label className="employee-label" htmlFor="last-name">
-            Last Name:{" "}
-          </label>
-          <input
-            className="employee-input"
-            type="text"
-            id="last-name"
-            placeholder="Enter Last Name"
-            value={lastname}
-            maxLength={15}
-            onChange={(e) => setLastName(e.target.value)}
-          />
-        </FormGroup>
-        <FormGroup className="forms-create-employee">
-          <label className="employee-label" htmlFor="last-name">
-            Second Last Name:{" "}
-          </label>
-          <input
-            className="employee-input"
-            type="text"
-            id="second-last-name"
-            placeholder="Enter Second Last Name"
-            value={secondlastname}
-            maxLength={15}
-            onChange={(e) => setSecondLastName(e.target.value)}
-          />
-        </FormGroup>
-        <FormGroup className="forms-create-employee">
-          <label className="employee-label" htmlFor="id-card">
-            ID Card:{" "}
-          </label>
-          <input
-            className="employee-input"
-            type="text"
-            id="id-card"
-            placeholder="Enter an ID Card"
+      <form className="employees-form">
+        <div className="form-title-employee">
+          <div className="image-employee"></div>
+          Create Employee
+        </div>
+        <div className="form-name-employee">
+          <div className="animated-input-employee">
+            <input type="text" id="name-employee" className="animated-input-employee__input" value = {name} 
+            maxLength={15} onChange={(e) => setName(e.target.value)} autocomplete="off" placeholder=" "></input>
+            <label for="Name" className="animated-input-employee__label">Name<span className="req">*</span></label>
+            <p className="errorForm" id="errorname"></p>
+          </div>
+
+          <div className="animated-input-employee">
+            <input type="text" id="first-last-name-employee" className="animated-input-employee__input" 
+            value={lastname} maxLength={15} onChange={(e) => setLastName(e.target.value)} autocomplete="off" placeholder=" "></input>
+            <label for="first-last-name-employee" className="animated-input-employee__label">First Last Name<span className="req">*</span></label>
+            <p className="errorForm" id="error-first-lastname-input"></p>
+          </div>
+
+          <div className="animated-input-employee">
+            
+            <input type="text" id="second-last-name-employee" className="animated-input-employee__input" 
+            value={secondlastname}maxLength={15}onChange={(e) => setSecondLastName(e.target.value)}autocomplete="off" placeholder=" "></input>
+            <label for="second-last-name-employee" className="animated-input-employee__label">Second Last Name<span className="req">*</span></label>
+            <p className="errorForm" id="error-second-lastname-input"></p>
+          </div>
+        </div>
+        <div className="form-id-phone-employee">
+          <div className="animated-input-employee-id">
+            <input type="text" id="id-employee" className="animated-input-employee-id__input" 
             value={id}
             maxLength={15}
             onChange={(e) => setID(e.target.value)}
-          />
-        </FormGroup>
-        <FormGroup className="forms-create-employee">
-          <label className="employee-label" htmlFor="email">
-            Email:{" "}
-          </label>
-          <input
-            className="employee-input"
-            type="text"
-            id="email"
-            placeholder="Enter an Email Address"
+            autocomplete="off" placeholder=" "></input>
+            <label for="id-employee" className="animated-input-employee-id__label">Id<span className="req">*</span></label>
+            <p className="errorForm" id="error-id-employee"></p>
+          </div>
+          <div className="animated-input-employee-id">
+            <input type="number" id="phone-number" className="animated-input-employee-id__input"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+            autocomplete="off" placeholder=" "></input>
+            <label for="phone-number" className="animated-input-employee-id__label">Phone Number<span className="req">*</span></label>
+
+          </div>
+        </div>
+        <div className="form-credentials-employee">
+          <div className="animated-input-employee-credentials">
+            <input type="text" id="email-employee" className="animated-input-employee-credentials__input" 
             value={email}
             maxLength={50}
             onChange={(e) => setEmail(e.target.value)}
-          />
-        </FormGroup>
-        <FormGroup className="forms-create-employee">
-          <label className="employee-label" htmlFor="password">
-            Password:{" "}
-          </label>
-          <input
-            className="employee-input"
-            type="password"
-            id="password"
-            placeholder="Enter a Password"
+            autocomplete="off" placeholder=" "></input>
+            <label for="email-employee" className="animated-input-employee-credentials__label">Email<span className="req">*</span></label>
+            <p className="errorForm" id="error-email-input"></p>
+          </div>
+          <div className="animated-input-employee-credentials">
+            <input type="text" id="password-employee" className="animated-input-employee-credentials__input" 
             value={password}
             maxLength={20}
             onChange={(e) => setPassword(e.target.value)}
-          />
-        </FormGroup>
-        <FormGroup className="forms-create-employee">
-          <label className="employee-label" htmlFor="phone-number">
-            Phone Number:{" "}
-          </label>
-          <input
-            className="employee-input"
-            type="number"
-            id="phone-number"
-            placeholder="Enter a Phone Number"
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
-          />
-        </FormGroup>
-        <FormGroup className="forms-create-employee">
-          <label className="employee-label" htmlFor="contract">
-            Type of Contract:{" "}
-          </label>
-          <select
-            className="dropdown-Contract"
-            onChange={(e) => {
-              setContractOption(e);
-            }}
-          >
-            {typeOfContracts.map((element) => (
-              <option key={element.TipoJornada} value={element.TipoJornada}>{element.TipoJornada}</option>
-            ))}
+            autocomplete="off" placeholder=" "></input>
+            <p className="errorForm" id="error-password-input"></p>
+            <label for="password-employee" className="animated-input-employee-credentials__label">Password<span className="req">*</span></label>
+          </div>
+        </div>
+        <div className="form-contract-employee">
+          <div className="animated-input-employee-contract">
+          <select id="contract-employee" className="animated-input-employee-contract__input"
+          onChange={(e) => {
+            setContractOption(e);
+            }}>
+          {typeOfContracts.map((element) => (
+            <option key={element.TipoJornada} value={element.TipoJornada}>{element.TipoJornada}</option>
+          ))}
           </select>
-        </FormGroup>
-        <FormGroup className="forms-create-employee">
-          <label className="employee-label" htmlFor="hourly-wage">
-            Hired Until
-          </label>
-          <input
-            className="employee-hired-until"
-            type="date"
-            value={contractDeadline}
-            onChange={(e) => setContractDeadline(e.target.value)}
-          />
-        </FormGroup>
-        <FormGroup className={otherContractCSS}>
-          <label className="employee-label" htmlFor="hourly-wage">
-            Hourly Wage:{" "}
-          </label>
-          <input
-            className="employee-input"
-            type="number"
-            id="hourly-wage"
-            placeholder="Enter a Hourly Wage"
-            value={hWage}
-            onChange={(e) => setHWage(e.target.value)}
-          />
-        </FormGroup>
-        <FormGroup className={serviceCSS}>
-          <label className="employee-label" htmlFor="hourly-wage">
-            Service Name:{" "}
-          </label>
-          <input
-            className="employee-input"
-            type="text"
-            placeholder="Enter a Service Name"
-            value={serviceName}
-            maxLength={50}
-            onChange={(e) => setServiceName(e.target.value)}
-          />
-        </FormGroup>
-        <FormGroup className={serviceCSS}>
-          <label className="employee-label" htmlFor="hourly-wage">
-            Service Value:{" "}
-          </label>
-          <input
-            className="employee-input"
-            type="number"
-            placeholder="Enter a Service Value"
-            value={serviceValue}
-            onChange={(e) => setserviceValue(e.target.value)}
-          />
-        </FormGroup>
-
-        <button className="submit-btn-employee" onClick={() => { submitEmployee() }}>
-          Submit
-        </button>
-        <button className="back-btn-employee" onClick={() => { back() }}>
-          Back
-        </button>
-      </div>
-      <div className="submit-cancel-employee">
-      </div>
+          <label for="contract-employee" className="animated-input-employee-contract__label">Type of Contract<span className="req">*</span></label>
+          </div>
+          <p className="errorForm" id="error-contract-input"></p>
+        </div>
+        <div className="buttons">
+          <button className="create-benefit-btn" >
+            create
+          </button>
+          <button className="cancel-benefit-btn" >
+            cancel
+          </button>
+        </div>
+      </form>
     </>
   );
 };
