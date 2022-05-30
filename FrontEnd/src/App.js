@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Benefits from './Pages/benefits';
 import Employees from './Pages/employees';
 import VolDeductions from './Pages/volDeductions';
+import { CreateNewVolDeduction } from './Pages/CreateNewVolDeduction';
 import Contracts from './Pages/contracts';
 import SelectProject from './Pages/payrollProjects/SelectProject';
 import { CreateNewEmployee } from './Pages/createNewEmployee';
@@ -36,6 +37,9 @@ function App() {
         </Route>
         <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
           <Route path="volDeductions" element={<VolDeductions />} />
+        </Route>
+        <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
+          <Route path="volDeductions/CreateVolDeductions" element={<CreateNewVolDeduction />} />
         </Route>
         <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
           <Route path="projectAdmin" element={<SelectProject />} />
