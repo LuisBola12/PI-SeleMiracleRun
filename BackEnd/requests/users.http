@@ -67,7 +67,7 @@ GET {{apiEmployees}}/Radiadores Solceri
 GET {{apiProjects}}/josefR@example.com
 
 ###
-GET  {{apiVolDeductions}}/Radiadores Solceri
+GET  {{apiVolDeductions}}/Taquería Milagro
 
 ###
 GET {{apiBenefits}}/Taquería Milagro/Prueba2
@@ -101,9 +101,8 @@ Content-Type: application/json
 
 {
   "Nombre":"Prueba",
-  "NombreProyecto": "Radiadores Solceri",
-  "PorcentajeEmpleador": 0.0,
-  "PorcentajeEmpleado": 0.0
+  "NombreProyecto": "Taquería Milagro",
+  "Costo": 0
 }
 
 ###
