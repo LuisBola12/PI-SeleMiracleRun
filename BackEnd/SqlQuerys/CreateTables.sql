@@ -68,8 +68,7 @@ Create Table Beneficios(
 Create Table DeduccionesVoluntarias(
 	Nombre varchar(50),
 	NombreProyecto varchar(50),
-	PorcentajeEmpleador float not null,
-	PorcentajeEmpleado float not null,
+	Costo real default 0,
 	primary key(Nombre,NombreProyecto),
 	foreign key(NombreProyecto) references Proyecto(Nombre) on update cascade on delete cascade
 );
