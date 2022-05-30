@@ -1,41 +1,96 @@
-import { FormGroup } from "reactstrap";
 import '../../App.css'
 import './CreateVolDeduction.scss'
 import { usePostToDatabase } from "./usePostToDatabase";
+import { useNavigate } from "react-router-dom";
+import { useGetVolDeductionsFromDatabase } from './useGetVolDeductionsFromDatabase';
+
 
 export const CreateVolDeduction = () => {
-  const { name, setName, cost, setCost, viewModal, setViewModal, addToTable } = usePostToDatabase();
+  const { name, setName, cost, setCost, submitVolDeduction } = usePostToDatabase();
+  const { verifyNames } = useGetVolDeductionsFromDatabase();
+  const navigate = useNavigate();
+
+  const submit = async () => {
+    const notExit = await verifyNames(name);
+    if (notExit === true) {
+      submitVolDeduction();
+      setName("");
+      setCost("");
+      navigate("/VolDeductions")
+    } else {
+      alert("Deducción voluntaria existente")
+    }
+  }
+
+  const cheackNumber = (value) => {
+    return String(value).toLowerCase().match(/^[0-9]*$/)
+  }
   return (
     <>
-      <form className="volDeductions-form">
+      <div className="volDeductions-form">
         <div className="form-title">
           <div className="image-volDeduction"></div>
           Create Voluntary Deduction
         </div>
-        <div className="form-group-volDeduction">
+        <div className="form-group-volDeductions">
           <div className="animated-input">
-            <input type="text" id="Name" className="animated-input__input" autocomplete="off" placeholder=" "></input>
-            <label for="Name" className="animated-input__label">Name<span className="req">*</span></label>
+            <input
+              type="text"
+              id="Name"
+              className="animated-input__input"
+              autoComplete="off"
+              placeholder=" "
+              value={name}
+              onChange={(e) => setName(e.target.value)}>
+            </input>
+            <label htmlFor="Name" className="animated-input__label">Name<span className="req">*</span></label>
           </div>
 
           <div className="animated-input">
-            <input type="Number" id="Cost" className="animated-input__input" autocomplete="off" placeholder=" "></input>
-            <label for="Cost" className="animated-input__label">Cost<span className="req">*</span></label>
+            <input
+              type="text"
+              id="Cost"
+              className="animated-input__input"
+              autoComplete="off"
+              placeholder=" "
+              value={cost}
+              onChange={(e) => { if (cheackNumber(e.target.value)) { setCost(e.target.value) } }}
+            ></input>
+            <label htmlFor="Cost" className="animated-input__label">Cost<span className="req">*</span></label>
           </div>
         </div>
         <div className="animated-input">
-          <textarea type="Description" id="Description" className="animated-input__textarea" autocomplete="off" placeholder=" "></textarea>
-          <label for="Description" className="animated-input__label">Description</label>
+          <textarea
+            id="Description"
+            className="animated-input__textarea"
+            autoComplete="off" placeholder=" ">
+          </textarea>
+          <label htmlFor="Description" className="animated-input__label">Description</label>
         </div>
         <div className="buttons">
-          <button className="create-volDeduction-btn" >
+          <button
+            className="create-volDeduction-btn"
+            onClick={() => {
+
+              if (name && cost && name.trim().length > 0) {
+                submit();
+              } else {
+                alert("!!!Error!!!");
+              }
+            }}>
             create
           </button>
-          <button className="cancel-volDeduction-btn" >
+          <button
+            className="cancel-volDeduction-btn"
+            onClick={() => {
+              setName("");
+              setCost("");
+              navigate("/volDeductions")
+            }}>
             cancel
           </button>
         </div>
-      </form>
+      </div>
     </>
   )
 };
