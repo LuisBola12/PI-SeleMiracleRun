@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
-export const usePostToDatabase = (data, setData) => {
+export const usePostToDatabase = () => {
   const activeProject = useSelector((state) => state.activeProject.projectName);
   const [name, setName] = useState('');
   const [cost, setCost] = useState('');
