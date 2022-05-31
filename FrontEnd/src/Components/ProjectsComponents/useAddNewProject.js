@@ -27,6 +27,7 @@ export const useAddNewProject = (actualData, setActualData) => {
   const [benefitsMaxAmount, setBenefitsMaxAmount] = useState();
 
   const [maxQuantityOfBenefits, setMaxQuantityOfBenefits] = useState();
+  const [description, setDescription] = useState();
 
   const addNewEntry = (newEntry) => {
     setActualData([...actualData, newEntry]);
@@ -65,6 +66,7 @@ export const useAddNewProject = (actualData, setActualData) => {
     paymentPeriod, setPaymentPeriod,
     warning, setWarning,
     addToTable,
-    benefitsMaxAmount, setBenefitsMaxAmount
+    benefitsMaxAmount, setBenefitsMaxAmount,
+    description, setDescription
   }
 }
