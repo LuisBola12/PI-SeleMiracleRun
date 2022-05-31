@@ -16,7 +16,7 @@ export const usePostToDatabase = () => {
       body: JSON.stringify({
         Nombre: name,
         NombreProyecto: activeProject,
-        CostoActual: parseInt(cost),
+        Costo: parseInt(cost),
       }),
     });
   }
