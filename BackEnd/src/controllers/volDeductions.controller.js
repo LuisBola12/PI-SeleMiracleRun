@@ -30,7 +30,7 @@ export const getVolDeductionsByName = async (req, res) => {
 };
 
 export const createNewVolDeduction = async (req, res) => {
-  const { Nombre, NombreProyecto, Costo } = req.body;
+  const { Nombre, NombreProyecto, Costo, Descripcion } = req.body;
   if (Nombre == null || NombreProyecto == null || Costo == null) {
     const message = "Bad Request. Please Fill All Fields.";
     return res.status(400).json({ msg: message });
@@ -42,9 +42,10 @@ export const createNewVolDeduction = async (req, res) => {
       .input("Nombre", sql.VarChar, Nombre)
       .input("NombreProyecto", sql.VarChar, NombreProyecto)
       .input("Costo", sql.Int, Costo)
+      .input("Descripcion", sql.VarChar, Descripcion)
       .query(queries.createNewVolDeduction);
     console.log(result);
-    res.json({ Nombre, Costo});
+    res.json({ Nombre, Costo, Descripcion});
   } catch (e) {
     console.log(`Error: ${e}`);
     res.status(500).send(e.message);
