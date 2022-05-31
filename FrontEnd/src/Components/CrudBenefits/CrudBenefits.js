@@ -21,7 +21,6 @@ export const CrudBenefits = () => {
           onClick={handleClick}
         >Create New Benefit</button>
         <br />
-        <label style={{ color: 'red' }}>{(data) ? "" : "No benefits added yet"}</label>
         <table className="Table">
           <thead>
             <tr className="table-header">
