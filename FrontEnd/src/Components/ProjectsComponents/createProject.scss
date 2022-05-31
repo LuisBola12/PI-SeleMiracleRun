@@ -81,6 +81,31 @@
     }
   }
 
+  &__textArea {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 12rem;
+    border: 2px solid grey;
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: inherit;
+    color: black;
+    outline: none;
+    padding: 1.25rem;
+    background: none;
+
+    &:hover {
+      border-color: #133c54;
+    }
+
+    &:focus {
+      border-color: #133c54;
+    }
+
+  }
+
   &__dropDown {
     position: absolute;
     top: 0;
@@ -156,12 +181,26 @@
   }
 }
 
+.row-Element__textArea:focus~.row-Element__label,
+.row-Element__textArea:not(:placeholder-shown).row-Element__textArea:not(:focus)~.row-Element__label {
+  top: -0.5rem;
+  font-size: 0.6rem;
+  left: 0.8rem;
+
+  .req {
+    opacity: 0;
+    font-size: 0px;
+    margin: 0px;
+  }
+}
+
 .register-btn-box {
+  margin-top: 9rem;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  margin-top: 1rem;
+
 }
 
 .register-btn-sumbit {
