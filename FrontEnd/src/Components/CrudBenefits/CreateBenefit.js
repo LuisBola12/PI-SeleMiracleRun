@@ -3,7 +3,8 @@ import './CreateBenefit.scss'
 import { usePostToDatabase } from "./usePostToDatabase";
 import { useNavigate } from "react-router-dom";
 import { useGetBenefitsFromDatabase } from './useGetBenefitsFromDatabase';
-
+import { validateBenefitForm } from './validateBenefitForm';
+import { maskCurrency } from '../../shared/moneyFormatTransform';
 
 export const CreateBenefit = () => {
   const { name, setName, cost, setCost, description, setDescription, submitBenefit } = usePostToDatabase();
@@ -16,17 +17,8 @@ export const CreateBenefit = () => {
       submitBenefit();
       navigate("/benefits")
     } else {
-      alert("Beneficio existente")
+      alert("That benefit already exits")
     }
-  }
-
-  const maskCurrency = (e) => {
-    let value = e.target.value
-    value = value.replace(/\D/g, "");
-    value = value.replace(/(\d)(\d{3})$/, "$1.$2");
-    value = value.replace(/(?=(\d{3})+(\D))\B/g, ".");
-    e.target.value = value
-    return e
   }
 
   return (
@@ -37,54 +29,59 @@ export const CreateBenefit = () => {
           Create Benefit
         </div>
         <div className="form-group-benefits">
-          <div className="animated-input">
-            <input
-              type="text"
-              id="Name"
-              className="animated-input__input"
-              autoComplete="off"
-              placeholder=" "
-              maxLength={50}
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            ></input>
-            <label htmlFor="Name" className="animated-input__label">Name<span className="req">*</span></label>
+          <div className='Name-input'>
+            <div className="animated-input">
+              <input
+                type="text"
+                id="Name"
+                className="animated-input__input"
+                autoComplete="off"
+                placeholder=" "
+                maxLength={50}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              ></input>
+              <label htmlFor="Name" className="animated-input__label">Name<span className="req">*</span></label>
+            </div>
+            <label className="error-message" id="benefit-name"></label>
           </div>
-
-          <div className="animated-input">
-            <input
-              type="text"
-              id="Cost"
-              className="animated-input__input"
-              autoComplete="off"
-              placeholder=" "
-              maxLength={50}
-              value={cost}
-              onChange={(e) => setCost(maskCurrency(e).target.value)}
-            ></input>
-            <label htmlFor="Cost" className="animated-input__label">Cost<span className="req">*</span></label>
+          <div className='Cost-input'>
+            <div className="animated-input">
+              <input
+                type="text"
+                id="Cost"
+                className="animated-input__input"
+                autoComplete="off"
+                placeholder=" "
+                maxLength={50}
+                value={cost}
+                onChange={(e) => setCost(maskCurrency(e).target.value)}
+              ></input>
+              <label htmlFor="Cost" className="animated-input__label">Cost<span className="req">*</span></label>
+            </div>
+            <label className="error-message" id="benefit-cost"></label>
           </div>
         </div>
-        <div className="animated-input">
-          <textarea
-            id="Description"
-            className="animated-input__textarea"
-            autoComplete="off" placeholder=" "
-            maxLength={300}
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          ></textarea>
-          <label htmlFor="Description" className="animated-input__label">Description</label>
+        <div>
+          <div className="animated-input">
+            <textarea
+              id="Description"
+              className="animated-input__textarea"
+              autoComplete="off" placeholder=" "
+              maxLength={300}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            ></textarea>
+            <label htmlFor="Description" className="animated-input__label">Description</label>
+            <label className="error-message" id="benefit-description"></label>
+          </div>
         </div>
         <div className="buttons">
           <button
             className="create-benefit-btn"
             onClick={() => {
-
-              if (name && cost && name.trim().length > 0) {
+              if (validateBenefitForm(name, cost) === true) {
                 submit();
-              } else {
-                alert("!!!Error!!!");
               }
             }}>
             create

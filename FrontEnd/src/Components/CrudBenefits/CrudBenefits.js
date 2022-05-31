@@ -5,24 +5,13 @@ import '../../App.css'
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useGetBenefitsFromDatabase } from "./useGetBenefitsFromDatabase";
 import { useNavigate } from "react-router-dom";
-
-
-
+import { transformCost } from "../../shared/moneyFormatTransform";
 
 export const CrudBenefits = () => {
   const navigate = useNavigate();
   const handleClick = () => {
     navigate("/benefits/CreateBenefit")
   }
-
-  const transformCost = (cost) => {
-    let value = cost.toString()
-    value = value.replace(/(\d)(\d{3})$/, "$1.$2");
-    value = value.replace(/(?=(\d{3})+(\D))\B/g, ".");
-    value += ' ₡'
-    return value;
-  }
-
   const { data, infoReceived } = useGetBenefitsFromDatabase();
   return !infoReceived ? <div className="loader" ></div > : (
     <>
