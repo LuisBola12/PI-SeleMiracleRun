@@ -23,6 +23,7 @@ export const CrudVolDeductions = () => {
             <tr className="table-header">
               <th className="table-left-border">Voluntary Deduction </th>
               <th>Cost</th>
+              <th>Description</th>
               <th>Edit</th>
               <th className="table-right-border">Delete</th>
             </tr>
@@ -32,6 +33,7 @@ export const CrudVolDeductions = () => {
               <tr key={element.Nombre}>
                 <td>{element.Nombre}</td>
                 <td>{element.Costo} ₡</td>
+                <td>{element.Descripcion} </td>
                 <td>
                   <button className=" button"> Edit </button>
                 </td>
