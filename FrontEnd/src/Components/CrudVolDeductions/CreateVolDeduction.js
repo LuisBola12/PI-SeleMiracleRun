@@ -6,7 +6,7 @@ import { useGetVolDeductionsFromDatabase } from './useGetVolDeductionsFromDataba
 
 
 export const CreateVolDeduction = () => {
-  const { name, setName, cost, setCost, submitVolDeduction } = usePostToDatabase();
+  const { name, setName, cost, setCost, description, setDescription, submitVolDeduction } = usePostToDatabase();
   const { verifyNames } = useGetVolDeductionsFromDatabase();
   const navigate = useNavigate();
 
@@ -16,6 +16,7 @@ export const CreateVolDeduction = () => {
       submitVolDeduction();
       setName("");
       setCost("");
+      setDescription("");
       navigate("/VolDeductions")
     } else {
       alert("Deducción voluntaria existente")
@@ -61,10 +62,14 @@ export const CreateVolDeduction = () => {
         </div>
         <div className="animated-input">
           <textarea
+            type="text"
             id="Description"
             className="animated-input__textarea"
-            autoComplete="off" placeholder=" ">
-          </textarea>
+            autoComplete="off" 
+            placeholder=" "
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          ></textarea>
           <label htmlFor="Description" className="animated-input__label">Description</label>
         </div>
         <div className="buttons">
@@ -85,6 +90,7 @@ export const CreateVolDeduction = () => {
             onClick={() => {
               setName("");
               setCost("");
+              setDescription("");
               navigate("/volDeductions")
             }}>
             cancel
