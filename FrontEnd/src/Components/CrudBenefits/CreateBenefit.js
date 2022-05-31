@@ -6,7 +6,7 @@ import { useGetBenefitsFromDatabase } from './useGetBenefitsFromDatabase';
 
 
 export const CreateBenefit = () => {
-  const { name, setName, cost, setCost, submitBenefit } = usePostToDatabase();
+  const { name, setName, cost, setCost, description, setDescription, submitBenefit } = usePostToDatabase();
   const { verifyNames } = useGetBenefitsFromDatabase();
   const navigate = useNavigate();
 
@@ -14,17 +14,21 @@ export const CreateBenefit = () => {
     const notExit = await verifyNames(name);
     if (notExit === true) {
       submitBenefit();
-      setName("");
-      setCost("");
       navigate("/benefits")
     } else {
       alert("Beneficio existente")
     }
   }
 
-  const cheackNumber = (value) => {
-    return String(value).toLowerCase().match(/^[0-9]*$/)
+  const maskCurrency = (e) => {
+    let value = e.target.value
+    value = value.replace(/\D/g, "");
+    value = value.replace(/(\d)(\d{3})$/, "$1.$2");
+    value = value.replace(/(?=(\d{3})+(\D))\B/g, ".");
+    e.target.value = value
+    return e
   }
+
   return (
     <>
       <div className="benefits-form">
@@ -40,9 +44,10 @@ export const CreateBenefit = () => {
               className="animated-input__input"
               autoComplete="off"
               placeholder=" "
+              maxLength={50}
               value={name}
-              onChange={(e) => setName(e.target.value)}>
-            </input>
+              onChange={(e) => setName(e.target.value)}
+            ></input>
             <label htmlFor="Name" className="animated-input__label">Name<span className="req">*</span></label>
           </div>
 
@@ -53,8 +58,9 @@ export const CreateBenefit = () => {
               className="animated-input__input"
               autoComplete="off"
               placeholder=" "
+              maxLength={50}
               value={cost}
-              onChange={(e) => { if (cheackNumber(e.target.value)) { setCost(e.target.value) } }}
+              onChange={(e) => setCost(maskCurrency(e).target.value)}
             ></input>
             <label htmlFor="Cost" className="animated-input__label">Cost<span className="req">*</span></label>
           </div>
@@ -63,8 +69,11 @@ export const CreateBenefit = () => {
           <textarea
             id="Description"
             className="animated-input__textarea"
-            autoComplete="off" placeholder=" ">
-          </textarea>
+            autoComplete="off" placeholder=" "
+            maxLength={300}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          ></textarea>
           <label htmlFor="Description" className="animated-input__label">Description</label>
         </div>
         <div className="buttons">
@@ -83,8 +92,6 @@ export const CreateBenefit = () => {
           <button
             className="cancel-benefit-btn"
             onClick={() => {
-              setName("");
-              setCost("");
               navigate("/benefits")
             }}>
             cancel

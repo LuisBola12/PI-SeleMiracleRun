@@ -14,6 +14,15 @@ export const CrudBenefits = () => {
   const handleClick = () => {
     navigate("/benefits/CreateBenefit")
   }
+
+  const transformCost = (cost) => {
+    let value = cost.toString()
+    value = value.replace(/(\d)(\d{3})$/, "$1.$2");
+    value = value.replace(/(?=(\d{3})+(\D))\B/g, ".");
+    value += ' ₡'
+    return value;
+  }
+
   const { data, infoReceived } = useGetBenefitsFromDatabase();
   return !infoReceived ? <div className="loader" ></div > : (
     <>
@@ -28,6 +37,7 @@ export const CrudBenefits = () => {
             <tr className="table-header">
               <th className="table-left-border">Benefit </th>
               <th>Actual Cost</th>
+              <th>Description</th>
               <th>Edit</th>
               <th className="table-right-border">Delete</th>
             </tr>
@@ -36,7 +46,8 @@ export const CrudBenefits = () => {
             {data.map((element) => (
               <tr key={element.Nombre}>
                 <td>{element.Nombre}</td>
-                <td>{element.CostoActual} ₡</td>
+                <td>{transformCost(element.CostoActual)}</td>
+                <td className="description-cell">{((element.Descripción) ? element.Descripción : "No description")}</td>
                 <td>
                   <button className=" button"> Edit </button>
                 </td>

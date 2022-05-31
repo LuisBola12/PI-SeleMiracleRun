@@ -132,6 +132,11 @@ td {
   padding-top: 25px;
 }
 
+.description-cell {
+  width: 40%;
+}
+
+
 .table-left-border {
   border-top-left-radius: 1rem;
   border-bottom-left-radius: 1rem;
