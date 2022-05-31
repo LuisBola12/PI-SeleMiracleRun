@@ -100,9 +100,10 @@ POST {{apiVolDeductions}}
 Content-Type: application/json
 
 {
-  "Nombre":"Prueba",
+  "Nombre":"Prueba3",
   "NombreProyecto": "Taquería Milagro",
-  "Costo": 0
+  "Costo": 0,
+  "Descripcion": "prueba descripcion3"
 }
 
 ###
