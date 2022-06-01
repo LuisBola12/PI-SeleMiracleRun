@@ -25,8 +25,8 @@ export const CrudBenefits = () => {
           <thead>
             <tr className="table-header">
               <th className="table-left-border">Benefit </th>
-              <th>Actual Cost</th>
               <th>Description</th>
+              <th>Actual Cost</th>
               <th>Edit</th>
               <th className="table-right-border">Delete</th>
             </tr>
@@ -35,8 +35,8 @@ export const CrudBenefits = () => {
             {data.map((element) => (
               <tr key={element.Nombre}>
                 <td>{element.Nombre}</td>
-                <td>{transformCost(element.CostoActual)}</td>
                 <td className="description-cell">{((element.Descripción) ? element.Descripción : "No description")}</td>
+                <td>{transformCost(element.CostoActual)}</td>
                 <td>
                   <button className=" button"> Edit </button>
                 </td>
