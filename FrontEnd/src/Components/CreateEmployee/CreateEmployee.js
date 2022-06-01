@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
-import history from "../../history";
+import './CreateEmployeesStyle.scss';
 import { useSelector } from 'react-redux';
-import './CreateEmployeesStyle.scss'
-import { validateEmail, validateId, validateName, validatePassword } from './../../Validate';
+import { back, validateForm,showContractValues,submitEmployee} from "../../Utils/CreateEmployee/CreateEmployee";
 
 export const CreateEmployee = () => {
-  const activeProject = useSelector((state) => state.activeProject.projectName);
   const [email, setEmail] = useState("");
   const [typeOfContracts, setTypeOfContracts] = useState();
   const [contractsReceived, setContractsReceived] = useState(false);
@@ -20,221 +18,29 @@ export const CreateEmployee = () => {
   const [serviceName, setServiceName] = useState("");
   const [serviceValue, setServiceValue] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const activeProject = useSelector((state) => state.activeProject.projectName);
 
-  const validateForm = () =>{
-    let validCount =0;
-    if(email){
-      if(!validateEmail(email)){
-        document.getElementById("error-email-input").style.display = "inline";
-        document.getElementById("error-email-input").innerHTML = "You must enter a valid format for an email.";
-        document.getElementById("email-employee").style.borderColor = "red";
-      }else{
-        document.getElementById("error-email-input").style.display = "";
-        document.getElementById("email-employee").style.borderColor = "gray";
-        validCount++;
-      }
-    }else{
-      document.getElementById("error-email-input").style.display = "inline";
-      document.getElementById("error-email-input").innerHTML = "Please enter an email.";
-      document.getElementById("email-employee").style.borderColor = "red";
-    }
-  
-    if(password){
-      if(!validatePassword(password)){
-        document.getElementById("error-password-input").style.display = "inline";
-        document.getElementById("error-password-input").innerHTML = "Password must be 6 characters longer and have at least 2 words.";
-        document.getElementById("password-employee").style.borderColor = "red";
-      }else{
-        document.getElementById("error-password-input").style.display = "";
-        document.getElementById("password-employee").style.borderColor = "gray";
-        validCount++;
-      }
-    }else{
-      document.getElementById("error-password-input").style.display = "inline";
-      document.getElementById("error-password-input").innerHTML = "Please enter a password.";
-      document.getElementById("password-employee").style.borderColor = "red";
-    }
-  
-    if(!validateName(name)){
-      document.getElementById("error-name-input").style.display = "inline";
-      document.getElementById("error-name-input").innerHTML = "Please enter a name.";
-      document.getElementById("name-employee").style.borderColor = "red";
-    }else{
-      document.getElementById("error-name-input").style.display = "";
-      document.getElementById("name-employee").style.borderColor = "gray";
-      validCount++;
-    }
-  
-    if(!validateName(lastname)){
-      document.getElementById("error-first-lastname-input").style.display = "inline";
-      document.getElementById("error-first-lastname-input").innerHTML = "Please enter a first last name.";
-      document.getElementById("first-last-name-employee").style.borderColor = "red";
-    }else{
-      document.getElementById("error-first-lastname-input").style.display = "";
-      document.getElementById("first-last-name-employee").style.borderColor = "gray";
-      validCount++;
-    }
-  
-    if(!validateName(secondlastname)){
-      document.getElementById("error-second-lastname-input").style.display = "inline";
-      document.getElementById("error-second-lastname-input").innerHTML = "Please enter a second last name.";
-      document.getElementById("second-last-name-employee").style.borderColor = "red";
-    }else{
-      document.getElementById("error-second-lastname-input").style.display = "";
-      document.getElementById("second-last-name-employee").style.borderColor = "gray";
-      validCount++;
-    }
-    if(id){
-      if(!validateId(id)){
-        document.getElementById("error-id-employee").style.display = "inline";
-        document.getElementById("error-id-employee").innerHTML = "Id must follow the Costa Rican format.";
-        document.getElementById("id-employee").style.borderColor = "red";
-      }else{
-        document.getElementById("error-id-employee").style.display = "";
-        document.getElementById("id-employee").style.borderColor = "gray";
-        validCount++;
-      }
-    }else{
-      document.getElementById("error-id-employee").style.display = "inline";
-      document.getElementById("error-id-employee").innerHTML = "Please enter an Id.";
-      document.getElementById("id-employee").style.borderColor = "red";
-    }
-    if(contract){
-      document.getElementById("error-contract-input").style.display = "";
-      document.getElementById("contract-employee").style.borderColor = "gray";
-      validCount++;
-    }else{
-      document.getElementById("error-contract-input").style.display = "inline";
-      document.getElementById("error-contract-input").innerHTML = "Please select a type of Contract.";
-      document.getElementById("contract-employee").style.borderColor = "red";
-    }
-    if (validCount ===7){
-      return true;
-    }else{
-      return false;
-    }
-  }
-  const verifyUser = async (Email) => {
-    const seleUrl = `http://localhost:4000/users/${email}`;
-    try {
-      const response = await fetch(seleUrl);
-      const newData = await response.json();
-      if (newData.length === 1) {
-        return false;
-      } else {
-        return true;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
   const validateAll = () =>{
-    const result = validateForm();
-    console.log(result)
-  }
-  const verifyEmployee = async (Cedula) => {
-    const seleUrl = `http://localhost:4000/employee/${id}`;
-    try {
-      const response = await fetch(seleUrl);
-      const newData = await response.json();
-      if (newData.length === 1) {
-        return false;
-      } else {
-        return true;
+    const data = {
+      email: email,
+      password: password,
+      name: name,
+      lastname: lastname,
+      secondlastname: secondlastname,
+      id: id,
+      contract: contract,
+    }
+    const result = validateForm(data);
+    if(result){
+      const submitData = {
+        activeProject:activeProject,email: email,password: password,
+        name: name,lastname: lastname,secondlastname: secondlastname,
+        id: id,phoneNumber: phoneNumber,contract: contract,
+        contractDeadline: contractDeadline,hWage:hWage,
+        serviceName:serviceName,serviceValue:serviceValue
       }
-    } catch (error) {
-      console.log(error);
+      submitEmployee(submitData);
     }
-  }
-
-  const showContractValues = (e) => {
-    setContract(e.target.value)
-    if (e.target.value === "Servicios Profesionales") {
-        document.getElementById("profesional service").style.display = "flex";
-        document.getElementById("other-contract").style.display = "none";
-    } else {
-      if(e.target.value!==""){
-        document.getElementById("other-contract").style.display = "flex";
-        document.getElementById("profesional service").style.display = "none";
-      }else{
-        document.getElementById("other-contract").style.display = "none";
-        document.getElementById("profesional service").style.display = "none";
-      }
-    }
-  }
-
-  const verifyEmployeeProject = async () => {
-    const seleUrl = "http://localhost:4000/employee/contract";
-    try {
-      const postFetch = await fetch(seleUrl, {
-        method: 'POST',
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          Cedula: id,
-          Proyecto: activeProject,
-        }),
-      });
-      const newData = await postFetch.json();
-      if (newData.length === 1) {
-        return false;
-      } else {
-        return true;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  const submitEmployee = async () => {
-    const user = await verifyUser();
-    const employee = await verifyEmployee();
-    const employeeContract = await verifyEmployeeProject();
-      if (user === true && employee === true && employeeContract === true) {
-      const createEmployeeFetch = await fetch('http://localhost:4000/employee', {
-        method: 'POST',
-        headers: {
-          "Content-type": "application/json",
-        },
-          body: JSON.stringify({
-          NombreProyecto: activeProject,
-          Email: email,
-          Contrasenia: password,
-          Nombre: name,
-          Apellido1: lastname,
-          Apellido2: secondlastname,
-          Cedula: id,
-          Telefono: phoneNumber,
-          TipoJornada: contract,
-          FechaFinContrato: contractDeadline,
-          SalarioPorHora: hWage,
-          NombreServicio: serviceName,
-          ValorServicio: serviceValue,
-        }),
-      });
-    } else {
-      alert("There is already an user with those credentials.")
-    }
-    resetAllStates();
-    history.push('/employees')
-    history.go()
-  }
-  const resetAllStates = () => {
-    setEmail("");
-    setPassword("");
-    setName("");
-    setLastName("");
-    setID("");
-    setContract("");
-    setHWage("");
-    setPhoneNumber("");
-
-  }
-  const back = () => {
-    resetAllStates();
-    history.push('/employees')
-    history.go()
   }
   useEffect(() => {
     const fetchTypeContracts = async () => {
@@ -345,6 +151,7 @@ export const CreateEmployee = () => {
             <div className="animated-input-employee-contract">
               <select id="contract-employee" className="animated-input-employee-contract__input"
               onChange={(e) => {
+                  setContract(e.target.value);
                   showContractValues(e);
                 }}
               >
@@ -398,10 +205,10 @@ export const CreateEmployee = () => {
         <div className="buttons-employee">
           <button className="create-employee-btn" 
           onClick={()=>{validateAll()}}>
-            create
+            Create
           </button>
-          <button className="cancel-employee-btn" >
-            cancel
+          <button className="cancel-employee-btn" onClick={()=>{back()}}>
+            Cancel
           </button>
         </div>
       </div>
