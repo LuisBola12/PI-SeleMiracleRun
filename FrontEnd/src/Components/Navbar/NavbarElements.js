@@ -2,6 +2,8 @@ import { NavLink as Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Nav = styled.nav`
+  position: sticky;
+  top:0;
   background: #133c54;
   height:80px;
   display: flex;
@@ -14,6 +16,8 @@ export const Nav = styled.nav`
 `;
 
 export const NavLink = styled(Link)`
+  position: sticky;
+  top:0;
   color: #fff;
   display: flex;
   align-items: center;
@@ -29,6 +33,8 @@ export const NavLink = styled(Link)`
 `;
 
 export const NavMenu = styled.div`
+  position: sticky;
+  top:0;
   display: flex;
   align-items: center;
   margin-left: 180px;
