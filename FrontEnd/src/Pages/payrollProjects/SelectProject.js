@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import '../../App.css'
 import './SelectProject.css'
 import { useProjectsData } from './useProjectsData';
-import { useSelector,useDispatch } from 'react-redux';
-import {logout} from "../../Slices/user/userSlice";
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from "../../Slices/user/userSlice";
 
 const SelectProject = () => {
   const navigate = useNavigate();
@@ -13,19 +13,21 @@ const SelectProject = () => {
   const activeProject = useSelector((state) => state.activeProject.projectName);
   const dispatch = useDispatch();
 
-  
+
   return (
     < div className='project-style'>
       <div className='project-header'>
         <div className='project-logo'></div>
-        <button className='project-backButton' onClick={() => { 
-          if(activeProject === ""){
+        <button className='project-backButton' onClick={() => {
+          if (activeProject === "") {
             dispatch(logout());
             navigate("/Login");
-          }else{
-            navigate(-1);
+          } else {
+            navigate('employees');
           }
-          }}>X</button>
+        }}
+        >
+          X</button>
       </div>
 
       <div className=" project-projectsRow">
@@ -46,7 +48,10 @@ const SelectProject = () => {
         }
 
         <div>
-          <NewProjectForm actualData={projects} setActualData={setProjects} />
+          {/* <NewProjectForm actualData={projects} setActualData={setProjects} /> */}
+          <button centered="true" className="project-buttonCreate" onClick={() => navigate('/newProjectForm')}>+</button >
+          <p className='project-AddNewProjectText'>Add new Project</p>
+
         </div>
       </div>
 
@@ -57,4 +62,4 @@ const SelectProject = () => {
   )
 }
 
-export default SelectProject
+export default SelectProject;

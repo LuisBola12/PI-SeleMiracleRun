@@ -39,7 +39,7 @@
 }
 
 .form {
-  gap: 1.4rem;
+  gap: 2.2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -83,18 +83,22 @@
 
   &__textArea {
     position: absolute;
-    top: 0;
     left: 0;
-    width: 100%;
+    width: 40.5rem;
     height: 12rem;
     border: 2px solid grey;
     border-radius: 5px;
     font-family: inherit;
+    margin-top: 0.5rem;
+    // margin-left: -10.3rem;
+    margin-left: -10.3rem;
+    margin-right: auto;
     font-size: inherit;
     color: black;
-    outline: none;
-    padding: 1.25rem;
+    // outline: none;
+    padding: 5rem;
     background: none;
+    resize: none;
 
     &:hover {
       border-color: #133c54;
@@ -119,6 +123,7 @@
     color: black;
     outline: none;
     background: none;
+
   }
 
   &:hover {
@@ -136,7 +141,7 @@
     padding: 0 0.5rem;
     color: black;
     cursor: text;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     transition: top 200ms ease-in, left 200ms ease-in, font-size 200ms ease-in;
     background-color: white;
   }
@@ -163,9 +168,16 @@
   .req {
     color: darkred;
     font-size: 0.8rem;
-    margin: 3px;
+    margin: 3pxabsolute
   }
 
+}
+
+.center {
+  display: block;
+  position: relative;
+  text-align: center;
+  left: 0;
 }
 
 .row-Element__input:focus~.row-Element__label,
@@ -184,7 +196,7 @@
 .row-Element__textArea:focus~.row-Element__label,
 .row-Element__textArea:not(:placeholder-shown).row-Element__textArea:not(:focus)~.row-Element__label {
   top: -0.5rem;
-  font-size: 0.6rem;
+  font-size: 0.8rem;
   left: 0.8rem;
 
   .req {
@@ -195,7 +207,7 @@
 }
 
 .register-btn-box {
-  margin-top: 9rem;
+  margin-top: 10.6rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -240,7 +252,11 @@
 
 .error {
   color: #D8000C;
-  margin-top: 39px;
+  margin-top: 45px;
   text-align: center;
-  // display: none;
+  font-size: small;
+}
+
+.deeper {
+  margin-top: 12.5rem;
 }

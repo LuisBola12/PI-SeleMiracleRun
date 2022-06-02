@@ -1,58 +1,31 @@
-import React, { useState, useEffect } from 'react'
-import { useAddNewProject } from './useAddNewProject';
-import { useNavigate } from 'react-router-dom';
 import "./createProject.scss";
-export const CreateProjectsForm = (actualData, setActualData) => {
-  // const { addToTable, name, setName, paymentPeriod, setPaymentPeriod, warning, setWarning,
-  //   benefitsMaxAmount, setBenefitsMaxAmount,
-  //   maxQuantityOfBenefits, setMaxQuantityOfBenefits } = useAddNewProject(actualData, setActualData);
+import validate from './NewProjectValidationRules';
+import useForm from "../../shared/hooks/useForm";
+import { useNavigate } from 'react-router-dom';
+import usePost from "../../shared/hooks/usePost";
+import { useSelector } from "react-redux";
 
-  const initialValues = {
-    projectName: "", paymentPeriod: "Mensual",
-    maxBenefitsQuantity: '', maxBenefitsMoneyAmount: '', description: ''
-  };
-  const [formValues, setFormValues] = useState(initialValues);
-  const [formErrors, setFormErrors] = useState({});
-  const [isSubmit, setIsSubmit] = useState(false);
+export const CreateProjectsForm = () => {
+
+
+
   const navigate = useNavigate();
-  const handleFormChange = (e) => {
-    const { id, value } = e.target;
-    setFormValues({ ...formValues, [id]: value });
-    console.log(formValues);
+  const { postError, post } = usePost("http://localhost:4000/projects");
+
+  const emailFromUser = useSelector((state) => state.user.user.Email);
+
+  const sendToDatabase = () => {
+    let string = JSON.stringify(formValues);
+    string = JSON.stringify({
+      Nombre: formValues.projectName,
+      Periodo: formValues.paymentPeriod,
+      Email: emailFromUser,
+    })
+    post(string);
+    navigate(-1);
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setFormErrors(validate(formValues));
-    setIsSubmit(true);
-  }
-
-  useEffect(() => {
-
-    console.log(formErrors);
-    if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log(formValues);
-    }
-  }, [formErrors, isSubmit, formValues]);
-
-  const validate = (values) => {
-    const errors = {};
-    const regex = '';
-    if (values.projectName === '') {
-      errors.projectName = 'Project Name is Required';
-    }
-    if (!values.maxBenefitsQuantity) {
-      errors.maxBenefitsQuantity = 'Max Benefits Quantity Required';
-    }
-    if (!values.maxBenefitsMoneyAmount) {
-      errors.maxBenefitsMoneyAmount = 'Max Money in Benefits Per employee';
-    }
-    if (!values.description) {
-      errors.description = 'Description required';
-    }
-
-    return errors;
-  }
+  const { formValues, handleInputChange, handleSubmit, errors } = useForm(sendToDatabase, validate);
 
   return (
     <>
@@ -65,41 +38,42 @@ export const CreateProjectsForm = (actualData, setActualData) => {
 
         <div className='row' >
           <div className="row-Element">
-            <input type="text" id="projectName" className="row-Element__input" value={formValues.projectName}
-              onChange={handleFormChange} autoComplete="off" placeholder=" " />
+            <input type="text" id="projectName" className="row-Element__input" value={formValues.projectName || ''}
+              onChange={handleInputChange} autoComplete="off" placeholder=" " />
             <label htmlFor="projectName" className='row-Element__label'> Project Name <span className="req">*</span></label>
-            <p className='error' >{formErrors.projectName}</p>
+            <p className='error' >{errors.projectName}</p>
           </div>
 
           <div className='row-Element'>
-            <select id='paymentPeriod' className='row-Element__dropDown' onChange={handleFormChange} name="paymentPeriod">
+            <select id='paymentPeriod' className='row-Element__dropDown' onChange={handleInputChange} >
+              <option value=''>Select Payment Period</option>
               <option value='Mensual'>Mensual</option>
               <option value='Quincenal'>Quincenal</option>
-              <option value='Quincenal'>Semanal</option>
+              <option value='Semanal'>Semanal</option>
             </select>
             <label htmlFor="paymentPeriod" className="row-Element__dropDown__label"> Payment Period <span className="req">*</span></label>
-
+            <p className='error' >{errors.paymentPeriod}</p>
           </div>
         </div>
 
         <div className='row' >
 
           <div className="row-Element">
-            <input type="number" id="maxBenefitsQuantity" className="row-Element__input" value={formValues.maxBenefitsQuantity}
-              onChange={handleFormChange}
+            <input type="number" id="maxBenefitsQuantity" className="row-Element__input" value={formValues.maxBenefitsQuantity || ''}
+              onChange={handleInputChange}
               autoComplete="off"
               placeholder=" " />
             <label htmlFor="maxBenefitsQuantity" className="row-Element__label"> Max Benefits Quantity <span className="req"     >*</span></label>
-            <p className='error'>{formErrors.maxBenefitsQuantity}</p>
+            <p className='error'>{errors.maxBenefitsQuantity}</p>
           </div>
 
           <div className="row-Element">
-            <input type="number" id="maxBenefitsMoneyAmount" className="row-Element__input" value={formValues.maxBenefitsMoneyAmount}
-              onChange={handleFormChange}
+            <input type="number" id="maxBenefitsMoneyAmount" className="row-Element__input" value={formValues.maxBenefitsMoneyAmount || ''}
+              onChange={handleInputChange}
               autoComplete="off"
               placeholder=" " />
             <label htmlFor="maxBenefitsMoneyAmount" className="row-Element__label"> Max Money On Benefits Per Employee <span className="req">*</span></label>
-            <p className='error'>{formErrors.maxBenefitsMoneyAmount}</p>
+            <p className='error'>{errors.maxBenefitsMoneyAmount}</p>
           </div>
 
         </div>
@@ -107,14 +81,10 @@ export const CreateProjectsForm = (actualData, setActualData) => {
         <div className='row'>
 
           <div className="row-Element">
-
-            <textarea type="Description" id="Description" className="row-Element__textArea" autocomplete="off" placeholder=" "></textarea>
-            <label htmlFor='Description' for="Description" className="row-Element__label">Description</label>
-            <p className='error'>{formErrors.description}</p>
-
+            <textarea id="Description" className="row-Element__textArea" autoComplete="off" placeholder=" "></textarea>
+            <label htmlFor='Description' className="row-Element__label center">Description</label>
+            <p className='error deeper'>{errors.description}</p>
           </div>
-
-
 
 
         </div>
@@ -124,7 +94,7 @@ export const CreateProjectsForm = (actualData, setActualData) => {
             <button onClick={handleSubmit} className="register-btn-sumbit" >
               Create
             </button>
-            <button className="register-btn-cancel" onClick={() => navigate(-1)}  >
+            <button className="register-btn-cancel" onClick={() => navigate('/')}  >
               Cancel
             </button>
           </div>
