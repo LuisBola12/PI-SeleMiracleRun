@@ -1,5 +1,6 @@
 import { validateEmail, validateId, validateName, validatePassword } from '../../Validate';
 import history from "../../history";
+import { validAnEntity } from '../validAnEntity';
 export const verifyEmployeeProject = async (id,activeProject) => {
   const seleUrl = "http://localhost:4000/employee/contract";
   try {
@@ -131,36 +132,6 @@ export const validateForm = (data) =>{
       return false;
     }
   }
-
-  export const verifyUser = async (Email) => {
-    const seleUrl = `http://localhost:4000/users/${Email}`;
-    try {
-      const response = await fetch(seleUrl);
-      const newData = await response.json();
-      if (newData.length === 1) {
-        return false;
-      } else {
-        return true;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  export const verifyEmployee = async (Cedula) => {
-    const seleUrl = `http://localhost:4000/employee/${Cedula}`;
-    try {
-      const response = await fetch(seleUrl);
-      const newData = await response.json();
-      if (newData.length === 1) {
-        return false;
-      } else {
-        return true;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   export const back = () => {
     history.push('/employees')
     history.go()
@@ -169,8 +140,9 @@ export const validateForm = (data) =>{
   export const submitEmployee = async (data) => {
     const {activeProject,email,password,name,lastname,secondlastname,id,phoneNumber,
       contract,contractDeadline,hWage,serviceName,serviceValue} = data;
-    const user = await verifyUser(email);
-    const employee = await verifyEmployee(id);
+    const user = await validAnEntity('users/',email);
+    const employee = await validAnEntity('employee/',id);
+    console.log(`valores: ${user} + ${employee}`);
     const employeeContract = await verifyEmployeeProject(id,activeProject);
       if (user === true && employee === true && employeeContract === true) {
       const createEmployeeFetch = await fetch('http://localhost:4000/employee', {
