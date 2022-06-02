@@ -1,14 +1,10 @@
-import { useState } from "react";
 import { useSelector } from "react-redux";
 
 export const usePostToDatabase = () => {
   const activeProject = useSelector((state) => state.activeProject.projectName);
-  const [name, setName] = useState('');
-  const [cost, setCost] = useState('');
-  const [description, setDescription] = useState('');
   const apiBenefits = `http://localhost:4000/benefits`
 
-  const submitBenefit = async () => {
+  const submitBenefit = async (name, cost, description) => {
     const newCost = cost.split('.').join('');
     const postFetch = await fetch(apiBenefits, {
       method: 'POST',
@@ -25,6 +21,6 @@ export const usePostToDatabase = () => {
   }
 
   return {
-    name, setName, cost, setCost, description, setDescription, submitBenefit
+    submitBenefit
   }
 }
