@@ -35,9 +35,9 @@ function App() {
           <Route path="contracts" element={<Contracts />} />
           <Route path="employees/CreateEmployee" element={<CreateNewEmployee />} />
           <Route path="benefits/CreateBenefit" element={<CreateNewBenefit />} />
-          {/* TODO: revisar si newProjectForm tiene que estar aca */}
+          <Route path="newProjectForm" element={<CreateProjectsForm />} />
         </Route>
-        <Route path="newProjectForm" element={<CreateProjectsForm />} />
+
       </Routes>
     </Router>
   );
