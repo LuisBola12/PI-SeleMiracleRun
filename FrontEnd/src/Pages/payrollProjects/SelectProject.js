@@ -1,5 +1,4 @@
 import React from 'react'
-import NewProjectForm from '../../Components/ProjectsComponents/NewProjectForm'
 import { useNavigate } from 'react-router-dom';
 import '../../App.css'
 import './SelectProject.css'
@@ -9,7 +8,7 @@ import { logout } from "../../Slices/user/userSlice";
 
 const SelectProject = () => {
   const navigate = useNavigate();
-  const { projects, setProjects, handleProjectSelection, loading, error } = useProjectsData();
+  const { projects, handleProjectSelection, loading, error } = useProjectsData();
   const activeProject = useSelector((state) => state.activeProject.projectName);
   const dispatch = useDispatch();
 
