@@ -40,10 +40,17 @@ const DropdownMenu = () => {
   }
 
   let navigateLogin = useNavigate();
+
   const redirectToLogIn = () => {
     dispatch(logout())
     dispatch(resetProject())
     navigateLogin("/login");
+  }
+
+  let navigateSettings = useNavigate();
+  
+  const redirectToSettings = () => {
+    navigateSettings("/navigateSettings");
   }
   return (
     <div className="sidebar-dropdown" style={{ height: menuHeight }} ref={dropdownRef}>
@@ -55,11 +62,13 @@ const DropdownMenu = () => {
         <div className="sidebar-menu">
             <button onClick={redirectToProjectSelecion} className="sidebar-button" >
               Projects
-          </button>
+            </button>
+            <button onClick={redirectToSettings} className="sidebar-button" >
+              Settings
+            </button>
             <button onClick={redirectToLogIn} className="sidebar-button" >
               Sign Out
             </button>
-            
         </div>
       </CSSTransition >
     </div >

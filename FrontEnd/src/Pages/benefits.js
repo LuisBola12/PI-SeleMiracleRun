@@ -5,8 +5,11 @@ import Navbar from '../Components/Navbar/Navbar';
 
 const  Benefits = () => {
   return (
-    <>
-        <Navbar/>
+    <>  
+        <div className='sticky-navbar'>
+          <Navbar/>
+        </div>
+        
         <div className = 'page-content'>
           { <CrudBenefits/> }
         </div>

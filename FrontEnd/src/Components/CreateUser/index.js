@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { postLogin } from "../../Slices/user/requests/postLogin";
 import { usePostUserFromDatabase } from "./usePostUserFromDatabase";
 import { resetErrorMsg } from "../../Slices/user/userSlice";
-import { validateEmail, validatePassword, validateName, validateId } from "../../Validate";
+import { validateEmail, validatePassword, validateName, validateId, validatePhoneNumber } from "../../Validate";
 import './createUserStyle.scss';
 
 export const CreateUser = () => {
@@ -19,7 +19,7 @@ export const CreateUser = () => {
         document.getElementById("register-error-email").innerHTML = "You must enter a valid format for an email.";
         document.getElementById("email-register").style.borderColor = "red";
       }else{
-        document.getElementById("register-error-email").style.display = "";
+        document.getElementById("register-error-email").style.display = "none";
         document.getElementById("email-register").style.borderColor = "gray";
         validCount++;
       }
@@ -32,10 +32,10 @@ export const CreateUser = () => {
     if(password){
       if(!validatePassword(password)){
         document.getElementById("register-error-password").style.display = "inline";
-        document.getElementById("register-error-password").innerHTML = "Password must be 6 characters longer and have at least 2 words.";
+        document.getElementById("register-error-password").innerHTML = "Password must be 8 characters long";
         document.getElementById("password-register").style.borderColor = "red";
       }else{
-        document.getElementById("register-error-password").style.display = "";
+        document.getElementById("register-error-password").style.display = "none";
         document.getElementById("password-register").style.borderColor = "gray";
         validCount++;
       }
@@ -50,7 +50,7 @@ export const CreateUser = () => {
       document.getElementById("register-error-name").innerHTML = "Please enter a name.";
       document.getElementById("name-register").style.borderColor = "red";
     }else{
-      document.getElementById("register-error-name").style.display = "";
+      document.getElementById("register-error-name").style.display = "none";
       document.getElementById("name-register").style.borderColor = "gray";
       validCount++;
     }
@@ -60,7 +60,7 @@ export const CreateUser = () => {
       document.getElementById("register-error-lastname1").innerHTML = "Please enter a first last name.";
       document.getElementById("lastname1-register").style.borderColor = "red";
     }else{
-      document.getElementById("register-error-lastname1").style.display = "";
+      document.getElementById("register-error-lastname1").style.display = "none";
       document.getElementById("lastname1-register").style.borderColor = "gray";
       validCount++;
     }
@@ -70,7 +70,7 @@ export const CreateUser = () => {
       document.getElementById("register-error-lastname2").innerHTML = "Please enter a second last name.";
       document.getElementById("lastname2-register").style.borderColor = "red";
     }else{
-      document.getElementById("register-error-lastname2").style.display = "";
+      document.getElementById("register-error-lastname2").style.display = "none";
       document.getElementById("lastname2-register").style.borderColor = "gray";
       validCount++;
     }
@@ -81,7 +81,7 @@ export const CreateUser = () => {
         document.getElementById("register-error-ID").innerHTML = "Id must follow the Costa Rican format.";
         document.getElementById("id-register").style.borderColor = "red";
       }else{
-        document.getElementById("register-error-ID").style.display = " ";
+        document.getElementById("register-error-ID").style.display = "none";
         document.getElementById("id-register").style.borderColor = "gray";
         validCount++;
       }
@@ -90,11 +90,29 @@ export const CreateUser = () => {
       document.getElementById("register-error-ID").innerHTML = "Please enter an Id.";
       document.getElementById("id-register").style.borderColor = "red";
     }
-    if (validCount === 6){
+
+    if(phoneNumber){
+      if(!validatePhoneNumber(phoneNumber)){
+        document.getElementById("register-error-phoneNumber").style.display = "inline";
+        document.getElementById("register-error-phoneNumber").innerHTML = "Phone Number must be: 0000-0000";
+        document.getElementById("phoneNumber-register").style.borderColor = "red";
+      }else{
+        document.getElementById("register-error-phoneNumber").style.display = "none";
+        document.getElementById("phoneNumber-register").style.borderColor = "gray";
+        validCount++;
+      }
+    }else{
+      document.getElementById("register-error-phoneNumber").style.display = "none";
+      document.getElementById("phoneNumber-register").style.borderColor = "gray";
+      validCount++;
+    }
+
+    if (validCount === 7){
       return true;
     }else{
       return false;
     }
+
   }
 
   const dispatch = useDispatch();
@@ -272,7 +290,7 @@ export const CreateUser = () => {
         </div>
 
         <div className="register-btn-box">
-          <button className="register-btn-sumbit" onClick={()=>{validateAll()}}>
+          <button className="register-btn-sumbit" onClick={submitEmployee}>
             Create
           </button>
           <button className="register-btn-cancel" onClick={handleClick}>
