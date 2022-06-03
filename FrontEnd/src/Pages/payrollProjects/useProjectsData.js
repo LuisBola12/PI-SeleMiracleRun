@@ -27,7 +27,7 @@ export const useProjectsData = () => {
 
 
   return {
-    projects, setProjects,
+    projects,
     handleProjectSelection,
     loading, error
   }
