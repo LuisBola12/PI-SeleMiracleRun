@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useGetBenefitsFromDatabase } from './useGetBenefitsFromDatabase';
 import { maskCurrency } from '../../shared/moneyFormatTransform';
 import validateBenefitForm from './validateBenefitForm'
-import useForm from './useForm'
+import useForm from '../../shared/hooks/useForm'
 
 export const CreateBenefit = () => {
   const { submitBenefit } = usePostToDatabase();
