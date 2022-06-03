@@ -5,32 +5,25 @@ import validate from './volDedutionValidations';
 import useForm from '../../shared/hooks/useForm'
 import { useNavigate } from "react-router-dom";
 import { useGetVolDeductionsFromDatabase } from './useGetVolDeductionsFromDatabase';
+import { maskCurrency } from '../../shared/moneyFormatTransform';
 
 
 export const CreateVolDeduction = () => {
-  //const { formValues, handleInputChange, handleSubmit, errors } = useForm();
-  //const { name, setName, cost, setCost, description, setDescription, submitVolDeduction } = usePostToDatabase();
   const { verifyNames } = useGetVolDeductionsFromDatabase();
+  const { submitVolDeduction } = usePostToDatabase();
   const navigate = useNavigate();
 
   const submit = async () => {
-    //const notExit = await verifyNames(name);
-    //if (notExit === true) {
-      //submitVolDeduction();
-      //setName("");
-      //setCost("");
-      //setDescription("");
+    const notExit = await verifyNames(formValues.Name);
+    if (notExit === true) {
+      submitVolDeduction(formValues.Name, formValues.Cost, formValues.Description);
       navigate("/VolDeductions")
-    //} else {
-    //  alert("Deducción voluntaria existente")
-    //}
+    } else {
+      alert("That voluntary deduction already exists")
+    }
   }
 
   const { formValues, handleInputChange, handleSubmit, errors } = useForm(submit, validate);
-
-  const cheackNumber = (value) => {
-    return String(value).toLowerCase().match(/^[0-9]*$/)
-  }
   return (
     <>
       <div className="volDeductions-form">
@@ -39,30 +32,35 @@ export const CreateVolDeduction = () => {
           Create Voluntary Deduction
         </div>
         <div className="form-group-volDeductions">
-          <div className="animated-input">
-            <input
-              type="text"
-              id="Name"
-              className="animated-input__input"
-              autoComplete="off"
-              placeholder=" "
-              value={formValues.Name || ''}
-              onChange={handleInputChange} />
-            <label htmlFor="Name" className="animated-input__label">Name<span className="req">*</span></label>
-            <label  className = 'error' > {errors.Name} </label>
+          <div className='Name-input'>
+            <div className="animated-input">
+              <input
+                type="text"
+                id="Name"
+                className="animated-input__input"
+                autoComplete="off"
+                placeholder=" "
+                maxLength={50}
+                value={formValues.Name || ''}
+                onChange={handleInputChange} />
+              <label htmlFor="Name" className="animated-input__label">Name<span className="req">*</span></label>
+              </div>
+            <label  className = 'error-message' > {errors.Name} </label>
           </div>
-
-          <div className="animated-input">
-            <input
-              type="text"
-              id="Cost"
-              className="animated-input__input"
-              autoComplete="off"
-              placeholder=" "
-              value={formValues.Cost || ''}
-              onChange={handleInputChange} />
-            <label htmlFor="Cost" className="animated-input__label">Cost<span className="req">*</span></label>
-            <label  className = 'error' > {errors.Cost} </label>
+          <div className='Cost-input'>
+            <div className="animated-input">
+              <input
+                type="text"
+                id="Cost"
+                className="animated-input__input"
+                autoComplete="off"
+                placeholder=" "
+                maxLength={50}
+                value={formValues.Cost || ''}
+                onChange={(e) => { handleInputChange(maskCurrency(e)) }} ></input>
+              <label htmlFor="Cost" className="animated-input__label">Cost<span className="req">*</span></label>
+            </div>
+            <label  className = 'error-message' > {errors.Cost} </label>
           </div>
         </div>
         <div className="animated-input">
@@ -72,6 +70,7 @@ export const CreateVolDeduction = () => {
             className="animated-input__textarea"
             autoComplete="off" 
             placeholder=" "
+            maxLength={300}
             value={formValues.Description || ''}
             onChange={handleInputChange} />
           <label htmlFor="Description" className="animated-input__label">Description</label>
