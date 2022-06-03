@@ -1,9 +1,9 @@
 import '../../App.css'
 import './CreateBenefit.scss'
-import { usePostToDatabase } from "./usePostToDatabase";
+import { usePostToDatabase } from "../../Utils/Benefits/usePostToDatabase";
 import { useNavigate } from "react-router-dom";
 import { maskCurrency } from '../../shared/moneyFormatTransform';
-import validateBenefitForm from './validateBenefitForm'
+import validateBenefitForm from '../../Utils/Benefits/validateBenefitForm'
 import useForm from '../../shared/hooks/useForm'
 import { validAnEntity } from '../../Utils/validAnEntity';
 import { useSelector } from "react-redux";
