@@ -16,11 +16,24 @@ export const useGetVolDeductionsFromDatabase = () => {
   const activeProject = useSelector((state) => state.activeProject.projectName);
   const apiGetVolDeductions = `http://localhost:4000/volDeductions/${activeProject}`;
   const [data, setData] = useState([{}]);
+  const verifyNames = async (name) => {
+    try {
+      const response = await fetch(apiGetVolDeductions + `/${name}`);
+      const newData = await response.json();
+      if (newData.length === 1) {
+        return false;
+      } else {
+        return true;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
   const [infoReceived, setInfoReceived] = useState(false);
   useEffect(() => {
     getVolDeductions(apiGetVolDeductions, setData, setInfoReceived);
   }, [])
   return {
-    data, setData, infoReceived
+    data, infoReceived, verifyNames
   }
 }
