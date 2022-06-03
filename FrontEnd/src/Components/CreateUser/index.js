@@ -3,135 +3,53 @@ import { useNavigate } from "react-router-dom";
 import { postLogin } from "../../Slices/user/requests/postLogin";
 import { usePostUserFromDatabase } from "./usePostUserFromDatabase";
 import { resetErrorMsg } from "../../Slices/user/userSlice";
-import { validateEmail, validatePassword, validateName, validateId } from "../../Validate";
+import { validAnEntity } from "../../Utils/validAnEntity";
+import usePost from "../../shared/hooks/usePost";
+import validate from "./createUserValidations";
+import useForm from "../../shared/hooks/useForm";
 import './createUserStyle.scss';
 
 export const CreateUser = () => {
-  const {registerUser, email, setEmail, password, setPassword, 
-        name, setName, lastname1, setLastName1, lastname2, setLastName2, 
-        id, setID, phoneNumber, setPhoneNumber, errorMessage, setErrorMessage} = usePostUserFromDatabase();
-
-  const validateForm = () =>{
-    let validCount = 0;
-    if(email){
-      if(!validateEmail(email)){
-        document.getElementById("register-error-email").style.display = "inline";
-        document.getElementById("register-error-email").innerHTML = "You must enter a valid format for an email.";
-        document.getElementById("email-register").style.borderColor = "red";
-      }else{
-        document.getElementById("register-error-email").style.display = "";
-        document.getElementById("email-register").style.borderColor = "gray";
-        validCount++;
-      }
-    }else{
-      document.getElementById("register-error-email").style.display = "inline";
-      document.getElementById("register-error-email").innerHTML = "Please enter an email.";
-      document.getElementById("email-register").style.borderColor = "red";
-    }
-  
-    if(password){
-      if(!validatePassword(password)){
-        document.getElementById("register-error-password").style.display = "inline";
-        document.getElementById("register-error-password").innerHTML = "Password must be 6 characters longer and have at least 2 words.";
-        document.getElementById("password-register").style.borderColor = "red";
-      }else{
-        document.getElementById("register-error-password").style.display = "";
-        document.getElementById("password-register").style.borderColor = "gray";
-        validCount++;
-      }
-    }else{
-      document.getElementById("register-error-password").style.display = "inline";
-      document.getElementById("register-error-password").innerHTML = "Please enter a password.";
-      document.getElementById("password-register").style.borderColor = "red";
-    }
-  
-    if(!validateName(name)){
-      document.getElementById("register-error-name").style.display = "inline";
-      document.getElementById("register-error-name").innerHTML = "Please enter a name.";
-      document.getElementById("name-register").style.borderColor = "red";
-    }else{
-      document.getElementById("register-error-name").style.display = "";
-      document.getElementById("name-register").style.borderColor = "gray";
-      validCount++;
-    }
-  
-    if(!validateName(lastname1)){
-      document.getElementById("register-error-lastname1").style.display = "inline";
-      document.getElementById("register-error-lastname1").innerHTML = "Please enter a first last name.";
-      document.getElementById("lastname1-register").style.borderColor = "red";
-    }else{
-      document.getElementById("register-error-lastname1").style.display = "";
-      document.getElementById("lastname1-register").style.borderColor = "gray";
-      validCount++;
-    }
-  
-    if(!validateName(lastname2)){
-      document.getElementById("register-error-lastname2").style.display = "inline";
-      document.getElementById("register-error-lastname2").innerHTML = "Please enter a second last name.";
-      document.getElementById("lastname2-register").style.borderColor = "red";
-    }else{
-      document.getElementById("register-error-lastname2").style.display = "";
-      document.getElementById("lastname2-register").style.borderColor = "gray";
-      validCount++;
-    }
-
-    if(id){
-      if(!validateId(id)){
-        document.getElementById("register-error-ID").style.display = "inline";
-        document.getElementById("register-error-ID").innerHTML = "Id must follow the Costa Rican format.";
-        document.getElementById("id-register").style.borderColor = "red";
-      }else{
-        document.getElementById("register-error-ID").style.display = " ";
-        document.getElementById("id-register").style.borderColor = "gray";
-        validCount++;
-      }
-    }else{
-      document.getElementById("register-error-ID").style.display = "inline";
-      document.getElementById("register-error-ID").innerHTML = "Please enter an Id.";
-      document.getElementById("id-register").style.borderColor = "red";
-    }
-    if (validCount === 6){
-      return true;
-    }else{
-      return false;
-    }
-  }
-
   const dispatch = useDispatch();
-  const submitEmployee = async () =>{
-    if(validateForm() === true){
-      if(errorMessage !== ""){
-        setErrorMessage("");
-      }
-      const prueba = await registerUser();
-      if(prueba === true){
-        dispatch(postLogin({ email, password }));
-        navigate("/");
-      }
-    }
-  }
+  const { postError, post } = usePost("http://localhost:4000/createEmployer");
+  
+  const sendToDatabase = async () =>{      
+    const user = await validAnEntity('users/',formValues.email_register);
+    const employee = await validAnEntity('employer/', formValues.id_register);
 
-  const resetAllStates = () =>{
-    setEmail("");
-    setPassword("");
-    setName("");
-    setLastName1("");
-    setLastName2("");
-    setID("");
-    setPhoneNumber("");
-    setErrorMessage("");
-  }
+    if (user === true && employee === true) {
+      console.log("prubea")
+        let string = JSON.stringify(formValues);
+
+        string = JSON.stringify({
+          Cedula: formValues.id_register,
+          Nombre: formValues.name_register,
+          Apellido1: formValues.lastname1_register,
+          Apellido2: formValues.lastname2_register,
+          Telefono: formValues.phoneNumber_register,
+          Email: formValues.email_register,
+          Contrasenia: formValues.password_register,
+          Roles: "admin"
+         })
+
+    post(string);
+    dispatch(postLogin({
+      email: formValues.email_register, 
+      password: formValues.password_register
+    }));
+    navigate("/");
+    }else{
+      setIsSubmitting(false);
+      alert("These user alredy exists.")
+    }
+    }
+
+  const { formValues, handleInputChange, handleSubmit, setIsSubmitting, errors,  } = useForm(sendToDatabase, validate);
 
   const navigate = useNavigate();
-  function handleClick() {
+  const handleClick = () => {
     dispatch(resetErrorMsg());
-    resetAllStates();
     navigate("/login");
-  }
-
-  const validateAll = () =>{
-    const result = validateForm();
-    console.log(result)
   }
 
   return (
@@ -147,17 +65,17 @@ export const CreateUser = () => {
             <div className="register-animated-input-name">
               <input 
                 type="text" 
-                id="name-register" 
+                id="name_register" 
                 className="register-animated-input-name__input" 
-                value = {name} 
+                value = {formValues.name_register || ''} 
                 maxLength={15} 
-                onChange={(e) => setName(e.target.value)} 
-                autocomplete="off" 
+                onChange={handleInputChange} 
+                autoComplete="off" 
                 placeholder=" "/>
-              <label for="name-register" className="register-animated-input-name__label"> Name <span className="req">*</span></label>
+              <label htmlFor="name_register" className="register-animated-input-name__label"> Name <span className="req">*</span></label>
             </div>
             <div>
-              <p className="register-error" id="register-error-name"></p>
+              <label className="register-error" id="register_error_name">{errors.name_register}</label>
             </div>
           </div>
 
@@ -165,17 +83,17 @@ export const CreateUser = () => {
             <div className="register-animated-input-name">
               <input 
                 type="text" 
-                id="lastname1-register"
+                id="lastname1_register"
                 className="register-animated-input-name__input" 
-                value={lastname1} 
+                value={formValues.lastname1_register || ''} 
                 maxLength={15} 
-                onChange={(e) => setLastName1(e.target.value)} 
-                autocomplete="off" 
+                onChange={handleInputChange} 
+                autoComplete="off" 
                 placeholder=" "/>
-              <label for="lastname1-register" className="register-animated-input-name__label">First Last Name<span className="req">*</span></label>
+              <label htmlFor="lastname1_register" className="register-animated-input-name__label">First Last Name<span className="req">*</span></label>
             </div>
             <div>
-              <p className="register-error" id="register-error-lastname1"></p>
+              <label className="register-error" id="register_error_name">{errors.lastname1_register} </label>
             </div>
           </div>
 
@@ -183,17 +101,17 @@ export const CreateUser = () => {
             <div className="register-animated-input-name">
               <input 
                 type="text" 
-                id="lastname2-register" 
+                id="lastname2_register" 
                 className="register-animated-input-name__input" 
-                value={lastname2}
+                value={formValues.lastname2_register || ''}
                 maxLength={15}
-                onChange={(e) => setLastName2(e.target.value)}
-                autocomplete="off" 
+                onChange={handleInputChange}
+                autoComplete="off" 
                 placeholder=" "/>
-              <label for="lastname2-register" className="register-animated-input-name__label">Second Last Name<span className="req">*</span></label>
+              <label htmlFor="lastname2_register" className="register-animated-input-name__label">Second Last Name<span className="req">*</span></label>
             </div>
             <div>
-                <p className="register-error" id="register-error-lastname2"></p>
+                <label className="register-error" id="register_error_lastname2">{errors.lastname2_register}</label>
             </div>
           </div>          
         </div>
@@ -202,34 +120,34 @@ export const CreateUser = () => {
             <div className="register-animated-input-id-phone">
               <input 
                 type="text" 
-                id="id-register" 
+                id="id_register" 
                 className="register-animated-input-id-phone__input" 
-                value={id} 
+                value={formValues.id_register || ''} 
                 maxLength={15} 
-                onChange={(e) => setID(e.target.value)} 
-                autocomplete="off" 
+                onChange={handleInputChange} 
+                autoComplete="off" 
                 placeholder=" "/>
-              <label for="id-register" className="register-animated-input-id-phone__label">Id<span className="req">*</span></label>
+              <label htmlFor="id_register" className="register-animated-input-id-phone__label">Id<span className="req">*</span></label>
             </div>
             <div>
-              <p className="register-error" id="register-error-ID"></p>
+              <label className="register-error" id="register_error_ID">{errors.id_register}</label>
             </div>
           </div>
           <div>
             <div className="register-animated-input-id-phone">
               <input 
                 type="text" 
-                id="phoneNumber-register" 
+                id="phoneNumber_register" 
                 className="register-animated-input-id-phone__input"
-                value={phoneNumber}
+                value={formValues.phoneNumber_register || ''}
                 maxLength={8}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                autocomplete="off" 
+                onChange={handleInputChange}
+                autoComplete="off" 
                 placeholder=" "/>
-              <label for="phoneNumber-register" className="register-animated-input-id-phone__label">Phone Number</label>
+              <label htmlFor="phoneNumber_register" className="register-animated-input-id-phone__label">Phone Number</label>
             </div>
             <div>
-              <p className="register-error" id="register-error-phoneNumber"></p>
+              <label className="register-error" id="register_error_phoneNumber">{errors.phoneNumber_register}</label>
             </div>
           </div>
         </div>
@@ -239,40 +157,40 @@ export const CreateUser = () => {
             <div className="register-animated-input-email">
               <input 
                 type="text" 
-                id="email-register" 
+                id="email_register" 
                 className="register-animated-input-email__input" 
-                value={email}
+                value={formValues.email_register || ''}
                 maxLength={50}
-                onChange={(e) => setEmail(e.target.value)}
-                autocomplete="off" 
+                onChange={handleInputChange}
+                autoComplete="off" 
                 placeholder=" "/>
-              <label for="email-register" className="register-animated-input-email__label"> Email <span className="req">*</span> </label>
+              <label htmlFor="email_register" className="register-animated-input-email__label"> Email <span className="req">*</span> </label>
             </div>
             <div>
-                <p className="register-error" id="register-error-email"></p>
+                <label className="register-error" id="register_error_email">{errors.email_register}</label>
             </div>
           </div>
           <div>
             <div className="register-animated-input-email">
               <input 
                 type="password" 
-                id="password-register" 
+                id="password_register" 
                 className="register-animated-input-email__input" 
-                value={password}
+                value={formValues.password_register || ''}
                 maxLength={20}
-                onChange={(e) => setPassword(e.target.value)}
-                autocomplete="off" 
+                onChange={handleInputChange}
+                autoComplete="off" 
                 placeholder=" "/>
-              <label for="password-register" className="register-animated-input-email__label"> Password <span className="req">*</span> </label>
+              <label htmlFor="password_register" className="register-animated-input-email__label"> Password <span className="req">*</span> </label>
             </div>
             <div>
-              <p className="register-error" id="register-error-password"></p>
+              <label className="register-error" id="register_error_password">{errors.password_register}</label>
             </div>
           </div>
         </div>
 
         <div className="register-btn-box">
-          <button className="register-btn-sumbit" onClick={()=>{validateAll()}}>
+          <button className="register-btn-sumbit" onClick={handleSubmit}>
             Create
           </button>
           <button className="register-btn-cancel" onClick={handleClick}>

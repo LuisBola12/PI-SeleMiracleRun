@@ -74,8 +74,6 @@ export const usePostUserFromDatabase = () => {
   }
 
   return {
-    registerUser, email, setEmail, password, setPassword, name, setName,
-    lastname1, setLastName1, lastname2, setLastName2, id, setID, phoneNumber,
-    setPhoneNumber, errorMessage, setErrorMessage
+    registerUser
   };
 }
