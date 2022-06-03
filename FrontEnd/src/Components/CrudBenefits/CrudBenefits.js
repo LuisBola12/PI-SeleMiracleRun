@@ -3,7 +3,7 @@ import {
 } from "reactstrap";
 import '../../App.css'
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useGetBenefitsFromDatabase } from "./useGetBenefitsFromDatabase";
+import { useGetBenefitsFromDatabase } from "../../Utils/Benefits/useGetBenefitsFromDatabase";
 import { useNavigate } from "react-router-dom";
 import { transformCost } from "../../shared/moneyFormatTransform";
 

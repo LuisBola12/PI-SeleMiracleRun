@@ -1,6 +1,6 @@
 import React from 'react';
 import '../App.css'
-import { CreateBenefit } from '../Components/CrudBenefits/CreateBenefit';
+import { CreateBenefit } from '../Components/CreateBenefit/CreateBenefit';
 import Navbar from '../Components/Navbar/Navbar';
 
 export const CreateNewBenefit = () => {
