@@ -24,23 +24,23 @@ export const CrudBenefits = () => {
         <table className="Table">
           <thead>
             <tr className="table-header">
-              <th className="table-left-border">Benefit </th>
-              <th>Description</th>
-              <th>Actual Cost</th>
-              <th>Edit</th>
-              <th className="table-right-border">Delete</th>
+              <th className="table-left-border left-td">Benefit</th>
+              <th className="left-td">Description</th>
+              <th className="right-td">Actual Cost</th>
+              <th className="right-td">Edit</th>
+              <th className="table-right-border right-td">Delete</th>
             </tr>
           </thead>
           <tbody>
             {data.map((element) => (
               <tr key={element.Nombre}>
-                <td>{element.Nombre}</td>
-                <td className="description-cell">{((element.Descripción) ? element.Descripción : "No description")}</td>
-                <td>{transformCost(element.CostoActual)}</td>
-                <td>
+                <td className="left-td">{element.Nombre}</td>
+                <td className="description-cell left-td">{((element.Descripción) ? element.Descripción : "No description")}</td>
+                <td className="right-td">{transformCost(element.CostoActual)}</td>
+                <td className="right-button">
                   <button className=" button"> Edit </button>
                 </td>
-                <td>
+                <td className="right-button">
                   <button className=" button cancel-button" > Delete </button>
                 </td>
               </tr>

@@ -121,7 +121,6 @@ table {
 }
 
 th {
-  text-align: center;
   margin-bottom: 20px;
   background-color: #133c54;
   color: white;
@@ -131,7 +130,21 @@ th {
 }
 
 td {
-  padding-top: 25px;
+  padding: 20px;
+  text-align: center;
+}
+
+.right-td {
+  text-align: right;
+}
+
+.right-button {
+  text-align: right;
+  padding: 0;
+}
+
+.left-td {
+  text-align: left;
 }
 
 .description-cell {

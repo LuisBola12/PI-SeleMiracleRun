@@ -58,7 +58,7 @@ export const CreateBenefit = () => {
                 value={formValues.Cost || ''}
                 onChange={(e) => { handleInputChange(maskCurrency(e)) }}
               ></input>
-              <label htmlFor="Cost" className="animated-input__label">Cost<span className="req">*</span></label>
+              <label htmlFor="Cost" className="animated-input__label">Cost ₡<span className="req">*</span></label>
             </div>
             <label className="error-message" id="benefit-cost">{errors.Cost}</label>
           </div>
