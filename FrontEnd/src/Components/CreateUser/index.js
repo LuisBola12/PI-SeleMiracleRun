@@ -11,9 +11,8 @@ import './createUserStyle.scss';
 
 export const CreateUser = () => {
   const dispatch = useDispatch();
-
   const { postError, post } = usePost("http://localhost:4000/createEmployer");
-
+  
   const sendToDatabase = async () =>{      
     const user = await validAnEntity('users/',formValues.email_register);
     const employee = await validAnEntity('employer/', formValues.id_register);
@@ -40,19 +39,18 @@ export const CreateUser = () => {
     }));
     navigate("/");
     }else{
+      setIsSubmitting(false);
       alert("These user alredy exists.")
     }
     }
 
-  const navigate = useNavigate();
+  const { formValues, handleInputChange, handleSubmit, setIsSubmitting, errors,  } = useForm(sendToDatabase, validate);
 
-  function handleClick() {
+  const navigate = useNavigate();
+  const handleClick = () => {
     dispatch(resetErrorMsg());
     navigate("/login");
   }
-
-  const { formValues, handleInputChange, handleSubmit, errors } = useForm(sendToDatabase, validate);
-
 
   return (
     <div>
