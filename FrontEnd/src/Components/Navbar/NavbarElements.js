@@ -18,7 +18,7 @@ export const Nav = styled.nav`
 export const NavLink = styled(Link)`
   position: sticky;
   top:0;
-  color: #fff;
+  color: white;
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -28,7 +28,11 @@ export const NavLink = styled(Link)`
   margin-left: 50px;
   margin-right: 50px;
   &.active {
-    color: #15cdfc;
+    color: #52d6d3;
+  }
+  &:hover {
+    color: #52d6d3;
+    opacity: 80%
   }
 `;
 

@@ -18,7 +18,7 @@ export const validateName = (name) =>{
     return String(name)
       .toLowerCase()
       .match(
-        /^[A-Za-z\s]+$/
+        /^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/
       );
 }
 

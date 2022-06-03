@@ -68,6 +68,7 @@ export const CrudEmployee = () => {
             ))}
           </tbody>
         </table>
+        <label className="Empty-message">{(data.length === 0) ? "No employees added yet":""}</label>
       </Container>
     </>
   )

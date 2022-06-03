@@ -60,6 +60,8 @@
 
 .content-container {
   margin-top: 30px;
+  display: flex;
+  flex-direction: column;
 }
 
 .button {
@@ -113,13 +115,12 @@ footer {
 
 table {
   text-align: center;
-  height: 300px;
+  height: 20%;
   margin-bottom: 100px;
   width: 100%;
 }
 
 th {
-  text-align: center;
   margin-bottom: 20px;
   background-color: #133c54;
   color: white;
@@ -129,8 +130,27 @@ th {
 }
 
 td {
-  padding-top: 25px;
+  padding: 20px;
+  text-align: center;
 }
+
+.right-td {
+  text-align: right;
+}
+
+.right-button {
+  text-align: right;
+  padding: 0;
+}
+
+.left-td {
+  text-align: left;
+}
+
+.description-cell {
+  width: 40%;
+}
+
 
 .table-left-border {
   border-top-left-radius: 1rem;
@@ -280,6 +300,7 @@ td {
 .forms-create-employee-service {
   margin: 40px;
   display: none;
+  /* color: #74f2f0; */
 }
 
 .forms-create-employee-service2 {
@@ -296,7 +317,13 @@ td {
   }
 }
 
-.sticky-navbar{
+.Empty-message {
+  font-size: 2rem;
+  opacity: 75%;
+  text-align: center;
+}
+
+.sticky-navbar {
   position: sticky;
   top: 0;
 }
