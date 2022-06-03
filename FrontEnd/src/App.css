@@ -134,6 +134,11 @@ td {
   text-align: center;
 }
 
+
+tr:nth-child(even) {
+  background-color: rgb(233, 233, 233);
+}
+
 .right-td {
   text-align: right;
 }
@@ -153,13 +158,13 @@ td {
 
 
 .table-left-border {
-  border-top-left-radius: 1rem;
-  border-bottom-left-radius: 1rem;
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
 }
 
 .table-right-border {
-  border-top-right-radius: 1rem;
-  border-bottom-right-radius: 1rem;
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
 }
 
 .dropdown-Contract {

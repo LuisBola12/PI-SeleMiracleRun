@@ -14,11 +14,11 @@ export const CrudEmployee = () => {
   const activeProject = useSelector((state) => state.activeProject.projectName);
   const [data, setData] = useState();
   useEffect(() => {
-    const getData = async() =>{
-      const newData = await getAnEntity('employee/',activeProject)
-        setData(newData);
-        setInfoReceived(true);
-      }
+    const getData = async () => {
+      const newData = await getAnEntity('employee/', activeProject)
+      setData(newData);
+      setInfoReceived(true);
+    }
     getData();
   }, []);
   return !infoReceived ? <div className="loader"></div> : (
@@ -51,7 +51,7 @@ export const CrudEmployee = () => {
           <tbody>
             {data.map((element) => (
               <tr key={element.Nombre}>
-                <td>{element.Nombre}</td>
+                <td className="table-left-border">{element.Nombre}</td>
                 <td>{element.Apellido1}</td>
                 <td>{element.Apellido2}</td>
                 <td>{element.Cedula}</td>
@@ -61,14 +61,14 @@ export const CrudEmployee = () => {
                 <td>
                   <button className=" button"> Edit </button>
                 </td>
-                <td>
+                <td className="table-right-border">
                   <button className=" button cancel-button" > Delete </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-        <label className="Empty-message">{(data.length === 0) ? "No employees added yet":""}</label>
+        <label className="Empty-message">{(data.length === 0) ? "No employees added yet" : ""}</label>
       </Container>
     </>
   )
