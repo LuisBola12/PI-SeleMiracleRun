@@ -30,7 +30,7 @@ export const getBenefitsByName = async (req, res) => {
 };
 
 export const createBenefit = async (req, res) => {
-  const { Nombre, NombreProyecto, CostoActual } = req.body;
+  const { Nombre, NombreProyecto, CostoActual, Descripción } = req.body;
   if (Nombre == null || CostoActual == null || NombreProyecto == null) {
     const message = "Bad Request. Please Fill All Fields.";
     return res.status(400).json({ msg: message });
@@ -42,6 +42,7 @@ export const createBenefit = async (req, res) => {
       .input("Nombre", sql.VarChar, Nombre)
       .input("NombreProyecto", sql.VarChar, NombreProyecto)
       .input("CostoActual", sql.Int, CostoActual)
+      .input("Descripción", sql.VarChar, Descripción)
       .query(queries.createBenefit);
     console.log(result);
     res.json({ Nombre, CostoActual });

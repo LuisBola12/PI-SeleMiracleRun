@@ -36,7 +36,7 @@ export const queries = {
   createNewVolDeduction: "Insert into DeduccionesVoluntarias values (@Nombre, @NombreProyecto, @PorcentajeEmpleador, @PorcentajeEmpleado)",
 
   // Benefit queries
-  getBenefits: "Select Nombre, CostoActual from Beneficios where NombreProyecto = @Proyecto",
+  getBenefits: "Select * from Beneficios where NombreProyecto = @Proyecto",
   getBenefitsByName: "select Nombre from Beneficios where Nombre = @Nombre and NombreProyecto = @Proyecto",
   getAllEmployers: "Select * From Empleador",
   getEmployerByID: "Select * From Empleador Where Cedula = @Cedula",
@@ -45,5 +45,5 @@ export const queries = {
   // Employer queries
   getAllContracts: "Select TipoJornada from Contrato",
   getAllEmployeesByID: "Select * From Empleador Where Cedula = @Cedula",
-  createBenefit: "Insert into Beneficios (Nombre, NombreProyecto, CostoActual) values (@Nombre, @NombreProyecto ,@CostoActual)"
+  createBenefit: "Insert into Beneficios (Nombre, NombreProyecto, CostoActual, Descripción) values (@Nombre, @NombreProyecto ,@CostoActual, @Descripción)"
 }

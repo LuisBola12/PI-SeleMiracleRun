@@ -62,6 +62,7 @@ Create Table Beneficios(
 	Nombre varchar(50),
 	NombreProyecto varchar(50),
 	CostoActual real not null,
+  Descripción varchar(300),
 	primary key(NombreProyecto,Nombre),
 	foreign key(NombreProyecto) references Proyecto(Nombre) on update cascade on delete cascade
 );	
