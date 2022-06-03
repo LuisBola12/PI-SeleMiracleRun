@@ -16,6 +16,7 @@ export const getBenefits = async (req, res) => {
 
 export const getBenefitsByName = async (req, res) => {
   const { Proyecto, Nombre } = req.params;
+  console.log(Proyecto, Nombre)
   try {
     const pool = await getConnection();
     const result = await pool.request()
@@ -23,6 +24,7 @@ export const getBenefitsByName = async (req, res) => {
       .input('Proyecto', Proyecto)
       .query(queries.getBenefitsByName);
     res.json(result.recordset);
+    console.log(result.recordset);
   } catch (e) {
     res.status(500);
     res.send(e.message);
@@ -30,7 +32,7 @@ export const getBenefitsByName = async (req, res) => {
 };
 
 export const createBenefit = async (req, res) => {
-  const { Nombre, NombreProyecto, CostoActual } = req.body;
+  const { Nombre, NombreProyecto, CostoActual, Descripción } = req.body;
   if (Nombre == null || CostoActual == null || NombreProyecto == null) {
     const message = "Bad Request. Please Fill All Fields.";
     return res.status(400).json({ msg: message });
@@ -42,6 +44,7 @@ export const createBenefit = async (req, res) => {
       .input("Nombre", sql.VarChar, Nombre)
       .input("NombreProyecto", sql.VarChar, NombreProyecto)
       .input("CostoActual", sql.Int, CostoActual)
+      .input("Descripción", sql.VarChar, Descripción)
       .query(queries.createBenefit);
     console.log(result);
     res.json({ Nombre, CostoActual });

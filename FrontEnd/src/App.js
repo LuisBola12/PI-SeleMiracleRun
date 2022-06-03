@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Benefits from './Pages/benefits';
 import Employees from './Pages/employees';
 import VolDeductions from './Pages/volDeductions';
+import { CreateNewVolDeduction } from './Pages/CreateNewVolDeduction';
 import Contracts from './Pages/contracts';
 import SelectProject from './Pages/payrollProjects/SelectProject';
 import { CreateNewEmployee } from './Pages/createNewEmployee';
@@ -31,6 +32,7 @@ function App() {
           <Route path="benefits" element={<Benefits />} />
           <Route path="employees" element={<Employees />} />
           <Route path="volDeductions" element={<VolDeductions />} />
+          <Route path="volDeductions/CreateVolDeductions" element={<CreateNewVolDeduction />} />
           <Route path="projectAdmin" element={<SelectProject />} />
           <Route path="contracts" element={<Contracts />} />
           <Route path="employees/CreateEmployee" element={<CreateNewEmployee />} />

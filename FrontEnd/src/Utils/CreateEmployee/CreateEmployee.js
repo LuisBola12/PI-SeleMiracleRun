@@ -1,6 +1,5 @@
 import { validateEmail, validateId, validateName, validatePassword } from '../../Validate';
 import history from "../../history";
-import { validAnEntity } from '../validAnEntity';
 export const verifyEmployeeProject = async (id,activeProject) => {
   const seleUrl = "http://localhost:4000/employee/contract";
   try {
@@ -39,135 +38,90 @@ export const showContractValues = (e) => {
   }
 }
 export const validateForm = (data) =>{
-    let validCount =0;
+    let errors = {}
     const {email,password,name,lastname,secondlastname,id,contract} = data;
+    console.log(data);
     if(email){
       if(!validateEmail(email)){
-        document.getElementById("error-email-input").style.display = "inline";
-        document.getElementById("error-email-input").innerHTML = "You must enter a valid format for an email.";
-        document.getElementById("email-employee").style.borderColor = "red";
+        errors.email = "You must enter a valid format for an email.";
+        document.getElementById("email").style.borderColor = "red";
       }else{
-        document.getElementById("error-email-input").style.display = "";
-        document.getElementById("email-employee").style.borderColor = "gray";
-        validCount++;
+        document.getElementById("email").style.borderColor = "gray";
       }
     }else{
-      document.getElementById("error-email-input").style.display = "inline";
-      document.getElementById("error-email-input").innerHTML = "Please enter an email.";
-      document.getElementById("email-employee").style.borderColor = "red";
+      errors.email = "Please enter an email.";
+      document.getElementById("email").style.borderColor = "red";
     }
   
     if(password){
       if(!validatePassword(password)){
-        document.getElementById("error-password-input").style.display = "inline";
-        document.getElementById("error-password-input").innerHTML = "Password must be 6 characters longer and have at least 2 words.";
-        document.getElementById("password-employee").style.borderColor = "red";
+        errors.password = "Password must be 6 characters longer and have at least 2 words.";
+        document.getElementById("password").style.borderColor = "red";
       }else{
         document.getElementById("error-password-input").style.display = "";
-        document.getElementById("password-employee").style.borderColor = "gray";
-        validCount++;
+        document.getElementById("password").style.borderColor = "gray";
       }
     }else{
-      document.getElementById("error-password-input").style.display = "inline";
-      document.getElementById("error-password-input").innerHTML = "Please enter a password.";
-      document.getElementById("password-employee").style.borderColor = "red";
+      errors.password = "Please enter a password.";
+      document.getElementById("password").style.borderColor = "red";
+    }
+    if(name){
+      if(!validateName(name)){
+        errors.name = "Please enter a valid name.";
+        document.getElementById("name").style.borderColor = "red";
+      }else{
+        document.getElementById("name").style.borderColor = "gray";
+      }
+    }else{
+        errors.name = "Please enter a name.";
+        document.getElementById("name").style.borderColor = "red";
     }
   
-    if(!validateName(name)){
-      document.getElementById("error-name-input").style.display = "inline";
-      document.getElementById("error-name-input").innerHTML = "Please enter a name.";
-      document.getElementById("name-employee").style.borderColor = "red";
+    if(lastname){
+      if(!validateName(lastname)){
+        errors.lastname = "Please enter a valid lastname.";
+        document.getElementById("lastname").style.borderColor = "red";
+      }else{
+        document.getElementById("lastname").style.borderColor = "gray";
+      }
     }else{
-      document.getElementById("error-name-input").style.display = "";
-      document.getElementById("name-employee").style.borderColor = "gray";
-      validCount++;
+        errors.lastname = "Please enter a lastname.";
+        document.getElementById("lastname").style.borderColor = "red";
     }
   
-    if(!validateName(lastname)){
-      document.getElementById("error-first-lastname-input").style.display = "inline";
-      document.getElementById("error-first-lastname-input").innerHTML = "Please enter a first last name.";
-      document.getElementById("first-last-name-employee").style.borderColor = "red";
+    if(secondlastname){
+      if(!validateName(secondlastname)){
+        errors.secondlastname = "Please enter valid a second last name.";
+        document.getElementById("secondlastname").style.borderColor = "red";
+      }else{
+        document.getElementById("secondlastname").style.borderColor = "gray";
+      }
     }else{
-      document.getElementById("error-first-lastname-input").style.display = "";
-      document.getElementById("first-last-name-employee").style.borderColor = "gray";
-      validCount++;
-    }
-  
-    if(!validateName(secondlastname)){
-      document.getElementById("error-second-lastname-input").style.display = "inline";
-      document.getElementById("error-second-lastname-input").innerHTML = "Please enter a second last name.";
-      document.getElementById("second-last-name-employee").style.borderColor = "red";
-    }else{
-      document.getElementById("error-second-lastname-input").style.display = "";
-      document.getElementById("second-last-name-employee").style.borderColor = "gray";
-      validCount++;
+        errors.secondlastname = "Please enter a secondlastname.";
+        document.getElementById("secondlastname").style.borderColor = "red";
     }
     if(id){
       if(!validateId(id)){
-        document.getElementById("error-id-employee").style.display = "inline";
-        document.getElementById("error-id-employee").innerHTML = "Id must follow the Costa Rican format.";
-        document.getElementById("id-employee").style.borderColor = "red";
+        errors.id = "Id must follow the Costa Rican format.";
+        document.getElementById("id").style.borderColor = "red";
       }else{
         document.getElementById("error-id-employee").style.display = "";
-        document.getElementById("id-employee").style.borderColor = "gray";
-        validCount++;
+        document.getElementById("id").style.borderColor = "gray";
       }
     }else{
-      document.getElementById("error-id-employee").style.display = "inline";
-      document.getElementById("error-id-employee").innerHTML = "Please enter an Id.";
-      document.getElementById("id-employee").style.borderColor = "red";
+      errors.id = "Please enter an Id.";
+      document.getElementById("id").style.borderColor = "red";
     }
     if(contract){
       document.getElementById("error-contract-input").style.display = "";
-      document.getElementById("contract-employee").style.borderColor = "gray";
-      validCount++;
+      document.getElementById("contract").style.borderColor = "gray";
     }else{
-      document.getElementById("error-contract-input").style.display = "inline";
-      document.getElementById("error-contract-input").innerHTML = "Please select a type of Contract.";
-      document.getElementById("contract-employee").style.borderColor = "red";
+      errors.contract = "Please select a type of Contract.";
+      document.getElementById("contract").style.borderColor = "red";
     }
-    if (validCount ===7){
-      return true;
-    }else{
-      return false;
-    }
+    return errors;
   }
   export const back = () => {
     history.push('/employees')
     history.go()
-  }
-
-  export const submitEmployee = async (data) => {
-    const {activeProject,email,password,name,lastname,secondlastname,id,phoneNumber,
-      contract,contractDeadline,hWage,serviceName,serviceValue} = data;
-    const user = await validAnEntity('users/',email);
-    const employee = await validAnEntity('employee/',id);
-    console.log(`valores: ${user} + ${employee}`);
-    const employeeContract = await verifyEmployeeProject(id,activeProject);
-      if (user === true && employee === true && employeeContract === true) {
-      const createEmployeeFetch = await fetch('http://localhost:4000/employee', {
-        method: 'POST',
-        headers: {
-          "Content-type": "application/json",
-        },
-          body: JSON.stringify({
-          NombreProyecto: activeProject,
-          Email: email,
-          Contrasenia: password,
-          Nombre: name,
-          Apellido1: lastname,
-          Apellido2: secondlastname,
-          Cedula: id,
-          Telefono: phoneNumber,
-          TipoJornada: contract,
-          FechaFinContrato: contractDeadline,
-          SalarioPorHora: hWage,
-          NombreServicio: serviceName,
-          ValorServicio: serviceValue,
-        }),
-      });
-    } else {
-      alert("There is already an user with those credentials.")
-    }
-    back()
   }
