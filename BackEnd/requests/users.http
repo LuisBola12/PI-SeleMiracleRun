@@ -61,7 +61,7 @@ GET {{apiUsers}}
 GET {{apiUsers}}/josefR@example.com
 
 ###
-GET {{apiEmployees}}/Radiadores Solceri
+GET {{apiEmployees}}/Super La Esquina
 
 ###
 GET {{apiProjects}}/josefR@example.com

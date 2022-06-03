@@ -28,7 +28,7 @@ const LoginComp = () => {
       <div className="logIn-logo-box">
         <div className="logIn-logo-AppName">
           <div className="logIn-logo"></div>
-          <div className="logIn-AppName">Playroll System</div>
+          <div className="logIn-AppName">Payroll System</div>
         </div>
         <p className="logIn-text">  Our payroll system seeks to help manage your payments
                                     in an autonomous and simplified way, making sure to 

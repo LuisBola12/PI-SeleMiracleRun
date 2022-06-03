@@ -4,7 +4,7 @@ import LoginComp from '../Components/Login/index';
 const Login = () => {
   return (
     <>
-       <LoginComp/>
+       <LoginComp/> 
     </>
   )
 }

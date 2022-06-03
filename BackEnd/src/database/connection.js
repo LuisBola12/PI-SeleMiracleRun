@@ -1,10 +1,11 @@
 import sql from 'mssql';
+import { config } from 'dotenv';
 
 const dbSettings = {
-    user: 'SeleMiracleRunAdmin',
-    password: 'SeleMiracleRunAdmin',
-    server: '172.16.202.209',
-    database: 'SeleMiracleRun',
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    server: process.env.DB_SERVER,
+    database: process.env.DB_NAME,
     options:{
         encrypt: true,
         trustServerCertificate: true,
