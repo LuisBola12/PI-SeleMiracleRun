@@ -6,6 +6,7 @@ import '../../App.css'
 import "bootstrap/dist/css/bootstrap.min.css";
 import history from "../../history";
 import { useSelector } from 'react-redux';
+import { getAnEntity } from './../../Utils/getAnEntity';
 
 export const CrudEmployee = () => {
 
@@ -13,18 +14,12 @@ export const CrudEmployee = () => {
   const activeProject = useSelector((state) => state.activeProject.projectName);
   const [data, setData] = useState();
   useEffect(() => {
-    const fetchSeleAPI = async () => {
-      const seleUrl = `http://localhost:4000/employee/${activeProject}`;
-      try {
-        const response = await fetch(seleUrl);
-        const newData = await response.json();
+    const getData = async() =>{
+      const newData = await getAnEntity('employee/',activeProject)
         setData(newData);
         setInfoReceived(true);
-      } catch (error) {
-        console.log(error);
       }
-    }
-    fetchSeleAPI();
+    getData();
   }, []);
   return !infoReceived ? <div className="loader"></div> : (
     <>

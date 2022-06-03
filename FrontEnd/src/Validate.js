@@ -10,8 +10,7 @@ export const validatePassword = (password) => {
   return String(password)
       .toLowerCase()
       .match(
-        /^[1-9]{4}$/
-        // /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/
+        /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
       );
 }
 

@@ -13,6 +13,7 @@ import Register from './Pages/register';
 import PrivateRoute from './Components/PrivateRoute/index';
 import Unauthoraized from './Pages/Unauthoraized';
 import { CreateNewBenefit } from './Pages/CreateNewBenefit';
+import { CreateProjectsForm } from './Components/ProjectsComponents/CreateProjectsForm';
 
 
 function App() {
@@ -27,28 +28,16 @@ function App() {
         <Route path="register" element={<Register />} />
         <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
           <Route path="/" element={<SelectProject />} />
-        </Route>
-        <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
           <Route path="benefits" element={<Benefits />} />
-        </Route>
-        <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
           <Route path="employees" element={<Employees />} />
-        </Route>
-        <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
           <Route path="volDeductions" element={<VolDeductions />} />
-        </Route>
-        <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
           <Route path="projectAdmin" element={<SelectProject />} />
-        </Route>
-        <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
           <Route path="contracts" element={<Contracts />} />
-        </Route>
-        <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
           <Route path="employees/CreateEmployee" element={<CreateNewEmployee />} />
-        </Route>
-        <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
           <Route path="benefits/CreateBenefit" element={<CreateNewBenefit />} />
+          <Route path="newProjectForm" element={<CreateProjectsForm />} />
         </Route>
+
       </Routes>
     </Router>
   );
