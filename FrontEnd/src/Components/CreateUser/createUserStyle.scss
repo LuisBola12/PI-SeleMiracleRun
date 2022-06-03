@@ -40,7 +40,7 @@
 }
 
 .register-full-form {
-    gap: 1.4rem;
+    gap: 0.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -286,7 +286,7 @@
 .register-error{
     color: #D8000C;
     text-align: center;
-   font-size: 0.7rem;
+    font-size: 0.7rem;
 }
 
 .register-btn-box {
@@ -294,7 +294,6 @@
     align-items: center;
     justify-content: center;
     gap: 1rem;
-    margin-top: 1rem;
   }
 
 .register-btn-sumbit {
