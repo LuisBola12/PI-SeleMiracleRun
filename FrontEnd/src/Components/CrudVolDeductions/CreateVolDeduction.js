@@ -1,27 +1,32 @@
 import '../../App.css'
 import './CreateVolDeduction.scss'
 import { usePostToDatabase } from "./usePostToDatabase";
+import validate from './volDedutionValidations';
+import useForm from '../../shared/hooks/useForm'
 import { useNavigate } from "react-router-dom";
 import { useGetVolDeductionsFromDatabase } from './useGetVolDeductionsFromDatabase';
 
 
 export const CreateVolDeduction = () => {
-  const { name, setName, cost, setCost, description, setDescription, submitVolDeduction } = usePostToDatabase();
+  //const { formValues, handleInputChange, handleSubmit, errors } = useForm();
+  //const { name, setName, cost, setCost, description, setDescription, submitVolDeduction } = usePostToDatabase();
   const { verifyNames } = useGetVolDeductionsFromDatabase();
   const navigate = useNavigate();
 
   const submit = async () => {
-    const notExit = await verifyNames(name);
-    if (notExit === true) {
-      submitVolDeduction();
-      setName("");
-      setCost("");
-      setDescription("");
+    //const notExit = await verifyNames(name);
+    //if (notExit === true) {
+      //submitVolDeduction();
+      //setName("");
+      //setCost("");
+      //setDescription("");
       navigate("/VolDeductions")
-    } else {
-      alert("Deducción voluntaria existente")
-    }
+    //} else {
+    //  alert("Deducción voluntaria existente")
+    //}
   }
+
+  const { formValues, handleInputChange, handleSubmit, errors } = useForm(submit, validate);
 
   const cheackNumber = (value) => {
     return String(value).toLowerCase().match(/^[0-9]*$/)
@@ -41,10 +46,10 @@ export const CreateVolDeduction = () => {
               className="animated-input__input"
               autoComplete="off"
               placeholder=" "
-              value={name}
-              onChange={(e) => setName(e.target.value)}>
-            </input>
+              value={formValues.Name || ''}
+              onChange={handleInputChange} />
             <label htmlFor="Name" className="animated-input__label">Name<span className="req">*</span></label>
+            <label  className = 'error' > {errors.Name} </label>
           </div>
 
           <div className="animated-input">
@@ -54,10 +59,10 @@ export const CreateVolDeduction = () => {
               className="animated-input__input"
               autoComplete="off"
               placeholder=" "
-              value={cost}
-              onChange={(e) => { if (cheackNumber(e.target.value)) { setCost(e.target.value) } }}
-            ></input>
+              value={formValues.Cost || ''}
+              onChange={handleInputChange} />
             <label htmlFor="Cost" className="animated-input__label">Cost<span className="req">*</span></label>
+            <label  className = 'error' > {errors.Cost} </label>
           </div>
         </div>
         <div className="animated-input">
@@ -67,32 +72,20 @@ export const CreateVolDeduction = () => {
             className="animated-input__textarea"
             autoComplete="off" 
             placeholder=" "
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          ></textarea>
+            value={formValues.Description || ''}
+            onChange={handleInputChange} />
           <label htmlFor="Description" className="animated-input__label">Description</label>
+          <label  className = 'error' > {errors.Description} </label>
         </div>
         <div className="buttons">
           <button
             className="create-volDeduction-btn"
-            onClick={() => {
-
-              if (name && cost && name.trim().length > 0) {
-                submit();
-              } else {
-                alert("!!!Error!!!");
-              }
-            }}>
+            onClick={handleSubmit}>
             create
           </button>
           <button
             className="cancel-volDeduction-btn"
-            onClick={() => {
-              setName("");
-              setCost("");
-              setDescription("");
-              navigate("/volDeductions")
-            }}>
+            onClick={() => { navigate("/volDeductions") }}>
             cancel
           </button>
         </div>
