@@ -1,14 +1,11 @@
-import { useState } from "react";
 import { useSelector } from "react-redux";
 
 export const usePostToDatabase = () => {
   const activeProject = useSelector((state) => state.activeProject.projectName);
-  const [name, setName] = useState('');
-  const [cost, setCost] = useState('');
-  const [description, setDescription] = useState('');
   const apiVolDeductions = `http://localhost:4000/volDeductions`
 
-  const submitVolDeduction = async () => {
+  const submitVolDeduction = async (name, cost, description) => {
+    const newCost = cost.split('.').join('');
     const postFetch = await fetch(apiVolDeductions, {
       method: 'POST',
       headers: {
@@ -17,13 +14,13 @@ export const usePostToDatabase = () => {
       body: JSON.stringify({
         Nombre: name,
         NombreProyecto: activeProject,
-        Costo: parseInt(cost),
+        Costo: parseInt(newCost),
         Descripcion: description,
       }),
     });
   }
 
   return {
-    name, setName, cost, setCost, description, setDescription, submitVolDeduction
+    submitVolDeduction
   }
 }
