@@ -206,7 +206,7 @@
   }
 }
 
-.register-btn-box {
+.project-btn-box {
   margin-top: 10.6rem;
   display: flex;
   align-items: center;
@@ -215,7 +215,7 @@
 
 }
 
-.register-btn-sumbit {
+.project-btn-sumbit {
   background-color: rgb(2, 119, 2);
   padding: 2px;
   border-radius: 5px;
@@ -227,12 +227,12 @@
   font-size: 1.6rem;
 }
 
-.register-btn-sumbit:hover {
+.project-btn-sumbit:hover {
   background-color: rgb(7, 145, 7);
   box-shadow: 0px 2px 8px 0px rgba(62, 62, 62, 0.55);
 }
 
-.register-btn-cancel {
+.project-btn-cancel {
   background-color: darkred;
   padding: 2px;
   border-radius: 8px;
@@ -244,7 +244,7 @@
   font-size: 1.6rem;
 }
 
-.register-btn-cancel:hover {
+.project-btn-cancel:hover {
   background-color: rgb(172, 1, 1);
   box-shadow: 0px 2px 8px 0px rgba(62, 62, 62, 0.55);
 }
@@ -255,6 +255,11 @@
   margin-top: 45px;
   text-align: center;
   font-size: small;
+}
+
+.borderRed, .borderRed:hover{
+  border-color: red;
+  
 }
 
 .deeper {
