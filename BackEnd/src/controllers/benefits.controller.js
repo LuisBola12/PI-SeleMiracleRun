@@ -16,6 +16,7 @@ export const getBenefits = async (req, res) => {
 
 export const getBenefitsByName = async (req, res) => {
   const { Proyecto, Nombre } = req.params;
+  console.log(Proyecto, Nombre)
   try {
     const pool = await getConnection();
     const result = await pool.request()
@@ -23,6 +24,7 @@ export const getBenefitsByName = async (req, res) => {
       .input('Proyecto', Proyecto)
       .query(queries.getBenefitsByName);
     res.json(result.recordset);
+    console.log(result.recordset);
   } catch (e) {
     res.status(500);
     res.send(e.message);

@@ -2,26 +2,28 @@ import '../../App.css'
 import './CreateBenefit.scss'
 import { usePostToDatabase } from "./usePostToDatabase";
 import { useNavigate } from "react-router-dom";
-import { useGetBenefitsFromDatabase } from './useGetBenefitsFromDatabase';
 import { maskCurrency } from '../../shared/moneyFormatTransform';
 import validateBenefitForm from './validateBenefitForm'
 import useForm from '../../shared/hooks/useForm'
+import { validAnEntity } from '../../Utils/validAnEntity';
+import { useSelector } from "react-redux";
 
 export const CreateBenefit = () => {
   const { submitBenefit } = usePostToDatabase();
-  const { verifyNames } = useGetBenefitsFromDatabase();
+  const activeProject = useSelector((state) => state.activeProject.projectName);
 
   const navigate = useNavigate();
   const submit = async () => {
-    const notExists = await verifyNames(formValues.Name);
+    const notExists = await validAnEntity('benefits/' + activeProject + '/', formValues.Name);
     if (notExists === true) {
       submitBenefit(formValues.Name, formValues.Cost, formValues.Description);
       navigate("/benefits")
     } else {
+      setIsSubmitting(false);
       alert("That benefit already exits")
     }
   }
-  const { formValues, handleInputChange, handleSubmit, errors } = useForm(submit, validateBenefitForm);
+  const { formValues, handleInputChange, handleSubmit, errors, setIsSubmitting } = useForm(submit, validateBenefitForm);
   return (
     <>
       <div className="benefits-form">

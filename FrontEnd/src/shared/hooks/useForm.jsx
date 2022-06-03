@@ -28,6 +28,7 @@ export const useForm = (onSubmit, validate) => {
     formValues,
     handleInputChange,
     handleSubmit,
+    setIsSubmitting,
     errors
   };
 };
