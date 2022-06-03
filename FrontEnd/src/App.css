@@ -300,6 +300,7 @@ td {
 .forms-create-employee-service {
   margin: 40px;
   display: none;
+  /* color: #74f2f0; */
 }
 
 .forms-create-employee-service2 {
@@ -314,4 +315,16 @@ td {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.Empty-message {
+  font-size: 2rem;
+  opacity: 75%;
+  text-align: center;
+}
+
+
+.sticky-navbar {
+  position: sticky;
+  top: 0;
 }

@@ -47,7 +47,7 @@ export const CrudBenefits = () => {
             ))}
           </tbody>
         </table>
-        <label className="Empty-benefit-message">{(data.length === 0) ? "No benefits added yet" : ""}</label>
+        <label className="Empty-message">{(data.length === 0) ? "No benefits added yet" : ""}</label>
       </Container>
     </>
   )

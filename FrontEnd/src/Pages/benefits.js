@@ -6,7 +6,7 @@ import Navbar from '../Components/Navbar/Navbar';
 const Benefits = () => {
   return (
     <>
-      <div className='.sticky-navbar'>
+      <div className='sticky-navbar'>
         <Navbar />
       </div>
       <div className='page-content'>
