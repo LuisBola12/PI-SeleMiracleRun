@@ -38,14 +38,14 @@ export const CreateProjectsForm = () => {
 
         <div className='row' >
           <div className="row-Element">
-            <input type="text" id="projectName" className="row-Element__input" value={formValues.projectName || ''}
+            <input type="text" id="projectName" className={`row-Element__input ${errors.projectNameErrorCss}` } value={formValues.projectName || ''}
               onChange={handleInputChange} autoComplete="off" placeholder=" " />
             <label htmlFor="projectName" className='row-Element__label'> Project Name <span className="req">*</span></label>
             <p className='error' >{errors.projectName}</p>
           </div>
 
           <div className='row-Element'>
-            <select id='paymentPeriod' className='row-Element__dropDown' onChange={handleInputChange} >
+            <select id='paymentPeriod' className={`row-Element__dropDown ${errors.paymentPeriodErrorCss}`} onChange={handleInputChange} >
               <option value=''>Select Payment Period</option>
               <option value='Mensual'>Mensual</option>
               <option value='Quincenal'>Quincenal</option>
@@ -59,7 +59,7 @@ export const CreateProjectsForm = () => {
         <div className='row' >
 
           <div className="row-Element">
-            <input type="number" id="maxBenefitsQuantity" className="row-Element__input" value={formValues.maxBenefitsQuantity || ''}
+            <input type="number" id="maxBenefitsQuantity" className={`row-Element__input ${errors.maxBenefitsQuantityCss}` } value={formValues.maxBenefitsQuantity || ''}
               onChange={handleInputChange}
               autoComplete="off"
               placeholder=" " />
@@ -68,7 +68,7 @@ export const CreateProjectsForm = () => {
           </div>
 
           <div className="row-Element">
-            <input type="number" id="maxBenefitsMoneyAmount" className="row-Element__input" value={formValues.maxBenefitsMoneyAmount || ''}
+            <input type="number" id="maxBenefitsMoneyAmount" className={`row-Element__input ${errors.maxBenefitsQuantityCss}`} value={formValues.maxBenefitsMoneyAmount || ''}
               onChange={handleInputChange}
               autoComplete="off"
               placeholder=" " />
@@ -90,11 +90,11 @@ export const CreateProjectsForm = () => {
         </div>
 
         <div className='row'>
-          <div className="register-btn-box">
-            <button onClick={handleSubmit} className="register-btn-sumbit" >
+          <div className="project-btn-box">
+            <button onClick={handleSubmit} className="project-btn-sumbit" >
               Create
             </button>
-            <button className="register-btn-cancel" onClick={() => navigate('/')}  >
+            <button className="project-btn-cancel" onClick={() => navigate('/')}  >
               Cancel
             </button>
           </div>
