@@ -9,21 +9,33 @@ import { useSelector } from "react-redux";
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react'
 import { transformCost } from "../../shared/moneyFormatTransform";
+import { usePutToBenefits } from '../../Utils/Benefits/usePutToBenefits';
 
 export const EditBenefit = () => {
+  const apiBenefits = `http://localhost:4000/benefits`;
   const activeProject = useSelector((state) => state.activeProject.projectName);
   const location = useLocation();
+  const oldName = location.state.Nombre;
   const navigate = useNavigate();
+  const { updateBenefit } = usePutToBenefits();
   const submit = async () => {
     const notExists = await validAnEntity('benefits/' + activeProject + '/', formValues.Name);
-    if (notExists === true) {
-      navigate("/benefits")
+    if (notExists === true || oldName === formValues.Name) {
+      updateBenefit(formValues.Name, formValues.Cost, formValues.Description, apiBenefits + `/${oldName}`);
+      navigate("/benefits");
     } else {
       setIsSubmitting(false);
       alert("That benefit already exits")
     }
   }
-  const { formValues, handleInputChange, handleSubmit, errors, setIsSubmitting, setFormValues } = useForm(submit, validateBenefitForm);
+  const {
+    formValues,
+    handleInputChange,
+    handleSubmit,
+    errors,
+    setIsSubmitting,
+    setFormValues
+  } = useForm(submit, validateBenefitForm);
   useEffect(() => {
     setFormValues({
       Name: location.state.Nombre,
@@ -91,7 +103,7 @@ export const EditBenefit = () => {
           <button
             className="create-benefit-btn"
             onClick={handleSubmit}>
-            create
+            Edit
           </button>
           <button
             className="cancel-benefit-btn"

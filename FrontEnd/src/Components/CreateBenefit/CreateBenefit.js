@@ -1,6 +1,6 @@
 import '../../App.css'
 import './CreateBenefit.scss'
-import { usePostToDatabase } from "../../Utils/Benefits/usePostToDatabase";
+import { usePostToBenefits } from "../../Utils/Benefits/usePostToBenefits.js";
 import { useNavigate } from "react-router-dom";
 import { maskCurrency } from '../../shared/moneyFormatTransform';
 import validateBenefitForm from '../../Utils/Benefits/validateBenefitForm'
@@ -9,7 +9,7 @@ import { validAnEntity } from '../../Utils/validAnEntity';
 import { useSelector } from "react-redux";
 
 export const CreateBenefit = () => {
-  const { submitBenefit } = usePostToDatabase();
+  const { submitBenefit } = usePostToBenefits();
   const activeProject = useSelector((state) => state.activeProject.projectName);
 
   const navigate = useNavigate();
