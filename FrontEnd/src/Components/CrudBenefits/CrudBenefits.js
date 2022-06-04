@@ -9,8 +9,11 @@ import { transformCost } from "../../shared/moneyFormatTransform";
 
 export const CrudBenefits = () => {
   const navigate = useNavigate();
-  const handleClick = () => {
+  const handleCreateClick = () => {
     navigate("/benefits/CreateBenefit")
+  }
+  const handleEditClick = (element) => {
+    navigate('/benefits/editBenefit', { state: element })
   }
   const { data, infoReceived } = useGetBenefitsFromDatabase();
   return !infoReceived ? <div className="loader" ></div > : (
@@ -18,7 +21,7 @@ export const CrudBenefits = () => {
       <Container className="content-container">
         <br />
         <button className="create-button"
-          onClick={handleClick}
+          onClick={handleCreateClick}
         >Create New Benefit</button>
         <br />
         <table className="Table">
@@ -38,7 +41,7 @@ export const CrudBenefits = () => {
                 <td className="description-cell left-td bottom-border">{((element.Descripción) ? element.Descripción : "No description")}</td>
                 <td className="right-td bottom-border">{transformCost(element.CostoActual)}</td>
                 <td className="right-button bottom-border">
-                  <button className="button"> Edit </button>
+                  <button className="button" onClick={() => handleEditClick(element)}> Edit </button>
                 </td>
                 <td className="right-button bottom-border table-right-border">
                   <button className="button cancel-button" > Delete </button>

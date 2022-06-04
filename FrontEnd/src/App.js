@@ -15,7 +15,7 @@ import PrivateRoute from './Components/PrivateRoute/index';
 import Unauthoraized from './Pages/Unauthoraized';
 import { CreateNewBenefit } from './Pages/CreateNewBenefit';
 import { CreateProjectsForm } from './Components/ProjectsComponents/CreateProjectsForm';
-
+import { EditBenefits } from './Pages/editBenefits';
 
 function App() {
 
@@ -37,6 +37,7 @@ function App() {
           <Route path="contracts" element={<Contracts />} />
           <Route path="employees/CreateEmployee" element={<CreateNewEmployee />} />
           <Route path="benefits/CreateBenefit" element={<CreateNewBenefit />} />
+          <Route path="benefits/editBenefit" element={<EditBenefits />} />
           <Route path="newProjectForm" element={<CreateProjectsForm />} />
         </Route>
 
