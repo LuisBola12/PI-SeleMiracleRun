@@ -58,14 +58,14 @@ export const EmployeeBenefits = () => {
         </table>
         <label className="Empty-message">{(data.length === 0) ? "No benefits selected added yet" : ""}</label>
 
-        <h2>Offered benefits</h2>
+        <h2>Offered Benefits</h2>
         <table className="Table">
           <thead>
             <tr className="table-header">
               <th className="table-left-border left-td">Benefit</th>
               <th className="left-td">Description</th>
               <th className="right-td">Actual Cost</th>
-              <th className="table-right-border right-td">Delete</th>
+              <th className="table-right-border right-td">Add</th>
             </tr>
           </thead>
           <tbody>
