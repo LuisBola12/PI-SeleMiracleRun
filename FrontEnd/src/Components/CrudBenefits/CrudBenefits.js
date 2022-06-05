@@ -34,7 +34,7 @@ export const CrudBenefits = () => {
           </tr>
         </thead>
         <tbody>
-          {data.map((element) => (
+          {projectBenefits.map((element) => (
             <tr key={element.Nombre}>
               <td className="left-td table-left-border">{element.Nombre}</td>
               <td className="description-cell left-td ">{((element.Descripción) ? element.Descripción : "No description")}</td>
@@ -49,7 +49,7 @@ export const CrudBenefits = () => {
           ))}
         </tbody>
       </table>
-      <label className="Empty-message">{(data.length === 0) ? "No benefits added yet" : ""}</label>
+      <label className="Empty-message">{(projectBenefits.length === 0) ? "No benefits added yet" : ""}</label>
     </>
   )
 };
