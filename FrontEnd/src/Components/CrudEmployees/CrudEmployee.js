@@ -23,8 +23,7 @@ export const CrudEmployee = () => {
   }, []);
   return !infoReceived ? <div className="loader"></div> : (
     <>
-      <Container className="content-container">
-        <br />
+      <div div className="table-button">
         <button className="create-button" onClick=
           {() => {
             history.push('employees/createEmployee')
@@ -33,43 +32,42 @@ export const CrudEmployee = () => {
           {" "}
           Create New Employee
         </button>
-        <br />
-        <table className="Table">
-          <thead>
-            <tr className="table-header">
-              <th className="table-left-border">Name</th>
-              <th>Last Name</th>
-              <th>Second Last Name</th>
-              <th>Id</th>
-              <th>Email</th>
-              <th>Contract</th>
-              <th>Net Salary</th>
-              <th>Edit</th>
-              <th className="table-right-border">Delete</th>
+      </div>
+      <table className="Table">
+        <thead>
+          <tr className="table-header">
+            <th className="table-left-border left-td">Name</th>
+            <th className="left-td">Last Name</th>
+            <th className="left-td">Second Last Name</th>
+            <th className="left-td">Id</th>
+            <th className="left-td">Email</th>
+            <th className="left-td">Contract</th>
+            <th>Net Salary</th>
+            <th>Edit</th>
+            <th className="table-right-border right-td">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((element) => (
+            <tr key={element.Nombre}>
+              <td className="table-left-border left-td">{element.Nombre}</td>
+              <td className="left-td">{element.Apellido1}</td>
+              <td className="left-td">{element.Apellido2}</td>
+              <td className="left-td">{element.Cedula}</td>
+              <td className="left-td">{element.Email}</td>
+              <td className="left-td">{element.TipoContrato}</td>
+              <td>₡0.0</td>
+              <td>
+                <button className=" button"> Edit </button>
+              </td>
+              <td className="table-right-border right-button">
+                <button className="button cancel-button" > Delete </button>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {data.map((element) => (
-              <tr key={element.Nombre}>
-                <td className="table-left-border">{element.Nombre}</td>
-                <td>{element.Apellido1}</td>
-                <td>{element.Apellido2}</td>
-                <td>{element.Cedula}</td>
-                <td>{element.Email}</td>
-                <td>{element.TipoContrato}</td>
-                <td>₡0.0</td>
-                <td>
-                  <button className=" button"> Edit </button>
-                </td>
-                <td className="table-right-border">
-                  <button className=" button cancel-button" > Delete </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <label className="Empty-message">{(data.length === 0) ? "No employees added yet" : ""}</label>
-      </Container>
+          ))}
+        </tbody>
+      </table>
+      <label className="Empty-message">{(data.length === 0) ? "No employees added yet" : ""}</label>
     </>
   )
 
