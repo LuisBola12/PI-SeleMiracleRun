@@ -39,10 +39,10 @@ function App() {
           <Route path="employees/CreateEmployee" element={<CreateNewEmployee />} />
           <Route path="benefits/CreateBenefit" element={<CreateNewBenefit />} />
           <Route path="benefits/editBenefit" element={<EditBenefits />} />
-          <Route path="myBenefits" element={<EmployeesBenefits />} />
+
           <Route path="newProjectForm" element={<CreateProjectsForm />} />
         </Route>
-
+        <Route path="myBenefits" element={<EmployeesBenefits />} />
       </Routes>
     </Router>
   );
