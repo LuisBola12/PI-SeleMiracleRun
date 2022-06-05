@@ -14,22 +14,38 @@ const Navbar = () => {
   // const { activeProject } = useContext(ProjectContext);
   const activeProject = useSelector((state) => state.activeProject.projectName);
   const user = useSelector((state) => state.user.user);
-
   return (
     <>
       <div>
         <Nav>
           <div className="navBar-logo"></div>
           <NavMenu>
-            <NavLink to="/employees" activestyle='true'>
-              Employees
-            </NavLink>
-            <NavLink to="/benefits" activestyle='true'>
-              Benefits
-            </NavLink>
-            <NavLink to="/volDeductions" activestyle='true'>
-              Voluntary Deductions
-            </NavLink>
+            {user.Roles === 'admin' &&
+              <>
+                <NavLink to="/employees" activestyle='true'>
+                  Employees
+                </NavLink>
+                <NavLink to="/benefits" activestyle='true'>
+                  Benefits
+                </NavLink>
+                <NavLink to="/volDeductions" activestyle='true'>
+                  Voluntary Deductions
+                </NavLink>
+              </>
+            }
+            {user.Roles === 'emp' &&
+              <>
+                <NavLink to="/" activestyle='true'>
+                  My Payments
+                </NavLink>
+                <NavLink to="/myBenefits" activestyle='true'>
+                  My Benefits
+                </NavLink>
+                <NavLink to="/" activestyle='true'>
+                  My Voluntary Deductions
+                </NavLink>
+              </>
+            }
           </NavMenu>
           <div className="navbar-corner">
             <div className="navbar-project-user">
