@@ -348,3 +348,7 @@ tr:nth-child(even) {
   position: sticky;
   top: 0;
 }
+
+.benefit-name {
+  width: 20%;
+}
