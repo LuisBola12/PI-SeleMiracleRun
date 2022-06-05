@@ -21,6 +21,9 @@ const Navbar = () => {
         <Nav>
           <div className="navBar-logo"></div>
           <NavMenu>
+          <NavLink to="/payroll" activestyle='true'>
+              Payroll
+            </NavLink>
             <NavLink to="/employees" activestyle='true'>
               Employees
             </NavLink>
