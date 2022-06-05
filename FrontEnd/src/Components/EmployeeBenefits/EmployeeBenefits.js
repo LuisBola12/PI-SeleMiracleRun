@@ -21,7 +21,16 @@ const database = [
 
 ];
 
+
 export const EmployeeBenefits = () => {
+  const isVinculated = (name) => {
+    for (let i = 0; i < database.length; i++) {
+      if (database[i].Nombre == name) {
+        return true;
+      }
+    }
+    return false;
+  }
   const { projectBenefits, infoReceived } = useGetBenefitsFromDatabase();
   const [data, setdata] = useState(database);
   const handleAddButton = (element) => {
@@ -71,12 +80,16 @@ export const EmployeeBenefits = () => {
           <tbody>
             {projectBenefits.map((element) => (
               <tr key={element.Nombre}>
-                <td className="left-td bottom-border table-left-border">{element.Nombre}</td>
-                <td className="description-cell left-td bottom-border">{((element.Descripción) ? element.Descripción : "No description")}</td>
-                <td className="right-td bottom-border">₡ {transformCost(element.CostoActual)}</td>
-                <td className="right-button bottom-border table-right-border">
-                  <button className="button add-button" onClick={() => handleAddButton(element)}> Add</button>
-                </td>
+                {isVinculated(element.Nombre) == false &&
+                  <>
+                    <td className="left-td bottom-border table-left-border">{element.Nombre}</td>
+                    <td className="description-cell left-td bottom-border">{((element.Descripción) ? element.Descripción : "No description")}</td>
+                    <td className="right-td bottom-border">₡ {transformCost(element.CostoActual)}</td>
+                    <td className="right-button bottom-border table-right-border">
+                      <button className="button add-button" onClick={() => handleAddButton(element)}> Add</button>
+                    </td>
+                  </>
+                }
               </tr>
             ))}
           </tbody>
