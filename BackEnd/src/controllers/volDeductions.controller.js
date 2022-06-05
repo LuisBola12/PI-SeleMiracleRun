@@ -1,4 +1,5 @@
 import { getConnection,sql,queries } from "../database";
+import { volDeductionsQuerys } from "../database/volDeductionsQuerys";
 
 export const getVolDeductions = async (req, res) => {
   const { NombreProyecto } = req.params;
@@ -21,7 +22,7 @@ export const getVolDeductionsByName = async (req, res) => {
     const result = await pool.request()
       .input('Nombre', Nombre)
       .input('NombreProyecto', NombreProyecto)
-      .query(queries.getVolDeductionsByName);
+      .query(volDeductionsQueries.getVolDeductionsByName);
     res.json(result.recordset);
   } catch (e) {
     res.status(500);
@@ -43,7 +44,7 @@ export const createNewVolDeduction = async (req, res) => {
       .input("NombreProyecto", sql.VarChar, NombreProyecto)
       .input("Costo", sql.Int, Costo)
       .input("Descripcion", sql.VarChar, Descripcion)
-      .query(queries.createNewVolDeduction);
+      .query(volDeductionsQueries.createNewVolDeduction);
     console.log(result);
     res.json({ Nombre, Costo, Descripcion});
   } catch (e) {
