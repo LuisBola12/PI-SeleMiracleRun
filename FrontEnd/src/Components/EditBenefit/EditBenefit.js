@@ -10,6 +10,8 @@ import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react'
 import { transformCost } from "../../shared/moneyFormatTransform";
 import { usePutToBenefits } from '../../Utils/Benefits/usePutToBenefits';
+import Swal from 'sweetalert2'
+
 
 export const EditBenefit = () => {
   const apiBenefits = `http://localhost:4000/benefits`;
@@ -25,7 +27,12 @@ export const EditBenefit = () => {
       navigate("/benefits");
     } else {
       setIsSubmitting(false);
-      alert("That benefit already exits")
+      Swal.fire({
+        icon: 'error',
+        title: 'error...',
+        text: 'That benefit already exists',
+        confirmButtonColor: 'darkgreen',
+      })
     }
   }
   const {
