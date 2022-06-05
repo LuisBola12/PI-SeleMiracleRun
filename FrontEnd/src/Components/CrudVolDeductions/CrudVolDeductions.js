@@ -13,40 +13,38 @@ export const CrudVolDeductions = () => {
   const { data, infoReceived } = useGetVolDeductionsFromDatabase();
   return !infoReceived ? <div className="loader" ></div > : (
     <>
-      <Container className="content-container">
-        <br />
+      <div className="table-button">
         <button className="create-button"
           onClick={handleClick}
         >Create New Voluntary Deduction</button><br />
-        <br />
-        <table className="Table">
-          <thead>
+      </div>
+      <table className="Table">
+        <thead>
           <tr className="table-header">
-              <th className="table-left-border left-td">Voluntary Deduction</th>
-              <th className="left-td">Description</th>
-              <th className="right-td">Cost</th>
-              <th className="right-td">Edit</th>
-              <th className="table-right-border right-td">Delete</th>
+            <th className="table-left-border left-td">Voluntary Deduction</th>
+            <th className="left-td">Description</th>
+            <th className="right-td">Cost</th>
+            <th className="right-td">Edit</th>
+            <th className="table-right-border right-td">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((element) => (
+            <tr key={element.Nombre}>
+              <td className="left-td">{element.Nombre}</td>
+              <td className="description-cell left-td">{((element.Descripcion) ? element.Descripcion : "No description")}</td>
+              <td className="right-td">{transformCost(element.Costo)}</td>
+              <td className="right-button">
+                <button className=" button"> Edit </button>
+              </td>
+              <td className="right-button">
+                <button className=" button cancel-button" > Delete </button>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {data.map((element) => (
-              <tr key={element.Nombre}>
-                <td className="left-td">{element.Nombre}</td>
-                <td className="description-cell left-td">{((element.Descripcion) ? element.Descripcion : "No description")}</td>
-                <td className="right-td">{transformCost(element.Costo)}</td>
-                <td className="right-button">
-                  <button className=" button"> Edit </button>
-                </td>
-                <td className="right-button">
-                  <button className=" button cancel-button" > Delete </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <label className="Empty-volDeduction-message">{(data.length === 0) ? "No voluntary deductions added yet" : ""}</label>
-      </Container>
+          ))}
+        </tbody>
+      </table>
+      <label className="Empty-volDeduction-message">{(data.length === 0) ? "No voluntary deductions added yet" : ""}</label>
     </>
   )
 };
