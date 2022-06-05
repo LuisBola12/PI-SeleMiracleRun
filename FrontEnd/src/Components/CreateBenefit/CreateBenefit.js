@@ -7,6 +7,7 @@ import validateBenefitForm from '../../Utils/Benefits/validateBenefitForm'
 import useForm from '../../shared/hooks/useForm'
 import { validAnEntity } from '../../Utils/validAnEntity';
 import { useSelector } from "react-redux";
+import Swal from 'sweetalert2'
 
 export const CreateBenefit = () => {
   const { submitBenefit } = usePostToBenefits();
@@ -20,7 +21,12 @@ export const CreateBenefit = () => {
       navigate("/benefits")
     } else {
       setIsSubmitting(false);
-      alert("That benefit already exits")
+      Swal.fire({
+        icon: 'error',
+        title: 'error...',
+        text: 'That benefit already exists',
+        confirmButtonColor: 'darkgreen',
+      })
     }
   }
   const { formValues, handleInputChange, handleSubmit, errors, setIsSubmitting } = useForm(submit, validateBenefitForm);
