@@ -1,6 +1,6 @@
 import React from 'react';
 import '../App.css'
-import { CreateVolDeduction } from '../Components/CrudVolDeductions/CreateVolDeduction';
+import { CreateVolDeduction } from '../Components/CreateVolDeduction/CreateVolDeduction';
 import Navbar from '../Components/Navbar/Navbar';
 
 export const CreateNewVolDeduction= () => {
