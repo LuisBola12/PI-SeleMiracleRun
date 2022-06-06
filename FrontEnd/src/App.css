@@ -85,6 +85,15 @@
   border-style: none;
   width: 100px;
 }
+.back-arrow-button{
+  padding: 10px;
+  text-align: left;
+  border-radius: 8px;
+  border-color: white;
+  background: none;
+  border-style: none;
+  width: 150px;
+}
 
 
 .button:hover {
