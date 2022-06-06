@@ -2,9 +2,11 @@ import {Container} from "reactstrap";
 import '../../App.css'
 import "bootstrap/dist/css/bootstrap.min.css";
 import history from "../../history";
+import { useNavigate } from "react-router-dom";
 
 
   export const ViewPayroll = () => {
+    const navigate = useNavigate();
     const data = [
         {
             'consecutiveNumber':3,
@@ -25,9 +27,8 @@ import history from "../../history";
             'Status': 'Closed'
         }
     ]
-    const goToDetails = () => {
-      history.push('/payroll/details')
-      history.go()
+    const goToDetails = (element) => {
+      navigate('/payroll/details', { state: element })
     }
 
     return /*!infoReceived ? <div className="loader" ></div > : */(
@@ -57,7 +58,7 @@ import history from "../../history";
                     Closed</td>
                   <td className="">
                     <button className="details-button" onClick={ () => {
-                       goToDetails();
+                       goToDetails(element);
                     }}>Details</button>
                   </td>
                 </tr>
