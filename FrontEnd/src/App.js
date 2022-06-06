@@ -16,13 +16,10 @@ import Unauthoraized from './Pages/Unauthoraized';
 import { CreateNewBenefit } from './Pages/CreateNewBenefit';
 import { CreateProjectsForm } from './Components/ProjectsComponents/CreateProjectsForm';
 import { EditBenefits } from './Pages/editBenefits';
-<<<<<<< HEAD
 import RegisterHours from './Pages/registerHours';
 import { useSelector } from "react-redux";
 import Home from './Pages/home';
-=======
 import EmployeesBenefits from './Pages/EmployeesBenefits';
->>>>>>> 030a7fce5717e6378cab8e5201523091039e4830
 
 function App() {
 
@@ -51,12 +48,14 @@ function App() {
           <Route path="benefits/editBenefit" element={<EditBenefits />} />
           <Route path="newProjectForm" element={<CreateProjectsForm />} />
           <Route path="registerHours" element={<RegisterHours />} />
+          <Route path="myBenefits" element={<EmployeesBenefits />} />
         </Route>}
 
         {/* Routes for the employee */}
         {userRoll && userRoll.Roles === 'emp' && 
           <Route element={<PrivateRoute allowedRoles={["emp"]} />}>
           <Route path="/" element={<Home />} />
+          {/* <Route path="employeesBenefits" element={<EmployeesBenefits />} /> */}
         </Route>}
       </Routes>
     </Router>
