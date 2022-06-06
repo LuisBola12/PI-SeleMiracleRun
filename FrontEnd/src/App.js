@@ -16,6 +16,8 @@ import Unauthoraized from './Pages/Unauthoraized';
 import { CreateNewBenefit } from './Pages/CreateNewBenefit';
 import { CreateProjectsForm } from './Components/ProjectsComponents/CreateProjectsForm';
 import { EditBenefits } from './Pages/editBenefits';
+import Payroll from './Pages/payroll';
+import PayrollDetailsPage from './Pages/payrollDetails';
 import EmployeesBenefits from './Pages/EmployeesBenefits';
 
 function App() {
@@ -36,6 +38,8 @@ function App() {
           <Route path="volDeductions/CreateVolDeductions" element={<CreateNewVolDeduction />} />
           <Route path="projectAdmin" element={<SelectProject />} />
           <Route path="contracts" element={<Contracts />} />
+          <Route path='payroll'element={<Payroll/>}/>
+          <Route path="payroll/details" element={<PayrollDetailsPage />} />
           <Route path="employees/CreateEmployee" element={<CreateNewEmployee />} />
           <Route path="benefits/CreateBenefit" element={<CreateNewBenefit />} />
           <Route path="benefits/editBenefit" element={<EditBenefits />} />
