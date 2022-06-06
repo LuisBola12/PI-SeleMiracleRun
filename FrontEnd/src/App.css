@@ -76,6 +76,17 @@
   width: 100px;
 }
 
+.details-button {
+  padding: 10px;
+  border-radius: 8px;
+  color: white;
+  border-color: white;
+  background-color: #178cd1;
+  border-style: none;
+  width: 100px;
+}
+
+
 .button:hover {
   background-color: #1f6085;
 }
