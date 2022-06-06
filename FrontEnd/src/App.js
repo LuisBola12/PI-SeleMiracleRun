@@ -16,9 +16,13 @@ import Unauthoraized from './Pages/Unauthoraized';
 import { CreateNewBenefit } from './Pages/CreateNewBenefit';
 import { CreateProjectsForm } from './Components/ProjectsComponents/CreateProjectsForm';
 import { EditBenefits } from './Pages/editBenefits';
+import RegisterHours from './Pages/registerHours';
+import { useSelector } from "react-redux";
+import Home from './Pages/home';
 
 function App() {
 
+  const userRoll = useSelector((state) => state.user.user);
 
   return (
 
@@ -27,7 +31,10 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route path="no-autorizado" element={<Unauthoraized />} />
         <Route path="register" element={<Register />} />
-        <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
+
+        
+        {userRoll && userRoll.Roles === 'admin' && 
+          <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
           <Route path="/" element={<SelectProject />} />
           <Route path="benefits" element={<Benefits />} />
           <Route path="employees" element={<Employees />} />
@@ -39,8 +46,13 @@ function App() {
           <Route path="benefits/CreateBenefit" element={<CreateNewBenefit />} />
           <Route path="benefits/editBenefit" element={<EditBenefits />} />
           <Route path="newProjectForm" element={<CreateProjectsForm />} />
-        </Route>
-
+          <Route path="registerHours" element={<RegisterHours />} />
+        </Route>}
+        {console.log(userRoll.Roles)}
+        {userRoll && userRoll.Roles === 'emp' && 
+          <Route element={<PrivateRoute allowedRoles={["emp"]} />}>
+          <Route path="/" element={<Home />} />
+        </Route>}
       </Routes>
     </Router>
   );
