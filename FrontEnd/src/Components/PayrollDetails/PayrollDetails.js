@@ -2,8 +2,15 @@ import React from "react";
 import { IconContext } from "react-icons";
 import { FaArrowLeft } from 'react-icons/fa';
 import { transformCost } from "../../shared/moneyFormatTransform";
+import history from './../../history';
+import { useEffect } from "react";
+import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 export const PayrollDetails = () => {
+    const [startDate,setStartDate] = useState();
+    const [endDate,setEndDate] = useState();
+    const location = useLocation();
     const data = [{
             'id':118020915,
             'name': 'Luis Bolanos',
@@ -34,16 +41,26 @@ export const PayrollDetails = () => {
             'netSalary': 600000
         }
     ]
+    const back = () => {
+      history.push('/payroll')
+      history.go()
+    }
+    useEffect(() => {
+      setStartDate(location.state.StartDate)
+      setEndDate(location.state.EndDate)
+    }, [])
   return (
     <>
-        <div className="table-button">
-            <br />
+        <h1 className="details-head-title">
+          {`PaySlips from: ${startDate} - ${endDate}`}
+        </h1>
+        <div className="details-table-button">
                 <IconContext.Provider value={{ color: "gray", className: "global-class-name", size: "3rem"}}>
-                <button className="back-arrow-button">
+                <button className="back-arrow-button" onClick={()=>{back()}}>
                     <FaArrowLeft />
                 </button>
-            </IconContext.Provider>
-          <br />
+              </IconContext.Provider>
+            <br />
         </div>
         <table className="Table">
             <thead>
