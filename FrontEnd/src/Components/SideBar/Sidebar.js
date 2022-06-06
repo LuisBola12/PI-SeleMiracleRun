@@ -63,6 +63,9 @@ const DropdownMenu = () => {
             <button onClick={redirectToProjectSelecion} className="sidebar-button" >
               Projects
             </button>
+            <button onClick={()=>{console.log("implementando")}} className="sidebar-button" >
+              Profile
+            </button>
             <button onClick={redirectToSettings} className="sidebar-button" >
               Settings
             </button>
