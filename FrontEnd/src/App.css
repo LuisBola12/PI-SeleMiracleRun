@@ -106,10 +106,19 @@
 
 }
 
+.add-button {
+  background-color: darkgreen;
+}
+
+.add-button:hover {
+  background-color: rgb(3, 119, 3);
+}
+
 
 .create-button:hover {
   background-color: rgb(3, 119, 3);
 }
+
 
 .cancel-button {
   background-color: darkred;
@@ -141,10 +150,11 @@ footer {
 
 table {
   text-align: center;
-  height: 20%;
+  height: 10%;
   margin-bottom: 100px;
   width: 80%;
 }
+
 
 th {
   margin-bottom: 20px;
@@ -357,4 +367,8 @@ tr:nth-child(even) {
 .sticky-navbar {
   position: sticky;
   top: 0;
+}
+
+.benefit-name {
+  width: 20%;
 }

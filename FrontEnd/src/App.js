@@ -18,6 +18,7 @@ import { CreateProjectsForm } from './Components/ProjectsComponents/CreateProjec
 import { EditBenefits } from './Pages/editBenefits';
 import Payroll from './Pages/payroll';
 import PayrollDetailsPage from './Pages/payrollDetails';
+import EmployeesBenefits from './Pages/EmployeesBenefits';
 
 function App() {
 
@@ -42,9 +43,10 @@ function App() {
           <Route path="employees/CreateEmployee" element={<CreateNewEmployee />} />
           <Route path="benefits/CreateBenefit" element={<CreateNewBenefit />} />
           <Route path="benefits/editBenefit" element={<EditBenefits />} />
+
           <Route path="newProjectForm" element={<CreateProjectsForm />} />
         </Route>
-
+        <Route path="myBenefits" element={<EmployeesBenefits />} />
       </Routes>
     </Router>
   );

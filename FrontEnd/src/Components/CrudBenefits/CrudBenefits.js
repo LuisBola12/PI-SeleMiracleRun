@@ -15,7 +15,7 @@ export const CrudBenefits = () => {
   const handleEditClick = (element) => {
     navigate('/benefits/editBenefit', { state: element })
   }
-  const { data, infoReceived } = useGetBenefitsFromDatabase();
+  const { projectBenefits, infoReceived } = useGetBenefitsFromDatabase();
   return !infoReceived ? <div className="loader" ></div > : (
     <>
       <div className="table-button">
@@ -34,7 +34,7 @@ export const CrudBenefits = () => {
           </tr>
         </thead>
         <tbody>
-          {data.map((element) => (
+          {projectBenefits.map((element) => (
             <tr key={element.Nombre}>
               <td className="left-td table-left-border">{element.Nombre}</td>
               <td className="description-cell left-td ">{((element.Descripción) ? element.Descripción : "No description")}</td>
@@ -49,7 +49,7 @@ export const CrudBenefits = () => {
           ))}
         </tbody>
       </table>
-      <label className="Empty-message">{(data.length === 0) ? "No benefits added yet" : ""}</label>
+      <label className="Empty-message">{(projectBenefits.length === 0) ? "No benefits added yet" : ""}</label>
     </>
   )
 };
