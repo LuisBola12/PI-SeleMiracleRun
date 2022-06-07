@@ -1,21 +1,24 @@
 import { Container } from "reactstrap";
 import '../../App.css'
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useGetVolDeductionsFromDatabase } from "./useGetVolDeductionsFromDatabase";
+import { useGetVolDeductionsFromDatabase } from "../../Utils/VolDeductions/useGetVolDeductionsFromDatabase";
 import { useNavigate } from "react-router-dom";
 import { transformCost } from "../../shared/moneyFormatTransform";
 
 export const CrudVolDeductions = () => {
   const navigate = useNavigate();
-  const handleClick = () => {
+  const handleCreateClick = () => {
     navigate("/volDeductions/CreateVolDeductions")
   }
-  const { data, infoReceived } = useGetVolDeductionsFromDatabase();
+  const handleEditClick = (element) => {
+    navigate('/volDeductions/editVolDeduction', { state: element })
+  }
+  const { projectVolDeductions, infoReceived } = useGetVolDeductionsFromDatabase();
   return !infoReceived ? <div className="loader" ></div > : (
     <>
       <div className="table-button">
         <button className="create-button"
-          onClick={handleClick}
+          onClick={handleCreateClick}
         >Create New Voluntary Deduction</button><br />
       </div>
       <table className="Table">
@@ -29,13 +32,13 @@ export const CrudVolDeductions = () => {
           </tr>
         </thead>
         <tbody>
-          {data.map((element) => (
+          {projectVolDeductions.map((element) => (
             <tr key={element.Nombre}>
               <td className="left-td">{element.Nombre}</td>
               <td className="description-cell left-td">{((element.Descripcion) ? element.Descripcion : "No description")}</td>
-              <td className="right-td">{transformCost(element.Costo)}</td>
+              <td className="right-td">₡ {transformCost(element.Costo)}</td>
               <td className="right-button">
-                <button className=" button"> Edit </button>
+                <button className=" button"  onClick={() => handleEditClick(element)}> Edit </button>
               </td>
               <td className="right-button">
                 <button className=" button cancel-button" > Delete </button>
@@ -44,7 +47,7 @@ export const CrudVolDeductions = () => {
           ))}
         </tbody>
       </table>
-      <label className="Empty-volDeduction-message">{(data.length === 0) ? "No voluntary deductions added yet" : ""}</label>
+      <label className="Empty-volDeduction-message">{(projectVolDeductions.length === 0) ? "No voluntary deductions added yet" : ""}</label>
     </>
   )
 };

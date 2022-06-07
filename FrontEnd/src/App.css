@@ -53,6 +53,17 @@
   width: 80%;
 }
 
+.details-table-button {
+  margin-top: 50px;
+  width: 80%;
+}
+
+.details-head-title {
+  font-family: sans-serif;
+  text-align: center;
+  width: 80%;
+}
+
 .page-content {
   display: flex;
   flex-direction: column;
@@ -76,6 +87,26 @@
   width: 100px;
 }
 
+.details-button {
+  padding: 10px;
+  border-radius: 8px;
+  color: white;
+  border-color: white;
+  background-color: #178cd1;
+  border-style: none;
+  width: 100px;
+}
+.back-arrow-button{
+  padding: 10px;
+  text-align: left;
+  border-radius: 8px;
+  border-color: white;
+  background: none;
+  border-style: none;
+  width: 150px;
+}
+
+
 .button:hover {
   background-color: #1f6085;
 }
@@ -86,10 +117,19 @@
 
 }
 
+.add-button {
+  background-color: darkgreen;
+}
+
+.add-button:hover {
+  background-color: rgb(3, 119, 3);
+}
+
 
 .create-button:hover {
   background-color: rgb(3, 119, 3);
 }
+
 
 .cancel-button {
   background-color: darkred;
@@ -121,10 +161,11 @@ footer {
 
 table {
   text-align: center;
-  height: 20%;
+  height: 10%;
   margin-bottom: 100px;
   width: 80%;
 }
+
 
 th {
   margin-bottom: 20px;
@@ -337,4 +378,8 @@ tr:nth-child(even) {
 .sticky-navbar {
   position: sticky;
   top: 0;
+}
+
+.benefit-name {
+  width: 20%;
 }
