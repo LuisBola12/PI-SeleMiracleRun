@@ -1,29 +1,36 @@
 import '../../App.css'
 import './CreateVolDeduction.scss'
-import { usePostToDatabase } from "./usePostToDatabase";
-import validate from './volDedutionValidations';
+import { usePostToVolDeductions } from '../../Utils/VolDeductions/usePostToVolDeductions';
+import validateVolDeductionForm from '../../Utils/VolDeductions/validateVolDeductionForm';
 import useForm from '../../shared/hooks/useForm'
 import { useNavigate } from "react-router-dom";
-import { useGetVolDeductionsFromDatabase } from './useGetVolDeductionsFromDatabase';
 import { maskCurrency } from '../../shared/moneyFormatTransform';
-
+import { validAnEntity } from '../../Utils/validAnEntity';
+import { useSelector } from "react-redux";
+import Swal from 'sweetalert2'
 
 export const CreateVolDeduction = () => {
-  const { verifyNames } = useGetVolDeductionsFromDatabase();
-  const { submitVolDeduction } = usePostToDatabase();
-  const navigate = useNavigate();
+  const { submitVolDeduction } = usePostToVolDeductions();
+  const activeProject = useSelector((state) => state.activeProject.projectName);
 
+  const navigate = useNavigate();
   const submit = async () => {
-    const notExit = await verifyNames(formValues.Name);
-    if (notExit === true) {
+    const notExists = await validAnEntity('volDeductions/' + activeProject + '/', formValues.Name);
+    if (notExists === true) {
       submitVolDeduction(formValues.Name, formValues.Cost, formValues.Description);
       navigate("/VolDeductions")
     } else {
-      alert("That voluntary deduction already exists")
+      setIsSubmitting(false);
+      Swal.fire({
+        icon: 'error',
+        title: 'error...',
+        text: 'That voluntary deduction already exists',
+        confirmButtonColor: 'darkgreen',
+      })
     }
   }
 
-  const { formValues, handleInputChange, handleSubmit, errors } = useForm(submit, validate);
+  const { formValues, handleInputChange, handleSubmit, errors, setIsSubmitting } = useForm(submit, validateVolDeductionForm);
   return (
     <>
       <div className="volDeductions-form">

@@ -5,6 +5,7 @@ import Benefits from './Pages/benefits';
 import Employees from './Pages/employees';
 import VolDeductions from './Pages/volDeductions';
 import { CreateNewVolDeduction } from './Pages/CreateNewVolDeduction';
+import { EditVolDeductions } from './Pages/editVolDeductions';
 import Contracts from './Pages/contracts';
 import SelectProject from './Pages/payrollProjects/SelectProject';
 import { CreateNewEmployee } from './Pages/createNewEmployee';
@@ -36,6 +37,7 @@ function App() {
           <Route path="employees" element={<Employees />} />
           <Route path="volDeductions" element={<VolDeductions />} />
           <Route path="volDeductions/CreateVolDeductions" element={<CreateNewVolDeduction />} />
+          <Route path="volDeductions/editVolDeduction" element={<EditVolDeductions />} />
           <Route path="projectAdmin" element={<SelectProject />} />
           <Route path="contracts" element={<Contracts />} />
           <Route path='payroll'element={<Payroll/>}/>

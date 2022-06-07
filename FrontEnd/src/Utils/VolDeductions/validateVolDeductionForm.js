@@ -2,9 +2,8 @@ import { validateName } from '../../Validate';
 const validate = (values) => {
   let errors = {};
   if (!values.Name) {
-    errors.Name = 'You must enter a name for the benefit';
+    errors.Name = 'You must enter a name for the voluntary deduction';
     document.getElementById('Name').style.borderColor = 'red';
-
   } else {
     document.getElementById('Name').style.borderColor = 'gray';
     if (!validateName(values.Name)) {
@@ -12,10 +11,10 @@ const validate = (values) => {
       document.getElementById('Name').style.borderColor = 'red';
     } else if (values.Name) {
       document.getElementById('Name').style.borderColor = 'gray';
-    }
+    } 
   }
   if (!values.Cost) {
-    errors.Cost = "The cost of the benefit can't be 0";
+    errors.Cost = "The cost of the voluntary deduction can't be 0";
     document.getElementById('Cost').style.borderColor = 'red';
   } else {
     document.getElementById('Cost').style.borderColor = 'gray';
