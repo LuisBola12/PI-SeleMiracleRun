@@ -12,10 +12,9 @@ export const maskCurrency = (e) => {
 
 export const transformCost = (cost) => {
   let value = cost.toString()
-  if(cost !== '-'){
+  if (cost !== '-') {
     value = value.replace(/(\d)(\d{3})$/, "$1.$2");
     value = value.replace(/(?=(\d{3})+(\D))\B/g, ".");
-    value = '₡' + value;
   }
   return value;
 }
