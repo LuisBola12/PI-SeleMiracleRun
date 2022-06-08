@@ -36,19 +36,19 @@ const CreateUser = () => {
       email: formValues.email_register, 
       password: formValues.password_register
     }));
-    navigate('/');
+    navigate('/projectAdmin');
     }else{
       setIsSubmitting(false);
       alert('These user alredy exists.')
     }
   }
 
-  const { formValues, handleInputChange, handleSubmit, setIsSubmitting, errors,  } = useForm(sendToDatabase, validate);
+  const { formValues, handleInputChange, handleSubmit, setIsSubmitting, errors } = useForm(sendToDatabase, validate);
 
   const navigate = useNavigate();
   const handleClick = () => {
     dispatch(resetErrorMsg());
-    navigate('/login');
+    navigate('/');
   }
 
   return (

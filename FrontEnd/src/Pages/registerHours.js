@@ -1,5 +1,5 @@
 import React from 'react'
-import CalendarComp from '../Components/CalendarComp';
+import CalendarComp from '../Components/CalendarComp/Calendar'
 import Navbar from '../Components/Navbar/Navbar';
 
 const RegisterHours = () => {

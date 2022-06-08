@@ -4,19 +4,34 @@ import 'react-calendar/dist/Calendar.css';
 import './calendarStyle.scss';
 import React from 'react';
 import {Modal, Button, Form} from 'react-bootstrap';
+import useForm from '../../shared/hooks/useForm';
+import validate from './calendarValidations';
 
 const CalendarComp = () => {
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
-  const [hours, setHours] = useState('');
   const dateMin = null;
+  const sendToDatabase = () =>{
+    setIsSubmitting(false);
+  }
+
+  const { formValues, handleInputChange, handleSubmit, setIsSubmitting, errors, setErrors } = useForm(sendToDatabase, validate);
 
   const handleClose = () => {
+    setErrors({});
     setShow(false);
   }
   
   const handleShow = () => {
     setShow(true);
+  }
+
+  const handleSave = async () => {
+    handleSubmit();
+    let error = JSON.stringify(errors);
+    if(error === '{}' ){
+      setShow(false);
+    }
   }
 
   return (
@@ -49,18 +64,21 @@ const CalendarComp = () => {
           <Form>
             <Form.Group>
               <Form.Control
-                id = 'calendar-hours'
-                type='number'
-                value={hours}
-                onChange={(e) => {setHours(e.target.value)}}
+                id = 'calendar_hours'
+                type = 'text'
+                value = {formValues.hours}
+                onChange = {handleInputChange}
                 placeholder='Hours'
                 autoFocus
               />
+              <div>
+                <label className='calendar-error' id='calendar_error_name'>{errors.calendar_hours}</label>
+            </div>
             </Form.Group>
           </Form>
           </Modal.Body>
         <Modal.Footer>
-          <Button variant='success' onClick={handleClose}>
+          <Button variant='success' onClick={handleSave}>
             Save
           </Button>
           <Button variant='danger' onClick={handleClose}>

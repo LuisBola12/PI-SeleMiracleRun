@@ -30,7 +30,8 @@ export const useForm = (onSubmit, validate) => {
     handleSubmit,
     setIsSubmitting,
     setFormValues,
-    errors
+    errors,
+    setErrors
   };
 };
 export default useForm;

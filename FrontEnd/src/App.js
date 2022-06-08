@@ -57,8 +57,8 @@ function App() {
           </Route>
         ) : (
           <Route element={<PrivateRoute allowedRoles={['emp']} />}>
-            <Route path='projectAdmin' element={<SelectProject />} />
             <Route path='home' element={<Home />} />
+            <Route path='projectAdmin' element={<SelectProject />} />
             <Route path='registerHours' element={<RegisterHours />} />
           </Route>
         ) }
