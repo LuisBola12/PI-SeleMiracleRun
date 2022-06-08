@@ -1,11 +1,11 @@
-import { Router } from "express";
-import { getProjectsByEmail, createProject } from "../controllers/projects.controller";
-import { getEmployerByID, getUsers, getUserByEmail, verifyCredentials, registerNewUser } from "../controllers/users.controller";
-import { getEmployees, postNewEmployee, getEmployeeByID, verifyEmployeeContractOnProject } from '../controllers/employees.contoller'
-import { getVolDeductions, createNewVolDeduction, getVolDeductionsByName } from "../controllers/volDeductions.controller";
-import { getTypeOfContracts } from "../controllers/contracts.controller";
-import { getBenefits, createBenefit, getBenefitsByName } from "../controllers/benefits.controller";
-import { createNewEmployer, getEmployer } from "../controllers/employer.controller";
+import { Router } from 'express';
+import { getProjectsByEmail, createProject } from '../controllers/projects.controller';
+import { getEmployerByID, getUsers, getUserByEmail, verifyCredentials, registerNewUser } from '../controllers/users.controller';
+import { getEmployees, postNewEmployee, getEmployeeByID, verifyEmployeeContractOnProject } from '../controllers/employees.contoller';
+import { getVolDeductions, createNewVolDeduction, getVolDeductionsByName } from '../controllers/volDeductions.controller';
+import { getTypeOfContracts } from '../controllers/contracts.controller';
+import { getBenefits, createBenefit, getBenefitsByName } from '../controllers/benefits.controller';
+import { createNewEmployer, getEmployer } from '../controllers/employer.controller';
 
 const router = Router();
 
@@ -49,6 +49,9 @@ router.get('/volDeductions/:NombreProyecto', getVolDeductions);
 router.get('/volDeductions/:NombreProyecto/:Nombre', getVolDeductionsByName);
 router.post('/volDeductions', createNewVolDeduction);
 
+//GetEmployeesPaidHours
+//TODO: cambiar el jj
+// router.post('/employesWorkInfo', jj);
 
 
 export default router;

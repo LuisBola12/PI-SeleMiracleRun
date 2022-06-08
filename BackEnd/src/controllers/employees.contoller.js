@@ -1,10 +1,10 @@
-import { getConnection, sql, queries } from "../database";
+import { getConnection, queries } from '../database';
 
 
 export const getEmployeeByID = async (req, res) => {
   const { Cedula } = req.params;
-  if (Cedula == null || Cedula == "") {
-    const message = "Bad Request. Please Fill All Fields.";
+  if (Cedula == null || Cedula == '') {
+    const message = 'Bad Request. Please Fill All Fields.';
     return res.status(400).json({ msg: message });
   }
   try {
@@ -18,7 +18,7 @@ export const getEmployeeByID = async (req, res) => {
     res.status(404);
     res.send(e.message);
   }
-}
+};
 
 export const getEmployees = async (req, res) => {
   try {
@@ -26,7 +26,7 @@ export const getEmployees = async (req, res) => {
     const pool = await getConnection();
     const result = await pool
       .request()
-      .input("Proyecto", Proyecto)
+      .input('Proyecto', Proyecto)
       .query(queries.getAllEmployees);
     res.json(result.recordset);
   } catch (e) {
@@ -40,8 +40,8 @@ export const verifyEmployeeContractOnProject = async (req, res) => {
     const pool = await getConnection();
     const result = await pool
       .request()
-      .input("Cedula", Cedula)
-      .input("Proyecto", Proyecto)
+      .input('Cedula', Cedula)
+      .input('Proyecto', Proyecto)
       .query(queries.verifyEmployeeContractProject);
     res.json(result.recordset);
   } catch (e) {
@@ -49,7 +49,7 @@ export const verifyEmployeeContractOnProject = async (req, res) => {
     res.send(e.message);
   }
 
-}
+};
 export const postNewEmployee = async (req, res) => {
   const date = new Date();
   const [month, day, year] = [
@@ -74,22 +74,22 @@ export const postNewEmployee = async (req, res) => {
     NombreServicio,
     ValorServicio,
   } = req.body;
-  if (SalarioPorHora = 0) {
+  if (SalarioPorHora === 0) {
     SalarioPorHora = null;
   }
-  if (NombreServicio = "") {
+  if (NombreServicio === '') {
     NombreServicio = null;
   }
-  if (ValorServicio = 0) {
+  if (ValorServicio === 0) {
     ValorServicio = null;
   }
   const pool = await getConnection();
   try {
-    const createUser = await pool
+    await pool
       .request()
-      .input("Email", Email)
-      .input("Contrasenia", Contrasenia)
-      .input("Roles", Roles)
+      .input('Email', Email)
+      .input('Contrasenia', Contrasenia)
+      .input('Roles', Roles)
       .query(queries.createNewUser);
   } catch (e) {
     console.log(e);
@@ -97,12 +97,12 @@ export const postNewEmployee = async (req, res) => {
   try {
     const createEmployee = await pool
       .request()
-      .input("Nombre", Nombre)
-      .input("Apellido1", Apellido1)
-      .input("Apellido2", Apellido2)
-      .input("Cedula", Cedula)
-      .input("Telefono", Telefono)
-      .input("Email", Email)
+      .input('Nombre', Nombre)
+      .input('Apellido1', Apellido1)
+      .input('Apellido2', Apellido2)
+      .input('Cedula', Cedula)
+      .input('Telefono', Telefono)
+      .input('Email', Email)
       .query(queries.createNewEmployee);
   } catch (e) {
     console.log(e);
@@ -110,14 +110,14 @@ export const postNewEmployee = async (req, res) => {
   try {
     const createContractForEmployee = await pool
       .request()
-      .input("Cedula", Cedula)
-      .input("NombreProyecto", NombreProyecto)
-      .input("TipoJornada", TipoJornada)
-      .input("FechaInicioContrato", fecha)
-      .input("FechaFinContrato", FechaFinContrato)
-      .input("SalarioPorHora", SalarioPorHora)
-      .input("NombreServicio", NombreServicio)
-      .input("ValorServicio", ValorServicio)
+      .input('Cedula', Cedula)
+      .input('NombreProyecto', NombreProyecto)
+      .input('TipoJornada', TipoJornada)
+      .input('FechaInicioContrato', fecha)
+      .input('FechaFinContrato', FechaFinContrato)
+      .input('SalarioPorHora', SalarioPorHora)
+      .input('NombreServicio', NombreServicio)
+      .input('ValorServicio', ValorServicio)
       .query(queries.addContractOfAnEmployee);
   } catch (e) {
     console.log(e);

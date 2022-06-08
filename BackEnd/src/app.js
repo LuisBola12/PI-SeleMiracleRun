@@ -1,7 +1,7 @@
 import express from 'express';
 import config from './config';
 import productsRoutes from './routes/seleMiracle.routes';
-import cors from "cors";
+import cors from 'cors';
 
 const app = express();
 
