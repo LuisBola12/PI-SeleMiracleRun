@@ -125,9 +125,34 @@
   border: none;
   background-color: white;
 }
+.user-profile-buttons{
+  width: 100%;
+  display: none;
+  gap:30px;
+  justify-content: center;
+  margin-bottom: 40px;
+}
 .user-profile-edit-icon{
   text-align: right; 
   margin-left: 87%;
+}
+.submit-change-btn{
+  padding: 13px;
+  border-radius: 8px;
+  color: white;
+  border-color: white;
+  background-color: darkgreen;
+  border-style: none;
+  width: 100px;
+}
+.dont-change-btn{
+  padding: 13px;
+  border-radius: 8px;
+  color: white;
+  border-color: white;
+  background-color: darkred;
+  border-style: none;
+  width: 100px;
 }
 .user-profile-edit-button{
   color: #133c54;

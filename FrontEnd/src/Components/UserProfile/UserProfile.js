@@ -5,6 +5,7 @@ import { useForm } from "./../../shared/hooks/useForm";
 import { validateForm } from "../../Utils/CreateEmployee/CreateEmployee";
 import { useGetProfileData } from './../../Utils/UserProfile/getUserProfile';
 import { editUserProfileForm } from "../../Utils/UserProfile/editUserProfile";
+import { removeNoEdit,applyNoEdit } from './../../Utils/UserProfile/editUserProfile';
 export const UserProfile = () => {
   const editUser = () => {};
   const {
@@ -36,7 +37,7 @@ export const UserProfile = () => {
             className: "user-profile-edit-button",
           }}
         >
-          <button className="edit-profile-button" onClick={editUserProfileForm}>
+          <button className="edit-profile-button" onClick={removeNoEdit}>
             <FaEdit />
           </button>
         </IconContext.Provider>
@@ -113,14 +114,17 @@ export const UserProfile = () => {
             ></input>
           </div>
           <div className="user-profile-inner-div"></div>
-          <div className="user-Profile-Buttons">
-          <button className="create-employee-btn"
-            onClick={handleSubmit}>
-            Create
-          </button>
-          <button className="cancel-employee-btn" >
-            Cancel
-          </button>
+
+          <div id= "user-profile-buttons-div"className="user-profile-buttons">
+
+            <button className="submit-change-btn"
+              onClick={handleSubmit}>
+              Submit
+            </button>
+            <button className="dont-change-btn" onClick={applyNoEdit} >
+              Cancel
+            </button>
+
           </div>
         </div>
       </div>
