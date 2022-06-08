@@ -3,7 +3,6 @@ export const validAnEntity = async (url, entity) => {
   try {
     const response = await fetch(seleUrl);
     const newData = await response.json();
-    console.log(newData);
     if (newData.length === 1) {
       return false;
     } else {

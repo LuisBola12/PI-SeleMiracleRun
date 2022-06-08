@@ -1,14 +1,14 @@
 import React from 'react';
-import '../App.css'
-import { CreateVolDeduction } from '../Components/CreateVolDeduction/CreateVolDeduction';
+import '../App.css';
+import { EditVolDeduction } from '../Components/EditVolDeduction/EditVolDeduction';
 import Navbar from '../Components/Navbar/Navbar';
 
-export const CreateNewVolDeduction= () => {
+export const EditVolDeductions = () => {
   return (
     <>
       <Navbar />
       <div className='page-content'>
-        {<CreateVolDeduction />}
+        {<EditVolDeduction />}
       </div>
       <footer>&copy; Sele Miracle Run - UCR</footer>
     </>

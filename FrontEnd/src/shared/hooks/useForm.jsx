@@ -29,6 +29,7 @@ export const useForm = (onSubmit, validate) => {
     handleInputChange,
     handleSubmit,
     setIsSubmitting,
+    setFormValues,
     errors
   };
 };
