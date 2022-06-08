@@ -1,37 +1,37 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './calendarStyle.scss';
 import React from 'react';
+import { useNavigate } from "react-router-dom";
+import {Modal, Button, Form} from 'react-bootstrap';
 
 const CalendarComp = () => {
   const [date, setDate] = useState(new Date());
-  const [hour, setHour] = useState('');
-
-  const reset = () =>{
-    date[1] = null;    
+  const dateMin = null
+  const [show, setShow] = useState(false);
+  const handleClose = () => {
+    setShow(false);
   }
-
-  const prueba22 = async (info) =>{
-  }
-
-  const prueba = async () => {
-
+  
+  const handleShow = () => {
+    setShow(true);
   }
 
   return (
-    <div className='app'>
+    <div className='calendar-page'>
       <h1 className='text-center'>Calendar</h1>
       <div className='calendar-container'>
         <Calendar
-          id = "Calendar"
-          onChange={setDate}
-          value={date}
-          selectRange={true}
+          value = {date}
+          onChange = {setDate}
+          onClickDay={handleShow}
           minDetail='year'
+          maxDate={new Date()}
+          minDate={dateMin}
           next2Label={null}
           prev2Label={null}
-          // onClickDay={prueba}
+        
         />
       </div>
       {
@@ -45,19 +45,35 @@ const CalendarComp = () => {
           </p>
         ) : (
               <p className='text-center'>
-                <span className='bold'>Default selected date:</span>{' '}
+                <span className='bold'>Selected date:</span>{' '}
                 {date.toDateString()}
               </p>
             )
       }
-      <div className='calendar-btn-box'>
-        <div>
-          <input type='date'/>
-        </div>
-        <button className='calendar-sumbit-btn' onClick={reset}>Reset</button>
-        <button className='calendar-sumbit-btn' onClick={prueba22}>Sumbit</button>
-        <button className='calendar-sumbit-btn' onClick={reset}>Cancel</button>
-      </div>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Enter Hours for {date.toDateString()} :</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group>
+              <Form.Control
+                type="number"
+                placeholder="Hours"
+                autoFocus
+              />
+            </Form.Group>
+          </Form>
+          </Modal.Body>
+        <Modal.Footer>
+          <Button variant="success" onClick={handleClose}>
+            Save
+          </Button>
+          <Button variant="danger" onClick={handleClose}>
+            Cancel
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }
