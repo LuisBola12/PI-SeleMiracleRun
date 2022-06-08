@@ -29,14 +29,14 @@ function App() {
 
     <Router history={history}>
       <Routes>
-        <Route path="login" element={<Login />} />
+        <Route path="/" element={<Login />} />
         <Route path="no-autorizado" element={<Unauthoraized />} />
         <Route path="register" element={<Register />} />
 
         {/* Routes for the employer */}
         {userRoll && userRoll.Roles === 'admin' && 
           <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
-          <Route path="/" element={<SelectProject />} />
+          {/* <Route path="/" element={<SelectProject />} /> */}
           <Route path="benefits" element={<Benefits />} />
           <Route path="employees" element={<Employees />} />
           <Route path="volDeductions" element={<VolDeductions />} />
@@ -54,8 +54,8 @@ function App() {
         {/* Routes for the employee */}
         {userRoll && userRoll.Roles === 'emp' && 
           <Route element={<PrivateRoute allowedRoles={["emp"]} />}>
-          <Route path="/" element={<Home />} />
-          {/* <Route path="employeesBenefits" element={<EmployeesBenefits />} /> */}
+            <Route path="projectAdmin" element={<SelectProject />} />
+          <Route path="home" element={<Home />} />
         </Route>}
       </Routes>
     </Router>

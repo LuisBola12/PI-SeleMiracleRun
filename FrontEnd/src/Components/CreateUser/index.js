@@ -37,7 +37,7 @@ export const CreateUser = () => {
       email: formValues.email_register, 
       password: formValues.password_register
     }));
-    navigate("/");
+    navigate("/projectAdmin");
     }else{
       setIsSubmitting(false);
       alert("These user alredy exists.")
@@ -49,7 +49,7 @@ export const CreateUser = () => {
   const navigate = useNavigate();
   const handleClick = () => {
     dispatch(resetErrorMsg());
-    navigate("/login");
+    navigate("/");
   }
 
   return (
