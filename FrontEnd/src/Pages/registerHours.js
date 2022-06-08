@@ -4,9 +4,14 @@ import Navbar from '../Components/Navbar/Navbar';
 
 const RegisterHours = () => {
   return (
-    <>
-      <Navbar/>
-      <CalendarComp/> 
+    <> 
+      <div className='sticky-navbar'>
+        <Navbar />
+      </div>
+      <div className='page-content'>
+        {<CalendarComp/>}
+      </div>
+      <footer>&copy; Sele Miracle Run - UCR</footer>
     </>
   )
 }

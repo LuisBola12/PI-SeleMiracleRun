@@ -44,6 +44,9 @@ const Navbar = () => {
                 <NavLink to="/ee" activestyle='true'>
                   My Voluntary Deductions
                 </NavLink>
+                <NavLink to="/registerHours" activestyle='true'>
+                 Hours
+                </NavLink>
               </>
             }
           </NavMenu>

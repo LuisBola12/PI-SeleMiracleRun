@@ -3,13 +3,14 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './calendarStyle.scss';
 import React from 'react';
-import { useNavigate } from "react-router-dom";
 import {Modal, Button, Form} from 'react-bootstrap';
 
 const CalendarComp = () => {
   const [date, setDate] = useState(new Date());
-  const dateMin = null
   const [show, setShow] = useState(false);
+  const [hours, setHours] = useState('');
+  const dateMin = null;
+
   const handleClose = () => {
     setShow(false);
   }
@@ -34,21 +35,11 @@ const CalendarComp = () => {
         
         />
       </div>
-      {
-      date.length > 0 ? 
-        (
-          <p className='text-center'>
-            <span className='bold'>Start:</span>{' '}
-            {date[0].toDateString()}
-            &nbsp;|&nbsp;
-            <span className='bold'>End:</span> {date[1].toDateString()}
-          </p>
-        ) : (
+      { date && 
               <p className='text-center'>
                 <span className='bold'>Selected date:</span>{' '}
                 {date.toDateString()}
               </p>
-            )
       }
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -58,18 +49,21 @@ const CalendarComp = () => {
           <Form>
             <Form.Group>
               <Form.Control
-                type="number"
-                placeholder="Hours"
+                id = 'calendar-hours'
+                type='number'
+                value={hours}
+                onChange={(e) => {setHours(e.target.value)}}
+                placeholder='Hours'
                 autoFocus
               />
             </Form.Group>
           </Form>
           </Modal.Body>
         <Modal.Footer>
-          <Button variant="success" onClick={handleClose}>
+          <Button variant='success' onClick={handleClose}>
             Save
           </Button>
-          <Button variant="danger" onClick={handleClose}>
+          <Button variant='danger' onClick={handleClose}>
             Cancel
           </Button>
         </Modal.Footer>
