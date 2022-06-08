@@ -7,7 +7,7 @@ import {Modal, Button, Form} from 'react-bootstrap';
 import useForm from '../../shared/hooks/useForm';
 import validate from './calendarValidations';
 
-const CalendarComp = () => {
+export const CalendarComp = () => {
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
   const dateMin = null;
@@ -89,5 +89,3 @@ const CalendarComp = () => {
     </div>
   );
 }
-
-export default CalendarComp;

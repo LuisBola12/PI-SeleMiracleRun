@@ -1,12 +1,10 @@
-import React from 'react'
-import CreateUser from '../Components/CreateUser/createUser';
+import React from 'react';
+import { CreateUser } from '../Components/CreateUser/createUser';
 
-const Register = () => {
+export const Register = () => {
   return (
     <>
-       <CreateUser/>
+      <CreateUser/>
     </>
-  )
-}
-
-export default Register;
+  );
+};

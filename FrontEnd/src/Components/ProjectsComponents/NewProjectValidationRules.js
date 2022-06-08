@@ -1,13 +1,12 @@
 
 const validate = (values) => {
   let errors = {};
-  const regex = '';
   if (!values.projectName) {
     errors.projectName = 'Project Name Is Required';
     errors.projectNameErrorCss = 'borderRed';
   } 
   if (!values.paymentperiod) {
-    errors.paymentPeriod = 'Payment Period Required'
+    errors.paymentPeriod = 'Payment Period Required';
     errors.paymentPeriodErrorCss = 'borderRed';
   }
   if (!values.maxBenefitsQuantity) {

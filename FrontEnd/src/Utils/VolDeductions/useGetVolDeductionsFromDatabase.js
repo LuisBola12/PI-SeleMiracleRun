@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { getAnEntity } from '../getAnEntity'
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { getAnEntity } from '../getAnEntity';
 
 export const useGetVolDeductionsFromDatabase = () => {
   const activeProject = useSelector((state) => state.activeProject.projectName);
@@ -11,10 +11,10 @@ export const useGetVolDeductionsFromDatabase = () => {
     const getVolDeductions = async () => {
       setProjectVolDeductions(await getAnEntity('volDeductions/', activeProject));
       setInfoReceived(true);
-    }
+    };
     getVolDeductions();
-  }, [])
+  }, []);
   return {
     projectVolDeductions, infoReceived
-  }
-}
+  };
+};

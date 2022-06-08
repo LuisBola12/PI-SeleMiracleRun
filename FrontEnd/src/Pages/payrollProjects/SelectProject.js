@@ -1,12 +1,12 @@
-import React from 'react'
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../../App.css'
-import './SelectProject.css'
+import '../../App.css';
+import './selectProject.css';
 import { useProjectsData } from './useProjectsData';
 import { useSelector, useDispatch } from 'react-redux';
-import { logout } from "../../Slices/user/userSlice";
+import { logout } from '../../Slices/user/userSlice';
 
-const SelectProject = () => {
+export const SelectProject = () => {
   const navigate = useNavigate();
   const { projects, handleProjectSelection, loading, error } = useProjectsData();
   const activeProject = useSelector((state) => state.activeProject.projectName);
@@ -18,9 +18,9 @@ const SelectProject = () => {
       <div className='project-header'>
         <div className='project-logo'></div>
         <button className='project-backButton' onClick={() => {
-          if (activeProject === "") {
+          if (activeProject === '') {
             dispatch(logout());
-            navigate("/");
+            navigate('/');
           } else {
             navigate('/employees');
           }
@@ -29,7 +29,7 @@ const SelectProject = () => {
           X</button>
       </div>
 
-      <div className=" project-projectsRow">
+      <div className='project-projectsRow'>
         {!loading && error == null ?
           projects.map((project) => {
             return (
@@ -41,25 +41,18 @@ const SelectProject = () => {
                 </button>
                 <div className='project-projectName'>{project.Nombre}</div>
               </div>
-            )
+            );
           })
           : null
         }
 
         <div>
           {/* <NewProjectForm actualData={projects} setActualData={setProjects} /> */}
-          
-          <button centered="true" className="project-buttonCreate" onClick={() => navigate('/newProjectForm')}>+</button >
+          <button centered='true' className='project-buttonCreate' onClick={() => navigate('/newProjectForm')}>+</button >
           <p className='project-AddNewProjectText'>Add new Project</p>
-
         </div>
       </div>
 
     </div >
-
-
-
-  )
-}
-
-export default SelectProject;
+  );
+};

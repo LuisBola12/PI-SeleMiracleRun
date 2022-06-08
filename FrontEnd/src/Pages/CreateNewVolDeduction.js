@@ -1,12 +1,14 @@
 import React from 'react';
-import '../App.css'
+import '../App.css';
 import { CreateVolDeduction } from '../Components/CreateVolDeduction/CreateVolDeduction';
-import Navbar from '../Components/Navbar/Navbar';
+import { Navbar } from '../Components/Navbar/Navbar';
 
 export const CreateNewVolDeduction= () => {
   return (
     <>
-      <Navbar />
+      <div className='sticky-navbar'>
+        <Navbar />
+      </div>
       <div className='page-content'>
         {<CreateVolDeduction />}
       </div>

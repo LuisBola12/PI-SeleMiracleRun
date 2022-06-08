@@ -1,37 +1,31 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import {
-  Nav,
-  NavLink,
-  NavMenu,
-} from "./NavbarElements";
-import DropdownMenu, { Sidebar } from "../SideBar/Sidebar.js";
-import { ReactComponent as ListIcon } from '../SideBar/icons/list.svg';
-import './Navbar.css'
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { Nav, NavLink, NavMenu } from './NavbarElements';
+import { DropdownMenu, Menu } from '../DropDownMenu/DropDownMenu';
+import { ReactComponent as ListIcon } from '../DropDownMenu/icons/list.svg';
+import './Navbar.css';
 
-
-const Navbar = () => {
-  // const { activeProject } = useContext(ProjectContext);
+export const Navbar = () => {
   const activeProject = useSelector((state) => state.activeProject.projectName);
   const user = useSelector((state) => state.user.user);
   return (
     <>
       <div>
         <Nav>
-          <div className="navBar-logo"></div>
+          <div className='navBar-logo'></div>
           <NavMenu>
             {user.Roles === 'admin' &&
               <>
-                <NavLink to="/payroll" activestyle='true'>
+                <NavLink to='/payroll' activestyle='true'>
                   Payroll
                 </NavLink>
-                <NavLink to="/employees" activestyle='true'>
+                <NavLink to='/employees' activestyle='true'>
                   Employees
                 </NavLink>
-                <NavLink to="/benefits" activestyle='true'>
+                <NavLink to='/benefits' activestyle='true'>
                   Benefits
                 </NavLink>
-                <NavLink to="/volDeductions" activestyle='true'>
+                <NavLink to='/volDeductions' activestyle='true'>
                   Voluntary Deductions
                 </NavLink>
               </>
@@ -41,7 +35,7 @@ const Navbar = () => {
                 <NavLink to="/ee" activestyle='true'>
                   My Payments
                 </NavLink>
-                <NavLink to="/myBenefits" activestyle='true'>
+                <NavLink to='/myBenefits' activestyle='true'>
                   My Benefits
                 </NavLink>
                 <NavLink to="/ee" activestyle='true'>
@@ -53,14 +47,14 @@ const Navbar = () => {
               </>
             }
           </NavMenu>
-          <div className="navbar-corner">
-            <div className="navbar-project-user">
-              <div className="activeProject">{activeProject}</div>
-              <div className="activeUser">{user.Email.charAt(0).toLocaleUpperCase()}</div>
+          <div className='navbar-corner'>
+            <div className='navbar-project-user'>
+              <div className='activeProject'>{activeProject}</div>
+              <div className='activeUser'>{user.Email.charAt(0).toLocaleUpperCase()}</div>
             </div>
-            <Sidebar icon={<ListIcon />}>
+            <Menu icon={<ListIcon />}>
               <DropdownMenu></DropdownMenu>
-            </Sidebar>
+            </Menu>
           </div>
 
         </Nav>
@@ -69,5 +63,3 @@ const Navbar = () => {
     </>
   );
 };
-
-export default Navbar;

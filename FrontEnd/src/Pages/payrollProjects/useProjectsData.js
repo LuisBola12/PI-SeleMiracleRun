@@ -1,13 +1,8 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 import { useFetch } from '../../shared/hooks/useFetch';
 import { useNavigate } from 'react-router-dom';
 import { updateActiveProject } from '../../Slices/projectSlice/activeProjectSlice';
-
-
-
-
-
 
 export const useProjectsData = () => {
   const [projects, setProjects] = useState([]);
@@ -16,19 +11,14 @@ export const useProjectsData = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
-
-
   const handleProjectSelection = (projectName) => {
     dispatch(updateActiveProject(projectName));
     navigate('/employees');
-
-  }
-
+  };
 
   return {
     projects,
     handleProjectSelection,
     loading, error
-  }
-}
+  };
+};

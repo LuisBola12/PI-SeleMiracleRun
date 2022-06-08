@@ -1,8 +1,9 @@
 import React from 'react';
-import Navbar from '../Components/Navbar/Navbar';
+import { Navbar } from '../Components/Navbar/Navbar';
 import { PayrollDetails } from './../Components/PayrollDetails/PayrollDetails';
+import '../App.css';
 
-const PayrollDetailsPage = () => {
+export const PayrollDetailsPage = () => {
   return (
     <>
       <div className='sticky-navbar'>
@@ -13,6 +14,5 @@ const PayrollDetailsPage = () => {
       </div>
       <footer>&copy; Sele Miracle Run - UCR</footer>
     </>
-  )
-}
-export default PayrollDetailsPage;
+  );
+};

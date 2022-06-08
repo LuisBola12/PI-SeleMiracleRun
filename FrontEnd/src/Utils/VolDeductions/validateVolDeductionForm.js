@@ -14,7 +14,7 @@ const validate = (values) => {
     } 
   }
   if (!values.Cost) {
-    errors.Cost = "The cost of the voluntary deduction can't be 0";
+    errors.Cost = 'The cost of the voluntary deduction can\'t be 0';
     document.getElementById('Cost').style.borderColor = 'red';
   } else {
     document.getElementById('Cost').style.borderColor = 'gray';

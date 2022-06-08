@@ -1,12 +1,14 @@
 import React from 'react';
 import '../App.css';
 import { EditBenefit } from '../Components/EditBenefit/EditBenefit';
-import Navbar from '../Components/Navbar/Navbar';
+import { Navbar } from '../Components/Navbar/Navbar';
 
 export const EditBenefits = () => {
   return (
     <>
-      <Navbar />
+      <div className='sticky-navbar'>
+        <Navbar />
+      </div>
       <div className='page-content'>
         {<EditBenefit />}
       </div>

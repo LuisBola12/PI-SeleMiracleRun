@@ -1,8 +1,8 @@
 import React from 'react'
-import CalendarComp from '../Components/CalendarComp/Calendar'
-import Navbar from '../Components/Navbar/Navbar';
+import { CalendarComp } from '../Components/CalendarComp/Calendar'
+import { Navbar } from '../Components/Navbar/Navbar';
 
-const RegisterHours = () => {
+export const RegisterHours = () => {
   return (
     <> 
       <div className='sticky-navbar'>
@@ -15,5 +15,3 @@ const RegisterHours = () => {
     </>
   )
 }
-
-export default RegisterHours;

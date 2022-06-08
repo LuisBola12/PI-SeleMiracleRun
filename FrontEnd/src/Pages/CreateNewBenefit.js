@@ -1,12 +1,14 @@
 import React from 'react';
-import '../App.css'
+import '../App.css';
 import { CreateBenefit } from '../Components/CreateBenefit/CreateBenefit';
-import Navbar from '../Components/Navbar/Navbar';
+import { Navbar } from '../Components/Navbar/Navbar';
 
 export const CreateNewBenefit = () => {
   return (
     <>
-      <Navbar />
+      <div className='sticky-navbar'>
+        <Navbar />
+      </div>
       <div className='page-content'>
         {<CreateBenefit />}
       </div>

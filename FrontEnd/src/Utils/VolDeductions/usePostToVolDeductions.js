@@ -1,15 +1,15 @@
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 
 export const usePostToVolDeductions = () => {
   const activeProject = useSelector((state) => state.activeProject.projectName);
-  const apiVolDeductions = `http://localhost:4000/volDeductions`
+  const apiVolDeductions = 'http://localhost:4000/volDeductions';
 
   const submitVolDeduction = async (name, cost, description) => {
     const newCost = cost.split('.').join('');
     const postFetch = await fetch(apiVolDeductions, {
       method: 'POST',
       headers: {
-        "Content-type": "application/json",
+        'Content-type': 'application/json',
       },
       body: JSON.stringify({
         Nombre: name,
@@ -18,9 +18,10 @@ export const usePostToVolDeductions = () => {
         Descripcion: description,
       }),
     });
-  }
+    console.log(postFetch);
+  };
 
   return {
     submitVolDeduction
-  }
-}
+  };
+};

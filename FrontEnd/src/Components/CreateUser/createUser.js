@@ -1,3 +1,4 @@
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { postLogin } from '../../Slices/user/requests/postLogin';
@@ -8,7 +9,7 @@ import validate from '../../Utils/CreateUser/createUserValidations';
 import useForm from '../../shared/hooks/useForm';
 import './createUserStyle.scss';
 
-const CreateUser = () => {
+export const CreateUser = () => {
   const dispatch = useDispatch();
   const { post } = usePost('http://localhost:4000/createEmployer');
   
@@ -17,19 +18,19 @@ const CreateUser = () => {
     const employee = await validAnEntity('employer/', formValues.id_register);
 
     if (user === true && employee === true) {
-      console.log('prubea')
-        let string = JSON.stringify(formValues);
+      console.log('prubea');
+      let string = JSON.stringify(formValues);
 
-        string = JSON.stringify({
-          Cedula: formValues.id_register,
-          Nombre: formValues.name_register,
-          Apellido1: formValues.lastname1_register,
-          Apellido2: formValues.lastname2_register,
-          Telefono: formValues.phoneNumber_register,
-          Email: formValues.email_register,
-          Contrasenia: formValues.password_register,
-          Roles: 'admin'
-         })
+      string = JSON.stringify({
+        Cedula: formValues.id_register,
+        Nombre: formValues.name_register,
+        Apellido1: formValues.lastname1_register,
+        Apellido2: formValues.lastname2_register,
+        Telefono: formValues.phoneNumber_register,
+        Email: formValues.email_register,
+        Contrasenia: formValues.password_register,
+        Roles: 'admin'
+      });
 
     post(string);
     dispatch(postLogin({
@@ -39,9 +40,9 @@ const CreateUser = () => {
     navigate('/projectAdmin');
     }else{
       setIsSubmitting(false);
-      alert('These user alredy exists.')
+      alert('These user alredy exists.');
     }
-  }
+  };
 
   const { formValues, handleInputChange, handleSubmit, setIsSubmitting, errors } = useForm(sendToDatabase, validate);
 
@@ -54,8 +55,8 @@ const CreateUser = () => {
   return (
     <div>
       <div className='register-bar'>
-          <div className='register-logo'></div>
-          <div className='register-title'> Sign Up </div>
+        <div className='register-logo'></div>
+        <div className='register-title'> Sign Up </div>
       </div>
         
       <div className='register-full-form'>        
@@ -110,13 +111,13 @@ const CreateUser = () => {
               <label htmlFor='lastname2_register' className='register-animated-input-name__label'>Second Last Name<span className='req'>*</span></label>
             </div>
             <div>
-                <label className='register-error' id='register_error_lastname2'>{errors.lastname2_register}</label>
+              <label className='register-error' id='register_error_lastname2'>{errors.lastname2_register}</label>
             </div>
           </div>          
         </div>
 
-          <div className='register-form'>
-            <div>
+        <div className='register-form'>
+          <div>
             <div className='register-row'>
               <input 
                 type='text' 
@@ -167,7 +168,7 @@ const CreateUser = () => {
               <label htmlFor='email_register' className='register-row__label'> Email <span className='req'>*</span> </label>
             </div>
             <div>
-                <label className='register-error' id='register_error_email'>{errors.email_register}</label>
+              <label className='register-error' id='register_error_email'>{errors.email_register}</label>
             </div>
           </div>
           <div>
@@ -202,5 +203,3 @@ const CreateUser = () => {
     </div>
   );
 };
-
-export default CreateUser;

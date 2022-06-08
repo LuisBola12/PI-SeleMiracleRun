@@ -1,9 +1,9 @@
 import React from 'react';
-import '../App.css'
-import Navbar from '../Components/Navbar/Navbar';
+import '../App.css';
+import { Navbar } from '../Components/Navbar/Navbar';
 import { EmployeeBenefits } from '../Components/EmployeeBenefits/EmployeeBenefits';
 
-const EmployeesBenefits = () => {
+export const EmployeesBenefits = () => {
   return (
     <>
       <div className='sticky-navbar'>
@@ -16,5 +16,3 @@ const EmployeesBenefits = () => {
     </>
   );
 };
-
-export default EmployeesBenefits;
