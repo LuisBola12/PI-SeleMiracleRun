@@ -1,11 +1,11 @@
-import { Router } from "express";
-import { getProjectsByEmail, createProject } from "../controllers/projects.controller";
-import { getEmployerByID, getUsers, getUserByEmail, verifyCredentials, registerNewUser, getProfileEmployeer,getProfileEmployee } from "../controllers/users.controller";
-import { getEmployees, postNewEmployee, getEmployeeByID, verifyEmployeeContractOnProject } from '../controllers/employees.contoller'
-import { getVolDeductions, createNewVolDeduction, getVolDeductionsByName, updateVolDeduction } from "../controllers/volDeductions.controller";
-import { getTypeOfContracts } from "../controllers/contracts.controller";
-import { getBenefits, createBenefit, getBenefitsByName, updateBenefit } from "../controllers/benefits.controller";
-import { createNewEmployer, getEmployer } from "../controllers/employer.controller";
+import { Router } from 'express';
+import { getProjectsByEmail, createProject } from '../controllers/projects.controller';
+import { getEmployerByID, getUsers, getUserByEmail, verifyCredentials, registerNewUser, getProfileEmployeer,getProfileEmployee } from '../controllers/users.controller';
+import { getEmployees, postNewEmployee, getEmployeeByID, verifyEmployeeContractOnProject } from '../controllers/employees.contoller';
+import { getVolDeductions, createNewVolDeduction, getVolDeductionsByName, updateVolDeduction } from '../controllers/volDeductions.controller';
+import { getTypeOfContracts } from '../controllers/contracts.controller';
+import { getBenefits, createBenefit, getBenefitsByName, updateBenefit } from '../controllers/benefits.controller';
+import { createNewEmployer, getEmployer } from '../controllers/employer.controller';
 
 const router = Router();
 
