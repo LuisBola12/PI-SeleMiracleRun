@@ -11,4 +11,4 @@ export const validAnEntity = async (url, entity) => {
   } catch (error) {
     console.log(error);
   }
-}
+};

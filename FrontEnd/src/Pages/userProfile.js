@@ -1,6 +1,7 @@
-import React from 'react'
-import Navbar from '../Components/Navbar/Navbar';
+import React from 'react';
+import { Navbar } from '../Components/Navbar/Navbar';
 import { UserProfile } from '../Components/UserProfile/UserProfile';
+import '../App.css';
 
 export const UserPage = () => {
   return (
@@ -13,5 +14,5 @@ export const UserPage = () => {
       </div>
       <footer>&copy; Sele Miracle Run - UCR</footer>
     </>
-  )
-}
+  );
+};

@@ -1,16 +1,16 @@
 import React from 'react';
-import '../App.css'
-import Navbar from '../Components/Navbar/Navbar';
+import '../App.css';
+import { Navbar } from '../Components/Navbar/Navbar';
 
-const  Unauthoraized = () => {
+export const  Unauthoraized = () => {
   return (
     <>
-        <Navbar/>
-        <div className = 'page-content'>
-        </div>
-        <footer>&copy; Sele Miracle Run - UCR</footer> 
+      <div className='sticky-navbar'>
+        <Navbar />
+      </div>
+      <div className = 'page-content'>
+      </div>
+      <footer>&copy; Sele Miracle Run - UCR</footer> 
     </>
   );
 };
-  
-export default Unauthoraized;

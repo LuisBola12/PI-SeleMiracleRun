@@ -1,10 +1,14 @@
 import React from 'react';
-import Navbar from '../Components/Navbar/Navbar';
-import {CrudEmployee} from '../Components/CrudEmployees/CrudEmployee'
-const Employees = () => {
+import { Navbar } from '../Components/Navbar/Navbar';
+import { CrudEmployee } from '../Components/CrudEmployees/CrudEmployee';
+import '../App.css';
+
+export const Employees = () => {
   return (
     <>
-      <Navbar/>
+      <div className='sticky-navbar'>
+        <Navbar />
+      </div>
       <div className='page-content'>
         {<CrudEmployee/>}
       </div>
@@ -12,5 +16,3 @@ const Employees = () => {
     </>
   );
 };
-  
-export default Employees;

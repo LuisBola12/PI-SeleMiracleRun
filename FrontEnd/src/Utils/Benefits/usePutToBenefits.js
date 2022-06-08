@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 
 export const usePutToBenefits = () => {
   const activeProject = useSelector((state) => state.activeProject.projectName);
@@ -8,7 +8,7 @@ export const usePutToBenefits = () => {
     const postFetch = await fetch(apiBenefits, {
       method: 'PUT',
       headers: {
-        "Content-type": "application/json",
+        'Content-type': 'application/json',
       },
       body: JSON.stringify({
         Nombre: name,
@@ -17,8 +17,9 @@ export const usePutToBenefits = () => {
         Descripción: description,
       }),
     });
-  }
+    console.log(postFetch);
+  };
   return {
     updateBenefit
-  }
-}
+  };
+};

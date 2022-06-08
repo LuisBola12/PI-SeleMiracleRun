@@ -1,9 +1,6 @@
-import Swal from 'sweetalert2'
-import {
-  Container
-} from "reactstrap";
-import '../../App.css'
-import { transformCost } from "../../shared/moneyFormatTransform";
+import React from 'react';
+import '../../App.css';
+import { transformCost } from '../../shared/moneyFormatTransform';
 import { useGetBenefitsFromDatabase } from '../../Utils/Benefits/useGetBenefitsFromDatabase';
 import { useState } from 'react';
 
@@ -30,48 +27,48 @@ export const EmployeeBenefits = () => {
       }
     }
     return false;
-  }
+  };
   const { projectBenefits, infoReceived } = useGetBenefitsFromDatabase();
   const [data, setdata] = useState(database);
   const handleAddButton = (element) => {
     //En desarrollo, se agregó este agregado básico solo para pruebas.
     setdata([...data, element]);
-  }
-  return !infoReceived ? <div className="loader" ></div > : (
+  };
+  return !infoReceived ? <div className='loader' ></div > : (
     <>
       <h2 className='table-button'>My Benefits</h2>
-      <table className="Table">
+      <table className='Table'>
         <thead>
-          <tr className="table-header">
-            <th className="table-left-border left-td">Benefit</th>
-            <th className="left-td">Description</th>
-            <th className="right-td">Actual Cost</th>
-            <th className="table-right-border right-td">Delete</th>
+          <tr className='table-header'>
+            <th className='table-left-border left-td'>Benefit</th>
+            <th className='left-td'>Description</th>
+            <th className='right-td'>Actual Cost</th>
+            <th className='table-right-border right-td'>Delete</th>
           </tr>
         </thead>
         <tbody>
           {data.map((element) => (
             <tr key={element.Nombre}>
-              <td className="left-td table-left-border benefit-name">{element.Nombre}</td>
-              <td className="description-cell left-td">{((element.Descripción) ? element.Descripción : "No description")}</td>
-              <td className="right-td">₡ {transformCost(element.CostoActual)}</td>
-              <td className="right-button table-right-border">
-                <button className="button cancel-button" > Delete </button>
+              <td className='left-td table-left-border benefit-name'>{element.Nombre}</td>
+              <td className='description-cell left-td'>{((element.Descripción) ? element.Descripción : 'No description')}</td>
+              <td className='right-td'>₡ {transformCost(element.CostoActual)}</td>
+              <td className='right-button table-right-border'>
+                <button className='button cancel-button' > Delete </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      <label className="Empty-message">{(data.length === 0) ? "No benefits selected added yet" : ""}</label>
+      <label className='Empty-message'>{(data.length === 0) ? 'No benefits selected added yet' : ''}</label>
 
       <h2 className='table-button'>Offered Benefits</h2>
-      <table className="Table">
+      <table className='Table'>
         <thead>
-          <tr className="table-header">
-            <th className="table-left-border left-td">Benefit</th>
-            <th className="left-td">Description</th>
-            <th className="right-td">Actual Cost</th>
-            <th className="table-right-border right-td">Add</th>
+          <tr className='table-header'>
+            <th className='table-left-border left-td'>Benefit</th>
+            <th className='left-td'>Description</th>
+            <th className='right-td'>Actual Cost</th>
+            <th className='table-right-border right-td'>Add</th>
           </tr>
         </thead>
         <tbody>
@@ -79,11 +76,11 @@ export const EmployeeBenefits = () => {
             <tr key={element.Nombre}>
               {isVinculated(element.Nombre) == false &&
                 <>
-                  <td className="left-td table-left-border benefit-name">{element.Nombre}</td>
-                  <td className="description-cell left-td">{((element.Descripción) ? element.Descripción : "No description")}</td>
-                  <td className="right-td">₡ {transformCost(element.CostoActual)}</td>
-                  <td className="right-button table-right-border">
-                    <button className="button add-button" onClick={() => handleAddButton(element)}> Add</button>
+                  <td className='left-td table-left-border benefit-name'>{element.Nombre}</td>
+                  <td className='description-cell left-td'>{((element.Descripción) ? element.Descripción : 'No description')}</td>
+                  <td className='right-td'>₡ {transformCost(element.CostoActual)}</td>
+                  <td className='right-button table-right-border'>
+                    <button className='button add-button' onClick={() => handleAddButton(element)}> Add</button>
                   </td>
                 </>
               }
@@ -91,7 +88,7 @@ export const EmployeeBenefits = () => {
           ))}
         </tbody>
       </table>
-      <label className="Empty-message">{(projectBenefits.length === 0) ? "No benefits added added yet" : ""}</label>
+      <label className='Empty-message'>{(projectBenefits.length === 0) ? 'No benefits added added yet' : ''}</label>
     </>
-  )
-}
+  );
+};
