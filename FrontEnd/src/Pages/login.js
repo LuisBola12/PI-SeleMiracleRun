@@ -1,5 +1,5 @@
 import React from 'react'
-import LoginComp from '../Components/Login/index';
+import LoginComp from '../Components/Login/login';
 
 const Login = () => {
   return (
