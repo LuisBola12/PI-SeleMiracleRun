@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 
-export const usePostToDatabase = () => {
+export const usePostToVolDeductions = () => {
   const activeProject = useSelector((state) => state.activeProject.projectName);
   const apiVolDeductions = `http://localhost:4000/volDeductions`
 

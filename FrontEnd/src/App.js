@@ -5,6 +5,7 @@ import Benefits from './Pages/benefits';
 import Employees from './Pages/employees';
 import VolDeductions from './Pages/volDeductions';
 import { CreateNewVolDeduction } from './Pages/CreateNewVolDeduction';
+import { EditVolDeductions } from './Pages/editVolDeductions';
 import Contracts from './Pages/contracts';
 import SelectProject from './Pages/payrollProjects/SelectProject';
 import { CreateNewEmployee } from './Pages/createNewEmployee';
@@ -19,6 +20,8 @@ import { EditBenefits } from './Pages/editBenefits';
 import RegisterHours from './Pages/registerHours';
 import { useSelector } from 'react-redux';
 import Home from './Pages/home';
+import Payroll from './Pages/payroll';
+import PayrollDetailsPage from './Pages/payrollDetails';
 import EmployeesBenefits from './Pages/EmployeesBenefits';
 
 function App() {
