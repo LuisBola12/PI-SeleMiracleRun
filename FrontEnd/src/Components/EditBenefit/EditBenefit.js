@@ -110,14 +110,14 @@ export const EditBenefit = () => {
           <button
             className="create-benefit-btn"
             onClick={handleSubmit}>
-            Edit
+            Save
           </button>
           <button
             className="cancel-benefit-btn"
             onClick={() => {
               navigate("/benefits")
             }}>
-            cancel
+            Cancel
           </button>
         </div>
       </div>
