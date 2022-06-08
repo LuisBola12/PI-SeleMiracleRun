@@ -23,6 +23,7 @@ import Home from './Pages/home';
 import Payroll from './Pages/payroll';
 import PayrollDetailsPage from './Pages/payrollDetails';
 import EmployeesBenefits from './Pages/EmployeesBenefits';
+import { UserPage } from './Pages/userProfile';
 
 function App() {
 

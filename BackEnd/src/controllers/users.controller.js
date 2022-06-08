@@ -1,4 +1,4 @@
-import { getConnection, sql, queries } from "../database";
+import { getConnection, sql, queries } from '../database';
 
 export const getUsers = async (req, res) => {
   try {
@@ -16,7 +16,7 @@ export const createNewUser = async (req, res) => {
 
   if (Email == null || Contrasenia == null) {
 
-    const message = "Bad Request. Please Fill All Fields.";
+    const message = 'Bad Request. Please Fill All Fields.';
     return res.status(400).json({ msg: message });
   }
 
@@ -24,8 +24,8 @@ export const createNewUser = async (req, res) => {
     const pool = await getConnection();
     const result = await pool
       .request()
-      .input("Email", sql.VarChar, Email)
-      .input("Contrasenia", sql.VarChar, Contrasenia)
+      .input('Email', sql.VarChar, Email)
+      .input('Contrasenia', sql.VarChar, Contrasenia)
       .query(queries.createNewUser);
     console.log(result);
     res.json({ Email, Contrasenia });
@@ -37,27 +37,27 @@ export const createNewUser = async (req, res) => {
 
 export const verifyCredentials = async (req, res) => {
   const { Email, Contrasenia } = req.body;
-  console.log("Email");
+  console.log('Email');
   console.log(Email);
   console.log(Contrasenia);
 
   if (Email == null || Contrasenia == null) {
-    const message = "Please Fill All Fields.";
+    const message = 'Please Fill All Fields.';
     return res.status(400).send({ errorMsg: message });
   }
 
-  if (Email == "" || Contrasenia == "") {
-    const message = "Please Fill All Fields.";
+  if (Email == '' || Contrasenia == '') {
+    const message = 'Please Fill All Fields.';
     return res.status(400).send({ errorMsg: message });
   }
 
   try {
-    const message = "Wrong UserName or Password.";
+    const message = 'Wrong UserName or Password.';
     const pool = await getConnection();
     const result = await pool
       .request()
-      .input("Email", sql.VarChar, Email)
-      .input("Contrasenia", sql.VarChar, Contrasenia)
+      .input('Email', sql.VarChar, Email)
+      .input('Contrasenia', sql.VarChar, Contrasenia)
       .query(queries.verifyCredentials);
     console.log(result);
     if (result.recordset.length == 0) {
@@ -73,8 +73,8 @@ export const verifyCredentials = async (req, res) => {
 
 export const getUserByEmail = async (req, res) => {
   const { Email } = req.params;
-  if (Email == null || Email == "") {
-    const message = "Please Fill All Fields.";
+  if (Email == null || Email == '') {
+    const message = 'Please Fill All Fields.';
     return res.status(400).json({ msg: message });
   }
   try {
@@ -91,8 +91,8 @@ export const getUserByEmail = async (req, res) => {
 
 export const getEmployerByID = async (req, res) => {
   const { Cedula } = req.params;
-  if (Cedula == null || Cedula == "") {
-    const message = "Please Fill All Fields.";
+  if (Cedula == null || Cedula == '') {
+    const message = 'Please Fill All Fields.';
     return res.status(400).json({ msg: message });
   }
   try {
@@ -114,14 +114,14 @@ export const registerNewUser = async (req, res) => {
   if (Cedula == null || Nombre == null || Apellido1 == null
     || Apellido2 == null || Telefono == null || Email == null || Contrasenia == null) {
 
-    const message = "Please Fill All Fields.";
+    const message = 'Please Fill All Fields.';
     return res.status(400).json({ msg: message });
   }
 
-  if (Cedula == "" || Nombre == "" || Apellido1 == ""
-    || Apellido2 == "" || Telefono == "" || Email == "" || Contrasenia == "") {
+  if (Cedula == '' || Nombre == '' || Apellido1 == ''
+    || Apellido2 == '' || Telefono == '' || Email == '' || Contrasenia == '') {
 
-    const message = "Please Fill All Fields.";
+    const message = 'Please Fill All Fields.';
     return res.status(400).json({ msg: message });
   }
 
@@ -129,9 +129,9 @@ export const registerNewUser = async (req, res) => {
     const pool = await getConnection();
     const result = await pool
       .request()
-      .input("Email", sql.VarChar, Email)
-      .input("Contrasenia", sql.VarChar, Contrasenia)
-      .input("Roles", sql.VarChar, Roles)
+      .input('Email', sql.VarChar, Email)
+      .input('Contrasenia', sql.VarChar, Contrasenia)
+      .input('Roles', sql.VarChar, Roles)
       .query(queries.createNewUser);
     console.log(result);
   } catch (e) {
@@ -143,17 +143,46 @@ export const registerNewUser = async (req, res) => {
     const pool = await getConnection();
     const result = await pool
       .request()
-      .input("Cedula", sql.VarChar, Cedula)
-      .input("Nombre", sql.VarChar, Nombre)
-      .input("Apellido1", sql.VarChar, Apellido1)
-      .input("Apellido2", sql.VarChar, Apellido2)
-      .input("Telefono", sql.VarChar, Telefono)
-      .input("Email", sql.VarChar, Email)
+      .input('Cedula', sql.VarChar, Cedula)
+      .input('Nombre', sql.VarChar, Nombre)
+      .input('Apellido1', sql.VarChar, Apellido1)
+      .input('Apellido2', sql.VarChar, Apellido2)
+      .input('Telefono', sql.VarChar, Telefono)
+      .input('Email', sql.VarChar, Email)
       .query(queries.createNewEmployer);
     console.log(result);
     res.status(200).send();
   } catch (e) {
     console.log(`Error: ${e}`);
     res.status(500).send(e.message);
+  }
+};
+export const getProfileEmployee = async (req, res) => {
+  try {
+    const { Email } = req.params;
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input('Email', Email)
+      .query(queries.getProfileEmployee);
+    res.json(result.recordset);
+    console.log(result.recordset);
+  } catch (e) {
+    res.status(500);
+    res.send(e.message);
+  }
+};
+export const getProfileEmployeer = async (req, res) => {
+  try {
+    const { Email } = req.params;
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input('Email', Email)
+      .query(queries.getProfileEmployeer);
+    res.json(result.recordset);
+  } catch (e) {
+    res.status(500);
+    res.send(e.message);
   }
 };

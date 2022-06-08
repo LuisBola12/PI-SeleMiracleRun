@@ -64,6 +64,14 @@
   width: 80%;
 }
 
+
+.profile-user-header{
+  margin-top: 40px;
+  justify-content: center;
+  display: flex;
+  width: 80%;
+}
+
 .page-content {
   display: flex;
   flex-direction: column;
@@ -76,6 +84,16 @@
   gap: 30px;
 }
 
+.user-profile-image{
+  background-image: url(icons/user_profile_icon.png);
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 10rem;
+  height: 10rem;
+
+}
+
 
 .button {
   padding: 10px;
@@ -86,7 +104,103 @@
   border-style: none;
   width: 100px;
 }
+.user-Profile-table-button{ 
+  margin-top: 40px;
+  text-align: right;
+  width: 100%;
+}
+.user-info-container{
+  width: 80%;
+}
+.user-profile-hr{
+  border: solid 1px;
+}
+.user-profile-header{
+  margin-top: 30px;
+  width: 100%;
+  display: flex;
+  align-items: baseline;
+}
+.edit-profile-button{
+  border: none;
+  background-color: white;
+}
+.user-profile-buttons{
+  width: 100%;
+  display: none;
+  gap:30px;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+.user-profile-edit-icon{
+  text-align: right; 
+  margin-left: 87%;
+}
+.submit-change-btn{
+  padding: 13px;
+  border-radius: 8px;
+  color: white;
+  border-color: white;
+  background-color: darkgreen;
+  border-style: none;
+  width: 100px;
+}
+.dont-change-btn{
+  padding: 13px;
+  border-radius: 8px;
+  color: white;
+  border-color: white;
+  background-color: darkred;
+  border-style: none;
+  width: 100px;
+}
+.user-profile-edit-button{
+  color: #133c54;
+  width: 50px;
+  height: 50px;
+}
+.user-profile-label{
+  font-family: sans-serif;
+  font-weight: bold;
+  margin-left: 15px;
+  width: 20%;
+  font-size: 20px;
+}
+.user-profile-inner-div{
+  line-height: 80px;
+  border-top: solid 1px black;
+  height: 80px;
+}
+.user-profile-input{
+  border: none;
+  font-family: sans-serif;
+  height: 65px;
+  font-size: 20px;
+  width: 75%;
+}
+.user-profile-input[disabled]{
+  background-color: white;
+  color: #000;
+}
+.user-profile-input:focus{
+  border: solid 1px white;
+}
+.user-profile-form{
+  margin-top: 30px;
+  width: 100%;
+  gap: 20px;
+}
 
+.user-profile-logo{
+  text-align: center;
+  border-radius: 50%;
+  color: white;
+  line-height: 100px;
+  font-size: 25px;
+  background-color: #133c54;
+  width: 100px;
+  height:100px;
+}
 .details-button {
   padding: 10px;
   border-radius: 8px;
