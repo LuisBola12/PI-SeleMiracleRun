@@ -20,7 +20,7 @@ export const Sidebar = (props) => {
 }
 
 const DropdownMenu = () => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const activeMenu = "main";
   const [menuHeight, setMenuHeight] = useState(null);
   const dropdownRef = useRef(null);
@@ -38,19 +38,17 @@ const DropdownMenu = () => {
 
     setMenuHeight(height);
   }
-
-  let navigateLogin = useNavigate();
-
+  const redirectToProfile = () => {
+    navigate('/userProfile')
+  }
   const redirectToLogIn = () => {
     dispatch(logout())
     dispatch(resetProject())
-    navigateLogin("/login");
+    navigate("/login");
   }
 
-  let navigateSettings = useNavigate();
-  
   const redirectToSettings = () => {
-    navigateSettings("/navigateSettings");
+    navigate("/navigateSettings");
   }
   return (
     <div className="sidebar-dropdown" style={{ height: menuHeight }} ref={dropdownRef}>
@@ -63,7 +61,7 @@ const DropdownMenu = () => {
             <button onClick={redirectToProjectSelecion} className="sidebar-button" >
               Projects
             </button>
-            <button onClick={()=>{console.log("implementando")}} className="sidebar-button" >
+            <button onClick={redirectToProfile} className="sidebar-button" >
               Profile
             </button>
             <button onClick={redirectToSettings} className="sidebar-button" >
