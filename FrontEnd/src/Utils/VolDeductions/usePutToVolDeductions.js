@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 
 export const usePutToVolDeductions = () => {
   const activeProject = useSelector((state) => state.activeProject.projectName);
@@ -8,7 +8,7 @@ export const usePutToVolDeductions = () => {
     const postFetch = await fetch(apiVolDeductions, {
       method: 'PUT',
       headers: {
-        "Content-type": "application/json",
+        'Content-type': 'application/json',
       },
       body: JSON.stringify({
         Nombre: name,
@@ -17,8 +17,9 @@ export const usePutToVolDeductions = () => {
         Descripcion: description,
       }),
     });
-  }
+    console.log(postFetch);
+  };
   return {
     updateVolDeduction
-  }
-}
+  };
+};

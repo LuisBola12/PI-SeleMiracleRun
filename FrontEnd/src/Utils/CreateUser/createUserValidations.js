@@ -87,7 +87,7 @@ const validate = (values) => {
     document.getElementById('phoneNumber_register').style.borderColor = 'gray';
   }
 
- return errors;
-}
+  return errors;
+};
 
 export default validate;

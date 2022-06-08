@@ -1,10 +1,10 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import userSlice from "./Slices/user/userSlice";
-import activeProjectSlice from "./Slices/projectSlice/activeProjectSlice";
-import storageSession from 'redux-persist/lib/storage/session'
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import userSlice from './Slices/user/userSlice';
+import activeProjectSlice from './Slices/projectSlice/activeProjectSlice';
+import storageSession from 'redux-persist/lib/storage/session';
 
 
-import { persistReducer } from "redux-persist";
+import { persistReducer } from 'redux-persist';
 
 const reducers = combineReducers({
   user: userSlice,
@@ -12,7 +12,7 @@ const reducers = combineReducers({
 });
 
 const rootPersistConfig = {
-  key: "root",
+  key: 'root',
   storage: storageSession,
 };
 

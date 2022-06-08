@@ -1,9 +1,6 @@
-import Swal from 'sweetalert2'
-import {
-  Container
-} from "reactstrap";
-import '../../App.css'
-import { transformCost } from "../../shared/moneyFormatTransform";
+import React from 'react';
+import '../../App.css';
+import { transformCost } from '../../shared/moneyFormatTransform';
 import { useGetVolDeductionsFromDatabase } from '../../Utils/volDeductions/useGetVolDeductionsFromDatabase';
 import { useState } from 'react';
 
@@ -29,68 +26,68 @@ export const EmployeeVolDeductions = () => {
       }
     }
     return false;
-  }
+  };
   const { projectVolDeductions, infoReceived } = useGetVolDeductionsFromDatabase();
   const [data, setdata] = useState(database);
   const handleAddButton = (element) => {
     //En desarrollo, se agregó este agregado básico solo para pruebas.
     setdata([...data, element]);
-  }
-  return !infoReceived ? <div className="loader" ></div > : (
+  };
+  return !infoReceived ? <div className='loader' ></div > : (
     <>
-        <h2 className = 'table-button'>My Voluntary Deductions</h2>
-        <table className="Table">
-          <thead>
-            <tr className="table-header">
-              <th className="table-left-border left-td">Deduction</th>
-              <th className="left-td">Description</th>
-              <th className="right-td">Cost</th>
-              <th className="table-right-border right-td">Delete</th>
+      <h2 className = 'table-button'>My Voluntary Deductions</h2>
+      <table className='Table'>
+        <thead>
+          <tr className='table-header'>
+            <th className='table-left-border left-td'>Deduction</th>
+            <th className='left-td'>Description</th>
+            <th className='right-td'>Cost</th>
+            <th className='table-right-border right-td'>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((element) => (
+            <tr key={element.Nombre}>
+              <td className='left-td bottom-border table-left-border'>{element.Nombre}</td>
+              <td className='description-cell left-td bottom-border'>{((element.Descripcion) ? element.Descripción : 'No description')}</td>
+              <td className='right-td bottom-border'>₡ {transformCost(element.Costo)}</td>
+              <td className='right-button bottom-border table-right-border'>
+                <button className='button cancel-button' > Delete </button>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {data.map((element) => (
-              <tr key={element.Nombre}>
-                <td className="left-td bottom-border table-left-border">{element.Nombre}</td>
-                <td className="description-cell left-td bottom-border">{((element.Descripcion) ? element.Descripción : "No description")}</td>
-                <td className="right-td bottom-border">₡ {transformCost(element.Costo)}</td>
-                <td className="right-button bottom-border table-right-border">
-                  <button className="button cancel-button" > Delete </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <label className="Empty-message">{(data.length === 0) ? "No voluntary deductions selected added yet" : ""}</label>
+          ))}
+        </tbody>
+      </table>
+      <label className='Empty-message'>{(data.length === 0) ? 'No voluntary deductions selected added yet' : ''}</label>
 
-        <h2>Offered Voluntary Deductions</h2>
-        <table className="Table">
-          <thead>
-            <tr className="table-header">
-              <th className="table-left-border left-td">Deduction</th>
-              <th className="left-td">Description</th>
-              <th className="right-td">Actual</th>
-              <th className="table-right-border right-td">Add</th>
-            </tr>
-          </thead>
-          <tbody>
-            {projectVolDeductions.map((element) => (
-              <tr key={element.Nombre}>
-                {isVinculated(element.Nombre) == false &&
+      <h2>Offered Voluntary Deductions</h2>
+      <table className='Table'>
+        <thead>
+          <tr className='table-header'>
+            <th className='table-left-border left-td'>Deduction</th>
+            <th className='left-td'>Description</th>
+            <th className='right-td'>Actual</th>
+            <th className='table-right-border right-td'>Add</th>
+          </tr>
+        </thead>
+        <tbody>
+          {projectVolDeductions.map((element) => (
+            <tr key={element.Nombre}>
+              {isVinculated(element.Nombre) == false &&
                   <>
-                    <td className="left-td bottom-border table-left-border">{element.Nombre}</td>
-                    <td className="description-cell left-td bottom-border">{((element.Descripcion) ? element.Descripción : "No description")}</td>
-                    <td className="right-td bottom-border">₡ {transformCost(element.Costo)}</td>
-                    <td className="right-button bottom-border table-right-border">
-                      <button className="button add-button" onClick={() => handleAddButton(element)}> Add</button>
+                    <td className='left-td bottom-border table-left-border'>{element.Nombre}</td>
+                    <td className='description-cell left-td bottom-border'>{((element.Descripcion) ? element.Descripción : 'No description')}</td>
+                    <td className='right-td bottom-border'>₡ {transformCost(element.Costo)}</td>
+                    <td className='right-button bottom-border table-right-border'>
+                      <button className='button add-button' onClick={() => handleAddButton(element)}> Add</button>
                     </td>
                   </>
-                }
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <label className="Empty-message">{(projectVolDeductions.length === 0) ? "No voluntary deductions added added yet" : ""}</label>
+              }
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <label className='Empty-message'>{(projectVolDeductions.length === 0) ? 'No voluntary deductions added added yet' : ''}</label>
     </>
-  )
-}
+  );
+};

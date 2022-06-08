@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState } from 'react';
 
 const usePost = (url) => {
   const [postError, setPostError] = useState(null);
@@ -8,7 +8,7 @@ const usePost = (url) => {
       const postFetch = await fetch(url, {
         method: 'POST',
         headers: {
-          "Content-type": "application/json",
+          'Content-type': 'application/json',
         },
         body: JSONBody
       });
@@ -18,10 +18,10 @@ const usePost = (url) => {
     }
 
 
-  }
+  };
 
   return { postError, post };
 
-}
+};
 export default usePost;
 

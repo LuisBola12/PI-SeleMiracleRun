@@ -1,9 +1,10 @@
 import React from 'react';
-import '../App.css'
+import '../App.css';
 import { CrudBenefits } from '../Components/CrudBenefits/CrudBenefits';
-import Navbar from '../Components/Navbar/Navbar';
+import { Navbar } from '../Components/Navbar/Navbar';
+import '../App.css';
 
-const Benefits = () => {
+export const Benefits = () => {
   return (
     <>
       <div className='sticky-navbar'>
@@ -16,5 +17,3 @@ const Benefits = () => {
     </>
   );
 };
-
-export default Benefits;
