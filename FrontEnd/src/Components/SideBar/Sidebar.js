@@ -44,7 +44,7 @@ const DropdownMenu = () => {
   const redirectToLogIn = () => {
     dispatch(logout())
     dispatch(resetProject())
-    navigateLogin("/");
+    navigate("/");
   }
 
   const redirectToSettings = () => {
