@@ -1,4 +1,6 @@
 @apiUsers = http://localhost:4000/users
+@apiProfileEmployee = http://localhost:4000/profileEmployee
+@apiProfileEmployeer = http://localhost:4000/profileEmployeer
 @apiEmployees = http://localhost:4000/employees
 @apiEmployee = http://localhost:4000/employee
 @apiEmployeeContract = http://localhost:4000/employee/contract
@@ -39,6 +41,10 @@ Content-Type: application/json
   "Cedula": "121121121",
   "Email": "josefR@example.com"
 }
+###
+GET {{apiProfileEmployee}}/javier.Mo@gmail.com
+###
+GET {{apiProfileEmployeer}}/Norman.Os.L@gmail.com
 ###
 POST {{apiEmployeeContract}}
 Content-Type: application/json

@@ -157,3 +157,32 @@ export const registerNewUser = async (req, res) => {
     res.status(500).send(e.message);
   }
 };
+export const getProfileEmployee = async (req, res) => {
+  try {
+    const { Email } = req.params;
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input("Email", Email)
+      .query(queries.getProfileEmployee);
+    res.json(result.recordset);
+    console.log(result.recordset)
+  } catch (e) {
+    res.status(500);
+    res.send(e.message);
+  }
+};
+export const getProfileEmployeer = async (req, res) => {
+  try {
+    const { Email } = req.params;
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input("Email", Email)
+      .query(queries.getProfileEmployeer);
+    res.json(result.recordset);
+  } catch (e) {
+    res.status(500);
+    res.send(e.message);
+  }
+};

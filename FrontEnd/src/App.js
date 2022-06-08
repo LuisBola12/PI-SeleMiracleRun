@@ -20,6 +20,7 @@ import { EditBenefits } from './Pages/editBenefits';
 import Payroll from './Pages/payroll';
 import PayrollDetailsPage from './Pages/payrollDetails';
 import EmployeesBenefits from './Pages/EmployeesBenefits';
+import { UserPage } from './Pages/userProfile';
 
 function App() {
 
@@ -31,6 +32,7 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route path="no-autorizado" element={<Unauthoraized />} />
         <Route path="register" element={<Register />} />
+        <Route path="userProfile" element={<UserPage />} />
         <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
           <Route path="/" element={<SelectProject />} />
           <Route path="benefits" element={<Benefits />} />

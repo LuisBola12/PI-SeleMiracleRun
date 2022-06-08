@@ -5,6 +5,8 @@ export const queries = {
   createNewEmployee: "Insert into Empleado (Cedula, Nombre, Apellido1, Apellido2, Telefono, Email) values(@Cedula, @Nombre, @Apellido1, @Apellido2, @Telefono, @Email)",
   getUserByEmail: "Select * From Usuarios Where Email = @Email",
   verifyCredentials: "Select * From Usuarios Where Email = @Email AND Contrasenia = @Contrasenia",
+  getProfileEmployee: "Select * From Empleado Where Email = @Email",
+  getProfileEmployeer: "Select * From Empleador Where Email = @Email",
 
   // Payroll period queries
   getPeriodos: "Select * from Periodo",
