@@ -47,7 +47,7 @@
     margin-top: 8rem;
 }
 
-.register-form-full-name {
+.register-form {
     justify-content: center;
     display: flex;
     gap: 0.6rem;
@@ -125,92 +125,7 @@
   }
 }
 
-.register-form-id-phone{
-    justify-content: center;
-    display: flex;
-    gap: 0.6rem;
-}
-
-.register-animated-input-id-phone {
-    position: relative;
-    width: 18.3rem;
-    height: 2.6rem;
-  
-    &__input {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 2px solid grey;
-      border-radius: 5px;
-      font-family: inherit;
-      font-size: inherit;
-      color: black;
-      outline: none;
-      padding: 1.25rem;
-      background: none;
-  
-      &:hover {
-        border-color: #133c54;
-      }
-  
-  
-      &:focus {
-        border-color: #133c54;
-      }
-    }
-  
-      &:hover {
-        border-color: #133c54;
-      }
-  
-  
-      &:focus {
-        border-color: #133c54;
-      }
-    
-  
-    &__label {
-      position: absolute;
-      left: 0.8rem;
-      top: 0.8rem;
-      padding: 0 0.5rem;
-      color: black;
-      cursor: text;
-      font-size: 0.8rem;
-      transition: top 200ms ease-in, left 200ms ease-in, font-size 200ms ease-in;
-      background-color: white;
-    }
-  
-      .req {
-        color: darkred;
-      font-size: 0.8rem;
-      margin: 3px;
-      }
-    
-  }
-
-.register-animated-input-id-phone__input:focus~.register-animated-input-id-phone__label,
-.register-animated-input-id-phone__input:not(:placeholder-shown).register-animated-input-id-phone__input:not(:focus)~.register-animated-input-id-phone__label {
-  top: -0.5rem;
-  font-size: 0.6rem;
-  left: 0.8rem;
-
-  .req {
-    opacity: 0;
-    font-size: 0px;
-    margin: 0px;
-  }
-}
-
-.register-form-email-password{
-    justify-content: center;
-    display: flex;
-    gap: 0.6rem;
-}
-
-.register-animated-input-email {
+.register-row {
     position: relative;
     width: 18.3rem;
     height: 2.6rem;
@@ -270,8 +185,8 @@
     
   }
 
-.register-animated-input-email__input:focus~.register-animated-input-email__label,
-.register-animated-input-email__input:not(:placeholder-shown).register-animated-input-email__input:not(:focus)~.register-animated-input-email__label {
+.register-row__input:focus~.register-row__label,
+.register-row__input:not(:placeholder-shown).register-row__input:not(:focus)~.register-row__label {
   top: -0.5rem;
   font-size: 0.6rem;
   left: 0.8rem;
@@ -296,25 +211,7 @@
     gap: 1rem;
   }
 
-.register-btn-sumbit {
-  background-color: rgb(2, 119, 2);
-  padding: 2px;
-  border-radius: 5px;
-  color: white;
-  font-weight: bold;
-  border-color: white;
-  border-style: none;
-  width: 15rem;
-  font-size: 1.6rem;
-}
-
-.register-btn-sumbit:hover {
-    background-color: rgb(7, 145, 7);
-    box-shadow: 0px 2px 8px 0px rgba(62, 62, 62, 0.55);
-  }
-
-.register-btn-cancel {
-  background-color: darkred;
+.register-btn {
   padding: 2px;
   border-radius: 8px;
   color: white;
@@ -325,7 +222,20 @@
   font-size: 1.6rem;
 }
 
-.register-btn-cancel:hover {
+.r-sumbit {
+  background-color: rgb(2, 119, 2);
+}
+
+.r-sumbit:hover {
+  background-color: rgb(7, 145, 7);
+  box-shadow: 0px 2px 8px 0px rgba(62, 62, 62, 0.55);
+}
+
+.r-cancel {
+  background-color: darkred;
+}
+
+.r-cancel:hover {
     background-color: rgb(172, 1, 1);
     box-shadow: 0px 2px 8px 0px rgba(62, 62, 62, 0.55);
   }
