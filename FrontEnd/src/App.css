@@ -50,7 +50,8 @@
 
 .table-button {
   margin-top: 50px;
-  width: 80%;
+  width: 90%;
+  /* border: solid black; */
 }
 
 .details-table-button {
@@ -104,6 +105,7 @@
   border-style: none;
   width: 100px;
 }
+
 .user-Profile-table-button{ 
   margin-top: 40px;
   text-align: right;
@@ -291,7 +293,7 @@ table {
   text-align: center;
   height: 10%;
   margin-bottom: 100px;
-  width: 80%;
+  width: 90%;
 }
 
 

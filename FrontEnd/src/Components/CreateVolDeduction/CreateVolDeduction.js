@@ -35,7 +35,7 @@ export const CreateVolDeduction = () => {
   return (
     <>
       <div className='volDeductions-form'>
-        <div className='form-title'>
+        <div className='form-title-volDeductions'>
           <div className='image-volDeduction'></div>
           Create Voluntary Deduction
         </div>
@@ -84,7 +84,7 @@ export const CreateVolDeduction = () => {
           <label htmlFor='Description' className='animated-input__label'>Description</label>
           <label  className = 'error' > {errors.Description} </label>
         </div>
-        <div className='buttons'>
+        <div className='buttons-volDeduction'>
           <button
             className='create-volDeduction-btn'
             onClick={handleSubmit}>
