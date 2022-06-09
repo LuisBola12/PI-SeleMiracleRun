@@ -1,3 +1,7 @@
+* {
+  font-family: 'Roboto', sans-serif;
+}
+
 .navBar-logo {
   background-color: transparent;
   background-image: url(../../icons/logo.png);
