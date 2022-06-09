@@ -17,12 +17,6 @@
   color: red;
 }
 
-.Empty-volDeduction-message {
-  font-size: 2rem;
-  opacity: 75%;
-  text-align: center;
-}
-
 .animated-input {
   position: relative;
   width: 20rem;
@@ -117,8 +111,8 @@
 }
 
 .volDeductions-form {
-  margin-top: 5rem;
-  gap: 50px;
+  margin-top: 2rem;
+  gap: 20px;
   display: flex;
   flex-direction: column;
 }
@@ -132,13 +126,13 @@
   height: 5rem;
 }
 
-.form-title {
-  font-size: 2.5rem;
+.form-title-volDeductions {
+  font-size: 2.35rem;
   color: #133c54;
   padding: 0.5rem;
   display: flex;
   align-items: center;
-  gap: 5.7rem;
+  gap: 1rem;
   font-weight: bold;
 }
 
@@ -147,13 +141,14 @@
   gap: 1%;
 }
 
-
 .create-volDeduction-btn:hover {
-  background-color: rgb(3, 119, 3);
+  background-color: rgb(7, 145, 7);
+  box-shadow: 0px 2px 8px 0px rgba(62, 62, 62, 0.55);
 }
 
 .cancel-volDeduction-btn:hover {
   background-color: rgb(172, 1, 1);
+  box-shadow: 0px 2px 8px 0px rgba(62, 62, 62, 0.55);
 }
 
 .create-volDeduction-btn {
@@ -178,7 +173,7 @@
   font-size: 1.3rem;
 }
 
-.buttons {
+.buttons-volDeduction {
   display: flex;
   align-items: center;
   justify-content: center;

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { postLogin } from '../../Slices/user/requests/postLogin';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { React, useState } from 'react';
-import './loginStyle.scss';
+import './LoginStyle.scss';
 
 export const LoginComp = () => {
   const [email, setEmail] = useState('');

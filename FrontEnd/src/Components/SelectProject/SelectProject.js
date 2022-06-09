@@ -1,12 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../App.css';
-import './selectProject.css';
-import { useProjectsData } from './useProjectsData';
+import './SelectProject.scss';
+import { useProjectsData } from '../../Utils/PayrollProjects/useProjectsData';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../Slices/user/userSlice';
 
-export const SelectProject = () => {
+export const SelectProjectComp = () => {
   const navigate = useNavigate();
   const { projects, handleProjectSelection, loading, error } = useProjectsData();
   const activeProject = useSelector((state) => state.activeProject.projectName);
@@ -52,7 +52,7 @@ export const SelectProject = () => {
           <p className='project-AddNewProjectText'>Add new Project</p>
         </div>
       </div>
-
+      <footer className='project-footerCopyRights'> &copy; SeleMiracleRun </footer>
     </div >
   );
 };

@@ -21,7 +21,7 @@ export const CrudEmployee = () => {
 
   return !infoReceived ? <div className='loader'></div> : (
     <>
-      <div div className='table-button'>
+      <div className='table-button'>
         <button className='create-button' onClick=
           {() => {
             history.push('employees/createEmployee');
@@ -40,8 +40,6 @@ export const CrudEmployee = () => {
             <th className='left-td'>Id</th>
             <th className='left-td'>Email</th>
             <th className='left-td'>Contract</th>
-            <th>Net Salary</th>
-            <th>Edit</th>
             <th className='table-right-border right-td'>Delete</th>
           </tr>
         </thead>
@@ -54,10 +52,6 @@ export const CrudEmployee = () => {
               <td className='left-td'>{element.Cedula}</td>
               <td className='left-td'>{element.Email}</td>
               <td className='left-td'>{element.TipoContrato}</td>
-              <td>₡0.0</td>
-              <td>
-                <button className=' button'> Edit </button>
-              </td>
               <td className='table-right-border right-button'>
                 <button className='button cancel-button' > Delete </button>
               </td>

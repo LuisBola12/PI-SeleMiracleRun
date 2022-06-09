@@ -1,5 +1,5 @@
 import { getConnection,sql } from '../database';
-import { volDeductionsQuerys } from '../database/volDeductionsQuerys';
+import { volDeductionsQueries } from '../database/queries/volDeductionsQueries';
 
 export const getVolDeductions = async (req, res) => {
   const { NombreProyecto } = req.params;
@@ -7,7 +7,7 @@ export const getVolDeductions = async (req, res) => {
     const pool = await getConnection();
     const result = await pool.request()
       .input('NombreProyecto', NombreProyecto)
-      .query(volDeductionsQuerys.getVolDeductions);
+      .query(volDeductionsQueries.getVolDeductions);
     res.json(result.recordset);
   } catch (e) {
     res.status(500);
@@ -22,7 +22,7 @@ export const getVolDeductionsByName = async (req, res) => {
     const result = await pool.request()
       .input('Nombre', Nombre)
       .input('NombreProyecto', NombreProyecto)
-      .query(volDeductionsQuerys.getVolDeductionsByName);
+      .query(volDeductionsQueries.getVolDeductionsByName);
     res.json(result.recordset);
   } catch (e) {
     res.status(500);
@@ -44,7 +44,7 @@ export const createNewVolDeduction = async (req, res) => {
       .input('NombreProyecto', sql.VarChar, NombreProyecto)
       .input('Costo', sql.Int, Costo)
       .input('Descripcion', sql.VarChar, Descripcion)
-      .query(volDeductionsQuerys.createNewVolDeduction);
+      .query(volDeductionsQueries.createNewVolDeduction);
     console.log(result);
     res.json({ Nombre, Costo, Descripcion});
   } catch (e) {
@@ -70,7 +70,7 @@ export const updateVolDeduction = async (req, res) => {
       .input('NombreProyecto', sql.VarChar, NombreProyecto)
       .input('Costo', sql.Int, Costo)
       .input('Descripcion', sql.VarChar, Descripcion)
-      .query(volDeductionsQuerys.editVolDeduction);
+      .query(volDeductionsQueries.editVolDeduction);
     res.json({ Nombre, NombreProyecto, Costo, Descripcion });
   } catch (e) {
     console.log(`Error: ${e}`);

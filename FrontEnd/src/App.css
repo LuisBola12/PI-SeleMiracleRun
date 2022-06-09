@@ -50,18 +50,22 @@
 
 .table-button {
   margin-top: 50px;
-  width: 80%;
+  width: 90%;
+  /* border: solid black; */
 }
 
 .details-table-button {
-  margin-top: 50px;
-  width: 80%;
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  width: 90%;
 }
 
 .details-head-title {
   font-family: sans-serif;
-  text-align: center;
-  width: 80%;
+  transform: translate(20%,0);
+  justify-content: center;
+  width: 90%;
 }
 
 
@@ -104,6 +108,7 @@
   border-style: none;
   width: 100px;
 }
+
 .user-Profile-table-button{ 
   margin-top: 40px;
   text-align: right;
@@ -291,7 +296,7 @@ table {
   text-align: center;
   height: 10%;
   margin-bottom: 100px;
-  width: 80%;
+  width: 90%;
 }
 
 
