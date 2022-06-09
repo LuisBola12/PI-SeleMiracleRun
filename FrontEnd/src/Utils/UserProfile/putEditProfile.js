@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 export const usePutEditUser = () => {
     const user = useSelector((state) => state.user.user);
   const updateUser = async (formValues, setIsSubmitting) => {
-    const apiEmployee = `http://localhost:4000/editEmployee`;
-    const apiEmployeer = `http://localhost:4000/editEmployeer`;
+    const apiEmployee = `http://localhost:4000//updateEmployee`;
+    const apiEmployeer = `http://localhost:4000//updateEmployeer`;
     let string = JSON.stringify(formValues);
     string = JSON.stringify({
       Email: formValues.email,
