@@ -1,16 +1,16 @@
 import React from 'react';
 import '../App.css';
 import { Navbar } from '../Components/Navbar/Navbar';
-import { EmployeeVolDeductions } from '../Components/EmployeeVolDeductions/EmployeeVolDeductions';
+import { EmployeeBenefits } from '../Components/EmployeeBenefits/EmployeeBenefits';
 
-export const EmployeesVolDeductions = () => {
+export const EmployeesBenefits = () => {
   return (
     <>
       <div className='sticky-navbar'>
         <Navbar />
       </div>
       <div className='page-content'>
-        {<EmployeeVolDeductions />}
+        {<EmployeeBenefits />}
       </div>
       <footer>&copy; Sele Miracle Run - UCR</footer>
     </>

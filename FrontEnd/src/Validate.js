@@ -36,4 +36,12 @@ export const validatePhoneNumber = (phoneNumber) => {
     .match(
       /^[1-9]{8}$/
     );
-};
+}
+
+export const validateNumber = (number) => {
+  return String(number)
+    .toLowerCase()
+    .match(
+      /^[1-9]$/
+    );
+}

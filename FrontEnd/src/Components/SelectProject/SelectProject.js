@@ -20,9 +20,9 @@ export const SelectProjectComp = () => {
         <button className='project-backButton' onClick={() => {
           if (activeProject === '') {
             dispatch(logout());
-            navigate('/Login');
+            navigate('/');
           } else {
-            navigate('employees');
+            navigate('/employees');
           }
         }}
         >
@@ -50,7 +50,6 @@ export const SelectProjectComp = () => {
           {/* <NewProjectForm actualData={projects} setActualData={setProjects} /> */}
           <button centered='true' className='project-buttonCreate' onClick={() => navigate('/newProjectForm')}>+</button >
           <p className='project-AddNewProjectText'>Add new Project</p>
-
         </div>
       </div>
       <footer className='project-footerCopyRights'> &copy; SeleMiracleRun </footer>

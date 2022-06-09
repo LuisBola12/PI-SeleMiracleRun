@@ -4,7 +4,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 
 export const PrivateRoute = ({
   children,
-  redirectPath = '/login',
+  redirectPath = '/',
   allowedRoles,
 })  => {
   const userState = useSelector((state) => state.user);
