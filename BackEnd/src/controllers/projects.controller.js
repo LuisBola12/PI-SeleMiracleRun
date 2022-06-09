@@ -1,4 +1,5 @@
-import { getConnection, sql, queries } from '../database';
+import { getConnection, sql } from '../database';
+import { projectQueries } from '../database/queries/projectQueries';
 
 export const getProjectsByEmail = async (req, res) => {
   const { Email } = req.params;
@@ -6,13 +7,12 @@ export const getProjectsByEmail = async (req, res) => {
     const pool = await getConnection();
     const result = await pool.request()
       .input('Email', Email)
-      .query(queries.getProjectsByEmail);
+      .query(projectQueries.getProjectsByEmail);
     res.json(result.recordset);
   } catch (e) {
     console.log(e);
   }
 };
-
 
 export const createProject = async (req, res) => {
   const { Nombre, Periodo, Email } = req.body;
@@ -27,7 +27,7 @@ export const createProject = async (req, res) => {
       .input('Nombre', Nombre)
       .input('Periodo', sql.VarChar, Periodo)
       .input('Email', sql.VarChar, Email)
-      .query(queries.createProject);
+      .query(projectQueries.createProject);
     console.log(result);
     res.json({ Nombre, Periodo, Email });
   } catch (e) {

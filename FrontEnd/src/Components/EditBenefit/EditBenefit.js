@@ -13,7 +13,6 @@ import { transformCost } from '../../shared/moneyFormatTransform';
 import { usePutToBenefits } from '../../Utils/Benefits/usePutToBenefits';
 import Swal from 'sweetalert2';
 
-
 export const EditBenefit = () => {
   const apiBenefits = 'http://localhost:4000/benefits';
   const activeProject = useSelector((state) => state.activeProject.projectName);

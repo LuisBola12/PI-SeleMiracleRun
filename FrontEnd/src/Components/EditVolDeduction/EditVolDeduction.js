@@ -53,7 +53,7 @@ export const EditVolDeduction = () => {
 
   return (
     <>
-      <div className='voluntaryDeductions-form'>
+      <div className='volDeductions-form'>
         <div className='form-title'>
           <div className='image-volDeduction'></div>
           Edit Deduction
@@ -117,7 +117,7 @@ export const EditVolDeduction = () => {
             onClick={() => {
               navigate('/volDeductions');
             }}>
-            cancel
+            Cancel
           </button>
         </div>
       </div>
