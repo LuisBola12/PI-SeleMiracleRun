@@ -110,7 +110,7 @@ export const EditVolDeduction = () => {
           <button
             className='create-volDeduction-btn'
             onClick={handleSubmit}>
-            Edit
+            Save
           </button>
           <button
             className='cancel-volDeduction-btn'
