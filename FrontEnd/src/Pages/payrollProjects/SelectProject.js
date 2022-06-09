@@ -20,9 +20,9 @@ export const SelectProject = () => {
         <button className='project-backButton' onClick={() => {
           if (activeProject === '') {
             dispatch(logout());
-            navigate('/Login');
+            navigate('/');
           } else {
-            navigate('employees');
+            navigate('/employees');
           }
         }}
         >
@@ -50,7 +50,6 @@ export const SelectProject = () => {
           {/* <NewProjectForm actualData={projects} setActualData={setProjects} /> */}
           <button centered='true' className='project-buttonCreate' onClick={() => navigate('/newProjectForm')}>+</button >
           <p className='project-AddNewProjectText'>Add new Project</p>
-
         </div>
       </div>
 

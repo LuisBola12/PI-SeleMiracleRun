@@ -32,25 +32,25 @@ export const CreateUser = () => {
         Roles: 'admin'
       });
 
-      post(string);
-      dispatch(postLogin({
-        email: formValues.email_register, 
-        password: formValues.password_register
-      }));
-      navigate('/');
+    post(string);
+    dispatch(postLogin({
+      email: formValues.email_register, 
+      password: formValues.password_register
+    }));
+    navigate('/projectAdmin');
     }else{
       setIsSubmitting(false);
       alert('These user alredy exists.');
     }
   };
 
-  const { formValues, handleInputChange, handleSubmit, setIsSubmitting, errors,  } = useForm(sendToDatabase, validate);
+  const { formValues, handleInputChange, handleSubmit, setIsSubmitting, errors } = useForm(sendToDatabase, validate);
 
   const navigate = useNavigate();
   const handleClick = () => {
     dispatch(resetErrorMsg());
-    navigate('/login');
-  };
+    navigate('/');
+  }
 
   return (
     <div>

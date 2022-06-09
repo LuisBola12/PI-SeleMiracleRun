@@ -44,7 +44,7 @@ export const DropdownMenu = () => {
   const redirectToLogIn = () => {
     dispatch(logout());
     dispatch(resetProject());
-    navigate('/login');
+    navigate('/');
   };
 
   const redirectToSettings = () => {

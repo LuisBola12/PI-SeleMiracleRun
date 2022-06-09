@@ -23,7 +23,7 @@ export const LoginComp = () => {
   };
 
   return userIsLoggedIn ? (
-    <Navigate to='/' />
+    <Navigate to='/projectAdmin' />
   ) : (
     <div className='logIn-page'>
       <div className='logIn-logo-box'>
