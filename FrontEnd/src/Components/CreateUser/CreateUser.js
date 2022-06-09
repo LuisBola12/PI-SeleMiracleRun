@@ -7,7 +7,7 @@ import { validAnEntity } from '../../Utils/validAnEntity';
 import usePost from '../../shared/hooks/usePost';
 import validate from '../../Utils/CreateUser/createUserValidations';
 import useForm from '../../shared/hooks/useForm';
-import './createUserStyle.scss';
+import './CreateUserStyle.scss';
 
 export const CreateUser = () => {
   const dispatch = useDispatch();
