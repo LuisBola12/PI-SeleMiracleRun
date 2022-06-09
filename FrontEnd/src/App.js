@@ -7,7 +7,7 @@ import { VolDeductions } from './Pages/volDeductions';
 import { CreateNewVolDeduction} from './Pages/createNewVolDeduction'
 import { EditVolDeductions } from './Pages/editVolDeductions';
 import { Contracts } from './Pages/contracts';
-import { SelectProject } from './Pages/payrollProjects/selectProject';
+import { SelectProject } from './Pages/selectProject';
 import { CreateNewEmployee } from './Pages/createNewEmployee';
 import history from './history';
 import { Login } from './Pages/login';

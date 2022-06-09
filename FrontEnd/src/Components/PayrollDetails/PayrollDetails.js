@@ -70,16 +70,16 @@ export const PayrollDetails = () => {
   return (
     <>
       <div className='details-table-button'>
-        <IconContext.Provider value={{ color: 'gray', className: 'global-class-name', size: '3rem'}}>
+        <IconContext.Provider value={{ color: 'gray', className: 'global-class-name', size: '2.6rem'}}>
           <button className='back-arrow-button' onClick={()=>{back();}}>
             <FaArrowLeft />
           </button>
         </IconContext.Provider>
-        <br />
-      </div>
-      <h1 className='details-head-title'>
+        <h2 className='details-head-title'>
         {`PaySlips from: ${startDate} - ${endDate}`}
-      </h1>
+      </h2>
+      </div>
+      
       <table className='Table'>
         <thead>
           <tr className='table-header'>
