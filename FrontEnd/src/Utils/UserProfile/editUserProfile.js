@@ -15,16 +15,16 @@ export const removeNoEdit = () => {
 };
 
 export const applyNoEdit = () => {
-    document.getElementById('user-profile-input-name').setAttribute('disabled','true')
-    document.getElementById('user-profile-input-lastname').setAttribute('disabled','true');
-    document.getElementById('user-profile-input-secondlastname').setAttribute('disabled','true');
-    document.getElementById('user-profile-input-email').setAttribute('disabled','true');
-    document.getElementById('user-profile-input-phoneNumber').setAttribute('disabled','true');
-    document.getElementById('user-profile-input-name').setAttribute('readOnly','true')
-    document.getElementById('user-profile-input-lastname').setAttribute('readOnly','true');
-    document.getElementById('user-profile-input-secondlastname').setAttribute('readOnly','true');
-    document.getElementById('user-profile-input-email').setAttribute('readOnly','true');
-    document.getElementById('user-profile-input-phoneNumber').setAttribute('readOnly','true');
+    document.getElementById('name').setAttribute('disabled','true')
+    document.getElementById('lastname').setAttribute('disabled','true');
+    document.getElementById('secondlastname').setAttribute('disabled','true');
+    document.getElementById('email').setAttribute('disabled','true');
+    document.getElementById('phoneNumber').setAttribute('disabled','true');
+    document.getElementById('name').setAttribute('readOnly','true')
+    document.getElementById('lastname').setAttribute('readOnly','true');
+    document.getElementById('secondlastname').setAttribute('readOnly','true');
+    document.getElementById('email').setAttribute('readOnly','true');
+    document.getElementById('phoneNumber').setAttribute('readOnly','true');
     document.getElementById('user-profile-buttons-div').style.display = 'none';
 }
 export const validateEditUserForm = (data) =>{

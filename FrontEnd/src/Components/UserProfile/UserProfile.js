@@ -2,6 +2,7 @@ import React from 'react';
 import { IconContext } from 'react-icons';
 import { FaEdit } from 'react-icons/fa';
 import { useForm } from './../../shared/hooks/useForm';
+import { useSelector } from 'react-redux';
 import { useGetProfileData } from './../../Utils/UserProfile/getUserProfile';
 import { usePutEditUser } from '../../Utils/UserProfile/putEditProfile';
 import {
@@ -11,10 +12,14 @@ import {
 } from './../../Utils/UserProfile/editUserProfile';
 
 export const UserProfile = () => {
-  const {updateUser} = usePutEditUser();
+  const {updateEmployee,updateEmployeer} = usePutEditUser();
+  const user = useSelector((state) => state.user.user);
   const submit = async () => {
-    const result = updateUser(formValues,setIsSubmitting);
-    if(result){
+    if(user.Roles === 'admin'){
+      updateEmployeer(formValues);
+      applyNoEdit();
+    }else{
+      updateEmployee(formValues);
       applyNoEdit();
     }
   }
@@ -25,7 +30,7 @@ export const UserProfile = () => {
     errors,
     setIsSubmitting,
   } = useForm(submit, validateEditUserForm);
-  const { userInfo, infoReceived } = useGetProfileData(formValues);
+  const {infoReceived } = useGetProfileData(formValues);
   return !infoReceived ? (
     <div className='loader'></div>
   ) : (
@@ -57,7 +62,7 @@ export const UserProfile = () => {
               id='name'
               className='user-profile-input'
               disabled
-              value={(formValues.name = userInfo[0].Nombre)}
+              value={formValues.name}
               onChange={handleInputChange}
               readOnly
             ></input>
@@ -73,7 +78,7 @@ export const UserProfile = () => {
               id='lastname'
               className='user-profile-input'
               disabled
-              value={(formValues.lastName = userInfo[0].Apellido1)}
+              value={formValues.lastname}
               onChange={handleInputChange}
               readOnly
             ></input>
@@ -89,7 +94,7 @@ export const UserProfile = () => {
               id='secondlastname'
               className='user-profile-input'
               disabled
-              value={(formValues.secondlastname = userInfo[0].Apellido2)}
+              value={formValues.secondlastname}
               onChange={handleInputChange}
               readOnly
             ></input>
@@ -105,7 +110,7 @@ export const UserProfile = () => {
               id='id'
               className='user-profile-input'
               disabled
-              value={(formValues.id = userInfo[0].Cedula)}
+              value={formValues.id}
               onChange={handleInputChange}
               readOnly
             ></input>
@@ -121,7 +126,7 @@ export const UserProfile = () => {
               id='email'
               className='user-profile-input'
               disabled
-              value={(formValues.email = userInfo[0].Email)}
+              value={formValues.email}
               onChange={handleInputChange}
               readOnly
             ></input>
@@ -137,7 +142,7 @@ export const UserProfile = () => {
               id='phoneNumber'
               className='user-profile-input'
               disabled
-              value={(formValues.phoneNumber = userInfo[0].Telefono)}
+              value={formValues.phoneNumber}
               onChange={handleInputChange}
               readOnly
             ></input>
