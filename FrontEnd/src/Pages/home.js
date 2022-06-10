@@ -1,10 +1,13 @@
 import React from 'react';
-import Navbar from '../Components/Navbar/Navbar';
+import { Navbar } from '../Components/Navbar/Navbar';
+import '../App.css';
 
-const Home = () => {
+export const Home = () => {
   return (
     <>
-      <Navbar/>
+      <div className='sticky-navbar'>
+        <Navbar />
+      </div>
       <div className='page-content'>
         <h1>Esto es el home page de la App</h1>
       </div>
@@ -12,5 +15,3 @@ const Home = () => {
     </>
   );
 };
-  
-export default Home;

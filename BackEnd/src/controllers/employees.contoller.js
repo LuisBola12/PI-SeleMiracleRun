@@ -1,5 +1,5 @@
-import { getConnection, queries } from '../database';
-
+import { getConnection } from '../database';
+import { employeesQueries } from '../database/queries/employeesQueries';
 
 export const getEmployeeByID = async (req, res) => {
   const { Cedula } = req.params;
@@ -11,7 +11,7 @@ export const getEmployeeByID = async (req, res) => {
     const pool = await getConnection();
     const result = await pool.request()
       .input('Cedula', Cedula)
-      .query(queries.getEmployeeByID);
+      .query(employeesQueries.getEmployeeByID);
     console.log(result);
     res.status(200).json(result.recordset);
   } catch (e) {
@@ -27,7 +27,7 @@ export const getEmployees = async (req, res) => {
     const result = await pool
       .request()
       .input('Proyecto', Proyecto)
-      .query(queries.getAllEmployees);
+      .query(employeesQueries.getAllEmployees);
     res.json(result.recordset);
   } catch (e) {
     res.status(500);
@@ -42,7 +42,7 @@ export const verifyEmployeeContractOnProject = async (req, res) => {
       .request()
       .input('Cedula', Cedula)
       .input('Proyecto', Proyecto)
-      .query(queries.verifyEmployeeContractProject);
+      .query(employeesQueries.verifyEmployeeContractProject);
     res.json(result.recordset);
   } catch (e) {
     res.status(500);
@@ -90,7 +90,7 @@ export const postNewEmployee = async (req, res) => {
       .input('Email', Email)
       .input('Contrasenia', Contrasenia)
       .input('Roles', Roles)
-      .query(queries.createNewUser);
+      .query(employeesQueries.createNewUser);
   } catch (e) {
     console.log(e);
   }
@@ -103,7 +103,7 @@ export const postNewEmployee = async (req, res) => {
       .input('Cedula', Cedula)
       .input('Telefono', Telefono)
       .input('Email', Email)
-      .query(queries.createNewEmployee);
+      .query(employeesQueries.createNewEmployee);
   } catch (e) {
     console.log(e);
   }
@@ -118,7 +118,7 @@ export const postNewEmployee = async (req, res) => {
       .input('SalarioPorHora', SalarioPorHora)
       .input('NombreServicio', NombreServicio)
       .input('ValorServicio', ValorServicio)
-      .query(queries.addContractOfAnEmployee);
+      .query(employeesQueries.addContractOfAnEmployee);
   } catch (e) {
     console.log(e);
   }

@@ -7,4 +7,4 @@ export const getAnEntity = async (url, project) => {
   } catch (error) {
     console.log(error);
   }
-}
+};

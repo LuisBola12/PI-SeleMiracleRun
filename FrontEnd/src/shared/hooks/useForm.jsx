@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 
 export const useForm = (onSubmit, validate) => {
   const [formValues, setFormValues] = useState({});
@@ -17,19 +17,21 @@ export const useForm = (onSubmit, validate) => {
     setErrors(validate(formValues));
     setIsSubmitting(true);
 
-  }
+  };
 
   const handleInputChange = (event) => {
     const { id, value } = event.target;
     setFormValues({ ...formValues, [id]: value });
-  }
+  };
 
   return {
     formValues,
     handleInputChange,
     handleSubmit,
     setIsSubmitting,
-    errors
+    setFormValues,
+    errors,
+    setErrors
   };
 };
 export default useForm;

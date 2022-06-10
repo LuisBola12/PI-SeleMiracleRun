@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import './CreateEmployeesStyle.scss';
 import { useSelector } from 'react-redux';
-import { back, validateForm, showContractValues, submitEmployee } from "../../Utils/CreateEmployee/CreateEmployee";
-import useForm from "../../shared/hooks/useForm";
-import usePost from "../../shared/hooks/usePost";
-import { validAnEntity } from "../../Utils/validAnEntity";
-import { verifyEmployeeProject } from "../../Utils/CreateEmployee/CreateEmployee";
+import { back, validateForm, showContractValues } from '../../Utils/CreateEmployee/CreateEmployee';
+import useForm from '../../shared/hooks/useForm';
+import usePost from '../../shared/hooks/usePost';
+import { validAnEntity } from '../../Utils/validAnEntity';
+import { verifyEmployeeProject } from '../../Utils/CreateEmployee/CreateEmployee';
 
 export const CreateEmployee = () => {
   const [contractsReceived, setContractsReceived] = useState(false);
   const [typeOfContracts, setTypeOfContracts] = useState();
   const activeProject = useSelector((state) => state.activeProject.projectName);
 
-  const { postError, post } = usePost('http://localhost:4000/employee');
+  const { post } = usePost('http://localhost:4000/employee');
   const sendToDatabase = async () => {
     let string = JSON.stringify(formValues);
     string = JSON.stringify({
@@ -29,22 +29,22 @@ export const CreateEmployee = () => {
       SalarioPorHora: formValues.hWage,
       NombreServicio: formValues.serviceName,
       ValorServicio: formValues.serviceValue,
-    })
+    });
     const user = await validAnEntity('users/', formValues.email);
     const employee = await validAnEntity('employee/', formValues.id);
     const employeeContract = await verifyEmployeeProject(formValues.id, activeProject);
     if (user === true && employee === true && employeeContract === true) {
       post(string);
-      back()
+      back();
     } else {
       setIsSubmitting(false);
-      alert("There is already an user with those credentials.")
+      alert('There is already an user with those credentials.');
     }
-  }
+  };
   const { formValues, handleInputChange, handleSubmit, errors, setIsSubmitting } = useForm(sendToDatabase, validateForm);
   useEffect(() => {
     const fetchTypeContracts = async () => {
-      const seleUrl = "http://localhost:4000/typeContracts";
+      const seleUrl = 'http://localhost:4000/typeContracts';
       try {
         const response = await fetch(seleUrl);
         const newData = await response.json();
@@ -53,162 +53,162 @@ export const CreateEmployee = () => {
       } catch (error) {
         console.log(error);
       }
-    }
+    };
     fetchTypeContracts();
   }, []);
-  return !contractsReceived ? <div className="loader"></div> : (
+  return !contractsReceived ? <div className='loader'></div> : (
     <>
-      <div className="employees-form">
-        <div className="form-title-bar">
-          <div className="image-employee"></div>
-          <div className="form-title-employee"> Create Employee </div>
+      <div className='employees-form'>
+        <div className='form-title-bar'>
+          <div className='image-employee'></div>
+          <div className='form-title-employee'> Create Employee </div>
         </div>
-        <div className="form-name-employee">
+        <div className='form-name-employee'>
           <div>
-            <div className="animated-input-employee">
-              <input type="text" id="name" className="animated-input-employee__input" value={formValues.name || ""}
-                maxLength={15} onChange={handleInputChange} autoComplete="off" placeholder=" "></input>
-              <label htmlFor="name" className="animated-input-employee__label">Name<span className="req">*</span></label>
+            <div className='animated-input-employee'>
+              <input type='text' id='name' className='animated-input-employee__input' value={formValues.name || ''}
+                maxLength={15} onChange={handleInputChange} autoComplete='off' placeholder=' '></input>
+              <label htmlFor='name' className='animated-input-employee__label'>Name<span className='req'>*</span></label>
             </div>
             <div>
-              <p className="errorForm" id="error-name-input">{errors.name}</p>
+              <p className='errorForm' id='error-name-input'>{errors.name}</p>
             </div>
           </div>
 
           <div>
-            <div className="animated-input-employee">
-              <input type="text" id="lastname" className="animated-input-employee__input"
-                value={formValues.lastname || ""} maxLength={15} onChange={handleInputChange} autoComplete="off" placeholder=" "></input>
-              <label htmlFor="first-last-name-employee" className="animated-input-employee__label">First Last Name<span className="req">*</span></label>
+            <div className='animated-input-employee'>
+              <input type='text' id='lastname' className='animated-input-employee__input'
+                value={formValues.lastname || ''} maxLength={15} onChange={handleInputChange} autoComplete='off' placeholder=' '></input>
+              <label htmlFor='first-last-name-employee' className='animated-input-employee__label'>First Last Name<span className='req'>*</span></label>
             </div>
             <div>
-              <p className="errorForm" id="error-first-lastname-input">{errors.lastname}</p>
+              <p className='errorForm' id='error-first-lastname-input'>{errors.lastname}</p>
             </div>
           </div>
           <div>
-            <div className="animated-input-employee">
-              <input type="text" id="secondlastname" className="animated-input-employee__input"
-                value={formValues.secondlastname || ""} maxLength={15} onChange={handleInputChange} autoComplete="off" placeholder=" "></input>
-              <label htmlFor="secondlastname" className="animated-input-employee__label">Second Last Name<span className="req">*</span></label>
+            <div className='animated-input-employee'>
+              <input type='text' id='secondlastname' className='animated-input-employee__input'
+                value={formValues.secondlastname || ''} maxLength={15} onChange={handleInputChange} autoComplete='off' placeholder=' '></input>
+              <label htmlFor='secondlastname' className='animated-input-employee__label'>Second Last Name<span className='req'>*</span></label>
             </div>
             <div>
-              <p className="errorForm" id="error-second-lastname-input">{errors.secondlastname}</p>
+              <p className='errorForm' id='error-second-lastname-input'>{errors.secondlastname}</p>
             </div>
           </div>
         </div>
-        <div className="form-id-phone-employee">
+        <div className='form-id-phone-employee'>
           <div>
-            <div className="animated-input-employee-id">
-              <input type="text" id="id" className="animated-input-employee-id__input"
-                value={formValues.id || ""}
+            <div className='animated-input-employee-id'>
+              <input type='text' id='id' className='animated-input-employee-id__input'
+                value={formValues.id || ''}
                 maxLength={15}
                 onChange={handleInputChange}
-                autoComplete="off" placeholder=" "></input>
-              <label htmlFor="id" className="animated-input-employee-id__label">Id<span className="req">*</span></label>
+                autoComplete='off' placeholder=' '></input>
+              <label htmlFor='id' className='animated-input-employee-id__label'>Id<span className='req'>*</span></label>
             </div>
             <div>
-              <p className="errorForm" id="error-id-employee">{errors.id}</p>
+              <p className='errorForm' id='error-id-employee'>{errors.id}</p>
             </div>
           </div>
-          <div className="animated-input-employee-id">
-            <input type="number" id="phoneNumber" className="animated-input-employee-id__input"
-              value={formValues.phoneNumber || ""}
+          <div className='animated-input-employee-id'>
+            <input type='number' id='phoneNumber' className='animated-input-employee-id__input'
+              value={formValues.phoneNumber || ''}
               onChange={handleInputChange}
-              autoComplete="off" placeholder=" "></input>
-            <label htmlFor="phoneNumber" className="animated-input-employee-id__label">Phone Number</label>
+              autoComplete='off' placeholder=' '></input>
+            <label htmlFor='phoneNumber' className='animated-input-employee-id__label'>Phone Number</label>
           </div>
         </div>
-        <div className="form-credentials-employee">
+        <div className='form-credentials-employee'>
           <div>
-            <div className="animated-input-employee-credentials">
-              <input type="text" id="email" className="animated-input-employee-credentials__input"
-                value={formValues.email || ""}
+            <div className='animated-input-employee-credentials'>
+              <input type='text' id='email' className='animated-input-employee-credentials__input'
+                value={formValues.email || ''}
                 maxLength={50}
                 onChange={handleInputChange}
-                autoComplete="off" placeholder=" "></input>
-              <label htmlFor="email" className="animated-input-employee-credentials__label">Email<span className="req">*</span></label>
+                autoComplete='off' placeholder=' '></input>
+              <label htmlFor='email' className='animated-input-employee-credentials__label'>Email<span className='req'>*</span></label>
             </div>
             <div>
-              <p className="errorForm" id="error-email-input">{errors.email}</p>
+              <p className='errorForm' id='error-email-input'>{errors.email}</p>
             </div>
           </div>
           <div>
-            <div className="animated-input-employee-credentials">
-              <input type="password" id="password" className="animated-input-employee-credentials__input"
-                value={formValues.password || ""}
+            <div className='animated-input-employee-credentials'>
+              <input type='password' id='password' className='animated-input-employee-credentials__input'
+                value={formValues.password || ''}
                 maxLength={20}
                 onChange={handleInputChange}
-                autoComplete="off" placeholder=" "></input>
-              <label htmlFor="password" className="animated-input-employee-credentials__label">Password<span className="req">*</span></label>
+                autoComplete='off' placeholder=' '></input>
+              <label htmlFor='password' className='animated-input-employee-credentials__label'>Password<span className='req'>*</span></label>
             </div>
             <div>
-              <p className="errorForm" id="error-password-input">{errors.password}</p>
+              <p className='errorForm' id='error-password-input'>{errors.password}</p>
             </div>
           </div>
         </div>
-        <div className="form-contract-employee">
+        <div className='form-contract-employee'>
           <div>
-            <div className="animated-input-employee-contract">
-              <select id="contract" className="animated-input-employee-contract__input"
-                value={formValues.contract || ""}
+            <div className='animated-input-employee-contract'>
+              <select id='contract' className='animated-input-employee-contract__input'
+                value={formValues.contract || ''}
                 onChange={(e) => {
-                  handleInputChange(e)
+                  handleInputChange(e);
                   showContractValues(e);
                 }}
               >
-                <option value={""}>Select a Contract </option>
+                <option value={''}>Select a Contract </option>
                 {typeOfContracts.map((element) => (
                   <option key={element.TipoJornada} value={element.TipoJornada}>{element.TipoJornada}</option>
                 ))}
               </select>
-              <label htmlFor="contract" className="animated-input-employee-contract__label">Type of Contract<span className="req">*</span></label>
+              <label htmlFor='contract' className='animated-input-employee-contract__label'>Type of Contract<span className='req'>*</span></label>
             </div>
             <div>
-              <p className="errorForm" id="error-contract-input">{errors.contract}</p>
+              <p className='errorForm' id='error-contract-input'>{errors.contract}</p>
             </div>
           </div>
-          <div className="animated-input-employee-service-contract">
-            <input type="date" id="contractDeadline" className="animated-input-employee-service-contract__input"
-              value={formValues.contractDeadline || ""}
+          <div className='animated-input-employee-service-contract'>
+            <input type='date' id='contractDeadline' className='animated-input-employee-service-contract__input'
+              value={formValues.contractDeadline || ''}
               maxLength={50}
               onChange={handleInputChange}
-              autoComplete="off" placeholder=" "></input>
-            <label htmlFor="contractDeadline" className="animated-input-employee-service-contract__label">Hired Until</label>
+              autoComplete='off' placeholder=' '></input>
+            <label htmlFor='contractDeadline' className='animated-input-employee-service-contract__label'>Hired Until</label>
           </div>
         </div>
-        <div className="form-profesional-contract" id="profesional service">
-          <div className="animated-input-employee-service-contract">
-            <input type="text" id="serviceName" className="animated-input-employee-service-contract__input"
+        <div className='form-profesional-contract' id='profesional service'>
+          <div className='animated-input-employee-service-contract'>
+            <input type='text' id='serviceName' className='animated-input-employee-service-contract__input'
               value={formValues.serviceName}
               maxLength={50}
               onChange={handleInputChange}
-              autoComplete="off" placeholder=" "></input>
-            <label htmlFor="serviceName" className="animated-input-employee-service-contract__label">Service Name</label>
+              autoComplete='off' placeholder=' '></input>
+            <label htmlFor='serviceName' className='animated-input-employee-service-contract__label'>Service Name</label>
           </div>
-          <div className="animated-input-employee-service-contract">
-            <input type="text" id="serviceValue" className="animated-input-employee-service-contract__input"
+          <div className='animated-input-employee-service-contract'>
+            <input type='text' id='serviceValue' className='animated-input-employee-service-contract__input'
               value={formValues.serviceValue}
               maxLength={50}
               onChange={handleInputChange}
-              autoComplete="off" placeholder=" "></input>
-            <label htmlFor="serviceValue" className="animated-input-employee-service-contract__label">Service Value</label>
+              autoComplete='off' placeholder=' '></input>
+            <label htmlFor='serviceValue' className='animated-input-employee-service-contract__label'>Service Value</label>
           </div>
         </div>
-        <div className="form-others-contract" id="other-contract">
-          <div className="animated-input-employee-other-contract">
-            <input type="number" id="hWage" className="animated-input-employee-other-contract__input"
-              value={formValues.hWage || ""}
+        <div className='form-others-contract' id='other-contract'>
+          <div className='animated-input-employee-other-contract'>
+            <input type='number' id='hWage' className='animated-input-employee-other-contract__input'
+              value={formValues.hWage || ''}
               onChange={handleInputChange}
-              autoComplete="off" placeholder=" "></input>
-            <label htmlFor="hWage" className="animated-input-employee-other-contract__label">Hourly Wage</label>
+              autoComplete='off' placeholder=' '></input>
+            <label htmlFor='hWage' className='animated-input-employee-other-contract__label'>Hourly Wage</label>
           </div>
         </div>
-        <div className="buttons-employee">
-          <button className="create-employee-btn"
+        <div className='buttons-employee'>
+          <button className='create-employee-btn'
             onClick={handleSubmit}>
             Create
           </button>
-          <button className="cancel-employee-btn" onClick={() => { back() }}>
+          <button className='cancel-employee-btn' onClick={() => { back(); }}>
             Cancel
           </button>
         </div>

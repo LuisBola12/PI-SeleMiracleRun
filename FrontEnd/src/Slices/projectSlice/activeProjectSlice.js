@@ -1,13 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const activeProjectSlice = createSlice({
   name: 'activeProjectSlice',
   initialState: {
-    projectName: "",
+    projectName: '',
   },
   reducers: {
-    updateActiveProject: (state, action) => { state.projectName = action.payload },
-    resetProject: (state) => { state.projectName = "" },
+    updateActiveProject: (state, action) => { state.projectName = action.payload; },
+    resetProject: (state) => { state.projectName = ''; },
   },
 
 });

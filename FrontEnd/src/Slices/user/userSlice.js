@@ -1,13 +1,13 @@
-import { onPostLoginFullfilled, onPostLoginRejected, postLogin } from "./requests/postLogin";
-import { createSlice } from "@reduxjs/toolkit";
-import { userReducers } from "./reducers/reducers";
+import { onPostLoginFullfilled, onPostLoginRejected, postLogin } from './requests/postLogin';
+import { createSlice } from '@reduxjs/toolkit';
+import { userReducers } from './reducers/reducers';
 
 const userSlice = createSlice({
   name: 'user',
   initialState: {
     user: null,
     userIsLoggedIn: false,
-    errorMessage: "",
+    errorMessage: '',
   },
 
   reducers: userReducers,
@@ -15,7 +15,7 @@ const userSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(postLogin.fulfilled, onPostLoginFullfilled)
-      .addCase(postLogin.rejected, onPostLoginRejected)
+      .addCase(postLogin.rejected, onPostLoginRejected);
   }
 });
 

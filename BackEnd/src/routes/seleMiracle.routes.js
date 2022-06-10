@@ -1,16 +1,17 @@
 import { Router } from 'express';
 import { getProjectsByEmail, createProject } from '../controllers/projects.controller';
-import { getEmployerByID, getUsers, getUserByEmail, verifyCredentials, registerNewUser } from '../controllers/users.controller';
+import { getEmployerByID, getUserByEmail, verifyCredentials, registerNewUser, getProfileEmployeer,getProfileEmployee } from '../controllers/users.controller';
 import { getEmployees, postNewEmployee, getEmployeeByID, verifyEmployeeContractOnProject } from '../controllers/employees.contoller';
-import { getVolDeductions, createNewVolDeduction, getVolDeductionsByName } from '../controllers/volDeductions.controller';
+import { getVolDeductions, createNewVolDeduction, getVolDeductionsByName, updateVolDeduction } from '../controllers/volDeductions.controller';
 import { getTypeOfContracts } from '../controllers/contracts.controller';
-import { getBenefits, createBenefit, getBenefitsByName } from '../controllers/benefits.controller';
-import { createNewEmployer, getEmployer } from '../controllers/employer.controller';
+import { getBenefits, createBenefit, getBenefitsByName, updateBenefit } from '../controllers/benefits.controller';
 
 const router = Router();
 
 //Users
 router.get('/users/:Email', getUserByEmail);
+router.get('/profileEmployee/:Email', getProfileEmployee);
+router.get('/profileEmployeer/:Email', getProfileEmployeer);
 router.post('/users', verifyCredentials);
 
 
@@ -42,12 +43,13 @@ router.post('/projects', createProject);
 router.get('/benefits/:Proyecto', getBenefits);
 router.get('/benefits/:Proyecto/:Nombre', getBenefitsByName);
 router.post('/benefits', createBenefit);
-
+router.put('/benefits/:NombreAntiguo', updateBenefit);
 
 //VoluntaryDeductions
 router.get('/volDeductions/:NombreProyecto', getVolDeductions);
 router.get('/volDeductions/:NombreProyecto/:Nombre', getVolDeductionsByName);
 router.post('/volDeductions', createNewVolDeduction);
+router.put('/volDeductions/:NombreAntiguo', updateVolDeduction);
 
 //GetEmployeesPaidHours
 //TODO: cambiar el jj

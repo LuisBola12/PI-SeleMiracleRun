@@ -1,4 +1,6 @@
 @apiUsers = http://localhost:4000/users
+@apiProfileEmployee = http://localhost:4000/profileEmployee
+@apiProfileEmployeer = http://localhost:4000/profileEmployeer
 @apiEmployees = http://localhost:4000/employees
 @apiEmployee = http://localhost:4000/employee
 @apiEmployeeContract = http://localhost:4000/employee/contract
@@ -40,6 +42,10 @@ Content-Type: application/json
   "Email": "josefR@example.com"
 }
 ###
+GET {{apiProfileEmployee}}/javier.Mo@gmail.com
+###
+GET {{apiProfileEmployeer}}/Norman.Os.L@gmail.com
+###
 POST {{apiEmployeeContract}}
 Content-Type: application/json
 
@@ -70,7 +76,7 @@ GET {{apiProjects}}/josefR@example.com
 GET  {{apiVolDeductions}}/Taquería Milagro
 
 ###
-GET {{apiBenefits}}/Taquería Milagro/Prueba2
+GET {{apiBenefits}}/Taquería Milagro
 
 ###
 GET {{apiContracts}}
@@ -135,4 +141,16 @@ Content-Type: application/json
   "Nombre":"Pepsi",
   "Periodo":"Mensual",
   "Email":"josefR@example.com"
+}
+
+###
+
+PUT {{apiBenefits}}/Almuerzo
+Content-Type: application/json
+
+{
+  "Nombre": "Almuerzo de prueba",
+  "NombreProyecto": "Taquería Milagro",
+  "CostoActual": 20000,
+  "Descripción": "Esto es una prueba de la edición"
 }

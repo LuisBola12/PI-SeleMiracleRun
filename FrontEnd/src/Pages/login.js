@@ -1,12 +1,11 @@
-import React from 'react'
-import LoginComp from '../Components/Login/index';
+import React from 'react';
+import { LoginComp } from '../Components/Login/Login';
+import '../App.css';
 
-const Login = () => {
+export const Login = () => {
   return (
     <>
-       <LoginComp/> 
+      <LoginComp/> 
     </>
-  )
-}
-
-export default Login;
+  );
+};
