@@ -70,7 +70,7 @@ GET {{apiUsers}}/josefR@example.com
 GET {{apiEmployees}}/Super La Esquina
 
 ###
-GET {{apiProjects}}/josefR@example.com
+GET {{apiProjects}}/norman.os.l@gmail.com/admin
 
 ###
 GET  {{apiVolDeductions}}/Taquería Milagro

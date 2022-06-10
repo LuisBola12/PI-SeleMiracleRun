@@ -7,7 +7,8 @@ import { updateActiveProject } from '../../Slices/projectSlice/activeProjectSlic
 export const useProjectsData = () => {
   const [projects, setProjects] = useState([]);
   const emailFromUser = useSelector((state) => state.user.user.Email);
-  const { loading, error } = useFetch(`http://localhost:4000/projects/${emailFromUser}`, setProjects);
+  const rolFromUser = useSelector((state) => state.user.user.Roles);
+  const { loading, error } = useFetch(`http://localhost:4000/projects/${emailFromUser}/${rolFromUser}`, setProjects);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

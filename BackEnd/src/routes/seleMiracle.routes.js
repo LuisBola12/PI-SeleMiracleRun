@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { getProjectsByEmail, createProject } from '../controllers/projects.controller';
-import { getEmployerByID, getUserByEmail, verifyCredentials, registerNewUser, getProfileEmployeer,getProfileEmployee } from '../controllers/users.controller';
+import { getProjectsByEmail, createProject, getEmployeeProjectsByEmail } from '../controllers/projects.controller';
+import { getEmployerByID, getUserByEmail, verifyCredentials, registerNewUser, getProfileEmployeer, getProfileEmployee } from '../controllers/users.controller';
 import { getEmployees, postNewEmployee, getEmployeeByID, verifyEmployeeContractOnProject } from '../controllers/employees.contoller';
 import { getVolDeductions, createNewVolDeduction, getVolDeductionsByName, updateVolDeduction } from '../controllers/volDeductions.controller';
 import { getTypeOfContracts } from '../controllers/contracts.controller';
@@ -35,7 +35,7 @@ router.post('/employee/contract', verifyEmployeeContractOnProject);
 
 
 //Projects
-router.get('/projects/:Email', getProjectsByEmail);
+router.get('/projects/:Email/:Rol', getProjectsByEmail);
 router.post('/projects', createProject);
 
 
