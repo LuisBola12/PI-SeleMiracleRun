@@ -6,6 +6,7 @@
 @apiEmployeeContract = http://localhost:4000/employee/contract
 @apiProjects = http://localhost:4000/projects
 @apiBenefits = http://localhost:4000/benefits
+@apiMyBenefits = http://localhost:4000/myBenefits
 @apiVolDeductions = http://localhost:4000/volDeductions
 @apiCreateEmployer =  http://localhost:4000/createEmployer
 @apiVerifyUser =  http://localhost:4000/verifyUser
@@ -80,6 +81,10 @@ GET {{apiBenefits}}/Taquería Milagro
 
 ###
 GET {{apiContracts}}
+
+###
+
+GET {{apiMyBenefits}}/Taquería Milagro/javier.Mo@gmail.com
 
 ###
 POST {{apiBenefits}}

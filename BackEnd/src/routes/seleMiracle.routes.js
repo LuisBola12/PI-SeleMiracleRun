@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import { getProjectsByEmail, createProject, getEmployeeProjectsByEmail } from '../controllers/projects.controller';
+import { getProjectsByEmail, createProject } from '../controllers/projects.controller';
 import { getEmployerByID, getUserByEmail, verifyCredentials, registerNewUser, getProfileEmployeer, getProfileEmployee } from '../controllers/users.controller';
 import { getEmployees, postNewEmployee, getEmployeeByID, verifyEmployeeContractOnProject } from '../controllers/employees.contoller';
 import { getVolDeductions, createNewVolDeduction, getVolDeductionsByName, updateVolDeduction } from '../controllers/volDeductions.controller';
 import { getTypeOfContracts } from '../controllers/contracts.controller';
-import { getBenefits, createBenefit, getBenefitsByName, updateBenefit } from '../controllers/benefits.controller';
+import { getBenefits, createBenefit, getBenefitsByName, updateBenefit, getEmployeeBenefitsByEmail } from '../controllers/benefits.controller';
 
 const router = Router();
 
@@ -42,6 +42,7 @@ router.post('/projects', createProject);
 //Benefits
 router.get('/benefits/:Proyecto', getBenefits);
 router.get('/benefits/:Proyecto/:Nombre', getBenefitsByName);
+router.get('/myBenefits/:Proyecto/:Email', getEmployeeBenefitsByEmail)
 router.post('/benefits', createBenefit);
 router.put('/benefits/:NombreAntiguo', updateBenefit);
 
