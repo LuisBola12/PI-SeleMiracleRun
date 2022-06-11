@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { postLogin } from '../../Slices/user/requests/postLogin';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { React, useState } from 'react';
+import { ButtonComp } from '../Button/ButtonComp';
 import './LoginStyle.scss';
 
 export const LoginComp = () => {
@@ -37,37 +38,41 @@ export const LoginComp = () => {
                                     as those benefits and needs that the employee requests.`}
         </p>
       </div>
-      <div className='logIn-box'>       
+      <div className='logIn-box'>
         <div className='login-animated-input-email'>
-          <input 
-            type='text' 
-            id='email_login' 
-            className='login-animated-input-email__input' 
+          <input
+            type='text'
+            id='email_login'
+            className='login-animated-input-email__input'
             value={email}
             maxLength={50}
-            onChange={(e) => {setEmail(e.target.value);}}
-            autoComplete='off' 
-            placeholder=' '/>
+            onChange={(e) => { setEmail(e.target.value); }}
+            autoComplete='off'
+            placeholder=' ' />
           <label htmlFor='email_login' className='login-animated-input-email__label'> Email <span className='req'>*</span> </label>
         </div>
 
         <div className='login-animated-input-email'>
-          <input 
-            type='password' 
-            id='password_login' 
-            className='login-animated-input-email__input' 
+          <input
+            type='password'
+            id='password_login'
+            className='login-animated-input-email__input'
             value={password}
             maxLength={20}
-            onChange={(e) => {setPassword(e.target.value);}}
-            autoComplete='off' 
-            placeholder=' '/>
+            onChange={(e) => { setPassword(e.target.value); }}
+            autoComplete='off'
+            placeholder=' ' />
           <label htmlFor='password_login' className='login-animated-input-email__label'> Password <span className='req'>*</span> </label>
         </div>
-           
+
         <div className='logIn-btn-box'>
-          <button className='logIn-btn-login'  onClick={logBtn}>
+          <ButtonComp
+            buttonType={'btn'}
+            onClick={logBtn}
+            buttonStyle={'btn--logIn--logIn'}
+            buttonSize={'extra--large--btn'}>
             Sign In
-          </button>
+          </ButtonComp>
           <div>
             {
               errorMessage && (
