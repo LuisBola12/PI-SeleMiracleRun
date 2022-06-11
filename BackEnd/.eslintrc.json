@@ -10,6 +10,9 @@
     "sourceType": "module"
   },
   "rules": {
+    "no-unused-vars": [
+      "warn"
+    ],
     "indent": [
       "error",
       2
@@ -25,6 +28,20 @@
     "semi": [
       "error",
       "always"
-    ]
+    ],
+    "array-bracket-spacing": [
+      2,
+      "always"
+    ],
+    "space-in-parens": [
+      2,
+      "always"
+    ],
+    "object-curly-spacing": [
+      2,
+      "always"
+    ],
+    "keyword-spacing": "warn",
+    "space-infix-ops": "warn"
   }
 }
