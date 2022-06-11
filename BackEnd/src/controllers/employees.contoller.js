@@ -1,5 +1,6 @@
 import { getConnection} from '../database';
 import { employeesQueries } from '../database/queries/employeesQueries';
+import { userQueries } from '../database/queries/userQueries';
 
 export const getEmployeeByID = async (req, res) => {
   const { Cedula } = req.params;
@@ -50,6 +51,21 @@ export const verifyEmployeeContractOnProject = async (req, res) => {
   }
 
 };
+export const getEmployeesWithContractOnOtherProyects = async(req,res) => {
+  try{
+    const {Cedula,Proyecto} = req.body;
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input('Cedula',Cedula)
+      .input('Proyecto',Proyecto)
+      .query(employeesQueries.getEmployeesWithContractsOnOtherProyects)
+      res.json(result.recordset);
+  } catch(e){
+    res.status(500);
+    res.send(e.message);
+  }
+}
 export const postNewEmployee = async (req, res) => {
   const date = new Date();
   const [month, day, year] = [
@@ -74,6 +90,20 @@ export const postNewEmployee = async (req, res) => {
     NombreServicio,
     ValorServicio,
   } = req.body;
+  console.log(NombreProyecto,
+    Email,
+    Contrasenia,
+    Roles,
+    Nombre,
+    Apellido1,
+    Apellido2,
+    Cedula,
+    Telefono,
+    TipoJornada,
+    FechaFinContrato,
+    SalarioPorHora,
+    NombreServicio,
+    ValorServicio,)
   if (SalarioPorHora === 0) {
     SalarioPorHora = null;
   }
@@ -90,7 +120,7 @@ export const postNewEmployee = async (req, res) => {
       .input('Email', Email)
       .input('Contrasenia', Contrasenia)
       .input('Roles', Roles)
-      .query(employeesQueries.createNewUser);
+      .query(userQueries.createNewUser);
   } catch (e) {
     console.log(e);
   }
@@ -124,3 +154,26 @@ export const postNewEmployee = async (req, res) => {
   }
   res.status(200).send();
 };
+
+const contractAEmployee = async (req,res) =>{
+  try{
+    const {Cedula,TipoContrato,Proyecto,NombreServicio,SalarioPorHora,FechaFinContrato,ValorServicio} = req.body;
+    const date = new Date();
+    const [month, day, year] = [
+      date.getMonth(),
+      date.getDate(),
+      date.getFullYear(),
+    ];
+  const FechaInicioContrato = `${year}-${month + 1}-${day}`;
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input('Cedula',Cedula)
+      .input('Proyecto',Proyecto)
+      .query(employeesQueries.getEmployeesWithContractsOnOtherProyects)
+      res.json(result.recordset);
+  } catch(e){
+    res.status(500);
+    res.send(e.message);
+  }
+}

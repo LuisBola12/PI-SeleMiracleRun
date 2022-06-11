@@ -13,8 +13,19 @@
 @apiVerifyUser =  http://localhost:4000/verifyUser
 @apiEmployer =  http://localhost:4000/employer
 @apiContracts = http://localhost:4000/typeContracts
+@apiEmployeeWithContractOnOtherProyects = http://localhost:4000/employeesWithContractsOnOtherProyects
 
 
+
+POST {{apiEmployeeWithContractOnOtherProyects}}
+Content-Type: application/json
+
+{
+  "Cedula":"608110776",
+  "Proyecto":"Taquería Milagro"
+}
+
+###
 POST {{apiUsers}}
 Content-Type: application/json
 
