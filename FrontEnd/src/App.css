@@ -51,7 +51,6 @@
 .table-button {
   margin-top: 50px;
   width: 90%;
-  /* border: solid black; */
 }
 
 .details-table-button {
@@ -534,4 +533,8 @@ tr:nth-child(even) {
 
 .benefit-name {
   width: 20%;
+}
+
+.ofer-benefits {
+  width: 90%;
 }
