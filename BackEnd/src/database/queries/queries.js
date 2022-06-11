@@ -41,13 +41,13 @@ export const queries = {
   createNewVolDeduction: 'Insert into DeduccionesVoluntarias (Nombre, NombreProyecto, Costo, Descripcion) values (@Nombre, @NombreProyecto, @Costo, @Descripcion)',
   getVolDeductionsByName: 'Select Nombre from DeduccionesVoluntarias where Nombre = @Nombre and NombreProyecto = @NombreProyecto',
 
-
+  // Employer
   getAllEmployers: 'Select * From Empleador',
   getEmployerByID: 'Select * From Empleador Where Cedula = @Cedula',
   createNewEmployer: 'Insert into Empleador (Cedula, Nombre, Apellido1, Apellido2, Telefono, Email) values(@Cedula, @Nombre, @Apellido1, @Apellido2, @Telefono, @Email)',
-
-  // Employer queries
-  getAllContracts: 'Select TipoJornada from Contrato',
   getAllEmployeesByID: 'Select * From Empleador Where Cedula = @Cedula',
+  
+  // Contrato
+  getAllContracts: 'Select TipoJornada from Contrato',
 
 };

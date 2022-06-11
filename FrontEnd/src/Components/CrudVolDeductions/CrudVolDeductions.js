@@ -47,7 +47,7 @@ export const CrudVolDeductions = () => {
           ))}
         </tbody>
       </table>
-      <label className='Empty-volDeduction-message'>{(projectVolDeductions.length === 0) ? 'No voluntary deductions added yet' : ''}</label>
+      <label className='Empty-message'>{(projectVolDeductions.length === 0) ? 'No voluntary deductions added yet' : ''}</label>
     </>
   );
 };

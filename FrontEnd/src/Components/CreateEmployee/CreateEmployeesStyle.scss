@@ -7,7 +7,7 @@
 }
 
 * {
-  font-family: 'Sora', sans-serif;
+  font-family: 'sora', sans-serif;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -44,15 +44,15 @@
     }
   }
 
-    &:hover {
-      border-color: #133c54;
-    }
+  &:hover {
+    border-color: #133c54;
+  }
 
 
-    &:focus {
-      border-color: #133c54;
-    }
-  
+  &:focus {
+    border-color: #133c54;
+  }
+
 
   &__label {
     position: absolute;
@@ -65,11 +65,11 @@
     background-color: white;
   }
 
-    .req {
-      color: darkred;
-      margin: 5px;
-    }
-  
+  .req {
+    color: darkred;
+    margin: 5px;
+  }
+
 }
 
 .animated-input-employee__input:focus~.animated-input-employee__label,
@@ -84,63 +84,64 @@
     margin: 0px;
   }
 }
+
 .animated-input-employee-id {
-    position: relative;
-    width: 30.5rem;
-    height: 3rem;
-  
-    &__input {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 2px solid grey;
-      border-radius: 5px;
-      font-family: inherit;
-      font-size: inherit;
-      color: black;
-      outline: none;
-      padding: 1.25rem;
-      background: none;
-  
-      &:hover {
-        border-color: #133c54;
-      }
-  
-  
-      &:focus {
-        border-color: #133c54;
-      }
+  position: relative;
+  width: 30.5rem;
+  height: 3rem;
+
+  &__input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 2px solid grey;
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: inherit;
+    color: black;
+    outline: none;
+    padding: 1.25rem;
+    background: none;
+
+    &:hover {
+      border-color: #133c54;
     }
-  
-      &:hover {
-        border-color: #133c54;
-      }
-  
-  
-      &:focus {
-        border-color: #133c54;
-      }
-    
-  
-    &__label {
-      position: absolute;
-      left: 1rem;
-      top: 0.8rem;
-      padding: 0 0.5rem;
-      color: black;
-      cursor: text;
-      transition: top 200ms ease-in, left 200ms ease-in, font-size 200ms ease-in;
-      background-color: white;
+
+
+    &:focus {
+      border-color: #133c54;
     }
-  
-      .req {
-        color: darkred;
-        margin: 5px;
-      }
-    
   }
+
+  &:hover {
+    border-color: #133c54;
+  }
+
+
+  &:focus {
+    border-color: #133c54;
+  }
+
+
+  &__label {
+    position: absolute;
+    left: 1rem;
+    top: 0.8rem;
+    padding: 0 0.5rem;
+    color: black;
+    cursor: text;
+    transition: top 200ms ease-in, left 200ms ease-in, font-size 200ms ease-in;
+    background-color: white;
+  }
+
+  .req {
+    color: darkred;
+    margin: 5px;
+  }
+
+}
 
 .animated-input-employee-id__input:focus~.animated-input-employee-id__label,
 .animated-input-employee-id__input:not(:placeholder-shown).animated-input-employee-id__input:not(:focus)~.animated-input-employee-id__label {
@@ -156,62 +157,62 @@
 }
 
 .animated-input-employee-credentials {
-    position: relative;
-    width: 30.5rem;
-    height: 3rem;
-  
-    &__input {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 2px solid grey;
-      border-radius: 5px;
-      font-family: inherit;
-      font-size: inherit;
-      color: black;
-      outline: none;
-      padding: 1.25rem;
-      background: none;
-  
-      &:hover {
-        border-color: #133c54;
-      }
-  
-  
-      &:focus {
-        border-color: #133c54;
-      }
+  position: relative;
+  width: 30.5rem;
+  height: 3rem;
+
+  &__input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 2px solid grey;
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: inherit;
+    color: black;
+    outline: none;
+    padding: 1.25rem;
+    background: none;
+
+    &:hover {
+      border-color: #133c54;
     }
-  
-      &:hover {
-        border-color: #133c54;
-      }
-  
-  
-      &:focus {
-        border-color: #133c54;
-      }
-    
-  
-    &__label {
-      position: absolute;
-      left: 1rem;
-      top: 0.8rem;
-      padding: 0 0.5rem;
-      color: black;
-      cursor: text;
-      transition: top 200ms ease-in, left 200ms ease-in, font-size 200ms ease-in;
-      background-color: white;
+
+
+    &:focus {
+      border-color: #133c54;
     }
-  
-      .req {
-        color: darkred;
-        margin: 5px;
-      }
-    
   }
+
+  &:hover {
+    border-color: #133c54;
+  }
+
+
+  &:focus {
+    border-color: #133c54;
+  }
+
+
+  &__label {
+    position: absolute;
+    left: 1rem;
+    top: 0.8rem;
+    padding: 0 0.5rem;
+    color: black;
+    cursor: text;
+    transition: top 200ms ease-in, left 200ms ease-in, font-size 200ms ease-in;
+    background-color: white;
+  }
+
+  .req {
+    color: darkred;
+    margin: 5px;
+  }
+
+}
 
 .animated-input-employee-credentials__input:focus~.animated-input-employee-credentials__label,
 .animated-input-employee-credentials__input:not(:placeholder-shown).animated-input-employee-credentials__input:not(:focus)~.animated-input-employee-credentials__label {
@@ -226,64 +227,65 @@
   }
 }
 
-.animated-input-employee-contract{
-    position: relative;
-    width: 30.5rem;
-    height: 3rem;
-  
-    &__input {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 2px solid grey;
-      border-radius: 5px;
-      font-family: inherit;
-      font-size: inherit;
-      color: black;
-      outline: none;
-      padding-left: 1.25rem;
-      padding-top: 0.2rem;
-      background: none;
-  
-      &:hover {
-        border-color: #133c54;
-      }
-  
-  
-      &:focus {
-        border-color: #133c54;
-      }
+.animated-input-employee-contract {
+  position: relative;
+  width: 30.5rem;
+  height: 3rem;
+
+  &__input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 2px solid grey;
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: inherit;
+    color: black;
+    outline: none;
+    padding-left: 1.25rem;
+    padding-top: 0.2rem;
+    background: none;
+
+    &:hover {
+      border-color: #133c54;
     }
-  
-      &:hover {
-        border-color: #133c54;
-      }
-  
-  
-      &:focus {
-        border-color: #133c54;
-      }
-    
-  
-    &__label {
-      position: absolute;
-      left: 1rem;
-      top: 0.8rem;
-      padding: 0 0.5rem;
-      color: black;
-      cursor: text;
-      transition: top 200ms ease-in, left 200ms ease-in, font-size 200ms ease-in;
-      background-color: white;
+
+
+    &:focus {
+      border-color: #133c54;
     }
-  
-      .req {
-        color: darkred;
-        margin: 5px;
-      }
-    
+  }
+
+  &:hover {
+    border-color: #133c54;
+  }
+
+
+  &:focus {
+    border-color: #133c54;
+  }
+
+
+  &__label {
+    position: absolute;
+    left: 1rem;
+    top: 0.8rem;
+    padding: 0 0.5rem;
+    color: black;
+    cursor: text;
+    transition: top 200ms ease-in, left 200ms ease-in, font-size 200ms ease-in;
+    background-color: white;
+  }
+
+  .req {
+    color: darkred;
+    margin: 5px;
+  }
+
 }
+
 .animated-input-employee-contract__input:focus~.animated-input-employee-contract__label,
 .animated-input-employee-contract__input:not(:placeholder-shown).animated-input-employee-contract__input:not(:focus)~.animated-input-employee-contract__label {
   top: -0.5rem;
@@ -297,64 +299,65 @@
   }
 }
 
-.animated-input-employee-service-contract{
-    position: relative;
-    width: 30.5rem;
-    height: 3rem;
-  
-    &__input {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 2px solid grey;
-      border-radius: 5px;
-      font-family: inherit;
-      font-size: inherit;
-      color: black;
-      outline: none;
-      padding-left: 1.25rem;
-      padding-top: 0.2rem;
-      background: none;
-  
-      &:hover {
-        border-color: #133c54;
-      }
-  
-  
-      &:focus {
-        border-color: #133c54;
-      }
+.animated-input-employee-service-contract {
+  position: relative;
+  width: 30.5rem;
+  height: 3rem;
+
+  &__input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 2px solid grey;
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: inherit;
+    color: black;
+    outline: none;
+    padding-left: 1.25rem;
+    padding-top: 0.2rem;
+    background: none;
+
+    &:hover {
+      border-color: #133c54;
     }
-  
-      &:hover {
-        border-color: #133c54;
-      }
-  
-  
-      &:focus {
-        border-color: #133c54;
-      }
-    
-  
-    &__label {
-      position: absolute;
-      left: 1rem;
-      top: 0.8rem;
-      padding: 0 0.5rem;
-      color: black;
-      cursor: text;
-      transition: top 200ms ease-in, left 200ms ease-in, font-size 200ms ease-in;
-      background-color: white;
+
+
+    &:focus {
+      border-color: #133c54;
     }
-  
-      .req {
-        color: darkred;
-        margin: 5px;
-      }
-    
+  }
+
+  &:hover {
+    border-color: #133c54;
+  }
+
+
+  &:focus {
+    border-color: #133c54;
+  }
+
+
+  &__label {
+    position: absolute;
+    left: 1rem;
+    top: 0.8rem;
+    padding: 0 0.5rem;
+    color: black;
+    cursor: text;
+    transition: top 200ms ease-in, left 200ms ease-in, font-size 200ms ease-in;
+    background-color: white;
+  }
+
+  .req {
+    color: darkred;
+    margin: 5px;
+  }
+
 }
+
 .animated-input-employee-service-contract__input:focus~.animated-input-employee-service-contract__label,
 .animated-input-employee-service-contract__input:not(:placeholder-shown).animated-input-employee-service-contract__input:not(:focus)~.animated-input-employee-service-contract__label {
   top: -0.5rem;
@@ -370,64 +373,65 @@
 
 
 
-.animated-input-employee-other-contract{
-    position: relative;
-    width: 30.5rem;
-    height: 3rem;
-  
-    &__input {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 2px solid grey;
-      border-radius: 5px;
-      font-family: inherit;
-      font-size: inherit;
-      color: black;
-      outline: none;
-      padding-left: 1.25rem;
-      padding-top: 0.2rem;
-      background: none;
-  
-      &:hover {
-        border-color: #133c54;
-      }
-  
-  
-      &:focus {
-        border-color: #133c54;
-      }
+.animated-input-employee-other-contract {
+  position: relative;
+  width: 30.5rem;
+  height: 3rem;
+
+  &__input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 2px solid grey;
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: inherit;
+    color: black;
+    outline: none;
+    padding-left: 1.25rem;
+    padding-top: 0.2rem;
+    background: none;
+
+    &:hover {
+      border-color: #133c54;
     }
-  
-      &:hover {
-        border-color: #133c54;
-      }
-  
-  
-      &:focus {
-        border-color: #133c54;
-      }
-    
-  
-    &__label {
-      position: absolute;
-      left: 1rem;
-      top: 0.8rem;
-      padding: 0 0.5rem;
-      color: black;
-      cursor: text;
-      transition: top 200ms ease-in, left 200ms ease-in, font-size 200ms ease-in;
-      background-color: white;
+
+
+    &:focus {
+      border-color: #133c54;
     }
-  
-      .req {
-        color: darkred;
-        margin: 5px;
-      }
-    
+  }
+
+  &:hover {
+    border-color: #133c54;
+  }
+
+
+  &:focus {
+    border-color: #133c54;
+  }
+
+
+  &__label {
+    position: absolute;
+    left: 1rem;
+    top: 0.8rem;
+    padding: 0 0.5rem;
+    color: black;
+    cursor: text;
+    transition: top 200ms ease-in, left 200ms ease-in, font-size 200ms ease-in;
+    background-color: white;
+  }
+
+  .req {
+    color: darkred;
+    margin: 5px;
+  }
+
 }
+
 .animated-input-employee-other-contract__input:focus~.animated-input-employee-other-contract__label,
 .animated-input-employee-other-contract__input:not(:placeholder-shown).animated-input-employee-other-contract__input:not(:focus)~.animated-input-employee-other-contract__label {
   top: -0.5rem;
@@ -448,32 +452,11 @@
   flex-direction: column;
 }
 
-.errorForm{
-    color: #D8000C;
-    font-size: 0.8rem;
-    text-align: center;
+.errorForm {
+  color: #D8000C;
+  font-size: 0.8rem;
+  text-align: center;
 }
-
-// .image-employee {
-//   background-image: url(../../icons/user_icon2.png);
-//   background-color: transparent;
-//   background-repeat: no-repeat;
-//   background-size: contain;
-//   margin-left: -0.7rem;
-//   width: 5rem;
-//   height: 5rem;
-// }
-
-// .form-title-employee {
-//   display: flex;
-//   font-size: 2.5rem;
-//   color: #133c54;
-//   padding: 0.5rem;
-//   display: flex;
-//   align-items: center;
-//   gap: 6rem;
-//   font-weight: bold;
-// }
 
 .form-title-bar {
   display: flex;
@@ -481,13 +464,13 @@
   align-items: center;
 }
 
-.form-title-employee{
+.form-title-employee {
   color: #133c54;
   font-size: 2.8rem;
   font-weight: bold;
   margin-left: auto;
   margin-right: auto;
-  transform: translate(-3.1rem,0);
+  transform: translate(-3.1rem, 0);
 }
 
 .image-employee {
@@ -501,43 +484,49 @@
 }
 
 .form-name-employee {
-    justify-content: center;
-    display: flex;
-    gap: 1rem;
-}
-.form-id-phone-employee{
-    justify-content: center;
-    display: flex;
-    gap: 1rem;
-}
-.form-credentials-employee{
-    justify-content: center;
-    display: flex;
-    gap: 1rem;
-}
-.form-profesional-contract{
-    justify-content: center;
-    display: none;
-    gap: 1rem;
-}
-.form-others-contract{
-    justify-content: center;
-    display: none;
-    
-}
-.form-contract-employee{
-    justify-content: center;
-    display: flex;
-    gap: 1rem;
+  justify-content: center;
+  display: flex;
+  gap: 1rem;
 }
 
+.form-id-phone-employee {
+  justify-content: center;
+  display: flex;
+  gap: 1rem;
+}
+
+.form-credentials-employee {
+  justify-content: center;
+  display: flex;
+  gap: 1rem;
+}
+
+.form-profesional-contract {
+  justify-content: center;
+  display: none;
+  gap: 1rem;
+}
+
+.form-others-contract {
+  justify-content: center;
+  display: none;
+
+}
+
+.form-contract-employee {
+  justify-content: center;
+  display: flex;
+  gap: 1rem;
+}
 
 .create-employee-btn:hover {
-  background-color: rgb(3, 119, 3);
+  background-color: rgb(7, 145, 7);
+  box-shadow: 0px 2px 8px 0px rgba(62, 62, 62, 0.55);
 }
 
 .cancel-employee-btn:hover {
   background-color: rgb(172, 1, 1);
+  box-shadow: 0px 2px 8px 0px rgba(62, 62, 62, 0.55);
 }
 
 .create-employee-btn {

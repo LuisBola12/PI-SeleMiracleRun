@@ -28,7 +28,6 @@ export const UserProfile = () => {
     handleInputChange,
     handleSubmit,
     errors,
-    setIsSubmitting,
   } = useForm(submit, validateEditUserForm);
   const {infoReceived } = useGetProfileData(formValues);
   return !infoReceived ? (

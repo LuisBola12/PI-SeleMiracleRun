@@ -11,7 +11,7 @@ export const Menu = (props) => {
 
   return (
     <li className='sidebar-component'>
-      <a href='#' className='sidebar-dropdown-icon' onClick={() => setOpen(!open)}>
+      <a className='sidebar-dropdown-icon' onClick={() => setOpen(!open)}>
         {props.icon}
       </a>
       {open && props.children}
@@ -44,7 +44,7 @@ export const DropdownMenu = () => {
   const redirectToLogIn = () => {
     dispatch(logout());
     dispatch(resetProject());
-    navigate('/login');
+    navigate('/');
   };
 
   const redirectToSettings = () => {
@@ -63,9 +63,6 @@ export const DropdownMenu = () => {
           </button>
           <button onClick={redirectToProfile} className='sidebar-button' >
               Profile
-          </button>
-          <button onClick={redirectToSettings} className='sidebar-button' >
-              Settings
           </button>
           <button onClick={redirectToLogIn} className='sidebar-button' >
               Sign Out

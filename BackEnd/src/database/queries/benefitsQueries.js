@@ -1,6 +1,4 @@
-
-export const benefitsQuerys = {
-  // Benefit queries
+export const benefitsQueries = {
   getBenefits: 'Select * from Beneficios where NombreProyecto = @Proyecto',
   getBenefitsByName: 'select Nombre from Beneficios where Nombre = @Nombre and NombreProyecto = @Proyecto',
   createBenefit: 'Insert into Beneficios (Nombre, NombreProyecto, CostoActual, Descripción) values (@Nombre, @NombreProyecto ,@CostoActual, @Descripción)',

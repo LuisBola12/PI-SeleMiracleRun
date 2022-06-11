@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { postLogin } from '../../Slices/user/requests/postLogin';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { React, useState } from 'react';
-import './loginStyle.scss';
+import './LoginStyle.scss';
 
 export const LoginComp = () => {
   const [email, setEmail] = useState('');
@@ -23,7 +23,7 @@ export const LoginComp = () => {
   };
 
   return userIsLoggedIn ? (
-    <Navigate to='/' />
+    <Navigate to='/projectAdmin' />
   ) : (
     <div className='logIn-page'>
       <div className='logIn-logo-box'>

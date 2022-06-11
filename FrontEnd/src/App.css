@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Sora&display=swap');
 
 * {
-  font-family: 'Sora', sans-serif;
+  font-family: 'sora', sans-serif;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -50,22 +50,26 @@
 
 .table-button {
   margin-top: 50px;
-  width: 80%;
+  width: 90%;
+  /* border: solid black; */
 }
 
 .details-table-button {
-  margin-top: 50px;
-  width: 80%;
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  width: 90%;
 }
 
 .details-head-title {
   font-family: sans-serif;
-  text-align: center;
-  width: 80%;
+  transform: translate(20%, 0);
+  justify-content: center;
+  width: 90%;
 }
 
 
-.profile-user-header{
+.profile-user-header {
   margin-top: 40px;
   justify-content: center;
   display: flex;
@@ -84,7 +88,7 @@
   gap: 30px;
 }
 
-.user-profile-image{
+.user-profile-image {
   background-image: url(icons/user_profile_icon.png);
   background-color: transparent;
   background-repeat: no-repeat;
@@ -104,39 +108,47 @@
   border-style: none;
   width: 100px;
 }
-.user-Profile-table-button{ 
+
+.user-Profile-table-button {
   margin-top: 40px;
   text-align: right;
   width: 100%;
 }
-.user-info-container{
+
+.user-info-container {
   width: 80%;
 }
-.user-profile-hr{
+
+.user-profile-hr {
   border: solid 1px;
 }
-.user-profile-header{
+
+.user-profile-header {
   margin-top: 30px;
   width: 100%;
   display: flex;
   align-items: baseline;
 }
-.edit-profile-button{
+
+.edit-profile-button {
   border: none;
   background-color: white;
 }
-.user-profile-buttons{
+
+.user-profile-buttons {
   width: 100%;
   display: none;
-  gap:30px;
+  gap: 30px;
   justify-content: center;
   margin-bottom: 40px;
 }
-.user-profile-edit-icon{
-  text-align: right; 
+
+.user-profile-edit-icon {
+  text-align: right;
   margin-left: 87%;
 }
-.submit-change-btn{
+
+.submit-change-btn {
   padding: 13px;
   border-radius: 8px;
   color: white;
@@ -145,7 +157,8 @@
   border-style: none;
   width: 100px;
 }
-.dont-change-btn{
+
+.dont-change-btn {
   padding: 13px;
   border-radius: 8px;
   color: white;
@@ -154,36 +167,42 @@
   border-style: none;
   width: 100px;
 }
-.user-profile-edit-button{
+
+.user-profile-edit-button {
   color: #133c54;
   width: 50px;
   height: 50px;
 }
-.user-profile-label{
+
+.user-profile-label {
   font-family: sans-serif;
   font-weight: bold;
   margin-left: 15px;
   font-size: 20px;
 }
-.user-profile-inner-div{
+
+.user-profile-inner-div {
   border-top: solid 1px#000;
   display: flex;
   align-items: center;
   height: 80px;
-  
+
 }
-.error-label{
+
+.error-label {
   color: red;
   display: none;
   margin-left: 15px;
   font-size: 15px;
 }
-.div-profile{
+
+.div-profile {
   width: 25%;
   display: flex;
   flex-direction: column;
 }
-.user-profile-input{
+
+.user-profile-input {
   border: none;
   padding-left: 15px;
   font-family: sans-serif;
@@ -191,21 +210,24 @@
   font-size: 20px;
   width: 75%;
 }
-.user-profile-input[disabled]{
+
+.user-profile-input[disabled] {
   background-color: white;
   color: #000;
 }
-.user-profile-input:focus{
+
+.user-profile-input:focus {
   border: solid 1px white;
 }
-.user-profile-form{
+
+.user-profile-form {
   display: flex;
   flex-direction: column;
   margin-top: 30px;
   width: 100%;
 }
 
-.user-profile-logo{
+.user-profile-logo {
   text-align: center;
   border-radius: 50%;
   color: white;
@@ -213,8 +235,9 @@
   font-size: 25px;
   background-color: #133c54;
   width: 100px;
-  height:100px;
+  height: 100px;
 }
+
 .details-button {
   padding: 10px;
   border-radius: 8px;
@@ -224,7 +247,8 @@
   border-style: none;
   width: 100px;
 }
-.back-arrow-button{
+
+.back-arrow-button {
   padding: 10px;
   text-align: left;
   border-radius: 8px;
@@ -291,7 +315,7 @@ table {
   text-align: center;
   height: 10%;
   margin-bottom: 100px;
-  width: 80%;
+  width: 90%;
 }
 
 
