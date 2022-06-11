@@ -18,6 +18,7 @@ router.post('/users', verifyCredentials);
 //Employer
 router.post('/createEmployer', registerNewUser);
 router.get('/employer/:Cedula', getEmployerByID);
+router.put('/updateEmployeer',updateProfileEmployeer);
 
 //Periodos
 // router.get('/periodos',getPeriodos);
@@ -32,6 +33,7 @@ router.get('/employee/:Proyecto', getEmployees);
 router.post('/employee', postNewEmployee);
 router.get('/employee/:Cedula', getEmployeeByID);
 router.post('/employee/contract', verifyEmployeeContractOnProject);
+router.put('/updateEmployee',updateProfileEmployee);
 
 
 //Projects
