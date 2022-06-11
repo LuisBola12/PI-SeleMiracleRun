@@ -53,13 +53,16 @@ export const verifyEmployeeContractOnProject = async (req, res) => {
 };
 export const getEmployeesWithContractOnOtherProyects = async(req,res) => {
   try{
-    const {Cedula,Proyecto} = req.body;
+    console.log("Holaaaaa")
+    const {Email,Proyecto} = req.body;
+    console.log(Email,Proyecto)
     const pool = await getConnection();
     const result = await pool
       .request()
-      .input('Cedula',Cedula)
+      .input('Email',Email)
       .input('Proyecto',Proyecto)
       .query(employeesQueries.getEmployeesWithContractsOnOtherProyects)
+      console.log(result.recordset);
       res.json(result.recordset);
   } catch(e){
     res.status(500);
@@ -168,7 +171,7 @@ const contractAEmployee = async (req,res) =>{
     const pool = await getConnection();
     const result = await pool
       .request()
-      .input('Cedula',Cedula)
+      .input('Email',Cedula)
       .input('Proyecto',Proyecto)
       .query(employeesQueries.getEmployeesWithContractsOnOtherProyects)
       res.json(result.recordset);

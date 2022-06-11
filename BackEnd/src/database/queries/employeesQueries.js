@@ -11,6 +11,6 @@ export const employeesQueries = {
     inner join EmpleadoYContratoSeAsocianAProyecto ECP on ECP.CedulaEmpleado = E.Cedula
     inner join Proyecto PR on PR.Nombre = ECP.NombreProyecto
     inner join Empleador EP on EP.Cedula = PR.CedulaEmpleador
-    where EP.Cedula = @Cedula AND PR.Nombre != @Proyecto`,
+    where EP.Email = @Email AND PR.Nombre != @Proyecto`,
   createNewEmployee: 'Insert into Empleado (Cedula, Nombre, Apellido1, Apellido2, Telefono, Email) values(@Cedula, @Nombre, @Apellido1, @Apellido2, @Telefono, @Email)',
 };

@@ -21,7 +21,7 @@ POST {{apiEmployeeWithContractOnOtherProyects}}
 Content-Type: application/json
 
 {
-  "Cedula":"608110776",
+  "Email":"Norman.Os.L@gmail.com",
   "Proyecto":"Taquería Milagro"
 }
 

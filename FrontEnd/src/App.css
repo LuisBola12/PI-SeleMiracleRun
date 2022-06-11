@@ -51,6 +51,8 @@
 .table-button {
   margin-top: 50px;
   width: 90%;
+  display: flex;
+  gap: 50px;
   /* border: solid black; */
 }
 
@@ -341,9 +343,16 @@ tr:nth-child(even) {
 .right-td {
   text-align: right;
 }
+.center-td {
+  text-align: center;
+}
 
 .right-button {
   text-align: right;
+  padding: 0;
+}
+.center-button {
+  text-align: center;
   padding: 0;
 }
 
@@ -412,7 +421,27 @@ tr:nth-child(even) {
   border-radius: 0.25rem;
   text-align: center;
 }
-
+.hire-header-button{
+  
+  text-align: left;
+}
+.hire-header{
+  display: flex;
+  flex-direction: row;
+  width: 90%;
+  margin-top: 3%;
+}
+.hire-header-title{
+  font-size: 2.5rem;
+  color: #133c54;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5.7rem;
+  width: 75%;
+  font-weight: bold;
+}
 .employee-input-address {
   height: 100px;
   width: 500px;
