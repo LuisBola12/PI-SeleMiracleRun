@@ -77,14 +77,14 @@ export const getHourlyEmployeeWorkedHours = async ( employeeID, projectName ) =>
   }
 };// 
 
-
+//TODO:REVISANDO
 export const getHourlyEmployeeRegisteredWork = async ( employeeID, projectName, paymentPeriod ) => {
 
   const preProcessedWorkedHours = await getHourlyEmployeeWorkedHours( employeeID, projectName );
   const today = extractDate( new Date() );
-  
-  let dayOneOfPayment = today;
-  let entrysInsidePeriod = [ {} ];
+  //TODO:Hasta aca todo bien
+  let dayOneOfPayment = extractDate( new Date() );
+  let entrysInsidePeriod = [];
   preProcessedWorkedHours.forEach( hoursEntry => {
     const { Fecha:workDate  } = hoursEntry;
 
@@ -106,6 +106,8 @@ export const getHourlyEmployeeRegisteredWork = async ( employeeID, projectName, 
       entrysInsidePeriod.push( hoursEntry );
     }
   } );
+
+  return entrysInsidePeriod;
 };
 
 const calculateHourlyEmployeeWorkedHours = async ( paymentPeriod, employeeID, projectName ) => {
@@ -208,16 +210,16 @@ const calculatePaidServicesGrossSalary = ( endOfContractDate, costOfService ) =>
 
 
 
-export const calculateGrossSalaryForAllEmployes =  async () => {
-  const projectName = 'Taquería Milagro';
+export const calculateGrossSalaryForAllEmployes =  async ( projectName ) => {
+  console.log( 'Entra' );
   let projectWorkedHoursInfo;
   let grossSalary;
   let hoursWorked;
-  let grossSalaries = [ {} ];
+  let grossSalaries = [];
 
   try {
     projectWorkedHoursInfo = await getEmployeesWorkingData( projectName );
-    projectWorkedHoursInfo.forEach  ( async employee => {
+    projectWorkedHoursInfo.forEach  (   async  employee => {
       //TODO:Agregar la cedula del empleado para mandarla en la respuesta
       const {  CedulaEmpleado:employeeID, TipoContrato: contractType, TipoPeriodo: paymentPeriod } = employee;
       const { ValorDeServicio: costOfService, FechaInicio:contractStartDate,  SalarioPorHoras:salaryPerHour, FechaFin:contractEndDate } = employee;
@@ -237,15 +239,27 @@ export const calculateGrossSalaryForAllEmployes =  async () => {
           break;
         
         case 'Por horas': {
-          hoursWorked = await calculateHourlyEmployeeWorkedHours( salaryPerHour, paymentPeriod, employeeID,projectName ); 
+          // hoursWorked =   await calculateHourlyEmployeeWorkedHours( paymentPeriod, employeeID, projectName ); 
           grossSalary = salaryPerHour * hoursWorked;
           break;
+       
         }
+        default:
+          break;
         }
-        // const obj= {employeeID: employeeID, grossSalary: grossSalary, contractType:contractType, paymentPeriod:paymentPeriod,
-        // salaryPerHour: salaryPerHour, contractStartDate:}
+        const obj = { employeeID: employeeID, grossSalary: grossSalary, contractType:contractType, paymentPeriod:paymentPeriod,
+          salaryPerHour: salaryPerHour, contractStartDate:contractStartDate, contractEndDate: contractEndDate };
+
+        grossSalaries.push( obj );
+        console.log( 'insertando' );
+        // console.log( obj );
+        
       }} );
+    
   } catch ( e ) {
     console.log( e );
+    return  e;
   }
+  // console.log( grossSalaries );
+  return  grossSalaries;
 }; 
