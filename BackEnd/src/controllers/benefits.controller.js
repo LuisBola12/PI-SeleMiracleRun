@@ -47,6 +47,24 @@ export const getEmployeeBenefitsByEmail = async (req, res) => {
   }
 };
 
+
+export const getOfferedBenefits = async (req, res) => {
+  const { Proyecto, Email } = req.params;
+  try {
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input('Email', Email)
+      .input('Proyecto', Proyecto)
+      .query(benefitsQueries.getOfferedBenefits);
+    res.json(result.recordset);
+    console.log(result.recordset);
+  } catch (e) {
+    res.status(500);
+    res.send(e.message);
+  }
+};
+
+
 export const createBenefit = async (req, res) => {
   const { Nombre, NombreProyecto, CostoActual, Descripción } = req.body;
   if (Nombre == null || CostoActual == null || NombreProyecto == null) {
