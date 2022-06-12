@@ -3,7 +3,7 @@ import '../App.css';
 import { CrudVoluntaryDeductions } from '../Components/CrudVoluntaryDeductions/CrudVoluntaryDeductions';
 import { Navbar } from '../Components/Navbar/Navbar';
 
-export const  voluntaryDeductions = () => {
+export const  VoluntaryDeductions = () => {
   return (
     <>
       <div className='sticky-navbar'>

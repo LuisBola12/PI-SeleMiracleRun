@@ -44,7 +44,7 @@ function App() {
               {/* <Route path='/' element={<SelectProject />} /> */}
               <Route path='benefits' element={<Benefits />} />
               <Route path='employees' element={<Employees />} />
-              <Route path='voluntaryDeductions' element={<voluntaryDeductions />} />
+              <Route path='voluntaryDeductions' element={<VoluntaryDeductions />} />
               <Route path='voluntaryDeductions/CreateVoluntaryDeductions' element={<CreateNewVoluntaryDeduction />} />
               <Route path='voluntaryDeductions/editVoluntaryDeduction' element={<EditVoluntaryDeductions />} />
               <Route path='projects' element={<SelectProject />} />
