@@ -4,8 +4,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Benefits } from './Pages/benefits';
 import { Employees } from './Pages/employees';
 import { voluntaryDeductions } from './Pages/voluntaryDeductions';
-import { CreateNewvoluntaryDeduction } from './Pages/createNewvoluntaryDeduction'
-import { EditvoluntaryDeductions } from './Pages/editvoluntaryDeductions';
+import { CreateNewVoluntaryDeduction } from './Pages/createNewVoluntaryDeduction'
+import { EditVoluntaryDeductions } from './Pages/editVoluntaryDeductions';
 import { Contracts } from './Pages/contracts';
 import { SelectProject } from './Pages/selectProject';
 import { CreateNewEmployee } from './Pages/createNewEmployee';

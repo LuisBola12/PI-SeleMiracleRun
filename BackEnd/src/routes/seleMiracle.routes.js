@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { getProjectsByEmail, createProject } from '../controllers/projects.controller';
 import { getEmployerByID, getUserByEmail, verifyCredentials, registerNewUser, getProfileEmployeer, getProfileEmployee } from '../controllers/users.controller';
 import { getEmployees, postNewEmployee, getEmployeeByID, verifyEmployeeContractOnProject } from '../controllers/employees.contoller';
-import { getvoluntaryDeductions, createNewvoluntaryDeduction, getvoluntaryDeductionsByName, updatevoluntaryDeduction } from '../controllers/voluntaryDeductions.controller';
+import { getVoluntaryDeductions, createNewvoluntaryDeduction, getVoluntaryDeductionsByName, updatevoluntaryDeduction } from '../controllers/VoluntaryDeductions.controller';
 import { getTypeOfContracts } from '../controllers/contracts.controller';
 import { getBenefits, createBenefit, getBenefitsByName, updateBenefit, getEmployeeBenefitsByEmail } from '../controllers/benefits.controller';
 
