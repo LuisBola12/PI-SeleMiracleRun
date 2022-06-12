@@ -1,8 +1,8 @@
 import React from 'react';
 import '../../App.css';
-import './CreateVolDeduction.scss';
-import { usePostToVolDeductions } from '../../Utils/VolDeductions/usePostToVolDeductions';
-import validateVolDeductionForm from '../../Utils/VolDeductions/validateVolDeductionForm';
+import './CreatevoluntaryDeduction.scss';
+import { usePostTovoluntaryDeductions } from '../../Utils/voluntaryDeductions/usePostTovoluntaryDeductions';
+import validatevoluntaryDeductionForm from '../../Utils/voluntaryDeductions/validatevoluntaryDeductionForm';
 import useForm from '../../shared/hooks/useForm';
 import { useNavigate } from 'react-router-dom';
 import { maskCurrency } from '../../shared/moneyFormatTransform';
@@ -10,16 +10,16 @@ import { validAnEntity } from '../../Utils/validAnEntity';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 
-export const CreateVolDeduction = () => {
-  const { submitVolDeduction } = usePostToVolDeductions();
+export const CreatevoluntaryDeduction = () => {
+  const { submitvoluntaryDeduction } = usePostTovoluntaryDeductions();
   const activeProject = useSelector((state) => state.activeProject.projectName);
 
   const navigate = useNavigate();
   const submit = async () => {
-    const notExists = await validAnEntity('volDeductions/' + activeProject + '/', formValues.Name);
+    const notExists = await validAnEntity('voluntaryDeductions/' + activeProject + '/', formValues.Name);
     if (notExists === true) {
-      submitVolDeduction(formValues.Name, formValues.Cost, formValues.Description);
-      navigate('/VolDeductions');
+      submitvoluntaryDeduction(formValues.Name, formValues.Cost, formValues.Description);
+      navigate('/voluntaryDeductions');
     } else {
       setIsSubmitting(false);
       Swal.fire({
@@ -31,15 +31,15 @@ export const CreateVolDeduction = () => {
     }
   };
 
-  const { formValues, handleInputChange, handleSubmit, errors, setIsSubmitting } = useForm(submit, validateVolDeductionForm);
+  const { formValues, handleInputChange, handleSubmit, errors, setIsSubmitting } = useForm(submit, validatevoluntaryDeductionForm);
   return (
     <>
-      <div className='volDeductions-form'>
-        <div className='form-title-volDeductions'>
-          <div className='image-volDeduction'></div>
+      <div className='voluntaryDeductions-form'>
+        <div className='form-title-voluntaryDeductions'>
+          <div className='image-voluntaryDeduction'></div>
           Create Voluntary Deduction
         </div>
-        <div className='form-group-volDeductions'>
+        <div className='form-group-voluntaryDeductions'>
           <div className='Name-input'>
             <div className='animated-input'>
               <input
@@ -84,15 +84,15 @@ export const CreateVolDeduction = () => {
           <label htmlFor='Description' className='animated-input__label'>Description</label>
           <label  className = 'error' > {errors.Description} </label>
         </div>
-        <div className='buttons-volDeduction'>
+        <div className='buttons-voluntaryDeduction'>
           <button
-            className='create-volDeduction-btn'
+            className='create-voluntaryDeduction-btn'
             onClick={handleSubmit}>
             create
           </button>
           <button
-            className='cancel-volDeduction-btn'
-            onClick={() => { navigate('/volDeductions'); }}>
+            className='cancel-voluntaryDeduction-btn'
+            onClick={() => { navigate('/voluntaryDeductions'); }}>
             cancel
           </button>
         </div>

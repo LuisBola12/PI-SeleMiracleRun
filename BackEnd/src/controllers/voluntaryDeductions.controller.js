@@ -1,13 +1,13 @@
 import { getConnection,sql } from '../database';
-import { volDeductionsQueries } from '../database/queries/volDeductionsQueries';
+import { voluntaryDeductionsQueries } from '../database/queries/voluntaryDeductionsQueries';
 
-export const getVolDeductions = async (req, res) => {
+export const getvoluntaryDeductions = async (req, res) => {
   const { NombreProyecto } = req.params;
   try {
     const pool = await getConnection();
     const result = await pool.request()
       .input('NombreProyecto', NombreProyecto)
-      .query(volDeductionsQueries.getVolDeductions);
+      .query(voluntaryDeductionsQueries.getvoluntaryDeductions);
     res.json(result.recordset);
   } catch (e) {
     res.status(500);
@@ -15,14 +15,14 @@ export const getVolDeductions = async (req, res) => {
   }
 };
 
-export const getVolDeductionsByName = async (req, res) => {
+export const getvoluntaryDeductionsByName = async (req, res) => {
   const { NombreProyecto, Nombre } = req.params;
   try {
     const pool = await getConnection();
     const result = await pool.request()
       .input('Nombre', Nombre)
       .input('NombreProyecto', NombreProyecto)
-      .query(volDeductionsQueries.getVolDeductionsByName);
+      .query(voluntaryDeductionsQueries.getvoluntaryDeductionsByName);
     res.json(result.recordset);
   } catch (e) {
     res.status(500);
@@ -30,7 +30,7 @@ export const getVolDeductionsByName = async (req, res) => {
   }
 };
 
-export const createNewVolDeduction = async (req, res) => {
+export const createNewvoluntaryDeduction = async (req, res) => {
   const { Nombre, NombreProyecto, Costo, Descripcion } = req.body;
   if (Nombre == null || NombreProyecto == null || Costo == null) {
     const message = 'Bad Request. Please Fill All Fields.';
@@ -44,7 +44,7 @@ export const createNewVolDeduction = async (req, res) => {
       .input('NombreProyecto', sql.VarChar, NombreProyecto)
       .input('Costo', sql.Int, Costo)
       .input('Descripcion', sql.VarChar, Descripcion)
-      .query(volDeductionsQueries.createNewVolDeduction);
+      .query(voluntaryDeductionsQueries.createNewvoluntaryDeduction);
     console.log(result);
     res.json({ Nombre, Costo, Descripcion});
   } catch (e) {
@@ -54,7 +54,7 @@ export const createNewVolDeduction = async (req, res) => {
 };
 
 
-export const updateVolDeduction = async (req, res) => {
+export const updatevoluntaryDeduction = async (req, res) => {
   const { Nombre, NombreProyecto, Costo, Descripcion } = req.body;
   const { NombreAntiguo } = req.params;
   if (Nombre == null || Costo == null || NombreProyecto == null) {
@@ -70,7 +70,7 @@ export const updateVolDeduction = async (req, res) => {
       .input('NombreProyecto', sql.VarChar, NombreProyecto)
       .input('Costo', sql.Int, Costo)
       .input('Descripcion', sql.VarChar, Descripcion)
-      .query(volDeductionsQueries.editVolDeduction);
+      .query(voluntaryDeductionsQueries.editvoluntaryDeduction);
     res.json({ Nombre, NombreProyecto, Costo, Descripcion });
   } catch (e) {
     console.log(`Error: ${e}`);

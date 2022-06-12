@@ -1,16 +1,16 @@
 import React from 'react';
 import '../App.css';
-import { EditVolDeduction } from '../Components/EditVolDeduction/EditVolDeduction';
 import { Navbar } from '../Components/Navbar/Navbar';
+import { EmployeevoluntaryDeductions } from '../Components/EmployeevoluntaryDeductions/EmployeevoluntaryDeductions';
 
-export const EditVolDeductions = () => {
+export const EmployeesvoluntaryDeductions = () => {
   return (
     <>
       <div className='sticky-navbar'>
         <Navbar />
       </div>
       <div className='page-content'>
-        {<EditVolDeduction />}
+        {<EmployeevoluntaryDeductions />}
       </div>
       <footer>&copy; Sele Miracle Run - UCR</footer>
     </>

@@ -1,13 +1,12 @@
 import { useSelector } from 'react-redux';
 
-export const usePostToVolDeductions = () => {
+export const usePutTovoluntaryDeductions = () => {
   const activeProject = useSelector((state) => state.activeProject.projectName);
-  const apiVolDeductions = 'http://localhost:4000/volDeductions';
 
-  const submitVolDeduction = async (name, cost, description) => {
+  const updatevoluntaryDeduction = async (name, cost, description, apivoluntaryDeductions) => {
     const newCost = cost.split('.').join('');
-    const postFetch = await fetch(apiVolDeductions, {
-      method: 'POST',
+    const postFetch = await fetch(apivoluntaryDeductions, {
+      method: 'PUT',
       headers: {
         'Content-type': 'application/json',
       },
@@ -20,8 +19,7 @@ export const usePostToVolDeductions = () => {
     });
     console.log(postFetch);
   };
-
   return {
-    submitVolDeduction
+    updatevoluntaryDeduction
   };
 };

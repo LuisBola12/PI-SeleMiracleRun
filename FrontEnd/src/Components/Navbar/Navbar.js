@@ -25,7 +25,7 @@ export const Navbar = () => {
                 <NavLink to='/benefits' activestyle='true'>
                   Benefits
                 </NavLink>
-                <NavLink to='/volDeductions' activestyle='true'>
+                <NavLink to='/voluntaryDeductions' activestyle='true'>
                   Voluntary Deductions
                 </NavLink>
               </>

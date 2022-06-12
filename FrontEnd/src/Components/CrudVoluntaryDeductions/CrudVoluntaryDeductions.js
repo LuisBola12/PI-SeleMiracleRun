@@ -1,19 +1,19 @@
 import React from 'react';
 import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useGetVolDeductionsFromDatabase } from '../../Utils/VolDeductions/useGetVolDeductionsFromDatabase';
+import { useGetvoluntaryDeductionsFromDatabase } from '../../Utils/voluntaryDeductions/useGetvoluntaryDeductionsFromDatabase';
 import { useNavigate } from 'react-router-dom';
 import { transformCost } from '../../shared/moneyFormatTransform';
 
-export const CrudVolDeductions = () => {
+export const CrudvoluntaryDeductions = () => {
   const navigate = useNavigate();
   const handleCreateClick = () => {
-    navigate('/volDeductions/CreateVolDeductions');
+    navigate('/voluntaryDeductions/CreatevoluntaryDeductions');
   };
   const handleEditClick = (element) => {
-    navigate('/volDeductions/editVolDeduction', { state: element });
+    navigate('/voluntaryDeductions/editvoluntaryDeduction', { state: element });
   };
-  const { projectVolDeductions, infoReceived } = useGetVolDeductionsFromDatabase();
+  const { projectvoluntaryDeductions, infoReceived } = useGetvoluntaryDeductionsFromDatabase();
   return !infoReceived ? <div className='loader' ></div > : (
     <>
       <div className='table-button'>
@@ -32,7 +32,7 @@ export const CrudVolDeductions = () => {
           </tr>
         </thead>
         <tbody>
-          {projectVolDeductions.map((element) => (
+          {projectvoluntaryDeductions.map((element) => (
             <tr key={element.Nombre}>
               <td className='left-td'>{element.Nombre}</td>
               <td className='description-cell left-td'>{((element.Descripcion) ? element.Descripcion : 'No description')}</td>
@@ -47,7 +47,7 @@ export const CrudVolDeductions = () => {
           ))}
         </tbody>
       </table>
-      <label className='Empty-message'>{(projectVolDeductions.length === 0) ? 'No voluntary deductions added yet' : ''}</label>
+      <label className='Empty-message'>{(projectvoluntaryDeductions.length === 0) ? 'No voluntary deductions added yet' : ''}</label>
     </>
   );
 };

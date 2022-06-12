@@ -9,7 +9,7 @@
 @apiProjects = http://localhost:4000/projects
 @apiBenefits = http://localhost:4000/benefits
 @apiMyBenefits = http://localhost:4000/myBenefits
-@apiVolDeductions = http://localhost:4000/volDeductions
+@apivoluntaryDeductions = http://localhost:4000/voluntaryDeductions
 @apiCreateEmployer =  http://localhost:4000/createEmployer
 @apiVerifyUser =  http://localhost:4000/verifyUser
 @apiEmployer =  http://localhost:4000/employer
@@ -102,7 +102,7 @@ GET {{apiEmployees}}/Super La Esquina
 GET {{apiProjects}}/norman.os.l@gmail.com/admin
 
 ###
-GET  {{apiVolDeductions}}/Taquería Milagro
+GET  {{apivoluntaryDeductions}}/Taquería Milagro
 
 ###
 GET {{apiBenefits}}/Taquería Milagro
@@ -135,7 +135,7 @@ Content-Type: application/json
 }
 
 ###
-POST {{apiVolDeductions}}
+POST {{apivoluntaryDeductions}}
 Content-Type: application/json
 
 {

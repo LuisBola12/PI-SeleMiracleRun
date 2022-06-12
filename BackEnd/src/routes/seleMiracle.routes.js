@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { getProjectsByEmail, createProject } from '../controllers/projects.controller';
 import { getEmployerByID, getUserByEmail, verifyCredentials, registerNewUser, getProfileEmployeer, getProfileEmployee } from '../controllers/users.controller';
 import { getEmployees, postNewEmployee, getEmployeeByID, verifyEmployeeContractOnProject } from '../controllers/employees.contoller';
-import { getVolDeductions, createNewVolDeduction, getVolDeductionsByName, updateVolDeduction } from '../controllers/volDeductions.controller';
+import { getvoluntaryDeductions, createNewvoluntaryDeduction, getvoluntaryDeductionsByName, updatevoluntaryDeduction } from '../controllers/voluntaryDeductions.controller';
 import { getTypeOfContracts } from '../controllers/contracts.controller';
 import { getBenefits, createBenefit, getBenefitsByName, updateBenefit, getEmployeeBenefitsByEmail } from '../controllers/benefits.controller';
 
@@ -49,10 +49,10 @@ router.post('/benefits', createBenefit);
 router.put('/benefits/:NombreAntiguo', updateBenefit);
 
 //VoluntaryDeductions
-router.get('/volDeductions/:NombreProyecto', getVolDeductions);
-router.get('/volDeductions/:NombreProyecto/:Nombre', getVolDeductionsByName);
-router.post('/volDeductions', createNewVolDeduction);
-router.put('/volDeductions/:NombreAntiguo', updateVolDeduction);
+router.get('/voluntaryDeductions/:NombreProyecto', getvoluntaryDeductions);
+router.get('/voluntaryDeductions/:NombreProyecto/:Nombre', getvoluntaryDeductionsByName);
+router.post('/voluntaryDeductions', createNewvoluntaryDeduction);
+router.put('/voluntaryDeductions/:NombreAntiguo', updatevoluntaryDeduction);
 
 
 
