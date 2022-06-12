@@ -50,6 +50,7 @@ function App() {
             <Route path='volDeductions/editVolDeduction' element={<EditVolDeductions />} />
             <Route path='projectAdmin' element={<SelectProject />} />
             <Route path='contracts' element={<Contracts />} />
+            <Route path='projects' element={<SelectProject />} />
             <Route path='userProfile' element={<UserPage />} />
             <Route path='employees/CreateEmployee' element={<CreateNewEmployee />} />
             <Route path='employees/hireAEmployee' element={<HireAEmployee />} />
@@ -68,6 +69,7 @@ function App() {
             <Route path='home' element={<Home />} />
             <Route path='projectAdmin' element={<SelectProject />} />
             <Route path='registerHours' element={<RegisterHours />} />
+            <Route path='projects' element={<SelectProject />} />
             <Route path='userProfile' element={<UserPage />} />
             <Route path='myBenefits' element={<EmployeesBenefits />} />
           </Route>
