@@ -160,6 +160,7 @@ export const postNewEmployee = async (req, res) => {
 export const contractAEmployee = async (req,res) =>{
   try{
     const {Cedula,TipoContrato,Proyecto,NombreServicio,SalarioPorHora,FechaFinContrato,ValorServicio} = req.body;
+    console.log(Cedula,TipoContrato,Proyecto,NombreServicio,SalarioPorHora,FechaFinContrato,ValorServicio);
     const date = new Date();
     const [month, day, year] = [
       date.getMonth(),

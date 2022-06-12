@@ -24,7 +24,8 @@ export const HireContract = () => {
       FechaFinContrato: formValues.contractDeadline,
       ValorServicio: formValues.serviceValue,
     });
-    console.log(string);
+    post(string);
+    navigate(-1);
   };
   const { formValues, handleInputChange, handleSubmit, errors } = useForm(
     sendToDataBase,
@@ -42,6 +43,9 @@ export const HireContract = () => {
       <div className="hire-header-title">
         <div className="image-employee"></div>
         Hire Employee
+      </div>
+      <div>
+        <h2>{`Hiring: ${location.state.Cedula}-${location.state.Nombre}`}</h2>
       </div>
       <div className="employees-form">
         <div className="contract-contractDeadline">

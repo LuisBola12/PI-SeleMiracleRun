@@ -20,13 +20,13 @@ POST {{apiContractEmployee}}
 Content-Type: application/json
 
 {
-  "Cedula":"403711862",
-  "TipoContrato":"Servicios Profesionales",
+  "Cedula":"120920129",
+  "TipoContrato":"Por horas",
   "Proyecto":"Taquería Milagro",
-  "NombreServicio":"Publicidad",
-  "SalarioPorHora":0,
+  "NombreServicio": "",
+  "SalarioPorHora":3000,
   "FechaFinContrato":"2026-12-12",
-  "ValorServicio":300000
+  "ValorServicio":""
 }
 
 ###

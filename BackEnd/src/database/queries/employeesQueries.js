@@ -8,11 +8,19 @@ export const employeesQueries = {
   values(@Cedula,@TipoJornada,@NombreProyecto,@NombreServicio,@SalarioPorHora,
     @FechaInicioContrato,@FechaFinContrato,@ValorServicio)`,
   getEmployeesWithContractsOnOtherProyects: `Select E.Cedula, E.Nombre, ECP.NombreProyecto,ECP.TipoContrato from Empleado E 
-    inner join EmpleadoYContratoSeAsocianAProyecto ECP on ECP.CedulaEmpleado = E.Cedula
-    inner join Proyecto PR on PR.Nombre = ECP.NombreProyecto
-    inner join Empleador EP on EP.Cedula = PR.CedulaEmpleador
-    where EP.Email = @Email AND PR.Nombre != @Proyecto`,
-  createNewEmployee: 'Insert into Empleado (Cedula, Nombre, Apellido1, Apellido2, Telefono, Email) values(@Cedula, @Nombre, @Apellido1, @Apellido2, @Telefono, @Email)',
+  inner join EmpleadoYContratoSeAsocianAProyecto ECP on ECP.CedulaEmpleado = E.Cedula
+  inner join Proyecto PR on PR.Nombre = ECP.NombreProyecto
+  inner join Empleador EP on EP.Cedula = PR.CedulaEmpleador
+  where EP.Email = @Email
+  AND E.Cedula NOT IN (
+              Select ECP.CedulaEmpleado
+            from EmpleadoYContratoSeAsocianAProyecto ECP
+            join Empleado E on ECP.CedulaEmpleado = E.Cedula
+            join Proyecto P on ECP.NombreProyecto = P.Nombre
+            where ECP.NombreProyecto = @Proyecto
+          )`,
+  createNewEmployee:
+    "Insert into Empleado (Cedula, Nombre, Apellido1, Apellido2, Telefono, Email) values(@Cedula, @Nombre, @Apellido1, @Apellido2, @Telefono, @Email)",
   contractExistentEmployee: `Insert into EmpleadoYContratoSeAsocianAProyecto values (@Cedula,@TipoJornada,@NombreProyecto,
-    @NombreServicio,@SalarioPorHora,@FechaInicioContrato,@FechaFinContrato,@ValorServicio)`
+    @NombreServicio,@SalarioPorHora,@FechaInicioContrato,@FechaFinContrato,@ValorServicio)`,
 };

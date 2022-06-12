@@ -39,7 +39,7 @@ export const CrudHire = () => {
           {employeesToHire.map((element) => (
             <tr key={element.Cedula}>
               <td className='left-td table-left-border'>{element.Cedula}</td>
-              <td className='left-td table-left-border'>{element.Nombre}</td>
+              <td className='left-td'>{element.Nombre}</td>
               <td className='left-td'>{element.NombreProyecto}</td>
               <td className='left-td'>{element.TipoContrato}</td>
               <td className='center-button'>
