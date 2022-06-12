@@ -13,7 +13,7 @@ export const EmployeeVoluntaryDeductions = () => {
   };
   return (
     <>
-      {!infoReceived ? <div className='loader' ></div > : (
+      {!EmployeeInfo ? <div className='loader' ></div > : (
         <>
           <h2 className = 'table-button'>My Voluntary Deductions</h2>
           <table className='Table'>
@@ -28,10 +28,10 @@ export const EmployeeVoluntaryDeductions = () => {
             <tbody>
               {EmployeeVoluntaryDeductions.map((element) => (
                 <tr key={element.Nombre}>
-                  <td className='left-td bottom-border table-left-border'>{element.Nombre}</td>
-                  <td className='description-cell left-td bottom-border'>{((element.Descripcion) ? element.Descripción : 'No description')}</td>
-                  <td className='right-td bottom-border'>₡ {transformCost(element.Costo)}</td>
-                  <td className='right-button bottom-border table-right-border'>
+                  <td className='left-td table-left-border voluntaryDeduction-name'>{element.Nombre}</td>
+                  <td className='description-cell left-td'>{((element.Descripcion) ? element.Descripción : 'No description')}</td>
+                  <td className='right-td'>₡ {transformCost(element.Costo)}</td>
+                  <td className='right-button table-right-border'>
                     <button className='button cancel-button' > Delete </button>
                   </td>
                 </tr>
@@ -43,7 +43,7 @@ export const EmployeeVoluntaryDeductions = () => {
 
       {!infoReceived ? (<div className='loader' ></div >) : (
         <>
-          <h2 className='ofer-benefits'> Offered Voluntary Deductions</h2>
+          <h2 className='offer-voluntaryDeductions'> Offered Voluntary Deductions</h2>
           <table className='Table'>
             <thead>
               <tr className='table-header'>
@@ -57,10 +57,10 @@ export const EmployeeVoluntaryDeductions = () => {
               {projectVoluntaryDeductions.map((element) => (
                 <tr key={element.Nombre}>
                   <>
-                    <td className='left-td bottom-border table-left-border'>{element.Nombre}</td>
-                    <td className='description-cell left-td bottom-border'>{((element.Descripcion) ? element.Descripción : 'No description')}</td>
-                    <td className='right-td bottom-border'>₡ {transformCost(element.Costo)}</td>
-                    <td className='right-button bottom-border table-right-border'>
+                    <td className='left-td table-left-border voluntaryDeduction-name'>{element.Nombre}</td>
+                    <td className='description-cell left-td'>{((element.Descripcion) ? element.Descripción : 'No description')}</td>
+                    <td className='right-td'>₡ {transformCost(element.Costo)}</td>
+                    <td className='right-button table-right-border'>
                       <button className='button add-button' onClick={() => handleAddButton(element)}> Add</button>
                     </td>
                   </>
