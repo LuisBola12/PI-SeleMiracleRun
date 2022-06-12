@@ -1,11 +1,11 @@
 import { useSelector } from 'react-redux';
 
-export const usePutTovoluntaryDeductions = () => {
+export const usePutToVoluntaryDeductions = () => {
   const activeProject = useSelector((state) => state.activeProject.projectName);
 
-  const updatevoluntaryDeduction = async (name, cost, description, apivoluntaryDeductions) => {
+  const updateVoluntaryDeduction = async (name, cost, description, apiVoluntaryDeductions) => {
     const newCost = cost.split('.').join('');
-    const postFetch = await fetch(apivoluntaryDeductions, {
+    const postFetch = await fetch(apiVoluntaryDeductions, {
       method: 'PUT',
       headers: {
         'Content-type': 'application/json',
@@ -20,6 +20,6 @@ export const usePutTovoluntaryDeductions = () => {
     console.log(postFetch);
   };
   return {
-    updatevoluntaryDeduction
+    updateVoluntaryDeduction
   };
 };

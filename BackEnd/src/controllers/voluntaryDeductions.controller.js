@@ -30,7 +30,7 @@ export const getVoluntaryDeductionsByName = async (req, res) => {
   }
 };
 
-export const createNewvoluntaryDeduction = async (req, res) => {
+export const createNewVoluntaryDeduction = async (req, res) => {
   const { Nombre, NombreProyecto, Costo, Descripcion } = req.body;
   if (Nombre == null || NombreProyecto == null || Costo == null) {
     const message = 'Bad Request. Please Fill All Fields.';
@@ -44,7 +44,7 @@ export const createNewvoluntaryDeduction = async (req, res) => {
       .input('NombreProyecto', sql.VarChar, NombreProyecto)
       .input('Costo', sql.Int, Costo)
       .input('Descripcion', sql.VarChar, Descripcion)
-      .query(voluntaryDeductionsQueries.createNewvoluntaryDeduction);
+      .query(voluntaryDeductionsQueries.createNewVoluntaryDeduction);
     console.log(result);
     res.json({ Nombre, Costo, Descripcion});
   } catch (e) {
@@ -54,7 +54,7 @@ export const createNewvoluntaryDeduction = async (req, res) => {
 };
 
 
-export const updatevoluntaryDeduction = async (req, res) => {
+export const updateVoluntaryDeduction = async (req, res) => {
   const { Nombre, NombreProyecto, Costo, Descripcion } = req.body;
   const { NombreAntiguo } = req.params;
   if (Nombre == null || Costo == null || NombreProyecto == null) {
@@ -70,7 +70,7 @@ export const updatevoluntaryDeduction = async (req, res) => {
       .input('NombreProyecto', sql.VarChar, NombreProyecto)
       .input('Costo', sql.Int, Costo)
       .input('Descripcion', sql.VarChar, Descripcion)
-      .query(voluntaryDeductionsQueries.editvoluntaryDeduction);
+      .query(voluntaryDeductionsQueries.editVoluntaryDeduction);
     res.json({ Nombre, NombreProyecto, Costo, Descripcion });
   } catch (e) {
     console.log(`Error: ${e}`);

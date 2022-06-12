@@ -1,19 +1,19 @@
 import React from 'react';
 import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useGetvoluntaryDeductionsFromDatabase } from '../../Utils/voluntaryDeductions/useGetvoluntaryDeductionsFromDatabase';
+import { useGetVoluntaryDeductionsFromDatabase } from '../../Utils/VoluntaryDeductions/useGetVoluntaryDeductionsFromDatabase';
 import { useNavigate } from 'react-router-dom';
 import { transformCost } from '../../shared/moneyFormatTransform';
 
-export const CrudvoluntaryDeductions = () => {
+export const CrudVoluntaryDeductions = () => {
   const navigate = useNavigate();
   const handleCreateClick = () => {
-    navigate('/voluntaryDeductions/CreatevoluntaryDeductions');
+    navigate('/voluntaryDeductions/CreateVoluntaryDeductions');
   };
   const handleEditClick = (element) => {
-    navigate('/voluntaryDeductions/editvoluntaryDeduction', { state: element });
+    navigate('/voluntaryDeductions/editVoluntaryDeduction', { state: element });
   };
-  const { projectvoluntaryDeductions, infoReceived } = useGetvoluntaryDeductionsFromDatabase();
+  const { projectVoluntaryDeductions, infoReceived } = useGetVoluntaryDeductionsFromDatabase();
   return !infoReceived ? <div className='loader' ></div > : (
     <>
       <div className='table-button'>
@@ -32,7 +32,7 @@ export const CrudvoluntaryDeductions = () => {
           </tr>
         </thead>
         <tbody>
-          {projectvoluntaryDeductions.map((element) => (
+          {projectVoluntaryDeductions.map((element) => (
             <tr key={element.Nombre}>
               <td className='left-td'>{element.Nombre}</td>
               <td className='description-cell left-td'>{((element.Descripcion) ? element.Descripcion : 'No description')}</td>
@@ -47,7 +47,7 @@ export const CrudvoluntaryDeductions = () => {
           ))}
         </tbody>
       </table>
-      <label className='Empty-message'>{(projectvoluntaryDeductions.length === 0) ? 'No voluntary deductions added yet' : ''}</label>
+      <label className='Empty-message'>{(projectVoluntaryDeductions.length === 0) ? 'No voluntary deductions added yet' : ''}</label>
     </>
   );
 };

@@ -3,7 +3,7 @@ import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Benefits } from './Pages/benefits';
 import { Employees } from './Pages/employees';
-import { voluntaryDeductions } from './Pages/voluntaryDeductions';
+import { VoluntaryDeductions } from './Pages/voluntaryDeductions';
 import { CreateNewVoluntaryDeduction } from './Pages/createNewVoluntaryDeduction'
 import { EditVoluntaryDeductions } from './Pages/editVoluntaryDeductions';
 import { Contracts } from './Pages/contracts';
@@ -45,8 +45,8 @@ function App() {
               <Route path='benefits' element={<Benefits />} />
               <Route path='employees' element={<Employees />} />
               <Route path='voluntaryDeductions' element={<voluntaryDeductions />} />
-              <Route path='voluntaryDeductions/CreatevoluntaryDeductions' element={<CreateNewvoluntaryDeduction />} />
-              <Route path='voluntaryDeductions/editvoluntaryDeduction' element={<EditvoluntaryDeductions />} />
+              <Route path='voluntaryDeductions/CreateVoluntaryDeductions' element={<CreateNewVoluntaryDeduction />} />
+              <Route path='voluntaryDeductions/editVoluntaryDeduction' element={<EditVoluntaryDeductions />} />
               <Route path='projects' element={<SelectProject />} />
               <Route path='contracts' element={<Contracts />} />
               <Route path='userProfile' element={<UserPage />} />

@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../App.css';
 import { transformCost } from '../../shared/moneyFormatTransform';
-import { useGetvoluntaryDeductionsFromDatabase } from '../../Utils/voluntaryDeductions/useGetvoluntaryDeductionsFromDatabase';
+import { useGetVoluntaryDeductionsFromDatabase } from '../../Utils/voluntaryDeductions/useGetVoluntaryDeductionsFromDatabase';
 import { useState } from 'react';
 
 const database = [
@@ -18,7 +18,7 @@ const database = [
 
 ];
 
-export const EmployeevoluntaryDeductions = () => {
+export const EmployeeVoluntaryDeductions = () => {
   const isVinculated = (name) => {
     for (let i = 0; i < database.length; i++) {
       if (database[i].Nombre == name) {
@@ -27,7 +27,7 @@ export const EmployeevoluntaryDeductions = () => {
     }
     return false;
   };
-  const { projectvoluntaryDeductions, infoReceived } = useGetvoluntaryDeductionsFromDatabase();
+  const { projectVoluntaryDeductions, infoReceived } = useGetVoluntaryDeductionsFromDatabase();
   const [data, setdata] = useState(database);
   const handleAddButton = (element) => {
     //En desarrollo, se agregó este agregado básico solo para pruebas.
@@ -71,7 +71,7 @@ export const EmployeevoluntaryDeductions = () => {
           </tr>
         </thead>
         <tbody>
-          {projectvoluntaryDeductions.map((element) => (
+          {projectVoluntaryDeductions.map((element) => (
             <tr key={element.Nombre}>
               {isVinculated(element.Nombre) == false &&
                   <>
@@ -87,7 +87,7 @@ export const EmployeevoluntaryDeductions = () => {
           ))}
         </tbody>
       </table>
-      <label className='Empty-message'>{(projectvoluntaryDeductions.length === 0) ? 'No voluntary deductions added added yet' : ''}</label>
+      <label className='Empty-message'>{(projectVoluntaryDeductions.length === 0) ? 'No voluntary deductions added added yet' : ''}</label>
     </>
   );
 };

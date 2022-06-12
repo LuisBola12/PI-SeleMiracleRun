@@ -1,6 +1,6 @@
 import React from 'react';
 import '../App.css';
-import { CrudvoluntaryDeductions } from '../Components/CrudvoluntaryDeductions/CrudvoluntaryDeductions';
+import { CrudVoluntaryDeductions } from '../Components/CrudVoluntaryDeductions/CrudVoluntaryDeductions';
 import { Navbar } from '../Components/Navbar/Navbar';
 
 export const  voluntaryDeductions = () => {
@@ -10,7 +10,7 @@ export const  voluntaryDeductions = () => {
         <Navbar />
       </div>
       <div className = 'page-content'>
-        { <CrudvoluntaryDeductions/> }
+        { <CrudVoluntaryDeductions/> }
       </div>
       <footer>&copy; Sele Miracle Run - UCR</footer> 
     </>

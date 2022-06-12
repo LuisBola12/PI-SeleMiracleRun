@@ -1,16 +1,16 @@
 import React from 'react';
 import '../App.css';
-import { CreatevoluntaryDeduction } from '../Components/CreatevoluntaryDeduction/CreatevoluntaryDeduction';
+import { CreateVoluntaryDeduction } from '../Components/CreateVoluntaryDeduction/CreateVoluntaryDeduction';
 import { Navbar } from '../Components/Navbar/Navbar';
 
-export const CreateNewvoluntaryDeduction= () => {
+export const CreateNewVoluntaryDeduction= () => {
   return (
     <>
       <div className='sticky-navbar'>
         <Navbar />
       </div>
       <div className='page-content'>
-        {<CreatevoluntaryDeduction />}
+        {<CreateVoluntaryDeduction />}
       </div>
       <footer>&copy; Sele Miracle Run - UCR</footer>
     </>

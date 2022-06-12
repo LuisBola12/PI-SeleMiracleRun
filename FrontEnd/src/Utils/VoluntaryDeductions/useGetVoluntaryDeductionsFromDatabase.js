@@ -2,19 +2,19 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { getAnEntity } from '../getAnEntity';
 
-export const useGetvoluntaryDeductionsFromDatabase = () => {
+export const useGetVoluntaryDeductionsFromDatabase = () => {
   const activeProject = useSelector((state) => state.activeProject.projectName);
-  const [projectvoluntaryDeductions, setProjectvoluntaryDeductions] = useState([{}]);
+  const [projectVoluntaryDeductions, setProjectVoluntaryDeductions] = useState([{}]);
 
   const [infoReceived, setInfoReceived] = useState(false);
   useEffect(() => {
-    const getvoluntaryDeductions = async () => {
-      setProjectvoluntaryDeductions(await getAnEntity('voluntaryDeductions/', activeProject));
+    const getVoluntaryDeductions = async () => {
+      setProjectVoluntaryDeductions(await getAnEntity('voluntaryDeductions/', activeProject));
       setInfoReceived(true);
     };
-    getvoluntaryDeductions();
+    getVoluntaryDeductions();
   }, []);
   return {
-    projectvoluntaryDeductions, infoReceived
+    projectVoluntaryDeductions, infoReceived
   };
 };

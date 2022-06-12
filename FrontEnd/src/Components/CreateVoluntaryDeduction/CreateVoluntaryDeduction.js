@@ -1,8 +1,8 @@
 import React from 'react';
 import '../../App.css';
-import './CreatevoluntaryDeduction.scss';
-import { usePostTovoluntaryDeductions } from '../../Utils/voluntaryDeductions/usePostTovoluntaryDeductions';
-import validatevoluntaryDeductionForm from '../../Utils/voluntaryDeductions/validatevoluntaryDeductionForm';
+import './CreateVoluntaryDeduction.scss';
+import { usePostToVoluntaryDeductions } from '../../Utils/VoluntaryDeductions/usePostToVoluntaryDeductions';
+import validateVoluntaryDeductionForm from '../../Utils/VoluntaryDeductions/validateVoluntaryDeductionForm';
 import useForm from '../../shared/hooks/useForm';
 import { useNavigate } from 'react-router-dom';
 import { maskCurrency } from '../../shared/moneyFormatTransform';
@@ -10,15 +10,15 @@ import { validAnEntity } from '../../Utils/validAnEntity';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 
-export const CreatevoluntaryDeduction = () => {
-  const { submitvoluntaryDeduction } = usePostTovoluntaryDeductions();
+export const CreateVoluntaryDeduction = () => {
+  const { submitVoluntaryDeduction } = usePostToVoluntaryDeductions();
   const activeProject = useSelector((state) => state.activeProject.projectName);
 
   const navigate = useNavigate();
   const submit = async () => {
     const notExists = await validAnEntity('voluntaryDeductions/' + activeProject + '/', formValues.Name);
     if (notExists === true) {
-      submitvoluntaryDeduction(formValues.Name, formValues.Cost, formValues.Description);
+      submitVoluntaryDeduction(formValues.Name, formValues.Cost, formValues.Description);
       navigate('/voluntaryDeductions');
     } else {
       setIsSubmitting(false);
@@ -31,7 +31,7 @@ export const CreatevoluntaryDeduction = () => {
     }
   };
 
-  const { formValues, handleInputChange, handleSubmit, errors, setIsSubmitting } = useForm(submit, validatevoluntaryDeductionForm);
+  const { formValues, handleInputChange, handleSubmit, errors, setIsSubmitting } = useForm(submit, validateVoluntaryDeductionForm);
   return (
     <>
       <div className='voluntaryDeductions-form'>

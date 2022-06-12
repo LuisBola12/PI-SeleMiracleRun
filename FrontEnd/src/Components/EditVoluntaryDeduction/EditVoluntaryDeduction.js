@@ -1,29 +1,29 @@
 import React from 'react';
 import '../../App.css';
-import '../CreatevoluntaryDeduction/CreatevoluntaryDeduction.scss';
+import '../CreateVoluntaryDeduction/CreateVoluntaryDeduction.scss';
 import { useNavigate } from 'react-router-dom';
 import { maskCurrency } from '../../shared/moneyFormatTransform';
-import validatevoluntaryDeductionForm from '../../Utils/voluntaryDeductions/validatevoluntaryDeductionForm';
+import validateVoluntaryDeductionForm from '../../Utils/VoluntaryDeductions/validateVoluntaryDeductionForm';
 import useForm from '../../shared/hooks/useForm';
 import { validAnEntity } from '../../Utils/validAnEntity';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { transformCost } from '../../shared/moneyFormatTransform';
-import { usePutTovoluntaryDeductions } from '../../Utils/voluntaryDeductions/usePutTovoluntaryDeductions';
+import { usePutToVoluntaryDeductions } from '../../Utils/VoluntaryDeductions/usePutToVoluntaryDeductions';
 import Swal from 'sweetalert2';
 
-export const EditvoluntaryDeduction = () => {
-  const apivoluntaryDeductions = 'http://localhost:4000/voluntaryDeductions';
+export const EditVoluntaryDeduction = () => {
+  const apiVoluntaryDeductions = 'http://localhost:4000/voluntaryDeductions';
   const activeProject = useSelector((state) => state.activeProject.projectName);
   const location = useLocation();
   const oldName = location.state.Nombre;
   const navigate = useNavigate();
-  const { updatevoluntaryDeduction } = usePutTovoluntaryDeductions();
+  const { updateVoluntaryDeduction } = usePutToVoluntaryDeductions();
   const submit = async () => {
     const notExists = await validAnEntity('voluntaryDeductions/' + activeProject + '/', formValues.Name);
     if (notExists === true || oldName === formValues.Name) {
-      updatevoluntaryDeduction(formValues.Name, formValues.Cost, formValues.Description, apivoluntaryDeductions + `/${oldName}`);
+      updateVoluntaryDeduction(formValues.Name, formValues.Cost, formValues.Description, apiVoluntaryDeductions + `/${oldName}`);
       navigate('/voluntaryDeductions');
     } else {
       setIsSubmitting(false);
@@ -42,7 +42,7 @@ export const EditvoluntaryDeduction = () => {
     errors,
     setIsSubmitting,
     setFormValues
-  } = useForm(submit, validatevoluntaryDeductionForm);
+  } = useForm(submit, validateVoluntaryDeductionForm);
   useEffect(() => {
     setFormValues({
       Name: location.state.Nombre,
