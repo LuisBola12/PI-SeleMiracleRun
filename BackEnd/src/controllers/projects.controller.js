@@ -2,17 +2,21 @@ import { getConnection, sql } from '../database';
 import { projectQueries } from '../database/queries/projectQueries';
 
 export const getProjectsByEmail = async (req, res) => {
-  const { Email } = req.params;
+  const { Email, Rol } = req.params;
   try {
     const pool = await getConnection();
+    let query;
+    Rol === 'admin' ? query = (projectQueries.getProjectsByEmail) :
+      query = (projectQueries.getEmployeeProjectsByEmail)
     const result = await pool.request()
       .input('Email', Email)
-      .query(projectQueries.getProjectsByEmail);
+      .query(query);
     res.json(result.recordset);
   } catch (e) {
     console.log(e);
   }
 };
+
 
 export const createProject = async (req, res) => {
   const { Nombre, Periodo, Email } = req.body;

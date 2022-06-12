@@ -12,9 +12,9 @@ import './CreateUserStyle.scss';
 export const CreateUser = () => {
   const dispatch = useDispatch();
   const { post } = usePost('http://localhost:4000/createEmployer');
-  
-  const sendToDatabase = async () =>{      
-    const user = await validAnEntity('users/',formValues.email_register);
+
+  const sendToDatabase = async () => {
+    const user = await validAnEntity('users/', formValues.email_register);
     const employee = await validAnEntity('employer/', formValues.id_register);
 
     if (user === true && employee === true) {
@@ -32,13 +32,13 @@ export const CreateUser = () => {
         Roles: 'admin'
       });
 
-    post(string);
-    dispatch(postLogin({
-      email: formValues.email_register, 
-      password: formValues.password_register
-    }));
-    navigate('/projectAdmin');
-    }else{
+      post(string);
+      dispatch(postLogin({
+        email: formValues.email_register,
+        password: formValues.password_register
+      }));
+      navigate('/projects');
+    } else {
       setIsSubmitting(false);
       alert('These user alredy exists.');
     }
@@ -58,20 +58,20 @@ export const CreateUser = () => {
         <div className='register-logo'></div>
         <div className='register-title'> Sign Up </div>
       </div>
-        
-      <div className='register-full-form'>        
+
+      <div className='register-full-form'>
         <div className='register-form'>
           <div>
             <div className='register-animated-input-name'>
-              <input 
-                type='text' 
-                id='name_register' 
-                className='register-animated-input-name__input' 
-                value = {formValues.name_register || ''} 
-                maxLength={15} 
-                onChange={handleInputChange} 
-                autoComplete='off' 
-                placeholder=' '/>
+              <input
+                type='text'
+                id='name_register'
+                className='register-animated-input-name__input'
+                value={formValues.name_register || ''}
+                maxLength={15}
+                onChange={handleInputChange}
+                autoComplete='off'
+                placeholder=' ' />
               <label htmlFor='name_register' className='register-animated-input-name__label'> Name <span className='req'>*</span></label>
             </div>
             <div>
@@ -81,15 +81,15 @@ export const CreateUser = () => {
 
           <div>
             <div className='register-animated-input-name'>
-              <input 
-                type='text' 
+              <input
+                type='text'
                 id='lastname1_register'
-                className='register-animated-input-name__input' 
-                value={formValues.lastname1_register || ''} 
-                maxLength={15} 
-                onChange={handleInputChange} 
-                autoComplete='off' 
-                placeholder=' '/>
+                className='register-animated-input-name__input'
+                value={formValues.lastname1_register || ''}
+                maxLength={15}
+                onChange={handleInputChange}
+                autoComplete='off'
+                placeholder=' ' />
               <label htmlFor='lastname1_register' className='register-animated-input-name__label'>First Last Name<span className='req'>*</span></label>
             </div>
             <div>
@@ -99,35 +99,35 @@ export const CreateUser = () => {
 
           <div>
             <div className='register-animated-input-name'>
-              <input 
-                type='text' 
-                id='lastname2_register' 
-                className='register-animated-input-name__input' 
+              <input
+                type='text'
+                id='lastname2_register'
+                className='register-animated-input-name__input'
                 value={formValues.lastname2_register || ''}
                 maxLength={15}
                 onChange={handleInputChange}
-                autoComplete='off' 
-                placeholder=' '/>
+                autoComplete='off'
+                placeholder=' ' />
               <label htmlFor='lastname2_register' className='register-animated-input-name__label'>Second Last Name<span className='req'>*</span></label>
             </div>
             <div>
               <label className='register-error' id='register_error_lastname2'>{errors.lastname2_register}</label>
             </div>
-          </div>          
+          </div>
         </div>
 
         <div className='register-form'>
           <div>
             <div className='register-row'>
-              <input 
-                type='text' 
-                id='id_register' 
-                className='register-row__input' 
-                value={formValues.id_register || ''} 
-                maxLength={15} 
-                onChange={handleInputChange} 
-                autoComplete='off' 
-                placeholder=' '/>
+              <input
+                type='text'
+                id='id_register'
+                className='register-row__input'
+                value={formValues.id_register || ''}
+                maxLength={15}
+                onChange={handleInputChange}
+                autoComplete='off'
+                placeholder=' ' />
               <label htmlFor='id_register' className='register-row__label'>Id<span className='req'>*</span></label>
             </div>
             <div>
@@ -136,15 +136,15 @@ export const CreateUser = () => {
           </div>
           <div>
             <div className='register-row'>
-              <input 
-                type='text' 
-                id='phoneNumber_register' 
+              <input
+                type='text'
+                id='phoneNumber_register'
                 className='register-row__input'
                 value={formValues.phoneNumber_register || ''}
                 maxLength={8}
                 onChange={handleInputChange}
-                autoComplete='off' 
-                placeholder=' '/>
+                autoComplete='off'
+                placeholder=' ' />
               <label htmlFor='phoneNumber_register' className='register-row__label'>Phone Number</label>
             </div>
             <div>
@@ -156,15 +156,15 @@ export const CreateUser = () => {
         <div className='register-form'>
           <div>
             <div className='register-row'>
-              <input 
-                type='text' 
-                id='email_register' 
-                className='register-row__input' 
+              <input
+                type='text'
+                id='email_register'
+                className='register-row__input'
                 value={formValues.email_register || ''}
                 maxLength={50}
                 onChange={handleInputChange}
-                autoComplete='off' 
-                placeholder=' '/>
+                autoComplete='off'
+                placeholder=' ' />
               <label htmlFor='email_register' className='register-row__label'> Email <span className='req'>*</span> </label>
             </div>
             <div>
@@ -173,15 +173,15 @@ export const CreateUser = () => {
           </div>
           <div>
             <div className='register-row'>
-              <input 
-                type='password' 
-                id='password_register' 
-                className='register-row__input' 
+              <input
+                type='password'
+                id='password_register'
+                className='register-row__input'
                 value={formValues.password_register || ''}
                 maxLength={20}
                 onChange={handleInputChange}
-                autoComplete='off' 
-                placeholder=' '/>
+                autoComplete='off'
+                placeholder=' ' />
               <label htmlFor='password_register' className='register-row__label'> Password <span className='req'>*</span> </label>
             </div>
             <div>

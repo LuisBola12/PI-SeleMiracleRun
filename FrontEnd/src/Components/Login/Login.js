@@ -23,7 +23,7 @@ export const LoginComp = () => {
   };
 
   return userIsLoggedIn ? (
-    <Navigate to='/projectAdmin' />
+    <Navigate to='/projects' />
   ) : (
     <div className='logIn-page'>
       <div className='logIn-logo-box'>
@@ -37,35 +37,35 @@ export const LoginComp = () => {
                                     as those benefits and needs that the employee requests.`}
         </p>
       </div>
-      <div className='logIn-box'>       
+      <div className='logIn-box'>
         <div className='login-animated-input-email'>
-          <input 
-            type='text' 
-            id='email_login' 
-            className='login-animated-input-email__input' 
+          <input
+            type='text'
+            id='email_login'
+            className='login-animated-input-email__input'
             value={email}
             maxLength={50}
-            onChange={(e) => {setEmail(e.target.value);}}
-            autoComplete='off' 
-            placeholder=' '/>
+            onChange={(e) => { setEmail(e.target.value); }}
+            autoComplete='off'
+            placeholder=' ' />
           <label htmlFor='email_login' className='login-animated-input-email__label'> Email <span className='req'>*</span> </label>
         </div>
 
         <div className='login-animated-input-email'>
-          <input 
-            type='password' 
-            id='password_login' 
-            className='login-animated-input-email__input' 
+          <input
+            type='password'
+            id='password_login'
+            className='login-animated-input-email__input'
             value={password}
             maxLength={20}
-            onChange={(e) => {setPassword(e.target.value);}}
-            autoComplete='off' 
-            placeholder=' '/>
+            onChange={(e) => { setPassword(e.target.value); }}
+            autoComplete='off'
+            placeholder=' ' />
           <label htmlFor='password_login' className='login-animated-input-email__label'> Password <span className='req'>*</span> </label>
         </div>
-           
+
         <div className='logIn-btn-box'>
-          <button className='logIn-btn-login'  onClick={logBtn}>
+          <button className='logIn-btn-login' onClick={logBtn}>
             Sign In
           </button>
           <div>
