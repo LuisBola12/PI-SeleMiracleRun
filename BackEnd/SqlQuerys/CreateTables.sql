@@ -110,6 +110,18 @@ Create table EmpleadoYContratoSeAsocianAProyecto(
 	foreign key(NombreProyecto) references Proyecto(Nombre)
 );
 
+Create Table EmpleadoGozaBeneficios(
+    CedulaEmpleado varchar(15),
+    NombreBeneficio varchar(50),
+	NombreProyecto varchar(50),
+    fechaInicio Date,
+    fechaFin Date,
+    primary key(CedulaEmpleado, NombreBeneficio, NombreProyecto),
+    foreign key(CedulaEmpleado) references Empleado(Cedula),
+    foreign key(NombreProyecto, NombreBeneficio) references Beneficios(NombreProyecto, Nombre) on update cascade
+);
+
+
 SELECT * FROM Empleado;
 
 INSERT INTO Empleado values ('198761121','Jarod','Venegas','Alpizar','84581885','carlosSo@example.com');

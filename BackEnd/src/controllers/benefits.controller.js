@@ -17,13 +17,28 @@ export const getBenefits = async (req, res) => {
 
 export const getBenefitsByName = async (req, res) => {
   const { Proyecto, Nombre } = req.params;
-  console.log(Proyecto, Nombre);
   try {
     const pool = await getConnection();
     const result = await pool.request()
       .input('Nombre', Nombre)
       .input('Proyecto', Proyecto)
       .query(benefitsQueries.getBenefitsByName);
+    res.json(result.recordset);
+    console.log(result.recordset);
+  } catch (e) {
+    res.status(500);
+    res.send(e.message);
+  }
+};
+
+export const getEmployeeBenefitsByEmail = async (req, res) => {
+  const { Proyecto, Email } = req.params;
+  try {
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input('Email', Email)
+      .input('Proyecto', Proyecto)
+      .query(benefitsQueries.getEmployeeBenefitsByEmail);
     res.json(result.recordset);
     console.log(result.recordset);
   } catch (e) {

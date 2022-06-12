@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Benefits } from './Pages/benefits';
 import { Employees } from './Pages/employees';
 import { VolDeductions } from './Pages/volDeductions';
-import { CreateNewVolDeduction} from './Pages/createNewVolDeduction'
+import { CreateNewVolDeduction } from './Pages/createNewVolDeduction'
 import { EditVolDeductions } from './Pages/editVolDeductions';
 import { Contracts } from './Pages/contracts';
 import { SelectProject } from './Pages/selectProject';
@@ -74,7 +74,6 @@ function App() {
         ) }
           
 
-        
       </Routes>
     </Router>
   );

@@ -565,3 +565,7 @@ tr:nth-child(even) {
 .benefit-name {
   width: 20%;
 }
+
+.ofer-benefits {
+  width: 90%;
+}
