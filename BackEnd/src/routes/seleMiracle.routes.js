@@ -3,7 +3,7 @@ import { getProjectsByEmail, createProject } from '../controllers/projects.contr
 import { getEmployerByID, getUserByEmail, verifyCredentials, registerNewUser, getProfileEmployeer,
     getProfileEmployee,updateProfileEmployee,updateProfileEmployeer } from '../controllers/users.controller';
 import { getEmployees, postNewEmployee, getEmployeeByID, verifyEmployeeContractOnProject,
-    getEmployeesWithContractOnOtherProyects } from '../controllers/employees.contoller';
+    getEmployeesWithContractOnOtherProyects,contractAEmployee} from '../controllers/employees.contoller';
 import { getVolDeductions, createNewVolDeduction, getVolDeductionsByName, updateVolDeduction } from '../controllers/volDeductions.controller';
 import { getTypeOfContracts } from '../controllers/contracts.controller';
 import { getBenefits, createBenefit, getBenefitsByName, updateBenefit } from '../controllers/benefits.controller';
@@ -37,7 +37,7 @@ router.get('/employee/:Cedula', getEmployeeByID);
 router.post('/employee/contract', verifyEmployeeContractOnProject);
 router.put('/updateEmployee',updateProfileEmployee);
 router.post('/employeesWithContractsOnOtherProyects',getEmployeesWithContractOnOtherProyects);
-
+router.post('/contractExistentEmployee',contractAEmployee);
 
 //Projects
 router.get('/projects/:Email', getProjectsByEmail);

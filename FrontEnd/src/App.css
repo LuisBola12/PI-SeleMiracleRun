@@ -441,6 +441,7 @@ tr:nth-child(even) {
   gap: 5.7rem;
   width: 75%;
   font-weight: bold;
+  margin-top:2%;
 }
 .employee-input-address {
   height: 100px;

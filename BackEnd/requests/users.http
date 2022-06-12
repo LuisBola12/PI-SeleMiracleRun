@@ -14,9 +14,22 @@
 @apiEmployer =  http://localhost:4000/employer
 @apiContracts = http://localhost:4000/typeContracts
 @apiEmployeeWithContractOnOtherProyects = http://localhost:4000/employeesWithContractsOnOtherProyects
+@apiContractEmployee = http://localhost:4000/contractExistentEmployee
 
+POST {{apiContractEmployee}}
+Content-Type: application/json
 
+{
+  "Cedula":"403711862",
+  "TipoContrato":"Servicios Profesionales",
+  "Proyecto":"Taquería Milagro",
+  "NombreServicio":"Publicidad",
+  "SalarioPorHora":0,
+  "FechaFinContrato":"2026-12-12",
+  "ValorServicio":300000
+}
 
+###
 POST {{apiEmployeeWithContractOnOtherProyects}}
 Content-Type: application/json
 

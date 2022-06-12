@@ -53,7 +53,6 @@ export const verifyEmployeeContractOnProject = async (req, res) => {
 };
 export const getEmployeesWithContractOnOtherProyects = async(req,res) => {
   try{
-    console.log("Holaaaaa")
     const {Email,Proyecto} = req.body;
     console.log(Email,Proyecto)
     const pool = await getConnection();
@@ -158,7 +157,7 @@ export const postNewEmployee = async (req, res) => {
   res.status(200).send();
 };
 
-const contractAEmployee = async (req,res) =>{
+export const contractAEmployee = async (req,res) =>{
   try{
     const {Cedula,TipoContrato,Proyecto,NombreServicio,SalarioPorHora,FechaFinContrato,ValorServicio} = req.body;
     const date = new Date();
@@ -171,9 +170,15 @@ const contractAEmployee = async (req,res) =>{
     const pool = await getConnection();
     const result = await pool
       .request()
-      .input('Email',Cedula)
-      .input('Proyecto',Proyecto)
-      .query(employeesQueries.getEmployeesWithContractsOnOtherProyects)
+      .input('Cedula',Cedula)
+      .input('TipoJornada',TipoContrato)
+      .input('NombreProyecto',Proyecto)
+      .input('NombreServicio',NombreServicio)
+      .input('SalarioPorHora',SalarioPorHora)
+      .input('FechaInicioContrato',FechaInicioContrato)
+      .input('FechaFinContrato',FechaFinContrato)
+      .input('ValorServicio',ValorServicio)
+      .query(employeesQueries.contractExistentEmployee)
       res.json(result.recordset);
   } catch(e){
     res.status(500);
