@@ -38,7 +38,7 @@ export const Navbar = () => {
                 <NavLink to='/myBenefits' activestyle='true'>
                   My Benefits
                 </NavLink>
-                <NavLink to="/ee" activestyle='true'>
+                <NavLink to="/myVoluntaryDeductions" activestyle='true'>
                   My Voluntary Deductions
                 </NavLink>
                 <NavLink to="/registerHours" activestyle='true'>

@@ -4,7 +4,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Benefits } from './Pages/benefits';
 import { Employees } from './Pages/employees';
 import { VoluntaryDeductions } from './Pages/voluntaryDeductions';
-import { CreateNewVoluntaryDeduction } from './Pages/createNewVoluntaryDeduction'
+import { CreateNewVoluntaryDeduction } from './Pages/createNewVoluntaryDeduction';
+import { EmployeesVoluntaryDeductions } from './Pages/employeesVoluntaryDeductions';
 import { EditVoluntaryDeductions } from './Pages/editVoluntaryDeductions';
 import { Contracts } from './Pages/contracts';
 import { SelectProject } from './Pages/selectProject';
@@ -67,6 +68,7 @@ function App() {
               <Route path='registerHours' element={<RegisterHours />} />
               <Route path='userProfile' element={<UserPage />} />
               <Route path='myBenefits' element={<EmployeesBenefits />} />
+              <Route path='myVoluntaryDeductions' element={<EmployeesVoluntaryDeductions />} />
             </Route>
           )}
 

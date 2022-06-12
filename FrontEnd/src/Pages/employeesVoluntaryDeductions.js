@@ -1,7 +1,7 @@
 import React from 'react';
 import '../App.css';
 import { Navbar } from '../Components/Navbar/Navbar';
-import { EmployeeVoluntaryDeduction } from '../Components/EmployeeVoluntaryDeductions/EmployeeVoluntaryDeductions';
+import { EmployeeVoluntaryDeductions } from '../Components/EmployeeVoluntaryDeductions/EmployeeVoluntaryDeductions';
 
 export const EmployeesVoluntaryDeductions = () => {
   return (
