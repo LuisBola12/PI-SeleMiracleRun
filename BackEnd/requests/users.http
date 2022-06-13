@@ -112,8 +112,9 @@ GET {{apiBenefits}}/Taquería Milagro
 GET {{apiContracts}}
 
 ###
-
 GET {{apiMyBenefits}}/Taquería Milagro/javier.Mo@gmail.com
+###
+GET {{apiMyVoluntaryDeductions}}/Taquería Milagro/javier.Mo@gmail.com
 
 ###
 POST {{apiBenefits}}
