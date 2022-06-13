@@ -23,4 +23,5 @@ export const employeesQueries = {
     "Insert into Empleado (Cedula, Nombre, Apellido1, Apellido2, Telefono, Email) values(@Cedula, @Nombre, @Apellido1, @Apellido2, @Telefono, @Email)",
   contractExistentEmployee: `Insert into EmpleadoYContratoSeAsocianAProyecto values (@Cedula,@TipoJornada,@NombreProyecto,
     @NombreServicio,@SalarioPorHora,@FechaInicioContrato,@FechaFinContrato,@ValorServicio)`,
+  deleteEmployeeFromProject: `Delete from EmpleadoYContratoSeAsocianAProyecto where CedulaEmpleado = @Cedula and NombreProyecto = @NombreProyecto`,
 };

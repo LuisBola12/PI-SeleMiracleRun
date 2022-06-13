@@ -19,6 +19,20 @@
 
 @apiCreatePayrroll = http://localhost:4000/getProjectPeriod
 
+@apiDeleteEmployeeFromProject = http://localhost:4000/deleteEmployeeFromProject
+
+
+
+
+DELETE {{apiDeleteEmployeeFromProject}}
+Content-Type: application/json
+
+{
+  "Cedula":"118706423",
+  "NombreProyecto":"Taquería Milagro"
+}
+
+###
 POST {{apiCreatePayrroll}}
 Content-Type: application/json
 

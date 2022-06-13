@@ -3,7 +3,7 @@ import { getProjectsByEmail, createProject,createPayrroll} from '../controllers/
 import { getEmployerByID, getUserByEmail, verifyCredentials, registerNewUser, getProfileEmployeer,
     getProfileEmployee,updateProfileEmployee,updateProfileEmployeer } from '../controllers/users.controller';
 import { getEmployees, postNewEmployee, getEmployeeByID, verifyEmployeeContractOnProject,
-    getEmployeesWithContractOnOtherProyects,contractAEmployee} from '../controllers/employees.contoller';
+    getEmployeesWithContractOnOtherProyects,contractAEmployee, deleteEmployeeFromProject} from '../controllers/employees.contoller';
 import { getVolDeductions, createNewVolDeduction, getVolDeductionsByName, updateVolDeduction } from '../controllers/volDeductions.controller';
 import { getTypeOfContracts } from '../controllers/contracts.controller';
 import { getBenefits, createBenefit, getBenefitsByName, updateBenefit, getEmployeeBenefitsByEmail } from '../controllers/benefits.controller';
@@ -37,6 +37,7 @@ router.post('/employee/contract', verifyEmployeeContractOnProject);
 router.put('/updateEmployee',updateProfileEmployee);
 router.post('/employeesWithContractsOnOtherProyects',getEmployeesWithContractOnOtherProyects);
 router.post('/contractExistentEmployee',contractAEmployee);
+router.delete('/deleteEmployeeFromProject',deleteEmployeeFromProject)
 
 //Projects
 router.get('/projects/:Email/:Rol', getProjectsByEmail);
