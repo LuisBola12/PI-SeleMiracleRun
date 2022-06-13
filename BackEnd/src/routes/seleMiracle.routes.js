@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getProjectsByEmail, createProject } from '../controllers/projects.controller';
+import { getProjectsByEmail, createProject,createPayrroll} from '../controllers/projects.controller';
 import { getEmployerByID, getUserByEmail, verifyCredentials, registerNewUser, getProfileEmployeer,
     getProfileEmployee,updateProfileEmployee,updateProfileEmployeer } from '../controllers/users.controller';
 import { getEmployees, postNewEmployee, getEmployeeByID, verifyEmployeeContractOnProject,
@@ -7,7 +7,6 @@ import { getEmployees, postNewEmployee, getEmployeeByID, verifyEmployeeContractO
 import { getVolDeductions, createNewVolDeduction, getVolDeductionsByName, updateVolDeduction } from '../controllers/volDeductions.controller';
 import { getTypeOfContracts } from '../controllers/contracts.controller';
 import { getBenefits, createBenefit, getBenefitsByName, updateBenefit, getEmployeeBenefitsByEmail } from '../controllers/benefits.controller';
-
 const router = Router();
 
 //Users
@@ -42,6 +41,7 @@ router.post('/contractExistentEmployee',contractAEmployee);
 //Projects
 router.get('/projects/:Email/:Rol', getProjectsByEmail);
 router.post('/projects', createProject);
+router.post('/getProjectPeriod',createPayrroll);
 
 
 //Benefits

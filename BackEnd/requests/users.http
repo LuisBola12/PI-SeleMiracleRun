@@ -17,6 +17,15 @@
 @apiEmployeeWithContractOnOtherProyects = http://localhost:4000/employeesWithContractsOnOtherProyects
 @apiContractEmployee = http://localhost:4000/contractExistentEmployee
 
+@apiCreatePayrroll = http://localhost:4000/getProjectPeriod
+
+POST {{apiCreatePayrroll}}
+Content-Type: application/json
+
+{
+  "NombreProyecto":"Taquería Milagro"
+}
+###
 POST {{apiContractEmployee}}
 Content-Type: application/json
 
