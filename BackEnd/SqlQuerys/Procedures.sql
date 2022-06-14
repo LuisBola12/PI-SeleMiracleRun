@@ -43,3 +43,25 @@ AS
             Print 'This Employee doesnt have Voluntary Deductions'
         End
     Delete from EmpleadoYContratoSeAsocianAProyecto where CedulaEmpleado = @Cedula and NombreProyecto = @Proyecto;
+
+
+CREATE PROCEDURE vincularBeneficioEmpleado 
+  @Email VARCHAR(50),
+  @NombreBeneficio VARCHAR(50),
+  @NombreProyecto VARCHAR(50)
+as 
+BEGIN
+  DECLARE @cedula VARCHAR(15);
+  DECLARE @fechaFin DATETIME;
+  DECLARE @fechaInicio DATETIME;
+
+  SET @fechaInicio = GETDATE();
+  SELECT @cedula = Cedula From Empleado WHERE Email = @Email;
+  SELECT @fechaFin = FechaFin from EmpleadoYContratoSeAsocianAProyecto ec
+  WHERE ec.CedulaEmpleado = @cedula and ec.NombreProyecto = @NombreProyecto;
+  
+  INSERT INTO BeneficioElegido VALUES 
+  (@cedula, @NombreBeneficio, @NombreProyecto, @fechaInicio, @fechaFin);
+
+END;
+GO
