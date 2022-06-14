@@ -18,7 +18,6 @@ export const CreateUser = () => {
     const employee = await validAnEntity('employer/', formValues.id_register);
 
     if (user === true && employee === true) {
-      console.log('prubea');
       let string = JSON.stringify(formValues);
 
       string = JSON.stringify({

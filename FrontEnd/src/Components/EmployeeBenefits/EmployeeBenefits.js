@@ -11,7 +11,6 @@ export const EmployeeBenefits = () => {
   const handleAddButton = (element) => {
 
   };
-  console.log(!EmployeeInfo && !offeredInfo);
   return (
     <>
       {!EmployeeInfo ? (<div className='loader' ></div >) : (
