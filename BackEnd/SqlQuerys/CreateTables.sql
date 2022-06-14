@@ -54,7 +54,7 @@ Create Table EmpleadoRegistraHorasEnProyecto(
 	NombreProyecto varchar(50),
 	Cantidad tinyint not null,
 	Fecha Date,
-	primary key(CedulaEmpleado,NombreProyecto),
+	primary key(CedulaEmpleado,NombreProyecto, Fecha),
 	foreign key(CedulaEmpleado) references Empleado(Cedula),
 	foreign key(NombreProyecto) references Proyecto(Nombre),
 );
