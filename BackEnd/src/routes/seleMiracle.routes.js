@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { getProjectsByEmail, createProject } from '../controllers/projects.controller';
+import { getProjectsByEmail, createProject,createPayrroll } from '../controllers/projects.controller';
 import { getEmployees, postNewEmployee, getEmployeeByID, verifyEmployeeContractOnProject,
-  getEmployeesWithContractOnOtherProyects,contractAEmployee, setHoursEmployee} from '../controllers/employees.contoller';
+  getEmployeesWithContractOnOtherProyects,contractAEmployee, setHoursEmployee,deleteEmployeeFromProject} from '../controllers/employees.contoller';
 import { getEmployerByID, getUserByEmail, verifyCredentials, registerNewUser, 
     getProfileEmployeer, getProfileEmployee, updateProfileEmployeer, updateProfileEmployee } from '../controllers/users.controller';
 import { getVoluntaryDeductions, createNewVoluntaryDeduction, getVoluntaryDeductionsByName, updateVoluntaryDeduction, getEmployeeVoluntaryDeductionsByEmail} from '../controllers/voluntaryDeductions.controller';
@@ -38,11 +38,13 @@ router.post('/employee/contract', verifyEmployeeContractOnProject);
 router.put('/updateEmployee',updateProfileEmployee);
 router.post('/employeesWithContractsOnOtherProyects',getEmployeesWithContractOnOtherProyects);
 router.post('/contractExistentEmployee',contractAEmployee);
+router.delete('/deleteEmployeeFromProject',deleteEmployeeFromProject)
 router.post('/employee/hours', setHoursEmployee);
 
 //Projects
 router.get('/projects/:Email/:Rol', getProjectsByEmail);
 router.post('/projects', createProject);
+router.post('/getProjectPeriod',createPayrroll);
 
 
 //Benefits

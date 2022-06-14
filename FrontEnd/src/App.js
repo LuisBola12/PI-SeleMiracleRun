@@ -27,6 +27,7 @@ import { EmployeesBenefits } from './Pages/employeesBenefits';
 import { UserPage } from './Pages/userProfile';
 import { HireAEmployee } from './Pages/crudHireEmployees';
 import { HireEmployee } from './Pages/hireEmployee';
+import { EndContractWithEmployee } from './Pages/endContractWithEmployee';
 function App() {
 
   const userRoll = useSelector((state) => state.user.user);
@@ -56,6 +57,7 @@ function App() {
             <Route path='employees/CreateEmployee' element={<CreateNewEmployee />} />
             <Route path='employees/hireAEmployee' element={<HireAEmployee />} />
             <Route path='employees/hireAEmployee/hire' element={<HireEmployee />} />
+            <Route path='employees/terminateContract' element={<EndContractWithEmployee />} />
             <Route path='benefits/CreateBenefit' element={<CreateNewBenefit />} />
             <Route path='benefits/editBenefit' element={<EditBenefits />} />
             <Route path='newProjectForm' element={<CreateProjectsForm />} />
