@@ -11,7 +11,6 @@ export const CreateEmployee = () => {
   const [contractsReceived, setContractsReceived] = useState(false);
   const [typeOfContracts, setTypeOfContracts] = useState();
   const activeProject = useSelector((state) => state.activeProject.projectName);
-
   const { post } = usePost('http://localhost:4000/employee');
   const sendToDatabase = async () => {
     let string = JSON.stringify(formValues);

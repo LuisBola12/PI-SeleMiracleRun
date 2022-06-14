@@ -1,30 +1,30 @@
 import React from 'react';
 import '../../App.css';
-import '../CreateVolDeduction/CreateVolDeduction.scss';
+import '../CreateVoluntaryDeduction/CreateVoluntaryDeduction.scss';
 import { useNavigate } from 'react-router-dom';
 import { maskCurrency } from '../../shared/moneyFormatTransform';
-import validateVolDeductionForm from '../../Utils/VolDeductions/validateVolDeductionForm';
+import validateVoluntaryDeductionForm from '../../Utils/VoluntaryDeductions/validateVoluntaryDeductionForm';
 import useForm from '../../shared/hooks/useForm';
 import { validAnEntity } from '../../Utils/validAnEntity';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { transformCost } from '../../shared/moneyFormatTransform';
-import { usePutToVolDeductions } from '../../Utils/VolDeductions/usePutToVolDeductions';
+import { usePutToVoluntaryDeductions } from '../../Utils/VoluntaryDeductions/usePutToVoluntaryDeductions';
 import Swal from 'sweetalert2';
 
-export const EditVolDeduction = () => {
-  const apiVolDeductions = 'http://localhost:4000/volDeductions';
+export const EditVoluntaryDeduction = () => {
+  const apiVoluntaryDeductions = 'http://localhost:4000/voluntaryDeductions';
   const activeProject = useSelector((state) => state.activeProject.projectName);
   const location = useLocation();
   const oldName = location.state.Nombre;
   const navigate = useNavigate();
-  const { updateVolDeduction } = usePutToVolDeductions();
+  const { updateVoluntaryDeduction } = usePutToVoluntaryDeductions();
   const submit = async () => {
-    const notExists = await validAnEntity('volDeductions/' + activeProject + '/', formValues.Name);
+    const notExists = await validAnEntity('voluntaryDeductions/' + activeProject + '/', formValues.Name);
     if (notExists === true || oldName === formValues.Name) {
-      updateVolDeduction(formValues.Name, formValues.Cost, formValues.Description, apiVolDeductions + `/${oldName}`);
-      navigate('/volDeductions');
+      updateVoluntaryDeduction(formValues.Name, formValues.Cost, formValues.Description, apiVoluntaryDeductions + `/${oldName}`);
+      navigate('/voluntaryDeductions');
     } else {
       setIsSubmitting(false);
       Swal.fire({
@@ -42,7 +42,7 @@ export const EditVolDeduction = () => {
     errors,
     setIsSubmitting,
     setFormValues
-  } = useForm(submit, validateVolDeductionForm);
+  } = useForm(submit, validateVoluntaryDeductionForm);
   useEffect(() => {
     setFormValues({
       Name: location.state.Nombre,
@@ -53,12 +53,12 @@ export const EditVolDeduction = () => {
 
   return (
     <>
-      <div className='volDeductions-form'>
+      <div className='voluntaryDeductions-form'>
         <div className='form-title'>
-          <div className='image-volDeduction'></div>
+          <div className='image-voluntaryDeduction'></div>
           Edit Deduction
         </div>
-        <div className='form-group-volDeductions'>
+        <div className='form-group-voluntaryDeductions'>
           <div className='Name-input'>
             <div className='animated-input'>
               <input
@@ -73,7 +73,7 @@ export const EditVolDeduction = () => {
               ></input>
               <label htmlFor='Name' className='animated-input__label'>Name<span className='req'>*</span></label>
             </div>
-            <label className='error-message' id='volDeduction-name'>{errors.Name}</label>
+            <label className='error-message' id='voluntaryDeduction-name'>{errors.Name}</label>
           </div>
           <div className='Cost-input'>
             <div className='animated-input'>
@@ -89,7 +89,7 @@ export const EditVolDeduction = () => {
               ></input>
               <label htmlFor='Cost' className='animated-input__label'>Cost ₡<span className='req'>*</span></label>
             </div>
-            <label className='error-message' id='volDeduction-cost'>{errors.Cost}</label>
+            <label className='error-message' id='voluntaryDeduction-cost'>{errors.Cost}</label>
           </div>
         </div>
         <div>
@@ -103,19 +103,19 @@ export const EditVolDeduction = () => {
               onChange={handleInputChange}
             ></textarea>
             <label htmlFor='Description' className='animated-input__label'>Description</label>
-            <label className='error-message' id='volDeduction-description'></label>
+            <label className='error-message' id='voluntaryDeduction-description'></label>
           </div>
         </div>
         <div className='buttons'>
           <button
-            className='create-volDeduction-btn'
+            className='create-voluntaryDeduction-btn'
             onClick={handleSubmit}>
             Save
           </button>
           <button
-            className='cancel-volDeduction-btn'
+            className='cancel-voluntaryDeduction-btn'
             onClick={() => {
-              navigate('/volDeductions');
+              navigate('/voluntaryDeductions');
             }}>
             Cancel
           </button>

@@ -17,7 +17,6 @@ export const getBenefits = async (req, res) => {
 
 export const getBenefitsByName = async (req, res) => {
   const { Proyecto, Nombre } = req.params;
-  console.log(Proyecto, Nombre);
   try {
     const pool = await getConnection();
     const result = await pool.request()
@@ -31,6 +30,40 @@ export const getBenefitsByName = async (req, res) => {
     res.send(e.message);
   }
 };
+
+export const getEmployeeBenefitsByEmail = async (req, res) => {
+  const { Proyecto, Email } = req.params;
+  try {
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input('Email', Email)
+      .input('Proyecto', Proyecto)
+      .query(benefitsQueries.getEmployeeBenefitsByEmail);
+    res.json(result.recordset);
+    console.log(result.recordset);
+  } catch (e) {
+    res.status(500);
+    res.send(e.message);
+  }
+};
+
+
+export const getOfferedBenefits = async (req, res) => {
+  const { Proyecto, Email } = req.params;
+  try {
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input('Email', Email)
+      .input('Proyecto', Proyecto)
+      .query(benefitsQueries.getOfferedBenefits);
+    res.json(result.recordset);
+    console.log(result.recordset);
+  } catch (e) {
+    res.status(500);
+    res.send(e.message);
+  }
+};
+
 
 export const createBenefit = async (req, res) => {
   const { Nombre, NombreProyecto, CostoActual, Descripción } = req.body;

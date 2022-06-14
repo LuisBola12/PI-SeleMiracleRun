@@ -24,7 +24,7 @@ export const LoginComp = () => {
   };
 
   return userIsLoggedIn ? (
-    <Navigate to='/projectAdmin' />
+    <Navigate to='/projects' />
   ) : (
     <div className='logIn-page'>
       <div className='logIn-logo-box'>
@@ -66,13 +66,9 @@ export const LoginComp = () => {
         </div>
 
         <div className='logIn-btn-box'>
-          <ButtonComp
-            buttonType={'btn'}
-            onClick={logBtn}
-            buttonStyle={'btn--logIn--logIn'}
-            buttonSize={'extra--large--btn'}>
+          <button className='logIn-btn-login' onClick={logBtn}>
             Sign In
-          </ButtonComp>
+          </button>
           <div>
             {
               errorMessage && (
