@@ -1,9 +1,10 @@
-import { getConnection,sql,queries } from '../database';
+import { getConnection,sql } from '../database';
+import { employerQueries } from '../database/queries/employerQueries';
 
 export const getEmployer = async (req, res) => {
   try {
     const pool = await getConnection();
-    const result = await pool.request().query(queries.getAllEmployers);
+    const result = await pool.request().query(employerQueries.getAllEmployers);
     res.json(result.recordset);
   } catch (e) {
     res.status(500);
@@ -31,7 +32,7 @@ export const createNewEmployer = async (req, res) => {
       .input('Apellido2', sql.VarChar, Apellido2)
       .input('Telefono', sql.VarChar, Telefono)
       .input('Email', sql.VarChar, Email)
-      .query(queries.createNewEmployer);
+      .query(employerQueries.createNewEmployer);
     console.log(result);
     res.json({ Cedula, Nombre, Apellido1, Apellido2, Telefono, Email });
   } catch (e) {

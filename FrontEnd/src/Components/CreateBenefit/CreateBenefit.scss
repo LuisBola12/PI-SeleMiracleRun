@@ -7,7 +7,7 @@
 }
 
 * {
-  font-family: 'Sora', sans-serif;
+  font-family: 'sora', sans-serif;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -111,8 +111,8 @@
 }
 
 .benefits-form {
-  margin-top: 5rem;
-  gap: 50px;
+  margin-top: 2rem;
+  gap: 20px;
   display: flex;
   flex-direction: column;
 }
@@ -141,13 +141,14 @@
   gap: 1%;
 }
 
-
 .create-benefit-btn:hover {
-  background-color: rgb(3, 119, 3);
+  background-color: rgb(7, 145, 7);
+  box-shadow: 0px 2px 8px 0px rgba(62, 62, 62, 0.55);
 }
 
 .cancel-benefit-btn:hover {
   background-color: rgb(172, 1, 1);
+  box-shadow: 0px 2px 8px 0px rgba(62, 62, 62, 0.55);
 }
 
 .create-benefit-btn {

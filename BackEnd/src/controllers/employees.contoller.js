@@ -1,5 +1,6 @@
-import { getConnection, sql, queries } from '../database';
-
+import { getConnection} from '../database';
+import { employeesQueries } from '../database/queries/employeesQueries';
+import { userQueries } from '../database/queries/userQueries';
 
 export const getEmployeeByID = async (req, res) => {
   const { Cedula } = req.params;
@@ -11,7 +12,7 @@ export const getEmployeeByID = async (req, res) => {
     const pool = await getConnection();
     const result = await pool.request()
       .input('Cedula', Cedula)
-      .query(queries.getEmployeeByID);
+      .query(employeesQueries.getEmployeeByID);
     console.log(result);
     res.status(200).json(result.recordset);
   } catch (e) {
@@ -27,7 +28,7 @@ export const getEmployees = async (req, res) => {
     const result = await pool
       .request()
       .input('Proyecto', Proyecto)
-      .query(queries.getAllEmployees);
+      .query(employeesQueries.getAllEmployees);
     res.json(result.recordset);
   } catch (e) {
     res.status(500);
@@ -42,13 +43,30 @@ export const verifyEmployeeContractOnProject = async (req, res) => {
       .request()
       .input('Cedula', Cedula)
       .input('Proyecto', Proyecto)
-      .query(queries.verifyEmployeeContractProject);
+      .query(employeesQueries.verifyEmployeeContractProject);
     res.json(result.recordset);
   } catch (e) {
     res.status(500);
     res.send(e.message);
   }
 
+};
+export const getEmployeesWithContractOnOtherProyects = async(req,res) => {
+  try{
+    const {Email,Proyecto} = req.body;
+    console.log(Email,Proyecto);
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input('Email',Email)
+      .input('Proyecto',Proyecto)
+      .query(employeesQueries.getEmployeesWithContractsOnOtherProyects);
+    console.log(result.recordset);
+    res.json(result.recordset);
+  } catch(e){
+    res.status(500);
+    res.send(e.message);
+  }
 };
 export const postNewEmployee = async (req, res) => {
   const date = new Date();
@@ -74,13 +92,27 @@ export const postNewEmployee = async (req, res) => {
     NombreServicio,
     ValorServicio,
   } = req.body;
-  if (SalarioPorHora = 0) {
+  console.log(NombreProyecto,
+    Email,
+    Contrasenia,
+    Roles,
+    Nombre,
+    Apellido1,
+    Apellido2,
+    Cedula,
+    Telefono,
+    TipoJornada,
+    FechaFinContrato,
+    SalarioPorHora,
+    NombreServicio,
+    ValorServicio,);
+  if (SalarioPorHora === 0) {
     SalarioPorHora = null;
   }
-  if (NombreServicio = '') {
+  if (NombreServicio === '') {
     NombreServicio = null;
   }
-  if (ValorServicio = 0) {
+  if (ValorServicio === 0) {
     ValorServicio = null;
   }
   const pool = await getConnection();
@@ -90,7 +122,7 @@ export const postNewEmployee = async (req, res) => {
       .input('Email', Email)
       .input('Contrasenia', Contrasenia)
       .input('Roles', Roles)
-      .query(queries.createNewUser);
+      .query(userQueries.createNewUser);
   } catch (e) {
     console.log(e);
   }
@@ -103,7 +135,7 @@ export const postNewEmployee = async (req, res) => {
       .input('Cedula', Cedula)
       .input('Telefono', Telefono)
       .input('Email', Email)
-      .query(queries.createNewEmployee);
+      .query(employeesQueries.createNewEmployee);
   } catch (e) {
     console.log(e);
   }
@@ -118,9 +150,59 @@ export const postNewEmployee = async (req, res) => {
       .input('SalarioPorHora', SalarioPorHora)
       .input('NombreServicio', NombreServicio)
       .input('ValorServicio', ValorServicio)
-      .query(queries.addContractOfAnEmployee);
+      .query(employeesQueries.addContractOfAnEmployee);
   } catch (e) {
     console.log(e);
   }
   res.status(200).send();
+};
+
+export const contractAEmployee = async (req,res) =>{
+  try{
+    const {Cedula,TipoContrato,Proyecto,NombreServicio,SalarioPorHora,FechaFinContrato,ValorServicio} = req.body;
+    console.log(Cedula,TipoContrato,Proyecto,NombreServicio,SalarioPorHora,FechaFinContrato,ValorServicio);
+    const date = new Date();
+    const [month, day, year] = [
+      date.getMonth(),
+      date.getDate(),
+      date.getFullYear(),
+    ];
+    const FechaInicioContrato = `${year}-${month + 1}-${day}`;
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input('Cedula',Cedula)
+      .input('TipoJornada',TipoContrato)
+      .input('NombreProyecto',Proyecto)
+      .input('NombreServicio',NombreServicio)
+      .input('SalarioPorHora',SalarioPorHora)
+      .input('FechaInicioContrato',FechaInicioContrato)
+      .input('FechaFinContrato',FechaFinContrato)
+      .input('ValorServicio',ValorServicio)
+      .query(employeesQueries.contractExistentEmployee);
+    res.json(result.recordset);
+  } catch(e){
+    res.status(500);
+    res.send(e.message);
+  }
+};
+
+export const setHoursEmployee = async (req, res) => {
+  try {
+    const { Email, Proyecto, Fecha, CantidadHoras } = req.body;
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input('Email', Email)
+      .input('Proyecto', Proyecto)
+      .input('Fecha', Fecha)
+      .input('CantidadHoras', CantidadHoras)
+      .execute('ingresarHoras');
+    res.json(result.recordset);
+    console.log(result.recordset);
+  } catch (e) {
+    res.status(500);
+    res.send(e.message);
+    console.log('buenas');
+  }
 };

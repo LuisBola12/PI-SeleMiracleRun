@@ -1,5 +1,5 @@
 import { getConnection, sql } from '../database';
-import { benefitsQuerys } from '../database/benefitsQuerys';
+import { benefitsQueries } from '../database/queries/benefitsQueries';
 
 export const getBenefits = async (req, res) => {
   const { Proyecto } = req.params;
@@ -7,7 +7,7 @@ export const getBenefits = async (req, res) => {
     const pool = await getConnection();
     const result = await pool.request()
       .input('Proyecto', Proyecto)
-      .query(benefitsQuerys.getBenefits);
+      .query(benefitsQueries.getBenefits);
     res.json(result.recordset);
   } catch (e) {
     res.status(500);
@@ -17,13 +17,12 @@ export const getBenefits = async (req, res) => {
 
 export const getBenefitsByName = async (req, res) => {
   const { Proyecto, Nombre } = req.params;
-  console.log(Proyecto, Nombre);
   try {
     const pool = await getConnection();
     const result = await pool.request()
       .input('Nombre', Nombre)
       .input('Proyecto', Proyecto)
-      .query(benefitsQuerys.getBenefitsByName);
+      .query(benefitsQueries.getBenefitsByName);
     res.json(result.recordset);
     console.log(result.recordset);
   } catch (e) {
@@ -31,6 +30,40 @@ export const getBenefitsByName = async (req, res) => {
     res.send(e.message);
   }
 };
+
+export const getEmployeeBenefitsByEmail = async (req, res) => {
+  const { Proyecto, Email } = req.params;
+  try {
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input('Email', Email)
+      .input('Proyecto', Proyecto)
+      .query(benefitsQueries.getEmployeeBenefitsByEmail);
+    res.json(result.recordset);
+    console.log(result.recordset);
+  } catch (e) {
+    res.status(500);
+    res.send(e.message);
+  }
+};
+
+
+export const getOfferedBenefits = async (req, res) => {
+  const { Proyecto, Email } = req.params;
+  try {
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input('Email', Email)
+      .input('Proyecto', Proyecto)
+      .query(benefitsQueries.getOfferedBenefits);
+    res.json(result.recordset);
+    console.log(result.recordset);
+  } catch (e) {
+    res.status(500);
+    res.send(e.message);
+  }
+};
+
 
 export const createBenefit = async (req, res) => {
   const { Nombre, NombreProyecto, CostoActual, Descripción } = req.body;
@@ -46,7 +79,7 @@ export const createBenefit = async (req, res) => {
       .input('NombreProyecto', sql.VarChar, NombreProyecto)
       .input('CostoActual', sql.Int, CostoActual)
       .input('Descripción', sql.VarChar, Descripción)
-      .query(benefitsQuerys.createBenefit);
+      .query(benefitsQueries.createBenefit);
     console.log(result);
     res.json({ Nombre, CostoActual });
   } catch (e) {
@@ -71,7 +104,7 @@ export const updateBenefit = async (req, res) => {
       .input('NombreProyecto', sql.VarChar, NombreProyecto)
       .input('CostoActual', sql.Int, CostoActual)
       .input('Descripción', sql.VarChar, Descripción)
-      .query(benefitsQuerys.editBenefit);
+      .query(benefitsQueries.editBenefit);
     res.json({ Nombre, NombreProyecto, CostoActual, Descripción });
   } catch (e) {
     console.log(`Error: ${e}`);
