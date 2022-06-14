@@ -110,6 +110,24 @@
   border-style: none;
   width: 100px;
 }
+.hire-button{
+  margin-bottom: 20px;
+  background-color: gray;
+  padding: 10px;
+  border-radius: 8px;
+  color: white;
+  border-color: white;
+  border-style: none;
+  width: 200px;
+}
+.end-contract-button{
+  color:white;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: darkred;
+  border-style: none;
+  width: 150px;
+}
 
 .user-Profile-table-button {
   margin-top: 40px;
@@ -282,7 +300,8 @@
   border-radius: 8px;
   color: white;
   border-color: white;
-  background-color: #178cd1;
+  background-color: gray;
+  /* background-color: #178cd1; */
   border-style: none;
   width: 100px;
 }

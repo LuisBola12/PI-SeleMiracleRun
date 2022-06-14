@@ -33,7 +33,7 @@ export const CrudEmployee = () => {
           {' '}
           Create New Employee
         </button>
-        <button className='create-button' onClick={
+        <button className='hire-button' onClick={
           () => {
             navigate('hireAEmployee')
           }
@@ -61,7 +61,7 @@ export const CrudEmployee = () => {
               <td className='left-td'>{element.Email}</td>
               <td className='left-td'>{element.TipoContrato}</td>
               <td className='table-right-border right-button'>
-                <button className='button cancel-button' onClick={()=>handleEndContract(element)}
+                <button className='end-contract-button' onClick={()=>handleEndContract(element)}
                 > End Contract </button>
               </td>
             </tr>
