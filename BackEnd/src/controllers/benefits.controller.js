@@ -65,6 +65,26 @@ export const getOfferedBenefits = async (req, res) => {
 };
 
 
+export const linkEmployeeToBenefit = async (req, res) => {
+  const { Email, NombreBeneficio, NombreProyecto } = req.body;
+  try {
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input('Email', sql.VarChar, Email)
+      .input('NombreProyecto', sql.VarChar, NombreProyecto)
+      .input('NombreBeneficio', sql.VarChar, NombreBeneficio)
+      .execute('vincularBeneficioEmpleado');
+    console.log(result);
+    res.json({ Nombre, CostoActual });
+  } catch (e) {
+    console.log(`Error: ${e}`);
+    res.status(500).send(e.message);
+  }
+};
+
+
+
 export const createBenefit = async (req, res) => {
   const { Nombre, NombreProyecto, CostoActual, Descripción } = req.body;
   if (Nombre == null || CostoActual == null || NombreProyecto == null) {
