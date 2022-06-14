@@ -569,3 +569,11 @@ tr:nth-child(even) {
 .ofer-benefits {
   width: 90%;
 }
+
+.voluntaryDeduction-name {
+  width: 20%;
+}
+
+.offer-voluntaryDeductions {
+  width: 90%;
+}
