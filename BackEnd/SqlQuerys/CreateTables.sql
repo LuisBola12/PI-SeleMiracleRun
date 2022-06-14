@@ -121,6 +121,17 @@ Create Table EmpleadoGozaBeneficios(
     foreign key(NombreProyecto, NombreBeneficio) references Beneficios(NombreProyecto, Nombre) on update cascade
 );
 
+Create Table EmpleadoAplicaDeduccionesVoluntarias(
+    CedulaEmpleado varchar(15),
+    NombreDeduccion varchar(50),
+	  NombreProyecto varchar(50),
+    fechaInicio Date,
+    fechaFin Date,
+    primary key(CedulaEmpleado, NombreDeduccion, NombreProyecto),
+    foreign key(CedulaEmpleado) references Empleado(Cedula),
+    foreign key(NombreProyecto, NombreDeduccion) references DeduccionesVoluntarias(NombreProyecto, Nombre) on update cascade
+);
+
 
 SELECT * FROM Empleado;
 
