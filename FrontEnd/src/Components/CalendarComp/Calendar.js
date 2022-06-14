@@ -1,17 +1,24 @@
-import { useState } from 'react'
+import { useState} from 'react'
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './calendarStyle.scss';
 import React from 'react';
 import {Modal, Button, Form} from 'react-bootstrap';
 import validate from './calendarValidations';
+import usePost from '../../shared/hooks/usePost';
+import { useSelector } from 'react-redux';
 
 export const CalendarComp = () => {
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
   const [hours, setHours] = useState('');
-
+  const { post } = usePost('http://localhost:4000/employee/hours');
   const dateMin = null;
+  const dateToString = () => {
+    return `${date.getFullYear()}/${date.getMonth()+1}/${date.getDay()}`
+  };
+  const userEmail = useSelector((state) => state.user.user.Email);
+  const proyecto = useSelector((state) => state.activeProject.projectName);
 
   const handleClose = () => {
     setShow(false);
@@ -23,11 +30,18 @@ export const CalendarComp = () => {
   }
 
   const handleSave = () => {
+    const actualDate = dateToString(date);
     if (validate(hours) === false){
-      console.log(`${date}`)
-      console.log(`${date.getFullYear()}/${date.getMonth()+1}/${date.getDay()}`)
+      let string = '';
+      string = JSON.stringify({
+        Email: userEmail,
+        Proyecto: proyecto,
+        Fecha: actualDate,
+        CantidadHoras: hours
+      });
+      post(string);
+      handleClose();
     }
-    handleClose();
   }
 
   return (
