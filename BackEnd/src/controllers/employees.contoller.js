@@ -54,20 +54,20 @@ export const verifyEmployeeContractOnProject = async (req, res) => {
 export const getEmployeesWithContractOnOtherProyects = async(req,res) => {
   try{
     const {Email,Proyecto} = req.body;
-    console.log(Email,Proyecto)
+    console.log(Email,Proyecto);
     const pool = await getConnection();
     const result = await pool
       .request()
       .input('Email',Email)
       .input('Proyecto',Proyecto)
-      .query(employeesQueries.getEmployeesWithContractsOnOtherProyects)
-      console.log(result.recordset);
-      res.json(result.recordset);
+      .query(employeesQueries.getEmployeesWithContractsOnOtherProyects);
+    console.log(result.recordset);
+    res.json(result.recordset);
   } catch(e){
     res.status(500);
     res.send(e.message);
   }
-}
+};
 export const postNewEmployee = async (req, res) => {
   const date = new Date();
   const [month, day, year] = [
@@ -105,7 +105,7 @@ export const postNewEmployee = async (req, res) => {
     FechaFinContrato,
     SalarioPorHora,
     NombreServicio,
-    ValorServicio,)
+    ValorServicio,);
   if (SalarioPorHora === 0) {
     SalarioPorHora = null;
   }
@@ -167,7 +167,7 @@ export const contractAEmployee = async (req,res) =>{
       date.getDate(),
       date.getFullYear(),
     ];
-  const FechaInicioContrato = `${year}-${month + 1}-${day}`;
+    const FechaInicioContrato = `${year}-${month + 1}-${day}`;
     const pool = await getConnection();
     const result = await pool
       .request()
@@ -179,8 +179,8 @@ export const contractAEmployee = async (req,res) =>{
       .input('FechaInicioContrato',FechaInicioContrato)
       .input('FechaFinContrato',FechaFinContrato)
       .input('ValorServicio',ValorServicio)
-      .query(employeesQueries.contractExistentEmployee)
-      res.json(result.recordset);
+      .query(employeesQueries.contractExistentEmployee);
+    res.json(result.recordset);
   } catch(e){
     res.status(500);
     res.send(e.message);
@@ -201,4 +201,24 @@ export const deleteEmployeeFromProject = async(req,res) =>{
     res.status(500);
     res.send(error.message);
   }
-}
+};
+
+export const setHoursEmployee = async (req, res) => {
+  try {
+    const { Email, Proyecto, Fecha, CantidadHoras } = req.body;
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input('Email', Email)
+      .input('Proyecto', Proyecto)
+      .input('Fecha', Fecha)
+      .input('CantidadHoras', CantidadHoras)
+      .execute('ingresarHoras');
+    res.json(result.recordset);
+    console.log(result.recordset);
+  } catch (e) {
+    res.status(500);
+    res.send(e.message);
+    console.log('buenas');
+  }
+};

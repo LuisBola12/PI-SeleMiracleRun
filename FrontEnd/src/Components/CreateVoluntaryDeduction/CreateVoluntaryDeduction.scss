@@ -110,15 +110,15 @@
   left: 0.8rem;
 }
 
-.volDeductions-form {
+.voluntaryDeductions-form {
   margin-top: 2rem;
   gap: 20px;
   display: flex;
   flex-direction: column;
 }
 
-.image-volDeduction {
-  background-image: url(../../icons/volDeductionIcon.png);
+.image-voluntaryDeduction {
+  background-image: url(../../icons/voluntaryDeductionIcon.png);
   background-color: transparent;
   background-repeat: no-repeat;
   background-size: contain;
@@ -126,7 +126,7 @@
   height: 5rem;
 }
 
-.form-title-volDeductions {
+.form-title-voluntaryDeductions {
   font-size: 2.35rem;
   color: #133c54;
   padding: 0.5rem;
@@ -136,22 +136,22 @@
   font-weight: bold;
 }
 
-.form-group-volDeductions {
+.form-group-voluntaryDeductions {
   display: flex;
   gap: 1%;
 }
 
-.create-volDeduction-btn:hover {
+.create-voluntaryDeduction-btn:hover {
   background-color: rgb(7, 145, 7);
   box-shadow: 0px 2px 8px 0px rgba(62, 62, 62, 0.55);
 }
 
-.cancel-volDeduction-btn:hover {
+.cancel-voluntaryDeduction-btn:hover {
   background-color: rgb(172, 1, 1);
   box-shadow: 0px 2px 8px 0px rgba(62, 62, 62, 0.55);
 }
 
-.create-volDeduction-btn {
+.create-voluntaryDeduction-btn {
   background-color: darkgreen;
   padding: 10px;
   border-radius: 8px;
@@ -162,7 +162,7 @@
   font-size: 1.3rem;
 }
 
-.cancel-volDeduction-btn {
+.cancel-voluntaryDeduction-btn {
   background-color: darkred;
   padding: 10px;
   border-radius: 8px;
@@ -173,7 +173,7 @@
   font-size: 1.3rem;
 }
 
-.buttons-volDeduction {
+.buttons-voluntaryDeduction {
   display: flex;
   align-items: center;
   justify-content: center;
