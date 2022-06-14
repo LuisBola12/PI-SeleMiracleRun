@@ -4,7 +4,7 @@ import { getEmployerByID, getUserByEmail, verifyCredentials, registerNewUser, ge
 import { getEmployees, postNewEmployee, getEmployeeByID, verifyEmployeeContractOnProject } from '../controllers/employees.contoller';
 import { getVoluntaryDeductions, createNewVoluntaryDeduction, getVoluntaryDeductionsByName, updateVoluntaryDeduction, getEmployeeVoluntaryDeductionsByEmail} from '../controllers/voluntaryDeductions.controller';
 import { getTypeOfContracts } from '../controllers/contracts.controller';
-import { getBenefits, createBenefit, getBenefitsByName, updateBenefit, getEmployeeBenefitsByEmail } from '../controllers/benefits.controller';
+import { getBenefits, createBenefit, getBenefitsByName, updateBenefit, getEmployeeBenefitsByEmail, getOfferedBenefits } from '../controllers/benefits.controller';
 
 const router = Router();
 
@@ -34,7 +34,8 @@ router.post('/employee', postNewEmployee);
 router.get('/employee/:Cedula', getEmployeeByID);
 router.post('/employee/contract', verifyEmployeeContractOnProject);
 router.put('/updateEmployee',updateProfileEmployee);
-
+router.post('/employeesWithContractsOnOtherProyects',getEmployeesWithContractOnOtherProyects);
+router.post('/contractExistentEmployee',contractAEmployee);
 
 //Projects
 router.get('/projects/:Email/:Rol', getProjectsByEmail);
@@ -44,7 +45,8 @@ router.post('/projects', createProject);
 //Benefits
 router.get('/benefits/:Proyecto', getBenefits);
 router.get('/benefits/:Proyecto/:Nombre', getBenefitsByName);
-router.get('/myBenefits/:Proyecto/:Email', getEmployeeBenefitsByEmail)
+router.get('/myBenefits/:Proyecto/:Email', getEmployeeBenefitsByEmail);
+router.get('/offeredBenefits/:Proyecto/:Email', getOfferedBenefits);
 router.post('/benefits', createBenefit);
 router.put('/benefits/:NombreAntiguo', updateBenefit);
 

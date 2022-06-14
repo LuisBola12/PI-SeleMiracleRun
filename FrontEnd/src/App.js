@@ -25,7 +25,8 @@ import { Payroll } from './Pages/payroll';
 import { PayrollDetailsPage } from './Pages/payrollDetails';
 import { EmployeesBenefits } from './Pages/employeesBenefits';
 import { UserPage } from './Pages/userProfile';
-
+import { HireAEmployee } from './Pages/crudHireEmployees';
+import { HireEmployee } from './Pages/hireEmployee';
 function App() {
 
   const userRoll = useSelector((state) => state.user.user);
@@ -39,41 +40,42 @@ function App() {
         <Route path='register' element={<Register />} />
 
         {/* Routes for the employer */}
-        {userRoll && userRoll.Roles === 'admin' ?
-          (
-            <Route element={<PrivateRoute allowedRoles={['admin']} />}>
-              {/* <Route path='/' element={<SelectProject />} /> */}
-              <Route path='benefits' element={<Benefits />} />
-              <Route path='employees' element={<Employees />} />
-              <Route path='voluntaryDeductions' element={<VoluntaryDeductions />} />
-              <Route path='voluntaryDeductions/CreateVoluntaryDeductions' element={<CreateNewVoluntaryDeduction />} />
-              <Route path='voluntaryDeductions/editVoluntaryDeduction' element={<EditVoluntaryDeductions />} />
-              <Route path='projects' element={<SelectProject />} />
-              <Route path='contracts' element={<Contracts />} />
-              <Route path='userProfile' element={<UserPage />} />
-              <Route path='employees/CreateEmployee' element={<CreateNewEmployee />} />
-              <Route path='benefits/CreateBenefit' element={<CreateNewBenefit />} />
-              <Route path='benefits/editBenefit' element={<EditBenefits />} />
-              <Route path='newProjectForm' element={<CreateProjectsForm />} />
-              <Route path='payroll' element={<Payroll />} />
-              <Route path='payroll/details' element={<PayrollDetailsPage />} />
-              {/* quiter esto */}
-              <Route path='registerHours' element={<RegisterHours />} />
-              <Route path='myBenefits' element={<EmployeesBenefits />} />
-            </Route>
-          ) : (
-            <Route element={<PrivateRoute allowedRoles={['emp']} />}>
-              <Route path='home' element={<Home />} />
-              <Route path='projects' element={<SelectProject />} />
-              <Route path='registerHours' element={<RegisterHours />} />
-              <Route path='userProfile' element={<UserPage />} />
-              <Route path='myBenefits' element={<EmployeesBenefits />} />
-              <Route path='myVoluntaryDeductions' element={<EmployeesVoluntaryDeductions />} />
-            </Route>
-          )}
-
-
-
+        {userRoll && userRoll.Roles === 'admin' ? 
+        (
+          <Route element={<PrivateRoute allowedRoles={['admin']} />}>
+          {/* <Route path='/' element={<SelectProject />} /> */}
+            <Route path='benefits' element={<Benefits />} />
+            <Route path='employees' element={<Employees />} />
+            <Route path='volDeductions' element={<VolDeductions />} />
+            <Route path='volDeductions/CreateVolDeductions' element={<CreateNewVolDeduction />} />
+            <Route path='volDeductions/editVolDeduction' element={<EditVolDeductions />} />
+            <Route path='projectAdmin' element={<SelectProject />} />
+            <Route path='contracts' element={<Contracts />} />
+            <Route path='projects' element={<SelectProject />} />
+            <Route path='userProfile' element={<UserPage />} />
+            <Route path='employees/CreateEmployee' element={<CreateNewEmployee />} />
+            <Route path='employees/hireAEmployee' element={<HireAEmployee />} />
+            <Route path='employees/hireAEmployee/hire' element={<HireEmployee />} />
+            <Route path='benefits/CreateBenefit' element={<CreateNewBenefit />} />
+            <Route path='benefits/editBenefit' element={<EditBenefits />} />
+            <Route path='newProjectForm' element={<CreateProjectsForm />} />
+            <Route path='payroll'element={<Payroll/>}/>
+            <Route path='payroll/details' element={<PayrollDetailsPage />} />
+            {/* quiter esto */}
+            <Route path='registerHours' element={<RegisterHours />} />
+            <Route path='myBenefits' element={<EmployeesBenefits />} />
+          </Route>
+        ) : (
+          <Route element={<PrivateRoute allowedRoles={['emp']} />}>
+            <Route path='home' element={<Home />} />
+            <Route path='projectAdmin' element={<SelectProject />} />
+            <Route path='registerHours' element={<RegisterHours />} />
+            <Route path='projects' element={<SelectProject />} />
+            <Route path='userProfile' element={<UserPage />} />
+            <Route path='myBenefits' element={<EmployeesBenefits />} />
+            <Route path='myVoluntaryDeductions' element={<EmployeesVoluntaryDeductions />} />
+          </Route>
+        ) }
       </Routes>
     </Router>
   );
