@@ -1,7 +1,9 @@
 import { Router } from 'express';
 import { getProjectsByEmail, createProject } from '../controllers/projects.controller';
-import { getEmployerByID, getUserByEmail, verifyCredentials, registerNewUser, getProfileEmployeer, getProfileEmployee, updateProfileEmployeer, updateProfileEmployee } from '../controllers/users.controller';
-import { getEmployees, postNewEmployee, getEmployeeByID, verifyEmployeeContractOnProject } from '../controllers/employees.contoller';
+import { getEmployees, postNewEmployee, getEmployeeByID, verifyEmployeeContractOnProject,
+    getEmployeesWithContractOnOtherProyects,contractAEmployee} from '../controllers/employees.contoller';
+import { getEmployerByID, getUserByEmail, verifyCredentials, registerNewUser, 
+    getProfileEmployeer, getProfileEmployee, updateProfileEmployeer, updateProfileEmployee } from '../controllers/users.controller';
 import { getVoluntaryDeductions, createNewVoluntaryDeduction, getVoluntaryDeductionsByName, updateVoluntaryDeduction, getEmployeeVoluntaryDeductionsByEmail} from '../controllers/voluntaryDeductions.controller';
 import { getTypeOfContracts } from '../controllers/contracts.controller';
 import { getBenefits, createBenefit, getBenefitsByName, updateBenefit, getEmployeeBenefitsByEmail, getOfferedBenefits } from '../controllers/benefits.controller';
