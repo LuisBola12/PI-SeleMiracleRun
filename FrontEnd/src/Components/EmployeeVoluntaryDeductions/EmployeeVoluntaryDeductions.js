@@ -9,7 +9,7 @@ export const EmployeeVoluntaryDeductions = () => {
   const { projectVoluntaryDeductions, infoReceived } = useGetVoluntaryDeductionsFromDatabase();
   const { EmployeeVoluntaryDeductions, EmployeeInfo } = useGetEmployeeVoluntaryDeductions();
   const handleAddButton = (element) => {
-
+  
   };
   return (
     <>
@@ -28,8 +28,8 @@ export const EmployeeVoluntaryDeductions = () => {
             <tbody>
               {EmployeeVoluntaryDeductions.map((element) => (
                 <tr key={element.Nombre}>
-                  <td className='left-td table-left-border voluntaryDeduction-name'>{element.Nombre}</td>
-                  <td className='description-cell left-td'>{((element.Descripcion) ? element.Descripción : 'No description')}</td>
+                  <td className='left-td table-left-border voluntaryDeduction-name'>{element.NombreDeduccion}</td>
+                  <td className='description-cell left-td'>{((element.Descripcion) ? element.Descripcion : 'No description')}</td>
                   <td className='right-td'>₡ {transformCost(element.Costo)}</td>
                   <td className='right-button table-right-border'>
                     <button className='button cancel-button' > Delete </button>
@@ -37,7 +37,7 @@ export const EmployeeVoluntaryDeductions = () => {
                 </tr>
               ))}
             </tbody>
-            </table>
+          </table>
           <label className='Empty-message'>{(EmployeeVoluntaryDeductions.length === 0) ? 'No voluntary deductions selected added yet' : ''}</label>
         </>)}
 
