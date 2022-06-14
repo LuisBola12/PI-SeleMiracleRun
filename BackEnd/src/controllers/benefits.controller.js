@@ -93,3 +93,19 @@ export const updateBenefit = async (req, res) => {
     res.status(500).send(e.message);
   }
 };
+
+export const getCostTotalBenefits = async (req, res) => {
+  const { Email, Proyecto } = req.params;
+  try {
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input('Email', Email)
+      .input('Proyecto', Proyecto)
+      .query(benefitsQueries.getCostTotalBenefits);
+    res.json(result.recordset);
+    console.log(result.recordset);
+  } catch (e) {
+    res.status(500);
+    res.send(e.message);
+  }
+};

@@ -10,4 +10,7 @@ export const benefitsQueries = {
   join Beneficios b on b.Nombre = eb.NombreBeneficio 
   and b.NombreProyecto = eb.NombreProyecto 
   where e.Email = @Email and p.Nombre = @Proyecto`,
+  getCostTotalBenefits: 'SELECT DBO.calcularTotalBeneficiosDeEmpleado (@Email, @Proyecto) As CostoTotal',
+  insertTotalBenefitsInPayRoll: `INSERT INTO PagoContieneBeneficios(ConsecutivoPlanilla, CedulaEmpleador, ConsecutivoPago, NombreBeneficio, NombreProyecto, MontoBeneficio)
+                            VALUES (@ConsecutivoPlanilla, @CedulaEmpleador, @ConsecutivoPago, @NombreBeneficio, @NombreProyecto, @MontoDeduccion)`
 };

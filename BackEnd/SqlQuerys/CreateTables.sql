@@ -138,4 +138,9 @@ Insert into EmpleadoYContratoSeAsocianAProyecto(CedulaEmpleado,TipoContrato,Nomb
 values ('187612921','Medio Tiempo','Radiadores Solceri',7000,'2022-08-12','2025-05-12');
 
 
-Select e.Nombre, e.Apellido1, e.Apellido2, e.Cedula,e.Email, ecp.TipoContrato from  Empleado e inner join EmpleadoYContratoSeAsocianAProyecto ecp on e.Cedula = ecp.CedulaEmpleado AND ecp.NombreProyecto = 'Radiadores Solceri';
+Select e.Nombre, e.Apellido1, e.Apellido2, e.Cedula,e.Email, ecp.TipoContrato 
+from  Empleado e 
+inner join EmpleadoYContratoSeAsocianAProyecto ecp on e.Cedula = ecp.CedulaEmpleado 
+			AND ecp.NombreProyecto = 'Radiadores Solceri';
+
+
