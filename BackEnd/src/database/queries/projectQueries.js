@@ -33,7 +33,7 @@ export const projectQueries = {
     ,[NombreProyecto]
     ,[Cantidad]
     ,[Fecha]
-    FROM [SeleMiracleRun].[dbo].[EmpleadoRegistraHorasEnProyecto]
+    FROM [SeleMiracleRun].[dbo].[HorasRegistradas]
     WHERE NombreProyecto = @projectName AND CedulaEmpleado = @employeeId `,
 
 
