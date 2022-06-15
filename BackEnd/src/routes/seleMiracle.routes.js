@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { getProjectsByEmail, createProject, createPayrroll } from '../controllers/projects.controller';
 import {
   getEmployees, postNewEmployee, getEmployeeByID, verifyEmployeeContractOnProject,
-  getEmployeesWithContractOnOtherProyects, contractAEmployee, setHoursEmployee, deleteEmployeeFromProject
+  getEmployeesWithContractOnOtherProyects, contractAEmployee, setHoursEmployee, deleteEmployeeFromProject, getEmployeesAllInfo
 } from '../controllers/employees.contoller';
 import {
   getEmployerByID, getUserByEmail, verifyCredentials, registerNewUser,
@@ -47,6 +47,8 @@ router.post( '/contractExistentEmployee', contractAEmployee );
 router.delete( '/deleteEmployeeFromProject', deleteEmployeeFromProject );
 router.post( '/employee/hours', setHoursEmployee );
 router.post( '/CostTotalBenefits', CostTotalBenefits );
+
+router.get( '/getEmployeesInfo/:projectName', getEmployeesAllInfo );
 
 //Projects
 router.get( '/projects/:Email/:Rol', getProjectsByEmail );
