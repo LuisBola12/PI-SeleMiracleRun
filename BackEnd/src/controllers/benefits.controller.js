@@ -76,6 +76,7 @@ export const linkEmployeeToBenefit = async (req, res) => {
       .input('NombreBeneficio', sql.VarChar, NombreBeneficio)
       .execute('vincularBeneficioEmpleado');
     console.log(result);
+    res.json({ Nombre, CostoActual });
   } catch (e) {
     console.log(`Error: ${e}`);
     res.status(500).send(e.message);
@@ -97,8 +98,7 @@ export const unlinkEmployeeToBenefit = async (req, res) => {
     console.log(`Error: ${e}`);
     res.status(500).send(e.message);
   }
-};
-
+}
 
 
 export const createBenefit = async (req, res) => {
@@ -145,5 +145,23 @@ export const updateBenefit = async (req, res) => {
   } catch (e) {
     console.log(`Error: ${e}`);
     res.status(500).send(e.message);
+  }
+};
+
+export const CostTotalBenefits = async (infoBenefits) => {
+  const { Email, Proyecto, ConsecutivoPlanilla, ConsecutivoPago } = infoBenefits.body;
+  try {
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input('Email', Email)
+      .input('Proyecto', Proyecto)
+      .input('ConsecutivoPlanilla', ConsecutivoPlanilla)
+      .input('ConsecutivoPago', ConsecutivoPago)
+      .execute('calcularTotalBeneficiosDeEmpleado');
+    console.log(result.recordset);
+    return result.recordset;
+  } catch (e) {
+    console.log(e);
+    return undefined;
   }
 };
