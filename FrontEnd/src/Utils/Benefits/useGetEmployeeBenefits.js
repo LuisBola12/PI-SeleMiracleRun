@@ -14,8 +14,8 @@ export const useGetEmployeeBenefits = () => {
       setEmployeeInfo(true);
     };
     getBenefits();
-  }, []);
+  }, [EmployeeInfo]);
   return {
-    EmployeeBenefits, EmployeeInfo
+    EmployeeBenefits, EmployeeInfo, setEmployeeInfo
   };
 };

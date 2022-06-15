@@ -49,12 +49,12 @@ Create Table DeduccionesObligatorias(
 	PorcentajeEmpleado float not null,
 	primary key(Nombre)
 );
-Create Table EmpleadoRegistraHorasEnProyecto(
+Create Table HorasRegistradas(
 	CedulaEmpleado varchar(15),
 	NombreProyecto varchar(50),
 	Cantidad tinyint not null,
 	Fecha Date,
-	primary key(CedulaEmpleado,NombreProyecto),
+	primary key(CedulaEmpleado,NombreProyecto, Fecha),
 	foreign key(CedulaEmpleado) references Empleado(Cedula),
 	foreign key(NombreProyecto) references Proyecto(Nombre),
 );
@@ -101,15 +101,46 @@ Create table EmpleadoYContratoSeAsocianAProyecto(
 	foreign key(NombreProyecto) references Proyecto(Nombre)
 );
 
-Create Table EmpleadoGozaBeneficios(
+Create Table BeneficioElegido(
     CedulaEmpleado varchar(15),
     NombreBeneficio varchar(50),
 	NombreProyecto varchar(50),
-    fechaInicio Date,
-    fechaFin Date,
-    primary key(CedulaEmpleado, NombreBeneficio, NombreProyecto),
+    fechaInicio DateTime,
+    fechaFin DateTime,
+    primary key(CedulaEmpleado, NombreBeneficio, NombreProyecto,FechaInicio),
     foreign key(CedulaEmpleado) references Empleado(Cedula),
     foreign key(NombreProyecto, NombreBeneficio) references Beneficios(NombreProyecto, Nombre) on update cascade
+);
+Create Table DeduccionVoluntariaElegida(
+    CedulaEmpleado varchar(15),
+    NombreDeduccionVoluntaria varchar(50),
+	NombreProyecto varchar(50),
+    FechaInicio DateTime,
+    FechaFin DateTime,
+    primary key(CedulaEmpleado, NombreDeduccionVoluntaria, NombreProyecto,FechaInicio),
+    foreign key(CedulaEmpleado) references Empleado(Cedula),
+    foreign key(NombreDeduccionVoluntaria,NombreProyecto) references DeduccionesVoluntarias(Nombre, NombreProyecto) on update cascade
+);
+
+Create Table ContratoSujetoADeduccionesObligatorias(
+	TipoJornada varchar(30),
+	NombreDeduccionObligatoria varchar(50),
+	primary key(TipoJornada, NombreDeduccionObligatoria),
+	foreign key(TipoJornada) references Contrato(TipoJornada),
+	foreign key(NombreDeduccionObligatoria) references DeduccionesObligatorias(Nombre)
+);
+
+Create Table PagoAplicaDeduccionesObligatorias(
+	ConsecutivoPlanilla int,
+	CedulaEmpleador varchar(15),
+	ConsecutivoPago int,
+	NombreDeduccionObligatoria varchar(50),
+	NombreProyecto varchar(50),
+	MontoEmpleador float ,
+	MontoEmpleado float ,
+	primary key(ConsecutivoPlanilla, CedulaEmpleador, ConsecutivoPago,NombreDeduccionObligatoria , NombreProyecto),
+	foreign key(ConsecutivoPago, ConsecutivoPlanilla, CedulaEmpleador) references Pago(ConsecutivoPago, ConsecutivoPlanilla, CedulaEmpleador)on delete cascade,
+	foreign key( NombreDeduccionObligatoria ) references DeduccionesObligatorias (Nombre),
 );
 
 Create Table Planilla(
