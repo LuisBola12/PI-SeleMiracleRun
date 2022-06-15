@@ -1,5 +1,6 @@
 import { getConnection, sql } from '../database';
 import { projectQueries } from '../database/queries/projectQueries';
+import { eliminateTimeFromDate, isInDateRange } from '../utils/dateManager';
 import { payrollQueries } from './../database/queries/payrollQueries';
 
 export const getProjectsByEmail = async ( req, res ) => {
@@ -41,14 +42,6 @@ export const createProject = async ( req, res ) => {
 
 
 
-const eliminateTimeFromDate = ( date ) => {
-  let extractedDate = date;
-  let year = date.getFullYear();
-  let month = date.getMonth();
-  let day = date.getDate();
-  extractedDate = new Date( year, month, day  , 0,0,0,0 );
-  return extractedDate;
-};
 
 
 export const getEmployeesWorkingData = async ( projectName ) => {
@@ -83,12 +76,10 @@ export const getHourlyEmployeeRegisteredWork = async ( employeeID, projectName, 
 
   const preProcessedWorkedHours = await getHourlyEmployeeWorkedHours( employeeID, projectName );
   const today = eliminateTimeFromDate( new Date() );
-  //TODO:Hasta aca todo bien
   let dayOneOfPayment = eliminateTimeFromDate( new Date() );
   let entrysInsidePeriod = [];
   if ( preProcessedWorkedHours ) {
- 
-    for ( let index = 0; index < preProcessedWorkedHours.length(); index++ ) {
+    for ( let index = 0; index < preProcessedWorkedHours.length; index++ ) {
       const { Fecha:workDate  } = preProcessedWorkedHours[index];
 
       switch ( paymentPeriod ) {
@@ -148,13 +139,6 @@ const calculateFullTimeWorkedHours = (  paymentPeriod ) => {
   return hoursWorked;
 };
 
-const isInDateRange = ( initialDate, finalDate, dateToVerify ) =>{
-  initialDate = eliminateTimeFromDate( initialDate );
-  finalDate = eliminateTimeFromDate( finalDate );
-  dateToVerify = eliminateTimeFromDate( dateToVerify );
-
-  return ( initialDate <= dateToVerify <= finalDate );
-};
 
 const hasWorkedLongEnough = ( contractStartDate, paymentPeriod ) =>{
   contractStartDate = eliminateTimeFromDate( contractStartDate );
