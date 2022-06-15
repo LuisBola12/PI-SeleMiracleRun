@@ -35,6 +35,7 @@ export const getEmployees = async (req, res) => {
     res.send(e.message);
   }
 };
+
 export const verifyEmployeeContractOnProject = async (req, res) => {
   try {
     const { Cedula, Proyecto } = req.body;
