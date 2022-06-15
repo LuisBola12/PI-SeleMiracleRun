@@ -1,15 +1,14 @@
 import React from 'react';
 import '../../App.css';
 import { transformCost } from '../../shared/moneyFormatTransform';
-import { useGetVoluntaryDeductionsFromDatabase } from '../../Utils/VoluntaryDeductions/useGetVoluntaryDeductionsFromDatabase';
-import { useState } from 'react';
+import { useGetOfferedVoluntaryDeductions } from '../../Utils/VoluntaryDeductions/useGetOfferedVoluntaryDeductions';
 import { useGetEmployeeVoluntaryDeductions } from '../../Utils/VoluntaryDeductions/useGetEmployeeVoluntaryDeductions';
 
 export const EmployeeVoluntaryDeductions = () => {
-  const { projectVoluntaryDeductions, infoReceived } = useGetVoluntaryDeductionsFromDatabase();
-  const { EmployeeVoluntaryDeductions, EmployeeInfo } = useGetEmployeeVoluntaryDeductions();
+  const { offeredVoluntaryDeductions, offeredInfo, setofferedInfo } = useGetOfferedVoluntaryDeductions();
+  const { EmployeeVoluntaryDeductions, EmployeeInfo, setEmployeeInfo } = useGetEmployeeVoluntaryDeductions();
   const handleAddButton = (element) => {
-  
+
   };
   return (
     <>
@@ -41,7 +40,7 @@ export const EmployeeVoluntaryDeductions = () => {
           <label className='Empty-message'>{(EmployeeVoluntaryDeductions.length === 0) ? 'No voluntary deductions selected added yet' : ''}</label>
         </>)}
 
-      {!infoReceived ? (<div className='loader' ></div >) : (
+      {!offeredInfo ? (<div className='loader' ></div >) : (
         <>
           <h2 className='offer-voluntaryDeductions'> Offered Voluntary Deductions</h2>
           <table className='Table'>
@@ -54,7 +53,7 @@ export const EmployeeVoluntaryDeductions = () => {
               </tr>
             </thead>
             <tbody>
-              {projectVoluntaryDeductions.map((element) => (
+              {offeredVoluntaryDeductions.map((element) => (
                 <tr key={element.Nombre}>
                   <>
                     <td className='left-td table-left-border voluntaryDeduction-name'>{element.Nombre}</td>
@@ -68,7 +67,7 @@ export const EmployeeVoluntaryDeductions = () => {
               ))}
             </tbody>
           </table>
-          <label className='Empty-message'>{(projectVoluntaryDeductions.length === 0) ? 'No voluntary deductions added added yet' : ''}</label>
+          <label className='Empty-message'>{(offeredVoluntaryDeductions.length === 0) ? 'No voluntary deductions added added yet' : ''}</label>
         </>)}
     </>
   );

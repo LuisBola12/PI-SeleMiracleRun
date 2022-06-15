@@ -24,7 +24,7 @@
 
 @apiDeleteEmployeeFromProject = http://localhost:4000/deleteEmployeeFromProject
 
-
+@apiOfferedVoluntaryDeductions = http://localhost:4000/offeredVoluntaryDeductions
 
 
 DELETE {{apiDeleteEmployeeFromProject}}
@@ -163,7 +163,7 @@ GET {{apiContracts}}
 ###
 GET {{apiMyBenefits}}/Taquería Milagro/javier.Mo@gmail.com
 ###
-GET {{apiMyVoluntaryDeductions}}/Taquería Milagro/javier.Mo@gmail.com
+GET {{apiOfferedVoluntaryDeductions}}/Taquería Milagro/javier.Mo@gmail.com
 
 ###
 POST {{apiBenefits}}

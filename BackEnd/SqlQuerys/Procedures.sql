@@ -133,3 +133,37 @@ BEGIN
   and b.Nombre not in (select Nombre from @offeredBenefits)
 END;
 GO
+
+CREATE PROCEDURE getEmployeeVoluntaryDeductions
+  @Email VARCHAR(50),
+  @Proyecto VARCHAR(50)
+as 
+BEGIN
+  DECLARE @fechaFin DATETIME;
+  DECLARE @cedula VARCHAR(15);
+
+  SELECT @cedula = Cedula From Empleado WHERE Email = @Email;
+
+  SELECT @fechaFin = FechaFin from EmpleadoYContratoSeAsocianAProyecto ec
+  WHERE ec.CedulaEmpleado = @cedula and ec.NombreProyecto = @Proyecto;
+
+  SELECT dve.NombreDeduccionVoluntaria, dv.Costo, dv.Descripcion from Empleado e
+  JOIN DeduccionVoluntariaElegida dve on e.Cedula = dve.CedulaEmpleado
+  JOIN DeduccionesVoluntarias dv on dve.NombreDeduccionVoluntaria = dv.Nombre and dve.NombreProyecto = dv.NombreProyecto
+  JOIN Proyecto p on dv.NombreProyecto = p.Nombre 
+  where e.Email = @Email and p.Nombre = @Proyecto and @fechaFin > GETDATE();
+  
+END;
+GO
+
+CREATE PROCEDURE getOfferedVoluntaryDeductions 
+  @Email VARCHAR(50),
+  @Proyecto VARCHAR(50)
+AS 
+BEGIN
+  DECLARE @offeredVoluntaryDeductions TABLE(Nombre VARCHAR(50), Costo real, Descripcion VARCHAR(300));
+  INSERT into @offeredVoluntaryDeductions EXEC getEmployeeVoluntaryDeductions @Email = @Email, @Proyecto = @Proyecto;
+  SELECT dv.Nombre, dv.Costo, dv.Descripcion from DeduccionesVoluntarias dv where dv.NombreProyecto = @Proyecto
+  and dv.Nombre not in (select Nombre from @offeredVoluntaryDeductions)
+END;
+GO
