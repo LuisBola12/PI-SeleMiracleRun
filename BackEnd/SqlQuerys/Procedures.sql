@@ -181,3 +181,50 @@ BEGIN
   and dv.Nombre not in (select Nombre from @offeredVoluntaryDeductions)
 END;
 GO
+
+CREATE PROCEDURE ObtenerBeneficiosEmpleado(
+				@Email VARCHAR(50),
+				@Proyecto VARCHAR(50)
+)
+AS
+BEGIN
+	SELECT P.CedulaEmpleador, B.Nombre, P.Nombre, B.CostoActual
+	FROM Usuarios U
+	JOIN Empleado E ON U.Email = E.Email
+		JOIN BeneficioElegido BE ON E.Cedula = BE.CedulaEmpleado
+			JOIN Beneficios B ON	BE.NombreBeneficio = B.Nombre and
+												BE.NombreProyecto = B.NombreProyecto		
+				JOIN Proyecto P ON B.NombreProyecto = P.Nombre
+	where U.Email = @Email AND P.Nombre = @Proyecto AND BE.FechaFin > GETDATE()
+END;
+
+CREATE PROCEDURE calcularTotalBeneficiosDeEmpleado (
+				@Email VARCHAR(50),
+				@Proyecto VARCHAR(50),
+				@ConsecutivoPlanilla int,
+				@ConsecutivoPago int
+) 
+AS
+BEGIN
+	DECLARE @Resultados TABLE(CedulaEmpleador VARCHAR(15),NombreBeneficio VARCHAR(50), NombreProyecto VARCHAR(50), CostoBeneficio real)
+	DECLARE @CedulaEmpleador VARCHAR(15), @NombreBeneficio VARCHAR(50), @NombreProyecto VARCHAR(50), @CostoBeneficio real
+	INSERT INTO @Resultados EXEC ObtenerBeneficiosEmpleado @Email = @Email, @Proyecto = @Proyecto
+
+	DECLARE cursor__ CURSOR FOR
+	SELECT R.CedulaEmpleador, R.NombreBeneficio, R.NombreProyecto, R.CostoBeneficio
+	FROM @Resultados R;
+	OPEN cursor__
+
+	FETCH NEXT FROM cursor__ INTO @CedulaEmpleador , @NombreBeneficio , @NombreProyecto , @CostoBeneficio
+	WHILE @@FETCH_STATUS = 0 
+		BEGIN
+			INSERT INTO PagoContieneBeneficios(ConsecutivoPlanilla, CedulaEmpleador, ConsecutivoPago, NombreBeneficio, NombreProyecto, MontoBeneficio)
+			VALUES (@ConsecutivoPlanilla, @CedulaEmpleador, @ConsecutivoPago, @NombreBeneficio, @NombreProyecto, @CostoBeneficio)
+		
+			FETCH NEXT FROM cursor__ INTO @CedulaEmpleador , @NombreBeneficio , @NombreProyecto , @CostoBeneficio
+		END;
+
+	SELECT SUM(R.CostoBeneficio) CostoDeduccion
+	FROM @Resultados R
+
+END;

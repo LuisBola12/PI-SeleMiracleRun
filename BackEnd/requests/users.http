@@ -15,19 +15,13 @@
 @apiVerifyUser =  http://localhost:4000/verifyUser
 @apiEmployer =  http://localhost:4000/employer
 @apiContracts = http://localhost:4000/typeContracts
-@apiTotalCostBenefits = http://localhost:4000/getCostTotalBenefits
+@apiTotalCostBenefits = http://localhost:4000/CostTotalBenefits
 @apiEmployeeWithContractOnOtherProyects = http://localhost:4000/employeesWithContractsOnOtherProyects
 @apiContractEmployee = http://localhost:4000/contractExistentEmployee
 @apaSetHours = http://localhost:4000/employee/hours
-
-
 @apiCreatePayrroll = http://localhost:4000/getProjectPeriod
-
 @apiDeleteEmployeeFromProject = http://localhost:4000/deleteEmployeeFromProject
-
 @apiPagoPruebas = http://localhost:4000/pago
-
-
 @apiOfferedVoluntaryDeductions = http://localhost:4000/offeredVoluntaryDeductions
 
 
@@ -244,8 +238,17 @@ Content-Type: application/json
 }
 
 ### 
-GET {{apiTotalCostBenefits}}/javier.Mo@gmail.com/Taquería Milagro
+POST {{apiTotalCostBenefits}}
+Content-Type: application/json
 
+{
+  "Email": "javier.Mo@gmail.com", 
+  "Proyecto": "Taquería Milagro", 
+  "ConsecutivoPlanilla": 1, 
+  "ConsecutivoPago" : 1
+}
+
+### 
 POST {{apiPagoPruebas}}
 Content-Type: application/json
 

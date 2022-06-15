@@ -132,18 +132,20 @@ export const updateBenefit = async ( req, res ) => {
   }
 };
 
-export const getCostTotalBenefits = async ( req, res ) => {
-  const { Email, Proyecto } = req.params;
+export const CostTotalBenefits = async ( infoBenefits ) => {
+  const { Email, Proyecto, ConsecutivoPlanilla, ConsecutivoPago } = infoBenefits.body;
   try {
     const pool = await getConnection();
     const result = await pool.request()
       .input( 'Email', Email )
       .input( 'Proyecto', Proyecto )
-      .query( benefitsQueries.getCostTotalBenefits );
-    res.json( result.recordset );
+      .input( 'ConsecutivoPlanilla', ConsecutivoPlanilla )
+      .input( 'ConsecutivoPago', ConsecutivoPago )
+      .execute( 'calcularTotalBeneficiosDeEmpleado' );
     console.log( result.recordset );
+    return result.recordset;
   } catch ( e ) {
-    res.status( 500 );
-    res.send( e.message );
+    console.log( e );
+    return undefined;
   }
 };
