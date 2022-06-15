@@ -131,6 +131,27 @@ Create Table DeduccionVoluntariaElegida(
     foreign key(NombreDeduccionVoluntaria,NombreProyecto) references DeduccionesVoluntarias(Nombre, NombreProyecto) on update cascade
 );
 
+Create Table ContratoSujetoADeduccionesObligatorias(
+	TipoJornada varchar(30),
+	NombreDeduccionObligatoria varchar(50),
+	primary key(TipoJornada, NombreDeduccionObligatoria),
+	foreign key(TipoJornada) references Contrato(TipoJornada),
+	foreign key(NombreDeduccionObligatoria) references DeduccionesObligatorias(Nombre)
+);
+
+Create Table PagoAplicaDeduccionesObligatorias(
+	ConsecutivoPlanilla int,
+	CedulaEmpleador varchar(15),
+	ConsecutivoPago int,
+	NombreDeduccionObligatoria varchar(50),
+	NombreProyecto varchar(50),
+	MontoEmpleador float ,
+	MontoEmpleado float ,
+	primary key(ConsecutivoPlanilla, CedulaEmpleador, ConsecutivoPago,NombreDeduccionObligatoria , NombreProyecto),
+	foreign key(ConsecutivoPago, ConsecutivoPlanilla, CedulaEmpleador) references Pago(ConsecutivoPago, ConsecutivoPlanilla, CedulaEmpleador)on delete cascade,
+	foreign key( NombreDeduccionObligatoria ) references DeduccionesObligatorias (Nombre),
+);
+
 
 SELECT * FROM Empleado;
 

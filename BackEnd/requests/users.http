@@ -24,6 +24,9 @@
 
 @apiDeleteEmployeeFromProject = http://localhost:4000/deleteEmployeeFromProject
 
+@apiPagoPruebas = http://localhost:4000/pago
+
+
 @apiOfferedVoluntaryDeductions = http://localhost:4000/offeredVoluntaryDeductions
 
 
@@ -237,4 +240,19 @@ Content-Type: application/json
   "NombreProyecto": "Taquería Milagro",
   "CostoActual": 20000,
   "Descripción": "Esto es una prueba de la edición"
+}
+
+### 
+
+POST {{apiPagoPruebas}}
+Content-Type: application/json
+
+{
+    "CedulaEmpleado": "208010869",
+    "CedulaEmpleador": "608110776",
+    "NombreProyecto": "Taquería Milagro",
+    "SalarioBruto": "800000",
+    "TipoJornada" : "Semanal",
+    "ConsecutivoPlanilla": 1,
+    "ConsecutivoPago": 1
 }
