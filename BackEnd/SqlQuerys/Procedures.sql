@@ -262,12 +262,6 @@ BEGIN
 	where U.Email = @Email AND P.Nombre = @Proyecto AND DVE.FechaFin > GETDATE()
 END;
 
-DROP PROCEDURE ObtenerDeduccionesVoluntariasEmpleado
-
-EXEC ObtenerDeduccionesVoluntariasEmpleado @Email = 'javier.Mo@gmail.com' , @Proyecto = 'Taquería Milagro'
-
-EXEC calcularTotalDeduccionesVoluntariasDeEmpleado @Email = 'javier.Mo@gmail.com' , @Proyecto = 'Taquería Milagro', @ConsecutivoPlanilla = 1, @ConsecutivoPago = 1
-
 CREATE PROCEDURE calcularTotalDeduccionesVoluntariasDeEmpleado (
 				@Email VARCHAR(50),
 				@Proyecto VARCHAR(50),
