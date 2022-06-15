@@ -8,7 +8,7 @@ import {
   getEmployerByID, getUserByEmail, verifyCredentials, registerNewUser,
   getProfileEmployeer, getProfileEmployee, updateProfileEmployeer, updateProfileEmployee
 } from '../controllers/users.controller';
-import { getVoluntaryDeductions, createNewVoluntaryDeduction, getVoluntaryDeductionsByName, updateVoluntaryDeduction, getEmployeeVoluntaryDeductionsByEmail, getOfferedVoluntaryDeductions } from '../controllers/voluntaryDeductions.controller';
+import { getVoluntaryDeductions, createNewVoluntaryDeduction, getVoluntaryDeductionsByName, updateVoluntaryDeduction, getEmployeeVoluntaryDeductionsByEmail, getOfferedVoluntaryDeductions, CostTotalVoluntaryDeductions } from '../controllers/voluntaryDeductions.controller';
 import { getTypeOfContracts } from '../controllers/contracts.controller';
 import { getBenefits, createBenefit, getBenefitsByName, updateBenefit, getEmployeeBenefitsByEmail, CostTotalBenefits, getOfferedBenefits, linkEmployeeToBenefit } from '../controllers/benefits.controller';
 import { ObligatoryDeductionsPayRoll } from '../controllers/payrollController';
@@ -46,7 +46,6 @@ router.post( '/employeesWithContractsOnOtherProyects', getEmployeesWithContractO
 router.post( '/contractExistentEmployee', contractAEmployee );
 router.delete( '/deleteEmployeeFromProject', deleteEmployeeFromProject );
 router.post( '/employee/hours', setHoursEmployee );
-router.post( '/CostTotalBenefits', CostTotalBenefits );
 
 //Projects
 router.get( '/projects/:Email/:Rol', getProjectsByEmail );
@@ -73,4 +72,6 @@ router.get( '/offeredVoluntaryDeductions/:Proyecto/:Email', getOfferedVoluntaryD
 
 // Pago Pruebas 
 router.post( '/pago', ObligatoryDeductionsPayRoll );
+router.post( '/CostTotalBenefits', CostTotalBenefits );
+router.post( '/CostTotalVoluntaryDeductions', CostTotalVoluntaryDeductions );
 export default router;
