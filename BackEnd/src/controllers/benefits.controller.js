@@ -38,7 +38,7 @@ export const getEmployeeBenefitsByEmail = async (req, res) => {
     const result = await pool.request()
       .input('Email', Email)
       .input('Proyecto', Proyecto)
-      .query(benefitsQueries.getEmployeeBenefitsByEmail);
+      .execute('getEmployeeBenefits');
     res.json(result.recordset);
     console.log(result.recordset);
   } catch (e) {
@@ -55,7 +55,7 @@ export const getOfferedBenefits = async (req, res) => {
     const result = await pool.request()
       .input('Email', Email)
       .input('Proyecto', Proyecto)
-      .query(benefitsQueries.getOfferedBenefits);
+      .execute('getOfferedBenefits');
     res.json(result.recordset);
     console.log(result.recordset);
   } catch (e) {

@@ -65,3 +65,37 @@ BEGIN
 
 END;
 GO
+
+CREATE PROCEDURE getEmployeeBenefits 
+  @Email VARCHAR(50),
+  @Proyecto VARCHAR(50)
+as 
+BEGIN
+  DECLARE @fechaFin DATETIME;
+  DECLARE @cedula VARCHAR(15);
+
+  SELECT @cedula = Cedula From Empleado WHERE Email = @Email;
+
+  SELECT @fechaFin = FechaFin from EmpleadoYContratoSeAsocianAProyecto ec
+  WHERE ec.CedulaEmpleado = @cedula and ec.NombreProyecto = @Proyecto;
+
+  SELECT be.NombreBeneficio, b.CostoActual, b.Descripción from Empleado e
+  JOIN BeneficioElegido be on e.Cedula = be.CedulaEmpleado
+  JOIN Beneficios b on be.NombreBeneficio = b.Nombre and be.NombreProyecto = b.NombreProyecto
+  JOIN Proyecto p on b.NombreProyecto = p.Nombre 
+  where e.Email = @Email and p.Nombre = @Proyecto and @fechaFin > GETDATE();
+  
+END;
+GO
+
+CREATE PROCEDURE getOfferedBenefits 
+  @Email VARCHAR(50),
+  @Proyecto VARCHAR(50)
+AS 
+BEGIN
+  DECLARE @offeredBenefits TABLE(Nombre VARCHAR(50), CostoActual real, Descripción VARCHAR(300));
+  INSERT into @offeredBenefits EXEC getEmployeeBenefits @Email = @Email, @Proyecto = @Proyecto;
+  SELECT b.Nombre, b.CostoActual, b.Descripción from Beneficios b where b.NombreProyecto = @Proyecto
+  and b.Nombre not in (select Nombre from @offeredBenefits)
+END;
+GO
