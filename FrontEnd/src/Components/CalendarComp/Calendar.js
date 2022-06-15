@@ -1,36 +1,46 @@
-import { useState } from 'react'
+import { useState} from 'react'
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './calendarStyle.scss';
 import React from 'react';
 import {Modal, Button, Form} from 'react-bootstrap';
-import useForm from '../../shared/hooks/useForm';
 import validate from './calendarValidations';
+import usePost from '../../shared/hooks/usePost';
+import { useSelector } from 'react-redux';
 
 export const CalendarComp = () => {
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
+  const [hours, setHours] = useState('');
+  const { post } = usePost('http://localhost:4000/employee/hours');
   const dateMin = null;
-  const sendToDatabase = () =>{
-    setIsSubmitting(false);
-  }
-
-  const { formValues, handleInputChange, handleSubmit, setIsSubmitting, errors, setErrors } = useForm(sendToDatabase, validate);
+  const dateToString = () => {
+    return `${date.getFullYear()}/${date.getMonth()+1}/${date.getDay()}`
+  };
+  const userEmail = useSelector((state) => state.user.user.Email);
+  const proyecto = useSelector((state) => state.activeProject.projectName);
 
   const handleClose = () => {
-    setErrors({});
     setShow(false);
+    setHours('');
   }
   
   const handleShow = () => {
     setShow(true);
   }
 
-  const handleSave = async () => {
-    handleSubmit();
-    let error = JSON.stringify(errors);
-    if(error === '{}' ){
-      setShow(false);
+  const handleSave = () => {
+    const actualDate = dateToString(date);
+    if (validate(hours) === false){
+      let string = '';
+      string = JSON.stringify({
+        Email: userEmail,
+        Proyecto: proyecto,
+        Fecha: actualDate,
+        CantidadHoras: hours
+      });
+      post(string);
+      handleClose();
     }
   }
 
@@ -66,13 +76,13 @@ export const CalendarComp = () => {
               <Form.Control
                 id = 'calendar_hours'
                 type = 'text'
-                value = {formValues.hours}
-                onChange = {handleInputChange}
+                value = {hours}
+                onChange = {(e) => {setHours(e.target.value);}}
                 placeholder='Hours'
                 autoFocus
               />
               <div>
-                <label className='calendar-error' id='calendar_error_name'>{errors.calendar_hours}</label>
+                <label className='calendar-error' id='calendar_error_name'></label>
             </div>
             </Form.Group>
           </Form>

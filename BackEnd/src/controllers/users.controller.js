@@ -59,7 +59,7 @@ export const verifyCredentials = async (req, res) => {
       .request()
       .input('Email', sql.VarChar, Email)
       .input('Contrasenia', sql.VarChar, Contrasenia)
-      .query(userQueries.verifyCredentials);
+      .execute('obtenerDatosUsuario')
     console.log(result);
     if (result.recordset.length == 0) {
       res.status(400).send({ errorMsg: message });

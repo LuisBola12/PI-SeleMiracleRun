@@ -35,6 +35,7 @@ export const getEmployees = async (req, res) => {
     res.send(e.message);
   }
 };
+
 export const verifyEmployeeContractOnProject = async (req, res) => {
   try {
     const { Cedula, Proyecto } = req.body;
@@ -215,10 +216,8 @@ export const setHoursEmployee = async (req, res) => {
       .input('CantidadHoras', CantidadHoras)
       .execute('ingresarHoras');
     res.json(result.recordset);
-    console.log(result.recordset);
   } catch (e) {
     res.status(500);
     res.send(e.message);
-    console.log('buenas');
   }
 };
