@@ -221,3 +221,19 @@ export const setHoursEmployee = async ( req, res ) => {
     res.send( e.message );
   }
 };
+
+export const getEmployeesAllInfo = async ( projectName ) => {
+  try {
+    let employeesInfo;
+    const pool = await getConnection(); 
+ 
+    const result = await pool
+      .request()
+      .input( 'projectName', projectName )
+      .query( employeesQueries.getActiveEmployeesInfo );
+    employeesInfo =  result.recordset ;
+    return employeesInfo;
+  } catch ( error ) {
+    return error;
+  }
+};
