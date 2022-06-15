@@ -38,7 +38,7 @@ export const createProject = async ( req, res ) => {
 
 
 
-const extractDate = ( date ) => {
+const eliminateTimeFromDate = ( date ) => {
   let extractedDate = date;
   let year = date.getFullYear();
   let month = date.getMonth();
@@ -63,7 +63,6 @@ export const getEmployeesWorkingData = async ( projectName ) => {
 };
 export const getHourlyEmployeeWorkedHours = async ( employeeID, projectName ) => {
   try {
-    console.log( employeeID );
     let employeeWorkedHours;
     const pool = await getConnection();
     const result = await pool.request()
@@ -77,35 +76,36 @@ export const getHourlyEmployeeWorkedHours = async ( employeeID, projectName ) =>
   }
 };// 
 
-//TODO:REVISANDO
 export const getHourlyEmployeeRegisteredWork = async ( employeeID, projectName, paymentPeriod ) => {
 
   const preProcessedWorkedHours = await getHourlyEmployeeWorkedHours( employeeID, projectName );
-  const today = extractDate( new Date() );
+  const today = eliminateTimeFromDate( new Date() );
   //TODO:Hasta aca todo bien
-  let dayOneOfPayment = extractDate( new Date() );
+  let dayOneOfPayment = eliminateTimeFromDate( new Date() );
   let entrysInsidePeriod = [];
-  preProcessedWorkedHours.forEach( hoursEntry => {
-    const { Fecha:workDate  } = hoursEntry;
+  if ( preProcessedWorkedHours ) {
+ 
+    for ( let index = 0; index < preProcessedWorkedHours.length(); index++ ) {
+      const { Fecha:workDate  } = preProcessedWorkedHours[index];
 
-    switch ( paymentPeriod ) {
-    case 'Quincenal':
-      dayOneOfPayment.setDate( today.getDate() - 15 );
-      break;
-    case 'Semanal':
-      dayOneOfPayment.setDate( today.getDate() - 7 );
-      break;
-    case 'Mensual':
-      dayOneOfPayment.setDate( today.getDate() - 30 );
-      break;
-    default:
-      return Error;
-    }
+      switch ( paymentPeriod ) {
+      case 'Quincenal':
+        dayOneOfPayment.setDate( today.getDate() - 15 );
+        break;
+      case 'Semanal':
+        dayOneOfPayment.setDate( today.getDate() - 7 );
+        break;
+      case 'Mensual':
+        dayOneOfPayment.setDate( today.getDate() - 30 );
+        break;
+      default:
+        return Error;
+      }
     
-    if ( isInDateRange( dayOneOfPayment, today, workDate )   ){
-      entrysInsidePeriod.push( hoursEntry );
-    }
-  } );
+      if ( isInDateRange( dayOneOfPayment, today, workDate )   ){
+        entrysInsidePeriod.push( preProcessedWorkedHours[index] );
+      }
+    }} 
 
   return entrysInsidePeriod;
 };
@@ -126,7 +126,7 @@ const calculateHourlyEmployeeWorkedHours = async ( paymentPeriod, employeeID, pr
 
 
 const calculateFullTimeWorkedHours = (  paymentPeriod ) => {
-  const hoursWorkWeek = 48;
+  const hoursWorkWeek = 40;
   let hoursWorked = null;
   switch ( paymentPeriod ) {
   case 'Quincenal':
@@ -146,16 +146,16 @@ const calculateFullTimeWorkedHours = (  paymentPeriod ) => {
 };
 
 const isInDateRange = ( initialDate, finalDate, dateToVerify ) =>{
-  initialDate = extractDate( initialDate );
-  finalDate = extractDate( finalDate );
-  dateToVerify = extractDate( dateToVerify );
+  initialDate = eliminateTimeFromDate( initialDate );
+  finalDate = eliminateTimeFromDate( finalDate );
+  dateToVerify = eliminateTimeFromDate( dateToVerify );
 
   return ( initialDate <= dateToVerify <= finalDate );
 };
 
 const hasWorkedLongEnough = ( contractStartDate, paymentPeriod ) =>{
-  contractStartDate = extractDate( contractStartDate );
-  const today = extractDate( new Date() );
+  contractStartDate = eliminateTimeFromDate( contractStartDate );
+  const today = eliminateTimeFromDate( new Date() );
   let dayOneOfPayment = today;
 
   switch ( paymentPeriod ) {
@@ -198,8 +198,8 @@ const isAvaliableForPayment = ( contractStartDate, contractEndDate, paymentPerio
 };
 
 const calculatePaidServicesGrossSalary = ( endOfContractDate, costOfService ) => {
-  const today = extractDate( new Date() );
-  endOfContractDate = extractDate( endOfContractDate );
+  const today = eliminateTimeFromDate( new Date() );
+  endOfContractDate = eliminateTimeFromDate( endOfContractDate );
   let grossSalary = null;
 
   if ( today.getTime() === endOfContractDate.getTime() ){
@@ -219,10 +219,10 @@ export const calculateGrossSalaryForAllEmployes =  async ( projectName ) => {
 
   try {
     projectWorkedHoursInfo = await getEmployeesWorkingData( projectName );
-    projectWorkedHoursInfo.forEach  (   async  employee => {
-      //TODO:Agregar la cedula del empleado para mandarla en la respuesta
-      const {  CedulaEmpleado:employeeID, TipoContrato: contractType, TipoPeriodo: paymentPeriod } = employee;
-      const { ValorDeServicio: costOfService, FechaInicio:contractStartDate,  SalarioPorHoras:salaryPerHour, FechaFin:contractEndDate } = employee;
+    for ( let index = 0; index < projectWorkedHoursInfo.length; index++ ) {
+        
+      const {  CedulaEmpleado:employeeID, TipoContrato: contractType, TipoPeriodo: paymentPeriod } = projectWorkedHoursInfo[index];
+      const { ValorDeServicio: costOfService, FechaInicio:contractStartDate,  SalarioPorHoras:salaryPerHour, FechaFin:contractEndDate } = projectWorkedHoursInfo[index];
       
 
       if ( isAvaliableForPayment( contractStartDate, contractEndDate, paymentPeriod ) ){
@@ -232,14 +232,14 @@ export const calculateGrossSalaryForAllEmployes =  async ( projectName ) => {
           grossSalary = salaryPerHour * hoursWorked;
           break;
         case 'Servicios Profesionales': {
-          const endOfContractDate = extractDate( contractEndDate );
+          const endOfContractDate = eliminateTimeFromDate( contractEndDate );
           hoursWorked = null;
           grossSalary = calculatePaidServicesGrossSalary( endOfContractDate, costOfService );
         }
           break;
         
         case 'Por horas': {
-          // hoursWorked =   await calculateHourlyEmployeeWorkedHours( paymentPeriod, employeeID, projectName ); 
+          hoursWorked =   await calculateHourlyEmployeeWorkedHours( paymentPeriod, employeeID, projectName ); 
           grossSalary = salaryPerHour * hoursWorked;
           break;
        
@@ -248,18 +248,13 @@ export const calculateGrossSalaryForAllEmployes =  async ( projectName ) => {
           break;
         }
         const obj = { employeeID: employeeID, grossSalary: grossSalary, contractType:contractType, paymentPeriod:paymentPeriod,
-          salaryPerHour: salaryPerHour, contractStartDate:contractStartDate, contractEndDate: contractEndDate };
+          salaryPerHour: salaryPerHour, contractStartDate:contractStartDate, contractEndDate: contractEndDate , hoursWorked:hoursWorked };
 
         grossSalaries.push( obj );
-        console.log( 'insertando' );
-        // console.log( obj );
-        
-      }} );
-    
+      }        }     
   } catch ( e ) {
     console.log( e );
     return  e;
   }
-  // console.log( grossSalaries );
   return  grossSalaries;
 }; 
