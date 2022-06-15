@@ -11,6 +11,7 @@ import {
 import { getVoluntaryDeductions, createNewVoluntaryDeduction, getVoluntaryDeductionsByName, updateVoluntaryDeduction, getEmployeeVoluntaryDeductionsByEmail } from '../controllers/voluntaryDeductions.controller';
 import { getTypeOfContracts } from '../controllers/contracts.controller';
 import { getBenefits, createBenefit, getBenefitsByName, updateBenefit, getEmployeeBenefitsByEmail, getOfferedBenefits, linkEmployeeToBenefit } from '../controllers/benefits.controller';
+import { ObligatoryDeductionsPayRoll } from '../controllers/PagoController';
 
 const router = Router();
 
@@ -67,5 +68,6 @@ router.post( '/voluntaryDeductions', createNewVoluntaryDeduction );
 router.put( '/voluntaryDeductions/:NombreAntiguo', updateVoluntaryDeduction );
 router.get( '/myVoluntaryDeductions/:Proyecto/:Email', getEmployeeVoluntaryDeductionsByEmail );
 
-
+// Pago Pruebas 
+router.post( '/pago', ObligatoryDeductionsPayRoll );
 export default router;

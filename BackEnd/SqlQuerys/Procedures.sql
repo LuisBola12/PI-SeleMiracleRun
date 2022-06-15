@@ -133,3 +133,18 @@ BEGIN
   and b.Nombre not in (select Nombre from @offeredBenefits)
 END;
 GO
+
+CREATE PROCEDURE ObtenerDeduccionesObligatorias(
+				@CedulaEmpleado VARCHAR(15),
+				@Proyecto VARCHAR(50)
+)
+AS
+BEGIN
+	SELECT DO.Nombre, DO.PorcentajeEmpleado, DO.PorcentajeEmpleador
+	FROM Empleado E
+		JOIN EmpleadoYContratoSeAsocianAProyecto ECAP ON E.Cedula = ECAP.CedulaEmpleado
+			JOIN Contrato C ON ECAP.TipoContrato = C.TipoJornada 
+				JOIN ContratoSujetoADeduccionesObligatorias CSDO ON C.TipoJornada = CSDO.TipoJornada
+					JOIN DeduccionesObligatorias DO ON CSDO.NombreDeduccionObligatoria = DO.Nombre
+	WHERE E.Cedula = @CedulaEmpleado AND ECAP.NombreProyecto = @Proyecto
+END;
