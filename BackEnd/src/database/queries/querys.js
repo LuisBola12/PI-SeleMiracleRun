@@ -5,15 +5,9 @@ export const queries = {
   createNewEmployee: 'Insert into Empleado (Cedula, Nombre, Apellido1, Apellido2, Telefono, Email) values(@Cedula, @Nombre, @Apellido1, @Apellido2, @Telefono, @Email)',
   getUserByEmail: 'Select * From Usuarios Where Email = @Email',
   verifyCredentials: 'Select * From Usuarios Where Email = @Email AND Contrasenia = @Contrasenia',
-  getProfileEmployee: 'Select * From Empleado Where Email = @Email',
-  getProfileEmployeer: 'Select * From Empleador Where Email = @Email',
-  udpateEmail: 'Update Usuarios set Email = @Email where Email = @EmailViejo',
-  updateEmployee:'Update Empleado set Nombre= @Nombre, Apellido1= @Apellido1 ,Apellido2= @Apellido2,Telefono= @Telefono Where Cedula= @Cedula',
-  updateEmployeer:'Update Empleador set Nombre= @Nombre, Apellido1= @Apellido1 ,Apellido2= @Apellido2,Telefono= @Telefono Where Cedula= @Cedula',
 
   // Payroll period queries
   getPeriodos: 'Select * from Periodo',
-
 
   //Employees
   getAllEmployees: 'Select e.Nombre, e.Apellido1, e.Apellido2, e.Cedula,e.Email, ecp.TipoContrato from  Empleado e inner join EmpleadoYContratoSeAsocianAProyecto ecp on e.Cedula = ecp.CedulaEmpleado and ecp.NombreProyecto = @Proyecto;',
@@ -24,30 +18,20 @@ export const queries = {
   values(@Cedula,@TipoJornada,@NombreProyecto,@NombreServicio,@SalarioPorHora,
     @FechaInicioContrato,@FechaFinContrato,@ValorServicio)`,
 
-  // Project queries
-  getProjectsByEmail:
-    `SELECT Proyecto.[Nombre] FROM Empleador 
-    JOIN Proyecto ON Proyecto.CedulaEmpleador = Empleador.Cedula 
-    WHERE Empleador.Email =@Email`,
-  createProject:
-    `DECLARE @cedulaObtenida VARCHAR(9);
-    SELECT  @cedulaObtenida = Empleador.Cedula FROM Empleador
-    JOIN Usuarios on Empleador.Email = Usuarios.Email
-    WHERE Empleador.Email =  @Email
-    INSERT into Proyecto(Nombre,CedulaEmpleador,TipoPeriodo) values (@Nombre,@cedulaObtenida, @Periodo)`,
-
   // Voluntary Deduction queries
-  getVoluntaryDeductions: 'Select * From DeduccionesVoluntarias Where NombreProyecto = @NombreProyecto',
-  createNewVoluntaryDeduction: 'Insert into DeduccionesVoluntarias (Nombre, NombreProyecto, Costo, Descripcion) values (@Nombre, @NombreProyecto, @Costo, @Descripcion)',
-  getVoluntaryDeductionsByName: 'Select Nombre from DeduccionesVoluntarias where Nombre = @Nombre and NombreProyecto = @NombreProyecto',
+  getVolDeductions: 'Select * From DeduccionesVoluntarias Where NombreProyecto = @NombreProyecto',
+  createNewVolDeduction: 'Insert into DeduccionesVoluntarias (Nombre, NombreProyecto, Costo, Descripcion) values (@Nombre, @NombreProyecto, @Costo, @Descripcion)',
+  getVolDeductionsByName: 'Select Nombre from DeduccionesVoluntarias where Nombre = @Nombre and NombreProyecto = @NombreProyecto',
 
-  // Employer
+  // Benefit queries
+  getBenefits: 'Select * from Beneficios where NombreProyecto = @Proyecto',
+  getBenefitsByName: 'select Nombre from Beneficios where Nombre = @Nombre and NombreProyecto = @Proyecto',
   getAllEmployers: 'Select * From Empleador',
   getEmployerByID: 'Select * From Empleador Where Cedula = @Cedula',
   createNewEmployer: 'Insert into Empleador (Cedula, Nombre, Apellido1, Apellido2, Telefono, Email) values(@Cedula, @Nombre, @Apellido1, @Apellido2, @Telefono, @Email)',
-  getAllEmployeesByID: 'Select * From Empleador Where Cedula = @Cedula',
-  
-  // Contrato
-  getAllContracts: 'Select TipoJornada from Contrato',
 
+  // Employer queries
+  getAllContracts: 'Select TipoJornada from Contrato',
+  getAllEmployeesByID: 'Select * From Empleador Where Cedula = @Cedula',
+  createBenefit: 'Insert into Beneficios (Nombre, NombreProyecto, CostoActual, Descripción) values (@Nombre, @NombreProyecto ,@CostoActual, @Descripción)'
 };

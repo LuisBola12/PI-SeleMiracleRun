@@ -2,20 +2,20 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { getAnEntity } from '../getAnEntity';
 
-export const useGetEmployeeBenefits = () => {
+export const useGetEmployeeVoluntaryDeductions = () => {
   const activeProject = useSelector((state) => state.activeProject.projectName);
   const employeeEmail = useSelector((state) => state.user.user.Email);
-  const [EmployeeBenefits, setEmployeeBenefits] = useState([{}]);
+  const [EmployeeVoluntaryDeductions, setEmployeeVoluntaryDeductions] = useState([{}]);
   const [EmployeeInfo, setEmployeeInfo] = useState(false);
   useEffect(() => {
     const api = activeProject + '/' + employeeEmail;
-    const getBenefits = async () => {
-      setEmployeeBenefits(await getAnEntity('myBenefits/', api));
+    const getVoluntaryDeductions = async () => {
+      setEmployeeVoluntaryDeductions(await getAnEntity('myVoluntaryDeductions/', api));
       setEmployeeInfo(true);
     };
-    getBenefits();
+    getVoluntaryDeductions();
   }, [EmployeeInfo]);
   return {
-    EmployeeBenefits, EmployeeInfo, setEmployeeInfo
+    EmployeeVoluntaryDeductions, EmployeeInfo, setEmployeeInfo
   };
 };

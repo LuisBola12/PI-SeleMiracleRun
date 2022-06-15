@@ -1,5 +1,4 @@
 import sql from 'mssql';
-import { config } from 'dotenv';
 
 const dbSettings = {
   user: process.env.DB_USER,

@@ -1,19 +1,31 @@
 const validate = (values) => {
-  let errors = {};
-  const hours = parseInt(values.calendar_hours);
-  // alert(hours)
+  const hours = parseInt(values);
+  let error = false;
   if(hours){
     if(hours < 0){
-      errors.calendar_hours = 'Cant be a negative number';
+      document.getElementById('calendar_hours').style.borderColor = 'red';
+      document.getElementById('calendar_error_name').innerHTML = 'Cant be a negative number';
+      error = true;
+    }else{
+      document.getElementById('calendar_error_name').innerHTML = '';
+      document.getElementById('calendar_hours').style.borderColor = 'gray';
+      error = false;
     }
     if(hours >= 16){
-      errors.calendar_hours = 'Cant be largar than 16';
+      document.getElementById('calendar_hours').style.borderColor = 'red';
+      document.getElementById('calendar_error_name').innerHTML = 'Cant be largar than 16';
+      error = true;
+    }else{
+      document.getElementById('calendar_error_name').innerHTML = '';
+      document.getElementById('calendar_hours').style.borderColor = 'gray';
+      error = false;
     }
   }else{
-    errors.calendar_hours = 'Please enter hours.';
+    document.getElementById('calendar_hours').style.borderColor = 'red';
+    document.getElementById('calendar_error_name').innerHTML = 'Please enter hours.';
+    error = true;
   }
-  console.log(errors)
- return errors;
+  return error;
 }
 
 export default validate;

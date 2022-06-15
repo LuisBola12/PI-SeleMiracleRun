@@ -1,18 +1,17 @@
 import React from 'react';
-import '../App.css';
-import { CreateVolDeduction } from '../Components/CreateVolDeduction/CreateVolDeduction';
 import { Navbar } from '../Components/Navbar/Navbar';
+import { TerminateContract } from '../Components/TerminateContract/TerminateContract';
 
-export const CreateNewVolDeduction= () => {
+export const EndContractWithEmployee = () => {
   return (
     <>
       <div className='sticky-navbar'>
         <Navbar />
       </div>
       <div className='page-content'>
-        {<CreateVolDeduction />}
+        <TerminateContract/>
       </div>
       <footer>&copy; Sele Miracle Run - UCR</footer>
     </>
-  );
-};
+  )
+}

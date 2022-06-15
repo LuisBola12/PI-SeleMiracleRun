@@ -1,18 +1,20 @@
 import React from 'react';
 import '../../App.css';
 import { transformCost } from '../../shared/moneyFormatTransform';
-import { useGetBenefitsFromDatabase } from '../../Utils/Benefits/useGetBenefitsFromDatabase';
-import { useState } from 'react';
+import { useGetOfferedBenefits } from '../../Utils/Benefits/useGetOfferedBenefits';
 import { useGetEmployeeBenefits } from '../../Utils/Benefits/useGetEmployeeBenefits';
+import { usePostToBenefits } from '../../Utils/Benefits/usePostToBenefits.js';
 
 
 export const EmployeeBenefits = () => {
-  const { projectBenefits, infoReceived } = useGetBenefitsFromDatabase();
-  const { EmployeeBenefits, EmployeeInfo } = useGetEmployeeBenefits();
+  const { submitBenefitToEmplyee } = usePostToBenefits();
+  const { offeredBenefits, offeredInfo, setofferedInfo } = useGetOfferedBenefits();
+  const { EmployeeBenefits, EmployeeInfo, setEmployeeInfo } = useGetEmployeeBenefits();
   const handleAddButton = (element) => {
-
+    submitBenefitToEmplyee(element.Nombre);
+    setofferedInfo(false);
+    setEmployeeInfo(false);
   };
-  console.log(!EmployeeInfo && !infoReceived);
   return (
     <>
       {!EmployeeInfo ? (<div className='loader' ></div >) : (
@@ -29,7 +31,7 @@ export const EmployeeBenefits = () => {
             </thead>
             <tbody>
               {EmployeeBenefits.map((element) => (
-                <tr key={element.Nombre}>
+                <tr key={element.NombreBeneficio}>
                   <td className='left-td table-left-border benefit-name'>{element.NombreBeneficio}</td>
                   <td className='description-cell left-td'>{((element.Descripción) ? element.Descripción : 'No description')}</td>
                   <td className='right-td'>₡ {transformCost(element.CostoActual)}</td>
@@ -43,7 +45,7 @@ export const EmployeeBenefits = () => {
           <label className='Empty-message'>{(EmployeeBenefits.length === 0) ? 'No benefits selected added yet' : ''}</label>
         </>)}
 
-      {!infoReceived ? (<div className='loader' ></div >) : (
+      {!offeredInfo ? (<div className='loader' ></div >) : (
         <>
           <h2 className='ofer-benefits'>Offered Benefits</h2>
           <table className='Table'>
@@ -56,7 +58,7 @@ export const EmployeeBenefits = () => {
               </tr>
             </thead>
             <tbody>
-              {projectBenefits.map((element) => (
+              {offeredBenefits.map((element) => (
                 <tr key={element.Nombre}>
                   <>
                     <td className='left-td table-left-border benefit-name'>{element.Nombre}</td>
@@ -70,7 +72,7 @@ export const EmployeeBenefits = () => {
               ))}
             </tbody>
           </table>
-          <label className='Empty-message'>{(projectBenefits.length === 0) ? 'No benefits added added yet' : ''}</label>
+          <label className='Empty-message'>{(offeredBenefits.length === 0) ? 'No benefits added added yet' : ''}</label>
         </>)}
     </>
   );

@@ -11,3 +11,4 @@ export const benefitsQueries = {
   and b.NombreProyecto = eb.NombreProyecto 
   where e.Email = @Email and p.Nombre = @Proyecto`,
 };
+

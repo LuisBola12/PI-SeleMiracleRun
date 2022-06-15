@@ -11,7 +11,6 @@ export const SelectProjectComp = () => {
   const { projects, handleProjectSelection, loading, error } = useProjectsData();
   const activeProject = useSelector((state) => state.activeProject.projectName);
   const rolFromUser = useSelector((state) => state.user.user.Roles);
-  console.log(rolFromUser);
   const dispatch = useDispatch();
   return (
     < div className='project-style'>

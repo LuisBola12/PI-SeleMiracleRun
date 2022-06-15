@@ -9,14 +9,38 @@
 @apiProjects = http://localhost:4000/projects
 @apiBenefits = http://localhost:4000/benefits
 @apiMyBenefits = http://localhost:4000/myBenefits
-@apiVolDeductions = http://localhost:4000/volDeductions
+@apiVoluntaryDeductions = http://localhost:4000/voluntaryDeductions
+@apiMyVoluntaryDeductions = http://localhost:4000/myVoluntaryDeductions
 @apiCreateEmployer =  http://localhost:4000/createEmployer
 @apiVerifyUser =  http://localhost:4000/verifyUser
 @apiEmployer =  http://localhost:4000/employer
 @apiContracts = http://localhost:4000/typeContracts
+@apiTotalCostBenefits = http://localhost:4000/CostTotalBenefits
 @apiEmployeeWithContractOnOtherProyects = http://localhost:4000/employeesWithContractsOnOtherProyects
 @apiContractEmployee = http://localhost:4000/contractExistentEmployee
+@apaSetHours = http://localhost:4000/employee/hours
+@apiCreatePayrroll = http://localhost:4000/getProjectPeriod
+@apiDeleteEmployeeFromProject = http://localhost:4000/deleteEmployeeFromProject
+@apiPagoPruebas = http://localhost:4000/pago
+@apiOfferedVoluntaryDeductions = http://localhost:4000/offeredVoluntaryDeductions
 
+
+DELETE {{apiDeleteEmployeeFromProject}}
+Content-Type: application/json
+
+{
+  "Cedula":"118706423",
+  "NombreProyecto":"Taquería Milagro"
+}
+
+###
+POST {{apiCreatePayrroll}}
+Content-Type: application/json
+
+{
+  "NombreProyecto":"Taquería Milagro"
+}
+###
 POST {{apiContractEmployee}}
 Content-Type: application/json
 
@@ -126,7 +150,7 @@ GET {{apiEmployees}}/Super La Esquina
 GET {{apiProjects}}/norman.os.l@gmail.com/admin
 
 ###
-GET  {{apiVolDeductions}}/Taquería Milagro
+GET  {{apiVoluntaryDeductions}}/Taquería Milagro
 
 ###
 GET {{apiBenefits}}/Taquería Milagro
@@ -135,8 +159,9 @@ GET {{apiBenefits}}/Taquería Milagro
 GET {{apiContracts}}
 
 ###
-
 GET {{apiMyBenefits}}/Taquería Milagro/javier.Mo@gmail.com
+###
+GET {{apiOfferedVoluntaryDeductions}}/Taquería Milagro/javier.Mo@gmail.com
 
 ###
 POST {{apiBenefits}}
@@ -159,7 +184,7 @@ Content-Type: application/json
 }
 
 ###
-POST {{apiVolDeductions}}
+POST {{apiVoluntaryDeductions}}
 Content-Type: application/json
 
 {
@@ -202,7 +227,7 @@ Content-Type: application/json
 
 ###
 
-PUT {{apiBenefits}}/Almuerzo
+POST {{apaSetHours}}
 Content-Type: application/json
 
 {
@@ -210,4 +235,29 @@ Content-Type: application/json
   "NombreProyecto": "Taquería Milagro",
   "CostoActual": 20000,
   "Descripción": "Esto es una prueba de la edición"
+}
+
+### 
+POST {{apiTotalCostBenefits}}
+Content-Type: application/json
+
+{
+  "Email": "javier.Mo@gmail.com", 
+  "Proyecto": "Taquería Milagro", 
+  "ConsecutivoPlanilla": 1, 
+  "ConsecutivoPago" : 1
+}
+
+### 
+POST {{apiPagoPruebas}}
+Content-Type: application/json
+
+{
+    "CedulaEmpleado": "208010869",
+    "CedulaEmpleador": "608110776",
+    "NombreProyecto": "Taquería Milagro",
+    "SalarioBruto": "800000",
+    "TipoJornada" : "Semanal",
+    "ConsecutivoPlanilla": 1,
+    "ConsecutivoPago": 1
 }
