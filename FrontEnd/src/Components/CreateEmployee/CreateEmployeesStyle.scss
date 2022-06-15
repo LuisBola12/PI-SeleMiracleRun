@@ -13,6 +13,10 @@
   padding: 0;
 }
 
+.contract-contractDeadline{
+  display: flex;
+  gap: 1rem;
+}
 
 .animated-input-employee {
   position: relative;
@@ -480,7 +484,6 @@
   background-size: contain;
   width: 6rem;
   height: 6rem;
-
 }
 
 .form-name-employee {

@@ -34,8 +34,14 @@ export const projectQueries = {
     ,[Cantidad]
     ,[Fecha]
     FROM [SeleMiracleRun].[dbo].[EmpleadoRegistraHorasEnProyecto]
-    WHERE NombreProyecto = @projectName AND CedulaEmpleado = @employeeId `
+    WHERE NombreProyecto = @projectName AND CedulaEmpleado = @employeeId `,
 
+
+  getEmployeeProjectsByEmail: `SELECT P.[Nombre] FROM EmpleadoYContratoSeAsocianAProyecto ep
+    JOIN Proyecto p ON p.Nombre =ep.NombreProyecto 
+    JOIN Empleado e on e.Cedula = ep.CedulaEmpleado
+    JOIN Usuarios u on e.Email = u.Email 
+    WHERE e.Email = @Email`,
+
+  getAllContracts: 'Select TipoJornada from Contrato',
 };
-
-// . WHERE [NombreProyecto] = @NombreProyecto

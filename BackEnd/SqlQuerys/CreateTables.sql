@@ -49,12 +49,12 @@ Create Table DeduccionesObligatorias(
 	PorcentajeEmpleado float not null,
 	primary key(Nombre)
 );
-Create Table EmpleadoRegistraHorasEnProyecto(
+Create Table HorasRegistradas(
 	CedulaEmpleado varchar(15),
 	NombreProyecto varchar(50),
 	Cantidad tinyint not null,
 	Fecha Date,
-	primary key(CedulaEmpleado,NombreProyecto),
+	primary key(CedulaEmpleado,NombreProyecto, Fecha),
 	foreign key(CedulaEmpleado) references Empleado(Cedula),
 	foreign key(NombreProyecto) references Proyecto(Nombre),
 );
@@ -109,6 +109,28 @@ Create table EmpleadoYContratoSeAsocianAProyecto(
 	foreign key(TipoContrato) references Contrato(TipoJornada),
 	foreign key(NombreProyecto) references Proyecto(Nombre)
 );
+
+Create Table BeneficioElegido(
+    CedulaEmpleado varchar(15),
+    NombreBeneficio varchar(50),
+	NombreProyecto varchar(50),
+    fechaInicio DateTime,
+    fechaFin DateTime,
+    primary key(CedulaEmpleado, NombreBeneficio, NombreProyecto,FechaInicio),
+    foreign key(CedulaEmpleado) references Empleado(Cedula),
+    foreign key(NombreProyecto, NombreBeneficio) references Beneficios(NombreProyecto, Nombre) on update cascade
+);
+Create Table DeduccionVoluntariaElegida(
+    CedulaEmpleado varchar(15),
+    NombreDeduccionVoluntaria varchar(50),
+	NombreProyecto varchar(50),
+    FechaInicio DateTime,
+    FechaFin DateTime,
+    primary key(CedulaEmpleado, NombreDeduccionVoluntaria, NombreProyecto,FechaInicio),
+    foreign key(CedulaEmpleado) references Empleado(Cedula),
+    foreign key(NombreDeduccionVoluntaria,NombreProyecto) references DeduccionesVoluntarias(Nombre, NombreProyecto) on update cascade
+);
+
 
 SELECT * FROM Empleado;
 

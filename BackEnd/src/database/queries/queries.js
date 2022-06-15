@@ -7,6 +7,9 @@ export const queries = {
   verifyCredentials: 'Select * From Usuarios Where Email = @Email AND Contrasenia = @Contrasenia',
   getProfileEmployee: 'Select * From Empleado Where Email = @Email',
   getProfileEmployeer: 'Select * From Empleador Where Email = @Email',
+  udpateEmail: 'Update Usuarios set Email = @Email where Email = @EmailViejo',
+  updateEmployee:'Update Empleado set Nombre= @Nombre, Apellido1= @Apellido1 ,Apellido2= @Apellido2,Telefono= @Telefono Where Cedula= @Cedula',
+  updateEmployeer:'Update Empleador set Nombre= @Nombre, Apellido1= @Apellido1 ,Apellido2= @Apellido2,Telefono= @Telefono Where Cedula= @Cedula',
 
   // Payroll period queries
   getPeriodos: 'Select * from Periodo',
@@ -34,9 +37,9 @@ export const queries = {
     INSERT into Proyecto(Nombre,CedulaEmpleador,TipoPeriodo) values (@Nombre,@cedulaObtenida, @Periodo)`,
 
   // Voluntary Deduction queries
-  getVolDeductions: 'Select * From DeduccionesVoluntarias Where NombreProyecto = @NombreProyecto',
-  createNewVolDeduction: 'Insert into DeduccionesVoluntarias (Nombre, NombreProyecto, Costo, Descripcion) values (@Nombre, @NombreProyecto, @Costo, @Descripcion)',
-  getVolDeductionsByName: 'Select Nombre from DeduccionesVoluntarias where Nombre = @Nombre and NombreProyecto = @NombreProyecto',
+  getVoluntaryDeductions: 'Select * From DeduccionesVoluntarias Where NombreProyecto = @NombreProyecto',
+  createNewVoluntaryDeduction: 'Insert into DeduccionesVoluntarias (Nombre, NombreProyecto, Costo, Descripcion) values (@Nombre, @NombreProyecto, @Costo, @Descripcion)',
+  getVoluntaryDeductionsByName: 'Select Nombre from DeduccionesVoluntarias where Nombre = @Nombre and NombreProyecto = @NombreProyecto',
 
   // Employer
   getAllEmployers: 'Select * From Empleador',

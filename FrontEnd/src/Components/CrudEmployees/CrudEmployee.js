@@ -2,14 +2,18 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import history from '../../history';
 import { useSelector } from 'react-redux';
 import { getAnEntity } from './../../Utils/getAnEntity';
+import { useNavigate } from 'react-router-dom';
 
 export const CrudEmployee = () => {
   const [infoReceived, setInfoReceived] = useState(false);
   const activeProject = useSelector((state) => state.activeProject.projectName);
   const [data, setData] = useState();
+  const handleEndContract = (element) => {
+    navigate('terminateContract', { state: element });
+  }
+  const navigate = useNavigate();
   useEffect(() => {
     const getData = async () => {
       const newData = await getAnEntity('employee/', activeProject);
@@ -24,12 +28,16 @@ export const CrudEmployee = () => {
       <div className='table-button'>
         <button className='create-button' onClick=
           {() => {
-            history.push('employees/createEmployee');
-            history.go();
+            navigate('createEmployee')
           }}>
           {' '}
           Create New Employee
         </button>
+        <button className='hire-button' onClick={
+          () => {
+            navigate('hireAEmployee')
+          }
+        }>Hire a Employee</button>
       </div>
       <table className='Table'>
         <thead>
@@ -53,7 +61,8 @@ export const CrudEmployee = () => {
               <td className='left-td'>{element.Email}</td>
               <td className='left-td'>{element.TipoContrato}</td>
               <td className='table-right-border right-button'>
-                <button className='button cancel-button' > Delete </button>
+                <button className='end-contract-button' onClick={()=>handleEndContract(element)}
+                > End Contract </button>
               </td>
             </tr>
           ))}

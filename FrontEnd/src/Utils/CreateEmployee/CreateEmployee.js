@@ -40,7 +40,6 @@ export const showContractValues = (e) => {
 export const validateForm = (data) =>{
   let errors = {};
   const {email,password,name,lastname,secondlastname,id,contract} = data;
-  console.log(data);
   if(email){
     if(!validateEmail(email)){
       errors.email = 'You must enter a valid format for an email.';

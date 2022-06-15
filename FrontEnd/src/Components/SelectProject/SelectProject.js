@@ -10,9 +10,8 @@ export const SelectProjectComp = () => {
   const navigate = useNavigate();
   const { projects, handleProjectSelection, loading, error } = useProjectsData();
   const activeProject = useSelector((state) => state.activeProject.projectName);
+  const rolFromUser = useSelector((state) => state.user.user.Roles);
   const dispatch = useDispatch();
-
-
   return (
     < div className='project-style'>
       <div className='project-header'>
@@ -22,7 +21,9 @@ export const SelectProjectComp = () => {
             dispatch(logout());
             navigate('/');
           } else {
-            navigate('/employees');
+            rolFromUser === 'admin' ?
+              (navigate('/employees')) :
+              (navigate('/home'));
           }
         }}
         >
@@ -45,12 +46,12 @@ export const SelectProjectComp = () => {
           })
           : null
         }
-
-        <div>
-          {/* <NewProjectForm actualData={projects} setActualData={setProjects} /> */}
-          <button centered='true' className='project-buttonCreate' onClick={() => navigate('/newProjectForm')}>+</button >
-          <p className='project-AddNewProjectText'>Add new Project</p>
-        </div>
+        {rolFromUser === 'admin' ? (
+          <div>
+            <button centered='true' className='project-buttonCreate' onClick={() => navigate('/newProjectForm')}>+</button >
+            <p className='project-AddNewProjectText'>Add new Project</p>
+          </div>
+        ) : (<></>)}
       </div>
       <footer className='project-footerCopyRights'> &copy; SeleMiracleRun </footer>
     </div >
