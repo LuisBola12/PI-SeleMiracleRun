@@ -86,16 +86,7 @@ Create Table Pago(
 	foreign key(NombreProyecto) references Proyecto(Nombre),
 	foreign key(CedulaEmpleado) references Empleado(Cedula),
 );
-Create Table PagoContieneBeneficios(
-	NumeroConsecutivo bigint,
-	CedulaEmpleador varchar(15),
-	NombreBeneficio varchar(50),
-	NombreProyecto varchar(50),
-	MontoBeneficio real not null,
-	primary key(NumeroConsecutivo,CedulaEmpleador,NombreBeneficio,NombreProyecto),
-	foreign key(NumeroConsecutivo,CedulaEmpleador) references Pago(NumeroConsecutivo,CedulaEmpleador)on delete cascade,
-	foreign key(NombreProyecto,NombreBeneficio) references Beneficios(NombreProyecto,Nombre),
-);
+
 Create table EmpleadoYContratoSeAsocianAProyecto(
 	CedulaEmpleado varchar(15),
 	TipoContrato varchar(30),
@@ -152,6 +143,38 @@ Create Table PagoAplicaDeduccionesObligatorias(
 	foreign key( NombreDeduccionObligatoria ) references DeduccionesObligatorias (Nombre),
 );
 
+Create Table Planilla(
+	Consectivo int not null IDENTITY(1,1),
+	CedulaEmpleador varchar(15),
+	FechaIncio date not null,
+	FechaFin date not null,
+	NombreProyecto varchar(50) not null,
+	primary key(Consectivo, CedulaEmpleador),
+	foreign key(CedulaEmpleador) references Empleador(Cedula),
+	foreign key(NombreProyecto) references Proyecto(Nombre),
+	);
+Create Table Pago(
+	ConsecutivoPago int not null IDENTITY(1,1),
+	ConsecutivoPlanilla int,
+	CedulaEmpleador varchar(15),
+	CedulaEmpleado varchar(15) not null,
+	SalarioBruto real not null,
+	primary key(ConsecutivoPago, ConsecutivoPlanilla, CedulaEmpleador),
+	foreign key(ConsecutivoPlanilla, CedulaEmpleador) references Planilla(Consectivo, CedulaEmpleador),
+);
+Create Table PagoContieneBeneficios(
+	ConsecutivoPlanilla int,
+	CedulaEmpleador varchar(15),
+	ConsecutivoPago int,
+	NombreBeneficio varchar(50),
+	NombreProyecto varchar(50),
+	MontoBeneficio real not null,
+	primary key(ConsecutivoPlanilla, CedulaEmpleador, ConsecutivoPago,NombreBeneficio , NombreProyecto),
+	foreign key(ConsecutivoPago, ConsecutivoPlanilla, CedulaEmpleador) references Pago(ConsecutivoPago, ConsecutivoPlanilla, CedulaEmpleador)on delete cascade,
+	foreign key(NombreProyecto, NombreBeneficio) references Beneficios (NombreProyecto, Nombre),
+);
+
+
 
 SELECT * FROM Empleado;
 
@@ -169,4 +192,9 @@ Insert into EmpleadoYContratoSeAsocianAProyecto(CedulaEmpleado,TipoContrato,Nomb
 values ('187612921','Medio Tiempo','Radiadores Solceri',7000,'2022-08-12','2025-05-12');
 
 
-Select e.Nombre, e.Apellido1, e.Apellido2, e.Cedula,e.Email, ecp.TipoContrato from  Empleado e inner join EmpleadoYContratoSeAsocianAProyecto ecp on e.Cedula = ecp.CedulaEmpleado AND ecp.NombreProyecto = 'Radiadores Solceri';
+Select e.Nombre, e.Apellido1, e.Apellido2, e.Cedula,e.Email, ecp.TipoContrato 
+from  Empleado e 
+inner join EmpleadoYContratoSeAsocianAProyecto ecp on e.Cedula = ecp.CedulaEmpleado 
+			AND ecp.NombreProyecto = 'Radiadores Solceri';
+
+

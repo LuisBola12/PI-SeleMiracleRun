@@ -10,7 +10,7 @@ import {
 } from '../controllers/users.controller';
 import { getVoluntaryDeductions, createNewVoluntaryDeduction, getVoluntaryDeductionsByName, updateVoluntaryDeduction, getEmployeeVoluntaryDeductionsByEmail, getOfferedVoluntaryDeductions } from '../controllers/voluntaryDeductions.controller';
 import { getTypeOfContracts } from '../controllers/contracts.controller';
-import { getBenefits, createBenefit, getBenefitsByName, updateBenefit, getEmployeeBenefitsByEmail, getOfferedBenefits, linkEmployeeToBenefit } from '../controllers/benefits.controller';
+import { getBenefits, createBenefit, getBenefitsByName, updateBenefit, getEmployeeBenefitsByEmail, CostTotalBenefits, getOfferedBenefits, linkEmployeeToBenefit } from '../controllers/benefits.controller';
 import { ObligatoryDeductionsPayRoll } from '../controllers/payrollController';
 
 const router = Router();
@@ -25,6 +25,7 @@ router.post( '/users', verifyCredentials );
 //Employer
 router.post( '/createEmployer', registerNewUser );
 router.get( '/employer/:Cedula', getEmployerByID );
+// router.put('/updateEmployeer',updateProfileEmployeer);
 router.put( '/updateEmployeer', updateProfileEmployeer );
 
 //Periodos
@@ -45,6 +46,7 @@ router.post( '/employeesWithContractsOnOtherProyects', getEmployeesWithContractO
 router.post( '/contractExistentEmployee', contractAEmployee );
 router.delete( '/deleteEmployeeFromProject', deleteEmployeeFromProject );
 router.post( '/employee/hours', setHoursEmployee );
+router.post( '/CostTotalBenefits', CostTotalBenefits );
 
 //Projects
 router.get( '/projects/:Email/:Rol', getProjectsByEmail );
