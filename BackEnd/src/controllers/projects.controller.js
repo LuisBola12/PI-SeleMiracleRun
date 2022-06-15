@@ -2,7 +2,6 @@ import { getConnection, sql } from '../database';
 import { projectQueries } from '../database/queries/projectQueries';
 import { eliminateTimeFromDate, isInDateRange } from '../utils/dateManager';
 import { payrollQueries } from './../database/queries/payrollQueries';
-import { getEmployees, getEmployeesAllInfo } from './employees.contoller';
 
 export const getProjectsByEmail = async ( req, res ) => {
   const { Email, Rol } = req.params;
@@ -289,15 +288,3 @@ const sumDays = ( fecha, dias ) =>{
 };
 
 
-export const  eliminateProject = async ( projectName ) => {  
-  try {
-
-    let employees = await getEmployeesAllInfo( projectName );
-    console.log( employees );
-  } catch ( error ) {
-
-    return error; 
-  }
-  
-
-};
