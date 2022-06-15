@@ -19,12 +19,15 @@ END;
 
 Create Procedure DeleteAnEmployeeFromAProject @Cedula varchar(15), @Proyecto varchar(50)
 AS
+Begin
     Declare @NumeroDeBeneficios int;
-    Select @NumeroDeBeneficios = Count() from EmpleadoGozaBeneficios 
-    where CedulaEmpleado = @Cedula and NombreProyecto = @Proyecto;
+	Declare @FechaFinContrato DateTime;
+	Select @FechaFinContrato = ECP.FechaFin from EmpleadoYContratoSeAsocianAProyecto ECP where ECP.CedulaEmpleado = @Cedula and ECP.NombreProyecto = @Proyecto
+    Select @NumeroDeBeneficios = Count(*) from BeneficioElegido
+    where CedulaEmpleado = @Cedula and NombreProyecto = @Proyecto and FechaFin > GETDATE();
     If(@NumeroDeBeneficios > 0)
     Begin
-        Delete from EmpleadoGozaBeneficios where CedulaEmpleado = @Cedula and NombreProyecto = @Proyecto;
+        UPDATE BeneficioElegido set FechaFin = GETDATE()  where CedulaEmpleado =	@Cedula and NombreProyecto = @Proyecto;
     End
     Else
         Begin
@@ -32,14 +35,16 @@ AS
         End
 
     Declare @NumeroDeDeduccionesVoluntarias int;
-    Select @NumeroDeDeduccionesVoluntarias = Count() from EmpleadoAplicaDeduccionesVolundarias 
-    where CedulaEmpleado = @Cedula and NombreProyecto = @Proyecto;
+    Select @NumeroDeDeduccionesVoluntarias = Count(*) from DeduccionVoluntariaElegida 
+    where CedulaEmpleado = @Cedula and NombreProyecto = @Proyecto and FechaFin > GETDATE();
     If(@NumeroDeDeduccionesVoluntarias > 0)
     Begin
-        Delete from EmpleadoAplicaDeduccionesVolundarias where CedulaEmpleado = @Cedula and NombreProyecto = @Proyecto;
+        UPDATE DeduccionVoluntariaElegida set FechaFin = GETDATE()  where CedulaEmpleado =	@Cedula and NombreProyecto = @Proyecto;
     End
     Else
         Begin
             Print 'This Employee doesnt have Voluntary Deductions'
         End
-    Delete from EmpleadoYContratoSeAsocianAProyecto where CedulaEmpleado = @Cedula and NombreProyecto = @Proyecto;
+    UPDATE EmpleadoYContratoSeAsocianAProyecto set FechaFin = GETDATE()  where CedulaEmpleado =	@Cedula and NombreProyecto = @Proyecto;
+End
+Go;
