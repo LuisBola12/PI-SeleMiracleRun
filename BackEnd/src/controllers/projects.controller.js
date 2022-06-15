@@ -164,11 +164,6 @@ const hasWorkedLongEnough = ( contractStartDate, paymentPeriod ) =>{
   return false;
 };
 
-
-
-// input NombreProyecto
-// output objeto {cedula, proyecto y salario bruto, horasTrabajadas}
-
 const isAvaliableForPayment = ( contractStartDate, contractEndDate, paymentPeriod ) => {
   const today = new Date();
   const isActive = isInDateRange( contractStartDate, contractEndDate, today );
