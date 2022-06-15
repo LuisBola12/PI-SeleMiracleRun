@@ -120,8 +120,6 @@ export const ObligatoryDeductionsPayRoll = async ( req, res ) => {
       montoEmpleado = calculateAmount( SalarioBruto, element.PorcentajeEmpleado );
       montoEmpleador = calculateAmount( SalarioBruto, element.PorcentajeEmpleador ); 
     }
-    // console.log( 'montoEmpleado, montoEmpleador' );
-    // console.log( montoEmpleado, montoEmpleador );
     nombreDeduccionObligatoria = element.Nombre;
 
     const data = {

@@ -11,7 +11,7 @@ import {
 import { getVoluntaryDeductions, createNewVoluntaryDeduction, getVoluntaryDeductionsByName, updateVoluntaryDeduction, getEmployeeVoluntaryDeductionsByEmail, getOfferedVoluntaryDeductions } from '../controllers/voluntaryDeductions.controller';
 import { getTypeOfContracts } from '../controllers/contracts.controller';
 import { getBenefits, createBenefit, getBenefitsByName, updateBenefit, getEmployeeBenefitsByEmail, getOfferedBenefits, linkEmployeeToBenefit } from '../controllers/benefits.controller';
-import { ObligatoryDeductionsPayRoll } from '../controllers/PagoController';
+import { ObligatoryDeductionsPayRoll } from '../controllers/payrollController';
 
 const router = Router();
 
