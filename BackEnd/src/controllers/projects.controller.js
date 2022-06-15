@@ -119,8 +119,11 @@ const calculateHourlyEmployeeWorkedHours = async ( paymentPeriod, employeeID, pr
 };
 
 
-const calculateFullTimeWorkedHours = (  paymentPeriod ) => {
-  const hoursWorkWeek = 40;
+const calculateFullTimeWorkedHours = (  paymentPeriod, contractType ) => {
+  let hoursWorkWeek = 40;
+  if ( contractType === 'Medio Tiempo' ){
+    hoursWorkWeek = 20;
+  }
   let hoursWorked = null;
   switch ( paymentPeriod ) {
   case 'Quincenal':
@@ -209,8 +212,11 @@ export const calculateGrossSalaryForAllEmployes =  async ( projectName ) => {
 
       if ( isAvaliableForPayment( contractStartDate, contractEndDate, paymentPeriod ) ){
         switch ( contractType ) {
-        case 'Tiempo Completo':
-          hoursWorked = calculateFullTimeWorkedHours( paymentPeriod );
+        //Intencionalmente se dejan estos cases seguidos pues se espera el mismo comportamiento
+        case 'Tiempo Completo' :
+        case  'Medio Tiempo':
+          hoursWorked = calculateFullTimeWorkedHours( paymentPeriod , contractType );
+          console.log( contractType );
           grossSalary = salaryPerHour * hoursWorked;
           break;
         case 'Servicios Profesionales': {
