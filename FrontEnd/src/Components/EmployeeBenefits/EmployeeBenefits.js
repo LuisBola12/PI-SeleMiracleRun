@@ -3,15 +3,18 @@ import '../../App.css';
 import { transformCost } from '../../shared/moneyFormatTransform';
 import { useGetOfferedBenefits } from '../../Utils/Benefits/useGetOfferedBenefits';
 import { useGetEmployeeBenefits } from '../../Utils/Benefits/useGetEmployeeBenefits';
+import { usePostToBenefits } from '../../Utils/Benefits/usePostToBenefits.js';
 
 
 export const EmployeeBenefits = () => {
-  const { offeredBenefits, offeredInfo } = useGetOfferedBenefits();
-  const { EmployeeBenefits, EmployeeInfo } = useGetEmployeeBenefits();
+  const { submitBenefitToEmplyee } = usePostToBenefits();
+  const { offeredBenefits, offeredInfo, setofferedInfo } = useGetOfferedBenefits();
+  const { EmployeeBenefits, EmployeeInfo, setEmployeeInfo } = useGetEmployeeBenefits();
   const handleAddButton = (element) => {
-
+    submitBenefitToEmplyee(element.Nombre);
+    setofferedInfo(false);
+    setEmployeeInfo(false);
   };
-  console.log(!EmployeeInfo && !offeredInfo);
   return (
     <>
       {!EmployeeInfo ? (<div className='loader' ></div >) : (

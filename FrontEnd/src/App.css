@@ -110,6 +110,24 @@
   border-style: none;
   width: 100px;
 }
+.hire-button{
+  margin-bottom: 20px;
+  background-color: gray;
+  padding: 10px;
+  border-radius: 8px;
+  color: white;
+  border-color: white;
+  border-style: none;
+  width: 200px;
+}
+.end-contract-button{
+  color:white;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: darkred;
+  border-style: none;
+  width: 150px;
+}
 
 .user-Profile-table-button {
   margin-top: 40px;
@@ -175,6 +193,17 @@
   width: 50px;
   height: 50px;
 }
+.employee-to-EndContract{
+  font-size: 20px;
+  text-align: center;
+  width: 100%;
+}
+.reason-to-end-contract{
+  width: 87.5%;
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+}
 
 .user-profile-label {
   font-family: sans-serif;
@@ -228,7 +257,33 @@
   margin-top: 30px;
   width: 100%;
 }
-
+.form-end-contract{
+  width: 90%;
+  margin-top: 2rem;
+  gap: 1.8rem;
+  display: flex;
+  flex-direction: row;
+}
+.image-terminateContract {
+  background-image: url(./icons/tContractIcon.png);
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 6rem;
+  height: 6rem;
+}
+.form-terminateContract-employee{
+  font-size: 40px;
+}
+.form-end-contract-title{
+  height: 15%;
+  width: 80%;
+  gap:10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
 .user-profile-logo {
   text-align: center;
   border-radius: 50%;
@@ -245,7 +300,8 @@
   border-radius: 8px;
   color: white;
   border-color: white;
-  background-color: #178cd1;
+  background-color: gray;
+  /* background-color: #178cd1; */
   border-style: none;
   width: 100px;
 }

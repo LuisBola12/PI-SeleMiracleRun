@@ -38,7 +38,7 @@ export const getEmployeeBenefitsByEmail = async (req, res) => {
     const result = await pool.request()
       .input('Email', Email)
       .input('Proyecto', Proyecto)
-      .query(benefitsQueries.getEmployeeBenefitsByEmail);
+      .execute('getEmployeeBenefits');
     res.json(result.recordset);
     console.log(result.recordset);
   } catch (e) {
@@ -55,7 +55,7 @@ export const getOfferedBenefits = async (req, res) => {
     const result = await pool.request()
       .input('Email', Email)
       .input('Proyecto', Proyecto)
-      .query(benefitsQueries.getOfferedBenefits);
+      .execute('getOfferedBenefits');
     res.json(result.recordset);
     console.log(result.recordset);
   } catch (e) {
@@ -63,6 +63,26 @@ export const getOfferedBenefits = async (req, res) => {
     res.send(e.message);
   }
 };
+
+
+export const linkEmployeeToBenefit = async (req, res) => {
+  const { Email, NombreBeneficio, NombreProyecto } = req.body;
+  try {
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input('Email', sql.VarChar, Email)
+      .input('NombreProyecto', sql.VarChar, NombreProyecto)
+      .input('NombreBeneficio', sql.VarChar, NombreBeneficio)
+      .execute('vincularBeneficioEmpleado');
+    console.log(result);
+    res.json({ Nombre, CostoActual });
+  } catch (e) {
+    console.log(`Error: ${e}`);
+    res.status(500).send(e.message);
+  }
+};
+
 
 
 export const createBenefit = async (req, res) => {
