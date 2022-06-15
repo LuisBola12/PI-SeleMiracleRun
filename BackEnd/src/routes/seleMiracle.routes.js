@@ -8,7 +8,7 @@ import {
   getEmployerByID, getUserByEmail, verifyCredentials, registerNewUser,
   getProfileEmployeer, getProfileEmployee, updateProfileEmployeer, updateProfileEmployee
 } from '../controllers/users.controller';
-import { getVoluntaryDeductions, createNewVoluntaryDeduction, getVoluntaryDeductionsByName, updateVoluntaryDeduction, getEmployeeVoluntaryDeductionsByEmail } from '../controllers/voluntaryDeductions.controller';
+import { getVoluntaryDeductions, createNewVoluntaryDeduction, getVoluntaryDeductionsByName, updateVoluntaryDeduction, getEmployeeVoluntaryDeductionsByEmail, getOfferedVoluntaryDeductions } from '../controllers/voluntaryDeductions.controller';
 import { getTypeOfContracts } from '../controllers/contracts.controller';
 import { getBenefits, createBenefit, getBenefitsByName, updateBenefit, getEmployeeBenefitsByEmail, getOfferedBenefits, linkEmployeeToBenefit } from '../controllers/benefits.controller';
 import { ObligatoryDeductionsPayRoll } from '../controllers/PagoController';
@@ -67,6 +67,7 @@ router.get( '/voluntaryDeductions/:NombreProyecto/:Nombre', getVoluntaryDeductio
 router.post( '/voluntaryDeductions', createNewVoluntaryDeduction );
 router.put( '/voluntaryDeductions/:NombreAntiguo', updateVoluntaryDeduction );
 router.get( '/myVoluntaryDeductions/:Proyecto/:Email', getEmployeeVoluntaryDeductionsByEmail );
+router.get( '/offeredVoluntaryDeductions/:Proyecto/:Email', getOfferedVoluntaryDeductions );
 
 // Pago Pruebas 
 router.post( '/pago', ObligatoryDeductionsPayRoll );
