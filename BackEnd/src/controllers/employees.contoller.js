@@ -1,4 +1,4 @@
-import { getConnection} from '../database';
+import { getConnection } from '../database';
 import { employeesQueries } from '../database/queries/employeesQueries';
 import { userQueries } from '../database/queries/userQueries';
 
@@ -118,7 +118,7 @@ export const postNewEmployee = async (req, res) => {
   }
   const pool = await getConnection();
   try {
-    const createUser = await pool
+    await pool
       .request()
       .input('Email', Email)
       .input('Contrasenia', Contrasenia)

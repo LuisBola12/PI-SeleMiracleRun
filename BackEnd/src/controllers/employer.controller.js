@@ -1,4 +1,4 @@
-import { getConnection,sql } from '../database';
+import { getConnection, sql } from '../database';
 import { employerQueries } from '../database/queries/employerQueries';
 
 export const getEmployer = async (req, res) => {
@@ -14,8 +14,8 @@ export const getEmployer = async (req, res) => {
 
 export const createNewEmployer = async (req, res) => {
   const { Cedula, Nombre, Apellido1, Apellido2, Telefono, Email } = req.body;
-  if (Cedula == null || Nombre == null || Apellido1 == null 
-      || Apellido2 == null || Telefono == null || Email == null) {
+  if (Cedula == null || Nombre == null || Apellido1 == null
+    || Apellido2 == null || Telefono == null || Email == null) {
 
     const message = 'Bad Request. Please Fill All Fields.';
     return res.status(400).json({ msg: message });

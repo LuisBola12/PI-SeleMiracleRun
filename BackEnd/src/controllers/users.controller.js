@@ -1,4 +1,4 @@
-import { getConnection, sql} from '../database';
+import { getConnection, sql } from '../database';
 import { userQueries } from '../database/queries/userQueries';
 
 export const getUsers = async (req, res) => {
