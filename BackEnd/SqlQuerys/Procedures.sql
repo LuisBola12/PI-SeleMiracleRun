@@ -110,17 +110,13 @@ BEGIN
 
   SELECT @cedula = Cedula From Empleado WHERE Email = @Email;
 
-  SELECT @fechaFin = FechaFin from EmpleadoYContratoSeAsocianAProyecto ec
-  WHERE ec.CedulaEmpleado = @cedula and ec.NombreProyecto = @Proyecto;
-
   SELECT be.NombreBeneficio, b.CostoActual, b.Descripción from Empleado e
   JOIN BeneficioElegido be on e.Cedula = be.CedulaEmpleado
   JOIN Beneficios b on be.NombreBeneficio = b.Nombre and be.NombreProyecto = b.NombreProyecto
   JOIN Proyecto p on b.NombreProyecto = p.Nombre 
-  where e.Email = @Email and p.Nombre = @Proyecto and @fechaFin > GETDATE();
+  where e.Email = @Email and p.Nombre = @Proyecto and be.fechaFin > GETDATE();
   
 END;
-GO
 
 CREATE PROCEDURE getOfferedBenefits 
   @Email VARCHAR(50),
@@ -165,5 +161,27 @@ BEGIN
   INSERT into @offeredVoluntaryDeductions EXEC getEmployeeVoluntaryDeductions @Email = @Email, @Proyecto = @Proyecto;
   SELECT dv.Nombre, dv.Costo, dv.Descripcion from DeduccionesVoluntarias dv where dv.NombreProyecto = @Proyecto
   and dv.Nombre not in (select Nombre from @offeredVoluntaryDeductions)
+END;
+GO
+
+CREATE PROCEDURE desvincularBeneficioDeEmpleado (
+  @Email VARCHAR(50),
+  @Proyecto VARCHAR(50),
+  @NombreBeneficio VARCHAR(50)
+) AS
+BEGIN
+  DECLARE @cedula CHAR(15);
+  DECLARE @fechaInicioBeneficio DATETIME;
+
+  SELECT @cedula = Cedula FROM Empleado WHERE Email = @Email;
+
+  SELECT @fechaInicioBeneficio = fechaInicio FROM BeneficioElegido be
+  WHERE be.CedulaEmpleado = @cedula AND be.NombreProyecto = @Proyecto AND 
+  NombreBeneficio = @NombreBeneficio AND fechaFin > GETDATE()
+
+  UPDATE BeneficioElegido SET fechaFin = GETDATE()
+  WHERE CedulaEmpleado = @cedula AND NombreProyecto = @Proyecto AND 
+  NombreBeneficio = @NombreBeneficio AND fechaInicio = @fechaInicioBeneficio
+
 END;
 GO

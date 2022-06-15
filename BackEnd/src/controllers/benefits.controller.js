@@ -76,7 +76,23 @@ export const linkEmployeeToBenefit = async (req, res) => {
       .input('NombreBeneficio', sql.VarChar, NombreBeneficio)
       .execute('vincularBeneficioEmpleado');
     console.log(result);
-    res.json({ Nombre, CostoActual });
+  } catch (e) {
+    console.log(`Error: ${e}`);
+    res.status(500).send(e.message);
+  }
+};
+
+export const unlinkEmployeeToBenefit = async (req, res) => {
+  const { Email, Proyecto, NombreBeneficio } = req.body;
+  try {
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input('Email', sql.VarChar, Email)
+      .input('Proyecto', sql.VarChar, Proyecto)
+      .input('NombreBeneficio', sql.VarChar, NombreBeneficio)
+      .execute('desvincularBeneficioDeEmpleado');
+    console.log(result);
   } catch (e) {
     console.log(`Error: ${e}`);
     res.status(500).send(e.message);
