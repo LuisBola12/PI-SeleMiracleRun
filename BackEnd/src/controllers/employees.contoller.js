@@ -222,17 +222,15 @@ export const setHoursEmployee = async ( req, res ) => {
   }
 };
 
-export const getEmployeesAllInfo = async ( projectName ) => {
+export const getEmployeesAllInfo = async ( req, res ) => {
+  const { projectName } = req.params;
   try {
-    let employeesInfo;
     const pool = await getConnection(); 
- 
     const result = await pool
       .request()
       .input( 'projectName', projectName )
       .query( employeesQueries.getActiveEmployeesInfo );
-    employeesInfo =  result.recordset ;
-    return employeesInfo;
+    res.json( result.recordset );
   } catch ( error ) {
     return error;
   }
