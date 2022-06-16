@@ -4,12 +4,12 @@ const getTransporter = function () {
   let transporter;
   transporter = nodemailer.createTransport( 
     {
-      host: 'smtp.gmail.com',
+      host: '',
       port: 465,
       secure: true,
       auth: {
-        user: 'selemiraclerun22@gmail.com',
-        pass: 'qfmlmammasmpbtcj'
+        user: '',
+        pass: ''
       },
       tls: {
         rejectUnauthorized: false
