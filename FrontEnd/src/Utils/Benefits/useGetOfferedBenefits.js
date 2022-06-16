@@ -15,9 +15,9 @@ export const useGetOfferedBenefits = () => {
       setofferedInfo(true);
     };
     getBenefits();
-  }, []);
+  }, [offeredInfo]);
   return {
-    offeredBenefits, offeredInfo
+    offeredBenefits, offeredInfo, setofferedInfo
   };
 };
 

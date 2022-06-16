@@ -3,15 +3,26 @@ import '../../App.css';
 import { transformCost } from '../../shared/moneyFormatTransform';
 import { useGetOfferedBenefits } from '../../Utils/Benefits/useGetOfferedBenefits';
 import { useGetEmployeeBenefits } from '../../Utils/Benefits/useGetEmployeeBenefits';
+import { usePostToBenefits } from '../../Utils/Benefits/usePostToBenefits.js';
+import { usePutToBenefits } from '../../Utils/Benefits/usePutToBenefits';
 
 
 export const EmployeeBenefits = () => {
-  const { offeredBenefits, offeredInfo } = useGetOfferedBenefits();
-  const { EmployeeBenefits, EmployeeInfo } = useGetEmployeeBenefits();
+  const { submitBenefitToEmplyee } = usePostToBenefits();
+  const { offeredBenefits, offeredInfo, setofferedInfo } = useGetOfferedBenefits();
+  const { EmployeeBenefits, EmployeeInfo, setEmployeeInfo } = useGetEmployeeBenefits();
+  const { unlinkEmployeeToBenefit } = usePutToBenefits();
   const handleAddButton = (element) => {
-
+    submitBenefitToEmplyee(element.Nombre);
+    setofferedInfo(false);
+    setEmployeeInfo(false);
   };
-  console.log(!EmployeeInfo && !offeredInfo);
+
+  const handleDeleteButton = (element) => {
+    unlinkEmployeeToBenefit(element.NombreBeneficio);
+    setofferedInfo(false);
+    setEmployeeInfo(false);
+  }
   return (
     <>
       {!EmployeeInfo ? (<div className='loader' ></div >) : (
@@ -33,7 +44,7 @@ export const EmployeeBenefits = () => {
                   <td className='description-cell left-td'>{((element.Descripción) ? element.Descripción : 'No description')}</td>
                   <td className='right-td'>₡ {transformCost(element.CostoActual)}</td>
                   <td className='right-button table-right-border'>
-                    <button className='button cancel-button' > Delete </button>
+                    <button className='button cancel-button' onClick={() => handleDeleteButton(element)}> Delete </button>
                   </td>
                 </tr>
               ))}
