@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { postLogin } from '../../Slices/user/requests/postLogin';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { React, useState } from 'react';
+import { ButtonComp } from '../Button/ButtonComp';
 import './LoginStyle.scss';
 
 export const LoginComp = () => {

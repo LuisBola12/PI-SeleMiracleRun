@@ -70,7 +70,7 @@ export const CreateEmployee = () => {
               <label htmlFor='name' className='animated-input-employee__label'>Name<span className='req'>*</span></label>
             </div>
             <div>
-              <p className='errorForm' id='error-name-input'>{errors.name}</p>
+              <label className='errorForm' id='error-name-input'>{errors.name}</label>
             </div>
           </div>
 
@@ -81,7 +81,7 @@ export const CreateEmployee = () => {
               <label htmlFor='first-last-name-employee' className='animated-input-employee__label'>First Last Name<span className='req'>*</span></label>
             </div>
             <div>
-              <p className='errorForm' id='error-first-lastname-input'>{errors.lastname}</p>
+              <label className='errorForm' id='error-first-lastname-input'>{errors.lastname}</label>
             </div>
           </div>
           <div>
@@ -91,7 +91,7 @@ export const CreateEmployee = () => {
               <label htmlFor='secondlastname' className='animated-input-employee__label'>Second Last Name<span className='req'>*</span></label>
             </div>
             <div>
-              <p className='errorForm' id='error-second-lastname-input'>{errors.secondlastname}</p>
+              <label className='errorForm' id='error-second-lastname-input'>{errors.secondlastname}</label>
             </div>
           </div>
         </div>
@@ -106,7 +106,7 @@ export const CreateEmployee = () => {
               <label htmlFor='id' className='animated-input-employee-id__label'>Id<span className='req'>*</span></label>
             </div>
             <div>
-              <p className='errorForm' id='error-id-employee'>{errors.id}</p>
+              <label className='errorForm' id='error-id-employee'>{errors.id}</label>
             </div>
           </div>
           <div className='animated-input-employee-id'>
@@ -128,7 +128,7 @@ export const CreateEmployee = () => {
               <label htmlFor='email' className='animated-input-employee-credentials__label'>Email<span className='req'>*</span></label>
             </div>
             <div>
-              <p className='errorForm' id='error-email-input'>{errors.email}</p>
+              <label className='errorForm' id='error-email-input'>{errors.email}</label>
             </div>
           </div>
           <div>
@@ -141,7 +141,7 @@ export const CreateEmployee = () => {
               <label htmlFor='password' className='animated-input-employee-credentials__label'>Password<span className='req'>*</span></label>
             </div>
             <div>
-              <p className='errorForm' id='error-password-input'>{errors.password}</p>
+              <label className='errorForm' id='error-password-input'>{errors.password}</label>
             </div>
           </div>
         </div>
@@ -163,7 +163,7 @@ export const CreateEmployee = () => {
               <label htmlFor='contract' className='animated-input-employee-contract__label'>Type of Contract<span className='req'>*</span></label>
             </div>
             <div>
-              <p className='errorForm' id='error-contract-input'>{errors.contract}</p>
+              <label className='errorForm' id='error-contract-input'>{errors.contract}</label>
             </div>
           </div>
           <div className='animated-input-employee-service-contract'>
