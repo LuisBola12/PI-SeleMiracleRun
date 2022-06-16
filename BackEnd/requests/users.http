@@ -24,7 +24,11 @@
 @apiPagoPruebas = http://localhost:4000/pago
 @apiOfferedVoluntaryDeductions = http://localhost:4000/offeredVoluntaryDeductions
 @apiCostTotalVoluntaryDeductions = http://localhost:4000/CostTotalVoluntaryDeductions
+@apiEmail =  http://localhost:4000/emailprueba
 
+get {{apiEmail}}
+
+###
 DELETE {{apiDeleteEmployeeFromProject}}
 Content-Type: application/json
 
