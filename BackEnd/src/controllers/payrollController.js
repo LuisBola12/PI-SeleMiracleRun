@@ -1,5 +1,8 @@
 import { getConnection, sql } from '../database';
 import { obligatoryDeductionsQueries } from '../database/queries/obligatoryDeductionsQueries';
+import { calculateGrossSalaryForAllEmployes } from './projects.controller';
+import { payrollQueries } from './../database/queries/payrollQueries';
+import {CostTotalBenefits, getCostTotalBenefits} from './benefits.controller'
 
 const calculateAmount = ( Salary, Percentage ) => {
   const salaryI = parseFloat( Salary );
@@ -96,17 +99,8 @@ const insertObligatoryDeductionsPayroll = async ( InfoDeduccionObligatoria ) => 
   }
 };
 
-export const ObligatoryDeductionsPayRoll = async ( req, res ) => {
-  const   { 
-    CedulaEmpleado,  
-    CedulaEmpleador, 
-    NombreProyecto, 
-    SalarioBruto,
-    TipoJornada,
-    ConsecutivoPlanilla,
-    ConsecutivoPago } = req.body;
-
-  const obligatoryDeductions = await getObligatoryDeductions( CedulaEmpleado, NombreProyecto );
+export const obligatoryDeductionsPayRoll = async(cedEmpleado,cedEmpleador,proyName,grossSalary,contractType,consecutivePlanilla,consecutivePayslip) => {
+  const obligatoryDeductions = await getObligatoryDeductions( cedEmpleado, proyName );
   let montoEmpleado = 0.0;
   let montoEmpleador = 0.0;
   let nombreDeduccionObligatoria = '';
@@ -114,23 +108,74 @@ export const ObligatoryDeductionsPayRoll = async ( req, res ) => {
   obligatoryDeductions.forEach( element => {
     if ( element.Nombre === 'ImpuestoSobreLaRenta' ){
       TipoJornada,
-      montoEmpleado = calculateAmountRentTaxes( SalarioBruto, TipoJornada );
+      montoEmpleado = calculateAmountRentTaxes( grossSalary, contractType );
       montoEmpleador = 0;
     } else {
-      montoEmpleado = calculateAmount( SalarioBruto, element.PorcentajeEmpleado );
-      montoEmpleador = calculateAmount( SalarioBruto, element.PorcentajeEmpleador ); 
+      montoEmpleado = calculateAmount( grossSalary, element.PorcentajeEmpleado );
+      montoEmpleador = calculateAmount( grossSalary, element.PorcentajeEmpleador ); 
     }
     nombreDeduccionObligatoria = element.Nombre;
 
     const data = {
-      'ConsecutivoPlanilla': ConsecutivoPlanilla, 
-      'CedulaEmpleador': CedulaEmpleador, 
-      'ConsecutivoPago': ConsecutivoPago,
+      'ConsecutivoPlanilla': consecutivePlanilla, 
+      'CedulaEmpleador': cedEmpleador, 
+      'ConsecutivoPago': consecutivePayslip,
       'NombreDeduccionObligatoria': nombreDeduccionObligatoria,
-      'NombreProyecto': NombreProyecto,
+      'NombreProyecto': proyName,
       'MontoEmpleador': montoEmpleador,
       'MontoEmpleado': montoEmpleado
     };
     insertObligatoryDeductionsPayroll( data );
-  } );
+  });
+};
+const insertAPaySlip = async(
+  consecutivoPlanilla,
+  cedulaEmpleador,
+  cedulaEmpleado,
+  salarioBruto) =>{
+  console.log(consecutivoPlanilla,
+      cedulaEmpleador,
+      cedulaEmpleado,
+      salarioBruto);
+  try {
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input( 'ConsecutivoPlanilla', consecutivoPlanilla )
+      .input( 'CedulaEmpleador', cedulaEmpleador )
+      .input( 'CedulaEmpleado', cedulaEmpleado )
+      .input( 'SalarioBruto', salarioBruto )
+      .query( payrollQueries.insertAPayslip);
+    console.log(result);
+  } catch (error) {
+    console.log(error);
+  }
+}
+const getConsecutivePayNumber = async(consecutivePlanilla,cedulaEmpleado)=>{
+  try { 
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input( 'ConsecutivoPlanilla', consecutivePlanilla )
+      .input( 'CedulaEmpleado', cedulaEmpleado )
+      .query( payrollQueries.getPaysilipOfAnEmployee);
+    return result.recordset[0].ConsecutivoPago;
+  } catch (error) {
+    console.log(error)
+    return error;
+  }
+}
+const insertTotalOblgatoryDeductions = async(cedEmpleado,cedEmpleador,proyName,grossSalary,contractType,consecutivePlanilla) =>{
+  const consecutivePayslip = await getConsecutivePayNumber(consecutivePlanilla,cedEmpleado);
+  obligatoryDeductionsPayRoll(cedEmpleado,cedEmpleador,proyName,grossSalary,contractType,consecutivePlanilla,consecutivePayslip)
+}
+export const executeAPayrroll = async(consecutivePlanilla,nombreProyecto,cedulaEmpleador) =>{
+  const payslips = await calculateGrossSalaryForAllEmployes(nombreProyecto);
+  payslips.forEach(element=>{
+    if(element.contractType === 'Servicios Profesionales'){
+      console.log("Esto se va a areglar")
+    }else{
+      insertAPaySlip(consecutivePlanilla,cedulaEmpleador,element.employeeID,element.grossSalary);
+      insertTotalOblgatoryDeductions(element.employeeID,cedulaEmpleador,nombreProyecto,element.grossSalary,element.contractType,consecutivePlanilla);
+      const totalBenefitsCost = getCostTotalBenefits()
+    }
+  });
 };
