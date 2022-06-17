@@ -1,5 +1,6 @@
 import { getConnection, sql } from '../database';
 import { benefitsQueries } from '../database/queries/benefitsQueries';
+import {getConsecutivePayNumber} from './payrollController'
 
 export const getBenefits = async (req, res) => {
   const { Proyecto } = req.params;
@@ -148,16 +149,18 @@ export const updateBenefit = async (req, res) => {
   }
 };
 
-export const getCostTotalBenefits = async ( cedEmpleador, proyName, consecutivePayroll, consecutivePayslip  ) => {
+export const insertCostTotalBenefits = async ( cedEmpleado, proyName, consecutivePayroll  ) => {
+  const consecutivePayslip = await getConsecutivePayNumber(consecutivePayroll,cedEmpleado);
+  console.log(` beneficio: ${cedEmpleado}, ${proyName}, ${consecutivePayroll},${consecutivePayslip}`)
   try {
     const pool = await getConnection();
     const result = await pool.request()
-      .input( 'Cedula', cedEmpleador )
+      .input( 'CedulaEmpleado', cedEmpleado )
       .input( 'Proyecto', proyName )
       .input( 'ConsecutivoPlanilla', consecutivePayroll )
       .input( 'ConsecutivoPago', consecutivePayslip )
-      .execute( 'calcularTotalBeneficiosDeEmpleado' );
-    return result.recordset[0].CostoBeneficios;
+      .execute( 'insertarBeneficiosEnPago' );
+      console.log(result.recordset)
   } catch ( e ) {
     console.log( e );
     return undefined;
