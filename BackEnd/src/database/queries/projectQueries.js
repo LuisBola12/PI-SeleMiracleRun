@@ -3,7 +3,7 @@ export const projectQueries = {
   getProjectsByEmail:
     `SELECT Proyecto.[Nombre] FROM Empleador 
     JOIN Proyecto ON Proyecto.CedulaEmpleador = Empleador.Cedula 
-    WHERE Empleador.Email =@Email`,
+    WHERE Empleador.Email =@Email AND Proyecto.Borrado = 0`,
 
   createProject:
     `DECLARE @cedulaObtenida VARCHAR(9);
