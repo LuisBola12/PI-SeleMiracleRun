@@ -1,14 +1,8 @@
 export const benefitsQueries = {
-  getBenefits: 'Select * from Beneficios where NombreProyecto = @Proyecto',
+  getBenefits: `Select * from Beneficios b where NombreProyecto = @Proyecto and b.Activo = 'true'`,
   getBenefitsByName: 'select Nombre from Beneficios where Nombre = @Nombre and NombreProyecto = @Proyecto',
-  createBenefit: 'Insert into Beneficios (Nombre, NombreProyecto, CostoActual, Descripción) values (@Nombre, @NombreProyecto ,@CostoActual, @Descripción)',
-  editBenefit: 'Update Beneficios set Nombre=@Nombre, CostoActual=@CostoActual, Descripción=@Descripción where NombreProyecto=@NombreProyecto and Nombre=@NombreAntiguo',
-  getEmployeeBenefitsByEmail: `SELECT eb.NombreBeneficio, b.CostoActual, b.Descripción from Empleado e
-  join Usuarios u on e.Email = u.Email 
-  join EmpleadoGozaBeneficios eb on e.Cedula = eb.CedulaEmpleado
-  join Proyecto p on eb.NombreProyecto = p.Nombre
-  join Beneficios b on b.Nombre = eb.NombreBeneficio 
-  and b.NombreProyecto = eb.NombreProyecto 
-  where e.Email = @Email and p.Nombre = @Proyecto`,
+  createBenefit: `Insert into Beneficios (Nombre, NombreProyecto, CostoActual, Descripción, Activo) values (@Nombre, @NombreProyecto ,@CostoActual, @Descripción, 'true')`,
+  editBenefit: `Update Beneficios set Nombre = @Nombre, CostoActual = @CostoActual, Descripción = @Descripción where NombreProyecto=@NombreProyecto and Nombre=@NombreAntiguo and Activo = 'true'`,
+  deactivateBenefit: `Update Beneficios set Activo = 'false' where Nombre = @Nombre and NombreProyecto = @NombreProyecto`
 };
 
