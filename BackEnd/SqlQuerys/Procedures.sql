@@ -263,10 +263,10 @@ BEGIN
 END;
 
 CREATE PROCEDURE calcularTotalDeduccionesVoluntariasDeEmpleado (
-				@Email VARCHAR(50),
-				@Proyecto VARCHAR(50),
-				@ConsecutivoPlanilla int,
-				@ConsecutivoPago int
+		@Email VARCHAR(50),
+		@Proyecto VARCHAR(50),
+		@ConsecutivoPlanilla int,
+		@ConsecutivoPago int
 ) 
 AS
 BEGIN
@@ -290,5 +290,18 @@ BEGIN
 
 	SELECT SUM(R.CostoDeduccionVoluntaria) CostoDeduccion
 	FROM @Resultados R
+
+END;
+
+CREATE PROCEDURE eliminarBeneficio (
+		@NombreBeneficio VARCHAR(50),
+		@Proyecto VARCHAR(50)
+) 
+AS
+BEGIN
+	UPDATE Beneficios SET Activo = 'false' WHERE Nombre = @NombreBeneficio AND NombreProyecto = @Proyecto
+	
+  UPDATE BeneficioElegido SET fechaFin = GETDATE() WHERE NombreBeneficio = @NombreBeneficio 
+  AND NombreProyecto = @Proyecto AND fechaFin > GETDATE()
 
 END;

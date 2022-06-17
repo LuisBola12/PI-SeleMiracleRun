@@ -4,7 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useGetBenefitsFromDatabase } from '../../Utils/Benefits/useGetBenefitsFromDatabase';
 import { useNavigate } from 'react-router-dom';
 import { transformCost } from '../../shared/moneyFormatTransform';
-import { deactivateBenefit, usePutToBenefits } from '../../Utils/Benefits/usePutToBenefits';
+import { usePutToBenefits } from '../../Utils/Benefits/usePutToBenefits';
+import Swal from 'sweetalert2';
 
 export const CrudBenefits = () => {
   const navigate = useNavigate();
@@ -16,8 +17,26 @@ export const CrudBenefits = () => {
     navigate('/benefits/editBenefit', { state: element });
   };
   const handleDeleteClick = (element) => {
-    deactivateBenefit(element.Nombre);
-    setInfoReceived(false);
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: 'darkgreen',
+      cancelButtonColor: 'darkred',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deactivateBenefit(element.Nombre);
+        setInfoReceived(false);
+        Swal.fire({
+          title: 'Deleted!',
+          text: `The benefit ${element.Nombre} has been deleted.`,
+          icon: 'success',
+          confirmButtonColor: 'darkgreen',
+        })
+      }
+    })
   };
   const { projectBenefits, infoReceived, setInfoReceived } = useGetBenefitsFromDatabase();
   return !infoReceived ? <div className='loader' ></div > : (

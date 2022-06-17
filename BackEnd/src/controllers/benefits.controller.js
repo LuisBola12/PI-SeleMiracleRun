@@ -154,9 +154,9 @@ export const deactivateBenefit = async (req, res) => {
     const pool = await getConnection();
     const result = await pool
       .request()
-      .input('Nombre', sql.VarChar, Nombre)
-      .input('NombreProyecto', sql.VarChar, NombreProyecto)
-      .query(benefitsQueries.deactivateBenefit);
+      .input('NombreBeneficio', sql.VarChar, Nombre)
+      .input('Proyecto', sql.VarChar, NombreProyecto)
+      .execute('eliminarBeneficio');
     res.json({ Nombre, NombreProyecto });
   } catch (e) {
     console.log(`Error: ${e}`);
