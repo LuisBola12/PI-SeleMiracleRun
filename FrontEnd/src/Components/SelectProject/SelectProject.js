@@ -75,7 +75,7 @@ export const SelectProjectComp = () => {
             return (
               <div key={project.Nombre} className='project-projectBox'>
                 {
-                  ( isDeletingProject ) ? <button onClick={() => eliminateProject( project.Nombre )}> x</button> : <></>
+                  ( isDeletingProject ) ? <button className = 'eliminateMinus-button' onClick={() => eliminateProject( project.Nombre )}>-</button> : <></>
 
                 }
                 <button
@@ -96,11 +96,17 @@ export const SelectProjectComp = () => {
           </div>
         ) : ( <></> )}
       </div>
-      {rolFromUser === 'admin' ? (
-        <button onClick={() =>setIsDeletingProject( true )}>d</button>
-      ) : <></>}
       {isDeletingProject && rolFromUser === 'admin' ? <button onClick={ ()=> setIsDeletingProject( false )}  >cancel</button> : <></>}
-      <footer className='project-footerCopyRights'> &copy; SeleMiracleRun </footer>
+      <div>
+
+        {rolFromUser === 'admin' ? (
+          <>  
+            <button className = 'eliminateProjects-icon' onClick={() =>setIsDeletingProject( true )}> </button>
+          
+          </>
+        ) : <></>}
+        <footer className='project-footerCopyRights'> &copy; SeleMiracleRun </footer>
+      </div>
     </div >
   );
 };
