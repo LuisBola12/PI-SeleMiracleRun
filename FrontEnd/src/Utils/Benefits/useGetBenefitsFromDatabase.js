@@ -13,8 +13,8 @@ export const useGetBenefitsFromDatabase = () => {
       setInfoReceived(true);
     };
     getBenefits();
-  }, []);
+  }, [infoReceived]);
   return {
-    projectBenefits, infoReceived
+    projectBenefits, infoReceived, setInfoReceived
   };
 };

@@ -4,16 +4,22 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useGetBenefitsFromDatabase } from '../../Utils/Benefits/useGetBenefitsFromDatabase';
 import { useNavigate } from 'react-router-dom';
 import { transformCost } from '../../shared/moneyFormatTransform';
+import { deactivateBenefit, usePutToBenefits } from '../../Utils/Benefits/usePutToBenefits';
 
 export const CrudBenefits = () => {
   const navigate = useNavigate();
+  const { deactivateBenefit } = usePutToBenefits();
   const handleCreateClick = () => {
     navigate('/benefits/CreateBenefit');
   };
   const handleEditClick = (element) => {
     navigate('/benefits/editBenefit', { state: element });
   };
-  const { projectBenefits, infoReceived } = useGetBenefitsFromDatabase();
+  const handleDeleteClick = (element) => {
+    deactivateBenefit(element.Nombre);
+    setInfoReceived(false);
+  };
+  const { projectBenefits, infoReceived, setInfoReceived } = useGetBenefitsFromDatabase();
   return !infoReceived ? <div className='loader' ></div > : (
     <>
       <div className='table-button'>
@@ -41,7 +47,7 @@ export const CrudBenefits = () => {
                 <button className='button' onClick={() => handleEditClick(element)}> Edit </button>
               </td>
               <td className='right-button table-right-border'>
-                <button className='button cancel-button' > Delete </button>
+                <button className='button cancel-button' onClick={() => handleDeleteClick(element)}> Delete </button>
               </td>
             </tr>
           ))}
