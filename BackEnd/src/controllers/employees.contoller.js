@@ -232,6 +232,7 @@ export const getEmployeesAllInfo = async ( req, res ) => {
       .query( employeesQueries.getActiveEmployeesInfo );
     res.json( result.recordset );
   } catch ( error ) {
+    res.error( error );
     return error;
   }
 };
