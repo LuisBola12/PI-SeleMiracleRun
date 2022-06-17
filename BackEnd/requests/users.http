@@ -251,7 +251,16 @@ Content-Type: application/json
   "ConsecutivoPlanilla": 1, 
   "ConsecutivoPago" : 1
 }
+###
+POST {{apiCostTotalVoluntaryDeductions}}
+Content-Type: application/json
 
+{
+  "Email": "juan.caras@hotmail.com", 
+  "Proyecto": "Taquería Milagro", 
+  "ConsecutivoPlanilla": 1, 
+  "ConsecutivoPago" : 1
+}
 ### 
 POST {{apiPagoPruebas}}
 Content-Type: application/json

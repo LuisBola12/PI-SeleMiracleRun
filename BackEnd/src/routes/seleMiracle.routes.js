@@ -8,32 +8,38 @@ import {
   getEmployerByID, getUserByEmail, verifyCredentials, registerNewUser,
   getProfileEmployeer, getProfileEmployee, updateProfileEmployeer, updateProfileEmployee
 } from '../controllers/users.controller';
-import { getVoluntaryDeductions, createNewVoluntaryDeduction, getVoluntaryDeductionsByName, updateVoluntaryDeduction, getEmployeeVoluntaryDeductionsByEmail, getOfferedVoluntaryDeductions } from '../controllers/voluntaryDeductions.controller';
+import { getVoluntaryDeductions, createNewVoluntaryDeduction, getVoluntaryDeductionsByName, updateVoluntaryDeduction, getEmployeeVoluntaryDeductionsByEmail, getOfferedVoluntaryDeductions, CostTotalVoluntaryDeductions } from '../controllers/voluntaryDeductions.controller';
 import { getTypeOfContracts } from '../controllers/contracts.controller';
+<<<<<<< HEAD
 import { getBenefits, createBenefit, getBenefitsByName, updateBenefit, getEmployeeBenefitsByEmail, getCostTotalBenefits, getOfferedBenefits, linkEmployeeToBenefit } from '../controllers/benefits.controller';
+=======
+import {
+  getBenefits, createBenefit, getBenefitsByName, updateBenefit, getEmployeeBenefitsByEmail,
+  getOfferedBenefits, linkEmployeeToBenefit, CostTotalBenefits, unlinkEmployeeToBenefit
+} from '../controllers/benefits.controller';
+>>>>>>> 86fd38e63e18bc9c78028a8ae390830ad2588bab
 import { ObligatoryDeductionsPayRoll } from '../controllers/payrollController';
 
 const router = Router();
 
 //Users
-router.get( '/users/:Email', getUserByEmail );
-router.get( '/profileEmployee/:Email', getProfileEmployee );
-router.get( '/profileEmployeer/:Email', getProfileEmployeer );
-router.post( '/users', verifyCredentials );
+router.get('/users/:Email', getUserByEmail);
+router.get('/profileEmployee/:Email', getProfileEmployee);
+router.get('/profileEmployeer/:Email', getProfileEmployeer);
+router.post('/users', verifyCredentials);
 
 
 //Employer
-router.post( '/createEmployer', registerNewUser );
-router.get( '/employer/:Cedula', getEmployerByID );
-// router.put('/updateEmployeer',updateProfileEmployeer);
-router.put( '/updateEmployeer', updateProfileEmployeer );
+router.post('/createEmployer', registerNewUser);
+router.get('/employer/:Cedula', getEmployerByID);
+router.put('/updateEmployeer', updateProfileEmployeer);
 
 //Periodos
 // router.get('/periodos',getPeriodos);
 
 
 //Contracts
-router.get( '/typeContracts', getTypeOfContracts );
+router.get('/typeContracts', getTypeOfContracts);
 
 
 //Employees
@@ -55,20 +61,24 @@ router.post( '/createPayrroll', createPayrroll );
 
 
 //Benefits
-router.get( '/benefits/:Proyecto', getBenefits );
-router.get( '/benefits/:Proyecto/:Nombre', getBenefitsByName );
-router.get( '/myBenefits/:Proyecto/:Email', getEmployeeBenefitsByEmail );
-router.get( '/offeredBenefits/:Proyecto/:Email', getOfferedBenefits );
-router.post( '/benefits', createBenefit );
-router.put( '/benefits/:NombreAntiguo', updateBenefit );
-router.post( '/myBenefits', linkEmployeeToBenefit );
+router.get('/benefits/:Proyecto', getBenefits);
+router.get('/benefits/:Proyecto/:Nombre', getBenefitsByName);
+router.get('/myBenefits/:Proyecto/:Email', getEmployeeBenefitsByEmail);
+router.get('/offeredBenefits/:Proyecto/:Email', getOfferedBenefits);
+router.post('/benefits', createBenefit);
+router.put('/benefits/:NombreAntiguo', updateBenefit);
+router.post('/myBenefits', linkEmployeeToBenefit);
+//router.put('/myBenefits', unlinkEmployeeToBenefit);
 
 //VoluntaryDeductions
-router.get( '/voluntaryDeductions/:NombreProyecto', getVoluntaryDeductions );
-router.get( '/voluntaryDeductions/:NombreProyecto/:Nombre', getVoluntaryDeductionsByName );
-router.post( '/voluntaryDeductions', createNewVoluntaryDeduction );
-router.put( '/voluntaryDeductions/:NombreAntiguo', updateVoluntaryDeduction );
-router.get( '/myVoluntaryDeductions/:Proyecto/:Email', getEmployeeVoluntaryDeductionsByEmail );
-router.get( '/offeredVoluntaryDeductions/:Proyecto/:Email', getOfferedVoluntaryDeductions );
+router.get('/voluntaryDeductions/:NombreProyecto', getVoluntaryDeductions);
+router.get('/voluntaryDeductions/:NombreProyecto/:Nombre', getVoluntaryDeductionsByName);
+router.post('/voluntaryDeductions', createNewVoluntaryDeduction);
+router.put('/voluntaryDeductions/:NombreAntiguo', updateVoluntaryDeduction);
+router.get('/myVoluntaryDeductions/:Proyecto/:Email', getEmployeeVoluntaryDeductionsByEmail);
+router.get('/offeredVoluntaryDeductions/:Proyecto/:Email', getOfferedVoluntaryDeductions);
 
+// Pago Pruebas 
+router.post('/pago', ObligatoryDeductionsPayRoll);
+router.post('/CostTotalVoluntaryDeductions', CostTotalVoluntaryDeductions);
 export default router;

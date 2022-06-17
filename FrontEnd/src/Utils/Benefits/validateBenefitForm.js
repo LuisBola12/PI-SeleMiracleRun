@@ -2,7 +2,7 @@ import { validateName } from '../../Validate';
 const validate = (values) => {
   let errors = {};
   if (!values.Name) {
-    errors.Name = 'You must enter a name for the benefit';
+    errors.Name = 'You must enter a name';
     document.getElementById('Name').style.borderColor = 'red';
 
   } else {
@@ -15,7 +15,7 @@ const validate = (values) => {
     }
   }
   if (!values.Cost) {
-    errors.Cost = 'The cost of the benefit can\'t be 0';
+    errors.Cost = 'The cost can\'t be 0';
     document.getElementById('Cost').style.borderColor = 'red';
   } else {
     document.getElementById('Cost').style.borderColor = 'gray';
