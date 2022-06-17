@@ -37,7 +37,7 @@ export const getEmployeeVoluntaryDeductionsByEmail = async ( req, res ) => {
     const result = await pool.request()
       .input( 'Email', Email )
       .input( 'Proyecto', Proyecto )
-      .execute('getEmployeeVoluntaryDeductions');
+      .execute( 'getEmployeeVoluntaryDeductions' );
     res.json( result.recordset );
     console.log( result.recordset );
   } catch ( e ) {
@@ -94,18 +94,36 @@ export const updateVoluntaryDeduction = async ( req, res ) => {
   }
 };
 
-export const getOfferedVoluntaryDeductions = async (req, res) => {
+export const getOfferedVoluntaryDeductions = async ( req, res ) => {
   const { Proyecto, Email } = req.params;
   try {
     const pool = await getConnection();
     const result = await pool.request()
-      .input('Email', Email)
-      .input('Proyecto', Proyecto)
-      .execute('getOfferedVoluntaryDeductions');
-    res.json(result.recordset);
-    console.log(result.recordset);
-  } catch (e) {
-    res.status(500);
-    res.send(e.message);
+      .input( 'Email', Email )
+      .input( 'Proyecto', Proyecto )
+      .execute( 'getOfferedVoluntaryDeductions' );
+    res.json( result.recordset );
+    console.log( result.recordset );
+  } catch ( e ) {
+    res.status( 500 );
+    res.send( e.message );
+  }
+};
+
+export const CostTotalVoluntaryDeductions = async ( infoBenefits ) => {
+  const { Email, Proyecto, ConsecutivoPlanilla, ConsecutivoPago } = infoBenefits.body;
+  try {
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input( 'Email', Email )
+      .input( 'Proyecto', Proyecto )
+      .input( 'ConsecutivoPlanilla', ConsecutivoPlanilla )
+      .input( 'ConsecutivoPago', ConsecutivoPago )
+      .execute( 'calcularTotalDeduccionesVoluntariasDeEmpleado' );
+    console.log( result.recordset );
+    return result.recordset;
+  } catch ( e ) {
+    console.log( e );
+    return undefined;
   }
 };

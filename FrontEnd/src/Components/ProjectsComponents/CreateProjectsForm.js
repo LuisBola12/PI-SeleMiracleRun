@@ -35,7 +35,7 @@ export const CreateProjectsForm = () => {
       <form className='form'>
         <div className='row' >
           <div className='row-Element'>
-            <input type='text' id='projectName' className={`row-Element__input ${errors.projectNameErrorCss}` } value={formValues.projectName || ''}
+            <input type='text' id='projectName' className={`row-Element__input ${errors.projectNameErrorCss}`} value={formValues.projectName || ''}
               onChange={handleInputChange} autoComplete='off' placeholder=' ' />
             <label htmlFor='projectName' className='row-Element__label'> Project Name <span className='req'>*</span></label>
             <p className='error' >{errors.projectName}</p>
@@ -54,7 +54,7 @@ export const CreateProjectsForm = () => {
 
         <div className='row' >
           <div className='row-Element'>
-            <input type='number' id='maxBenefitsQuantity' className={`row-Element__input ${errors.maxBenefitsQuantityCss}` } value={formValues.maxBenefitsQuantity || ''}
+            <input type='number' id='maxBenefitsQuantity' className={`row-Element__input ${errors.maxBenefitsQuantityCss}`} value={formValues.maxBenefitsQuantity || ''}
               onChange={handleInputChange}
               autoComplete='off'
               placeholder=' ' />
@@ -74,7 +74,7 @@ export const CreateProjectsForm = () => {
         <div className='row'>
           <div className='row-Element'>
             <textarea id='Description' className='row-Element__textArea' autoComplete='off' placeholder=' '></textarea>
-            <label htmlFor='Description' className='row-Element__label center'>Description</label>
+            <label htmlFor='Description' className='row-Element__label row-Element__textarea-label center'>Description</label>
             <p className='error deeper'>{errors.description}</p>
           </div>
         </div>
