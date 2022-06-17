@@ -3,7 +3,7 @@ export const projectQueries = {
   getProjectsByEmail:
     `SELECT Proyecto.[Nombre] FROM Empleador 
     JOIN Proyecto ON Proyecto.CedulaEmpleador = Empleador.Cedula 
-    WHERE Empleador.Email =@Email AND Proyecto.Borrado = 0`,
+    WHERE Empleador.Email =@Email AND Proyecto.Activo = 1`,
 
   createProject:
     `DECLARE @cedulaObtenida VARCHAR(9);
@@ -34,7 +34,7 @@ export const projectQueries = {
     ,[Cantidad]
     ,[Fecha]
     FROM [SeleMiracleRun].[dbo].[HorasRegistradas]
-    WHERE NombreProyecto = @projectName AND CedulaEmpleado = @employeeId `,
+    WHERE NombreProyecto = @projectName AND CedulaEmpleado = @employeeId` ,
 
 
   getEmployeeProjectsByEmail: `SELECT P.[Nombre] FROM EmpleadoYContratoSeAsocianAProyecto ep
@@ -44,4 +44,8 @@ export const projectQueries = {
     WHERE e.Email = @Email`,
 
   getAllContracts: 'Select TipoJornada from Contrato',
+
+  logicalEraseProject: `UPDATE Proyecto 
+  SET Activo = 0
+  WHERE Nombre = @projectName;`
 };
