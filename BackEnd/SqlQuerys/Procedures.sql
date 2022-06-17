@@ -126,7 +126,7 @@ BEGIN
   DECLARE @offeredBenefits TABLE(Nombre VARCHAR(50), CostoActual real, Descripción VARCHAR(300));
   INSERT into @offeredBenefits EXEC getEmployeeBenefits @Email = @Email, @Proyecto = @Proyecto;
   SELECT b.Nombre, b.CostoActual, b.Descripción from Beneficios b where b.NombreProyecto = @Proyecto
-  and b.Nombre not in (select Nombre from @offeredBenefits)
+  and b.Nombre not in (select Nombre from @offeredBenefits) and b.Activo = True
 END;
 GO
 
