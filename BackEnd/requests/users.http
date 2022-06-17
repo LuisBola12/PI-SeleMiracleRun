@@ -26,6 +26,8 @@
 @apiGetEmployeesInfo = http://localhost:4000/getEmployeesInfo
 @apiCostTotalVoluntaryDeductions = http://localhost:4000/CostTotalVoluntaryDeductions
 
+@apiEliminateProject = http://localhost:4000/logicEliminateProject
+
 DELETE {{apiDeleteEmployeeFromProject}}
 Content-Type: application/json
 
@@ -273,3 +275,11 @@ Content-Type: application/json
 }
 ###
 GET {{apiGetEmployeesInfo}}/Taquería Milagro
+
+###
+PUT {{apiEliminateProject}}
+Content-Type: application/json
+
+{
+  "Nombre":"Taquería Milagro"
+}
