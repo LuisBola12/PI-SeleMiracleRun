@@ -10,7 +10,7 @@ export const projectQueries = {
     SELECT  @cedulaObtenida = Empleador.Cedula FROM Empleador
     JOIN Usuarios on Empleador.Email = Usuarios.Email
     WHERE Empleador.Email =  @Email
-    INSERT into Proyecto(Nombre,CedulaEmpleador,TipoPeriodo) values (@Nombre,@cedulaObtenida, @Periodo)`,
+    INSERT into Proyecto(Nombre,CedulaEmpleador,TipoPeriodo,Activo) values (@Nombre,@cedulaObtenida, @Periodo, 1)`,
 
 
 
