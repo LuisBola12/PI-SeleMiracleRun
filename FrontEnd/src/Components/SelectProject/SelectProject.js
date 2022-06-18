@@ -5,30 +5,40 @@ import './SelectProject.scss';
 import { useProjectsData } from '../../Utils/PayrollProjects/useProjectsData';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../Slices/user/userSlice';
-
+import usePost from '../../shared/hooks/usePost';
 
 
 
 export const SelectProjectComp = () => {
   const navigate = useNavigate();
-  const { projects, handleProjectSelection, loading, error } = useProjectsData();
+  const { projects, handleProjectSelection, loading, setNeedToRefresh } = useProjectsData();
   const activeProject = useSelector( ( state ) => state.activeProject.projectName );
   const rolFromUser = useSelector( ( state ) => state.user.user.Roles );
   const dispatch = useDispatch();
   const [ isDeletingProject, setIsDeletingProject ] = useState( false );
 
-  const proceedToEliminate = ( projectName ) => {
+  const { post, postError } = usePost( 'http://localhost:4000/logicEliminateProject', 'PUT' );
+
+  const proceedToEliminate = async ( projectName ) => {
     console.log( `Eliminating: ${projectName}` );
     console.log( 'proceding eliminate project From database ' );
+    let string = '';
+    string = JSON.stringify( {
+      Nombre: projectName,
+    } );
+    post( string );
+    if ( postError ){
+      console.log( 'Error Trying to delete' );
+    }
+
+    setNeedToRefresh( true );
 
   };
   
   const eliminateProject = async( projectName ) => {
-    console.log( projectName );
     try {
       const activeEmployeesApiResponse = await fetch( `http://localhost:4000/getEmployeesInfo/${projectName}` );
       const activeEmployees = await activeEmployeesApiResponse.json();
-      console.log( activeEmployees );
       if ( activeEmployees.length == 0 ){
         proceedToEliminate( projectName );
       } else {
@@ -70,7 +80,7 @@ export const SelectProjectComp = () => {
       </div>
 
       <div className='project-projectsRow'>
-        {!loading && error == null ?
+        {!loading ?
           projects.map( ( project ) => {
             return (
               <div key={project.Nombre} className='project-projectBox'>
