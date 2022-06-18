@@ -131,6 +131,8 @@ export const ObligatoryDeductionsPayRoll = async ( req, res ) => {
       'MontoEmpleador': montoEmpleador,
       'MontoEmpleado': montoEmpleado
     };
+
+    
     insertObligatoryDeductionsPayroll( data );
   } );
 };
