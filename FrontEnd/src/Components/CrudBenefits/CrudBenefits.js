@@ -4,16 +4,41 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useGetBenefitsFromDatabase } from '../../Utils/Benefits/useGetBenefitsFromDatabase';
 import { useNavigate } from 'react-router-dom';
 import { transformCost } from '../../shared/moneyFormatTransform';
+import { usePutToBenefits } from '../../Utils/Benefits/usePutToBenefits';
+import Swal from 'sweetalert2';
 
 export const CrudBenefits = () => {
   const navigate = useNavigate();
+  const { deactivateBenefit } = usePutToBenefits();
   const handleCreateClick = () => {
     navigate('/benefits/CreateBenefit');
   };
   const handleEditClick = (element) => {
     navigate('/benefits/editBenefit', { state: element });
   };
-  const { projectBenefits, infoReceived } = useGetBenefitsFromDatabase();
+  const handleDeleteClick = (element) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: 'darkgreen',
+      cancelButtonColor: 'darkred',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deactivateBenefit(element.Nombre);
+        setInfoReceived(false);
+        Swal.fire({
+          title: 'Deleted!',
+          text: `The benefit ${element.Nombre} has been deleted.`,
+          icon: 'success',
+          confirmButtonColor: 'darkgreen',
+        })
+      }
+    })
+  };
+  const { projectBenefits, infoReceived, setInfoReceived } = useGetBenefitsFromDatabase();
   return !infoReceived ? <div className='loader' ></div > : (
     <>
       <div className='table-button'>
@@ -41,7 +66,7 @@ export const CrudBenefits = () => {
                 <button className='button' onClick={() => handleEditClick(element)}> Edit </button>
               </td>
               <td className='right-button table-right-border'>
-                <button className='button cancel-button' > Delete </button>
+                <button className='button cancel-button' onClick={() => handleDeleteClick(element)}> Delete </button>
               </td>
             </tr>
           ))}

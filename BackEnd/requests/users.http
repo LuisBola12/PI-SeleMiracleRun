@@ -24,7 +24,20 @@
 @apiPagoPruebas = http://localhost:4000/pago
 @apiOfferedVoluntaryDeductions = http://localhost:4000/offeredVoluntaryDeductions
 @apiCreatePayrroll = http://localhost:4000/createPayrroll
+@apiGetEmployeesInfo = http://localhost:4000/getEmployeesInfo
+@apiCostTotalVoluntaryDeductions = http://localhost:4000/CostTotalVoluntaryDeductions
+@apiEliminateProject = http://localhost:4000/logicEliminateProject
 
+
+DELETE {{apiDeleteEmployeeFromProject}}
+Content-Type: application/json
+
+{
+  "Cedula":"118706423",
+  "NombreProyecto":"Taquería Milagro"
+}
+
+###
 POST {{apiCreatePayrroll}}
 Content-Type: application/json
 
@@ -262,6 +275,16 @@ Content-Type: application/json
     "NombreProyecto": "Taquería Milagro",
     "SalarioBruto": "800000",
     "TipoJornada" : "Semanal",
-    "ConsecutivoPlanilla": 1,
-    "ConsecutivoPago": 1
+    "ConsecutivoPlanilla": 42,
+    "ConsecutivoPago": 21
+}
+###
+GET {{apiGetEmployeesInfo}}/Taquería Milagro
+
+###
+PUT {{apiEliminateProject}}
+Content-Type: application/json
+
+{
+  "Nombre":"Taquería Milagro"
 }

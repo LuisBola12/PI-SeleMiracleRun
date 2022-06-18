@@ -325,3 +325,24 @@ const sumDays = ( dias ) =>{
   newDate.setDate( newDate.getDate() + dias );
   return newDate;
 };
+
+export const logicEliminateProject = async ( req, res ) => {
+  const { Nombre } = req.body;
+  if ( Nombre == null ) {
+    const message = 'Bad Request Invalid Project Name';
+    return res.status( 400 ).json( { msg: message } );
+  }
+
+  try {
+    const pool = await getConnection();
+    await pool
+      .request()
+      .input( 'projectName', Nombre )
+      .query( projectQueries.logicalEraseProject );
+    res.json( 'Success' );
+  }
+  catch ( error ){
+    res.status( 500 ).send( error.message ); 
+  }
+
+};

@@ -165,3 +165,18 @@ export const insertCostTotalBenefits = async ( cedEmpleado, proyName, consecutiv
     return undefined;
   }
 };
+export const deactivateBenefit = async (req, res) => {
+  const { Nombre, NombreProyecto } = req.body;
+  try {
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input('NombreBeneficio', sql.VarChar, Nombre)
+      .input('Proyecto', sql.VarChar, NombreProyecto)
+      .execute('eliminarBeneficio');
+    res.json({ Nombre, NombreProyecto });
+  } catch (e) {
+    console.log(`Error: ${e}`);
+    res.status(500).send(e.message);
+  }
+};
