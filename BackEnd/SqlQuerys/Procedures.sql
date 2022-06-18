@@ -126,7 +126,7 @@ BEGIN
   DECLARE @offeredBenefits TABLE(Nombre VARCHAR(50), CostoActual real, Descripción VARCHAR(300));
   INSERT into @offeredBenefits EXEC getEmployeeBenefits @Email = @Email, @Proyecto = @Proyecto;
   SELECT b.Nombre, b.CostoActual, b.Descripción from Beneficios b where b.NombreProyecto = @Proyecto
-  and b.Nombre not in (select Nombre from @offeredBenefits)
+  and b.Nombre not in (select Nombre from @offeredBenefits) and b.Activo = True
 END;
 GO
 
@@ -262,17 +262,11 @@ BEGIN
 	where U.Email = @Email AND P.Nombre = @Proyecto AND DVE.FechaFin > GETDATE()
 END;
 
-DROP PROCEDURE ObtenerDeduccionesVoluntariasEmpleado
-
-EXEC ObtenerDeduccionesVoluntariasEmpleado @Email = 'javier.Mo@gmail.com' , @Proyecto = 'Taquería Milagro'
-
-EXEC calcularTotalDeduccionesVoluntariasDeEmpleado @Email = 'javier.Mo@gmail.com' , @Proyecto = 'Taquería Milagro', @ConsecutivoPlanilla = 1, @ConsecutivoPago = 1
-
 CREATE PROCEDURE calcularTotalDeduccionesVoluntariasDeEmpleado (
-				@Email VARCHAR(50),
-				@Proyecto VARCHAR(50),
-				@ConsecutivoPlanilla int,
-				@ConsecutivoPago int
+		@Email VARCHAR(50),
+		@Proyecto VARCHAR(50),
+		@ConsecutivoPlanilla int,
+		@ConsecutivoPago int
 ) 
 AS
 BEGIN
@@ -296,5 +290,18 @@ BEGIN
 
 	SELECT SUM(R.CostoDeduccionVoluntaria) CostoDeduccion
 	FROM @Resultados R
+
+END;
+
+CREATE PROCEDURE eliminarBeneficio (
+		@NombreBeneficio VARCHAR(50),
+		@Proyecto VARCHAR(50)
+) 
+AS
+BEGIN
+	UPDATE Beneficios SET Activo = 'false' WHERE Nombre = @NombreBeneficio AND NombreProyecto = @Proyecto
+	
+  UPDATE BeneficioElegido SET fechaFin = GETDATE() WHERE NombreBeneficio = @NombreBeneficio 
+  AND NombreProyecto = @Proyecto AND fechaFin > GETDATE()
 
 END;

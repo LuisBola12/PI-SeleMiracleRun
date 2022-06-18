@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { getProjectsByEmail, createProject, createPayrroll } from '../controllers/projects.controller';
+import { getProjectsByEmail, createProject, createPayrroll, logicEliminateProject } from '../controllers/projects.controller';
 import {
   getEmployees, postNewEmployee, getEmployeeByID, verifyEmployeeContractOnProject,
-  getEmployeesWithContractOnOtherProyects, contractAEmployee, setHoursEmployee, deleteEmployeeFromProject
+  getEmployeesWithContractOnOtherProyects, contractAEmployee, setHoursEmployee, deleteEmployeeFromProject, getEmployeesAllInfo
 } from '../controllers/employees.contoller';
 import {
   getEmployerByID, getUserByEmail, verifyCredentials, registerNewUser,
@@ -12,7 +12,7 @@ import { getVoluntaryDeductions, createNewVoluntaryDeduction, getVoluntaryDeduct
 import { getTypeOfContracts } from '../controllers/contracts.controller';
 import {
   getBenefits, createBenefit, getBenefitsByName, updateBenefit, getEmployeeBenefitsByEmail,
-  getOfferedBenefits, linkEmployeeToBenefit, CostTotalBenefits, unlinkEmployeeToBenefit
+  getOfferedBenefits, linkEmployeeToBenefit, CostTotalBenefits, unlinkEmployeeToBenefit, deactivateBenefit
 } from '../controllers/benefits.controller';
 import { ObligatoryDeductionsPayRoll } from '../controllers/payrollController';
 
@@ -53,7 +53,13 @@ router.post( '/employee/hours', setHoursEmployee );
 router.get( '/projects/:Email/:Rol', getProjectsByEmail );
 router.post( '/projects', createProject );
 router.post( '/getProjectPeriod', createPayrroll );
+router.get( '/getEmployeesInfo/:projectName', getEmployeesAllInfo );
 
+//Projects
+router.get( '/projects/:Email/:Rol', getProjectsByEmail );
+router.post( '/projects', createProject );
+router.post( '/getProjectPeriod', createPayrroll );
+router.put( '/logicEliminateProject', logicEliminateProject );
 
 //Benefits
 router.get( '/benefits/:Proyecto', getBenefits );
@@ -62,6 +68,7 @@ router.get( '/myBenefits/:Proyecto/:Email', getEmployeeBenefitsByEmail );
 router.get( '/offeredBenefits/:Proyecto/:Email', getOfferedBenefits );
 router.post( '/benefits', createBenefit );
 router.put( '/benefits/:NombreAntiguo', updateBenefit );
+router.put( '/benefits', deactivateBenefit );
 router.post( '/myBenefits', linkEmployeeToBenefit );
 router.put( '/myBenefits', unlinkEmployeeToBenefit );
 

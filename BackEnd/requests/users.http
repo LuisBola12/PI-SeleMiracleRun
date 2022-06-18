@@ -23,9 +23,12 @@
 @apiDeleteEmployeeFromProject = http://localhost:4000/deleteEmployeeFromProject
 @apiPagoPruebas = http://localhost:4000/pago
 @apiOfferedVoluntaryDeductions = http://localhost:4000/offeredVoluntaryDeductions
+@apiGetEmployeesInfo = http://localhost:4000/getEmployeesInfo
 @apiCostTotalVoluntaryDeductions = http://localhost:4000/CostTotalVoluntaryDeductions
 
 ###
+@apiEliminateProject = http://localhost:4000/logicEliminateProject
+
 DELETE {{apiDeleteEmployeeFromProject}}
 Content-Type: application/json
 
@@ -270,4 +273,14 @@ Content-Type: application/json
     "TipoJornada" : "Semanal",
     "ConsecutivoPlanilla": 42,
     "ConsecutivoPago": 21
+}
+###
+GET {{apiGetEmployeesInfo}}/Taquería Milagro
+
+###
+PUT {{apiEliminateProject}}
+Content-Type: application/json
+
+{
+  "Nombre":"Taquería Milagro"
 }
