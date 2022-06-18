@@ -15,7 +15,6 @@ import {
   getOfferedBenefits, linkEmployeeToBenefit, CostTotalBenefits, unlinkEmployeeToBenefit
 } from '../controllers/benefits.controller';
 import { ObligatoryDeductionsPayRoll } from '../controllers/payrollController';
-import { sendEMail } from '../controllers/sendEmail';
 
 const router = Router();
 
@@ -78,5 +77,4 @@ router.get( '/offeredVoluntaryDeductions/:Proyecto/:Email', getOfferedVoluntaryD
 router.post( '/pago', ObligatoryDeductionsPayRoll );
 router.post( '/CostTotalBenefits', CostTotalBenefits );
 router.post( '/CostTotalVoluntaryDeductions', CostTotalVoluntaryDeductions );
-router.get( '/emailprueba', sendEMail );
 export default router;
