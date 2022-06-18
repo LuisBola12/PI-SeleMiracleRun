@@ -175,7 +175,6 @@ export const deactivateBenefit = async (req, res) => {
       .input('NombreBeneficio', sql.VarChar, Nombre)
       .input('Proyecto', sql.VarChar, NombreProyecto)
       .execute('eliminarBeneficio');
-    console.log(result.recordset);
     notifyEmployeesForDeletedBenefit(result.recordset, Nombre, NombreProyecto);
   } catch (e) {
     console.log(`Error: ${e}`);
