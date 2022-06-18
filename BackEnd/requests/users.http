@@ -28,6 +28,8 @@
 
 @apiEliminateProject = http://localhost:4000/logicEliminateProject
 
+@apigetProjectsEmailAndName = http://localhost:4000/myProjects
+
 DELETE {{apiDeleteEmployeeFromProject}}
 Content-Type: application/json
 
@@ -283,3 +285,6 @@ Content-Type: application/json
 {
   "Nombre":"Taquería Milagro"
 }
+
+###
+GET {{apigetProjectsEmailAndName}}/Norman.Os.L@gmail.com/Taquería Milagro

@@ -307,3 +307,18 @@ export const logicEliminateProject = async ( req, res ) => {
   }
 
 };
+
+export const getProjectsByEmailAndName = async ( req, res ) => {
+  const { Email, ProjectName } = req.params;
+  try {
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input( 'email', Email )
+      .input( 'projectName', ProjectName )
+      .query( projectQueries.getProjectsByEmailAndName );
+    res.json( result.recordset );
+  } catch ( e ) {
+    console.log( e );
+    res.error( e );
+  }
+};
