@@ -14,8 +14,8 @@ export const useGetEmployeeVoluntaryDeductions = () => {
       setEmployeeInfo(true);
     };
     getVoluntaryDeductions();
-  }, []);
+  }, [EmployeeInfo]);
   return {
-    EmployeeVoluntaryDeductions, EmployeeInfo
+    EmployeeVoluntaryDeductions, EmployeeInfo, setEmployeeInfo
   };
 };

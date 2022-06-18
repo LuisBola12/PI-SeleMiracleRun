@@ -1,5 +1,6 @@
-import { validateEmail, validateId, validateName, validatePassword } from '../../Validate';
+import { validateEmail, validateId, validateName } from '../../Validate';
 import history from '../../history';
+
 export const verifyEmployeeProject = async (id,activeProject) => {
   const seleUrl = 'http://localhost:4000/employee/contract';
   try {
@@ -37,9 +38,10 @@ export const showContractValues = (e) => {
     }
   }
 };
+
 export const validateForm = (data) =>{
   let errors = {};
-  const {email,password,name,lastname,secondlastname,id,contract} = data;
+  const {email,name,lastname,secondlastname,id,contract} = data;
   if(email){
     if(!validateEmail(email)){
       errors.email = 'You must enter a valid format for an email.';
@@ -51,19 +53,7 @@ export const validateForm = (data) =>{
     errors.email = 'Please enter an email.';
     document.getElementById('email').style.borderColor = 'red';
   }
-  
-  if(password){
-    if(!validatePassword(password)){
-      errors.password = 'Password must be 6 characters longer and have at least 2 words.';
-      document.getElementById('password').style.borderColor = 'red';
-    }else{
-      document.getElementById('error-password-input').style.display = '';
-      document.getElementById('password').style.borderColor = 'gray';
-    }
-  }else{
-    errors.password = 'Please enter a password.';
-    document.getElementById('password').style.borderColor = 'red';
-  }
+
   if(name){
     if(!validateName(name)){
       errors.name = 'Please enter a valid name.';

@@ -15,17 +15,21 @@
 @apiVerifyUser =  http://localhost:4000/verifyUser
 @apiEmployer =  http://localhost:4000/employer
 @apiContracts = http://localhost:4000/typeContracts
+@apiTotalCostBenefits = http://localhost:4000/CostTotalBenefits
 @apiEmployeeWithContractOnOtherProyects = http://localhost:4000/employeesWithContractsOnOtherProyects
 @apiContractEmployee = http://localhost:4000/contractExistentEmployee
 @apaSetHours = http://localhost:4000/employee/hours
-
-
 @apiCreatePayrroll = http://localhost:4000/getProjectPeriod
-
 @apiDeleteEmployeeFromProject = http://localhost:4000/deleteEmployeeFromProject
+@apiPagoPruebas = http://localhost:4000/pago
+@apiOfferedVoluntaryDeductions = http://localhost:4000/offeredVoluntaryDeductions
+@apiCreatePayrroll = http://localhost:4000/createPayrroll
+@apiGetEmployeesInfo = http://localhost:4000/getEmployeesInfo
+@apiCostTotalVoluntaryDeductions = http://localhost:4000/CostTotalVoluntaryDeductions
+@apiEliminateProject = http://localhost:4000/logicEliminateProject
 
-
-
+@apigetProjectsEmailAndName = http://localhost:4000/myProjects
+@apiValidateBenefit = http://localhost:4000/validateBenefit
 
 DELETE {{apiDeleteEmployeeFromProject}}
 Content-Type: application/json
@@ -40,8 +44,21 @@ POST {{apiCreatePayrroll}}
 Content-Type: application/json
 
 {
+  "Cedula":"608110776",
+  "NombreProyecto":"Taquería Milagro" 
+}
+
+
+###
+DELETE {{apiDeleteEmployeeFromProject}}
+Content-Type: application/json
+
+{
+  "Cedula":"608110776",
   "NombreProyecto":"Taquería Milagro"
 }
+
+
 ###
 POST {{apiContractEmployee}}
 Content-Type: application/json
@@ -163,7 +180,7 @@ GET {{apiContracts}}
 ###
 GET {{apiMyBenefits}}/Taquería Milagro/javier.Mo@gmail.com
 ###
-GET {{apiMyVoluntaryDeductions}}/Taquería Milagro/javier.Mo@gmail.com
+GET {{apiOfferedVoluntaryDeductions}}/Taquería Milagro/javier.Mo@gmail.com
 
 ###
 POST {{apiBenefits}}
@@ -201,14 +218,13 @@ POST {{apiEmployee}}
 Content-Type: application/json
 
 {
-  "NombreProyecto":"Radiadores Solceri",
-  "Email":"erickV@example.com",
-  "Contrasenia":"1234",
-  "Roles":"empleado",
-  "Nombre":"Erick",
-  "Apellido1":"Valverde",
-  "Apellido2":"Gonzales",
-  "Cedula":"187126112",
+  "NombreProyecto":"Taquería Milagro",
+  "Email":"jdvenegas50@gmail.com",
+  "Roles":"emp",
+  "Nombre":"Buenas",
+  "Apellido1":"Tardes",
+  "Apellido2":"Noches",
+  "Cedula":"123896754",
   "Telefono":87126121,
   "TipoJornada":"Por Horas",
   "FechaFinContrato":"2025-09-19",
@@ -238,3 +254,43 @@ Content-Type: application/json
   "CostoActual": 20000,
   "Descripción": "Esto es una prueba de la edición"
 }
+
+### 
+POST {{apiTotalCostBenefits}}
+Content-Type: application/json
+
+{
+  "Email": "javier.Mo@gmail.com", 
+  "Proyecto": "Taquería Milagro", 
+  "ConsecutivoPlanilla": 1, 
+  "ConsecutivoPago" : 1
+}
+
+### 
+POST {{apiPagoPruebas}}
+Content-Type: application/json
+
+{
+    "CedulaEmpleado": "208010869",
+    "CedulaEmpleador": "608110776",
+    "NombreProyecto": "Taquería Milagro",
+    "SalarioBruto": "800000",
+    "TipoJornada" : "Semanal",
+    "ConsecutivoPlanilla": 42,
+    "ConsecutivoPago": 21
+}
+###
+GET {{apiGetEmployeesInfo}}/Taquería Milagro
+
+###
+PUT {{apiEliminateProject}}
+Content-Type: application/json
+
+{
+  "Nombre":"Taquería Milagro"
+}
+
+###
+GET {{apigetProjectsEmailAndName}}/Norman.Os.L@gmail.com/Taquería Milagro
+###
+GET {{apiValidateBenefit}}/Taquería Milagro/crhisCo@hotmail.com/Comida

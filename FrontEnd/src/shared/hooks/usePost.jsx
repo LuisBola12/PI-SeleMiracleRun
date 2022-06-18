@@ -1,23 +1,21 @@
 import { useState } from 'react';
 
-const usePost = (url) => {
-  const [postError, setPostError] = useState(null);
-
-  const post = async (JSONBody) => {
+const usePost = ( url, methodReq = 'POST' ) => {
+  const [ postError, setPostError ] = useState( null );
+  // console.log( url, methodReq );
+  const post = async ( JSONBody ) => {
     try {
-      const postFetch = await fetch(url, {
-        method: 'POST',
+      const postFetch = await fetch( url, {
+        method: methodReq,
         headers: {
           'Content-type': 'application/json',
         },
         body: JSONBody
-      });
-      console.log(postFetch);
-    } catch (error) {
-      setPostError(error);
+      } );
+      console.log( postFetch );
+    } catch ( error ) {
+      setPostError( error );
     }
-
-
   };
 
   return { postError, post };
