@@ -200,15 +200,14 @@ export const CostTotalBenefits = async ( infoBenefits ) => {
 
 export const validateBenefitSuscription =  async ( req, res ) =>{
   const { projectName, employeeEmail ,benefitToValidate } = req.params;
-  // const projectName = 'Taquería Milagro';
-  // const employeeEmail = 'crhisCo@hotmail.com';
-  // const benefitToValidate = 'Comida';
 
 
   let validation = {
     isValid: true,
     exceedsMoneyAmountLimit: false,
-    exceedsBenefitsQtyLimit: false
+    exceedsBenefitsQtyLimit: false,
+    maxBenefitsQtyAllowed: 0,
+    maxMoneyAmountAllowed: 0
   };
   try {
 
@@ -228,11 +227,13 @@ export const validateBenefitSuscription =  async ( req, res ) =>{
       .input( 'projectName', projectName )
       .query( benefitsQueries.benefitsLimits  );
 
-    console.log( benefitsUsedInfo.recordset );
     const {  employeeBenefitsQty, moneyAmountUsedByEmployee } =  benefitsUsedInfo.recordset[0];
     const { maxBenefitsQtyAllowed,  maxMoneyAmountAllowed } =   benefitsLimits.recordset[0];
     const {   CostoActual: benefitToValidateCost } =   benefitToValidateInfo.recordset[0];
 
+    validation.maxBenefitsQtyAllowed = maxBenefitsQtyAllowed;
+    validation.maxMoneyAmountAllowed = maxMoneyAmountAllowed;
+    
     if ( employeeBenefitsQty + 1 > maxBenefitsQtyAllowed ){
       validation.isValid = false;
       validation.exceedsBenefitsQtyLimit = true;
