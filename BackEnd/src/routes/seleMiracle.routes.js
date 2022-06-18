@@ -49,6 +49,10 @@ router.post( '/contractExistentEmployee', contractAEmployee );
 router.delete( '/deleteEmployeeFromProject', deleteEmployeeFromProject );
 router.post( '/employee/hours', setHoursEmployee );
 
+//Projects
+router.get( '/projects/:Email/:Rol', getProjectsByEmail );
+router.post( '/projects', createProject );
+router.post( '/getProjectPeriod', createPayrroll );
 router.get( '/getEmployeesInfo/:projectName', getEmployeesAllInfo );
 
 //Projects
