@@ -4,7 +4,6 @@ export const useForm = (onSubmit, validate) => {
   const [formValues, setFormValues] = useState({});
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   useEffect(() => {
     if (Object.keys(errors).length === 0 && isSubmitting) {
       onSubmit();
