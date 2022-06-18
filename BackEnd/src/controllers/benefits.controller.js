@@ -226,10 +226,20 @@ export const validateBenefitSuscription =  async ( req, res ) =>{
     const benefitsLimits = await pool.request()
       .input( 'projectName', projectName )
       .query( benefitsQueries.benefitsLimits  );
+    console.log( benefitsUsedInfo.recordset );
 
-    const {  employeeBenefitsQty, moneyAmountUsedByEmployee } =  benefitsUsedInfo.recordset[0];
-    const { maxBenefitsQtyAllowed,  maxMoneyAmountAllowed } =   benefitsLimits.recordset[0];
-    const {   CostoActual: benefitToValidateCost } =   benefitToValidateInfo.recordset[0];
+    
+    let employeeBenefitsQty = 0;
+    let moneyAmountUsedByEmployee = 0; 
+
+    if ( benefitsUsedInfo.length > 0 ){
+      const {  employeeBenefitsQty:extractedQty, moneyAmountUsedByEmployee:extractedMoney } = await benefitsUsedInfo.recordset[0];
+      employeeBenefitsQty = extractedQty;
+      moneyAmountUsedByEmployee = extractedMoney;
+    } 
+    
+    const { maxBenefitsQtyAllowed,  maxMoneyAmountAllowed } =  await benefitsLimits.recordset[0];
+    const {   CostoActual: benefitToValidateCost } =  await benefitToValidateInfo.recordset[0];
 
     validation.maxBenefitsQtyAllowed = maxBenefitsQtyAllowed;
     validation.maxMoneyAmountAllowed = maxMoneyAmountAllowed;
