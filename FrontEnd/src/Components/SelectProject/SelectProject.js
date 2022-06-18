@@ -51,10 +51,6 @@ export const SelectProjectComp = () => {
         } );
       }
     } );
-
-
-
-
   };
   
   const eliminateProject = async( projectName ) => {
@@ -64,6 +60,14 @@ export const SelectProjectComp = () => {
       if ( activeEmployees.length == 0 ){
         proceedToEliminate( projectName );
       } else {
+        Swal.fire( {
+          icon: 'error',
+          title: 'Oops... Can\'t Delete Project',
+          text: 'This project have active Employees',
+          confirmButtonColor: 'darkgreen',
+        } );
+
+
         console.log( 'NO se puede eliminar: El proyecto Tiene empleados' );
       }      console.log( 'entra' );
 
