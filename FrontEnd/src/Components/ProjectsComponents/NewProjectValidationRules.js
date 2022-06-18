@@ -6,7 +6,7 @@ const validate = ( values ) => {
     errors.projectNameErrorCss = 'borderRed';
   } 
   console.log( values.paymentPeriod );
-  if ( values.paymentperiod === '' ) {
+  if ( !values.paymentPeriod || values.paymentperiod === '' ) {
     errors.paymentPeriod = 'Payment Period Required';
     errors.paymentPeriodErrorCss = 'borderRed';
     console.log( errors.paymentPeriod );
