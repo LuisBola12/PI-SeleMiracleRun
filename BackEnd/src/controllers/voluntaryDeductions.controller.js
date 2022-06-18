@@ -113,7 +113,6 @@ export const getOfferedVoluntaryDeductions = async ( req, res ) => {
 
 export const insertCostTotalVoluntaryDeductions = async ( cedEmpleado, proyName, consecutivePayroll ) => {
   const consecutivePayslip = await getConsecutivePayNumber(consecutivePayroll,cedEmpleado);
-  console.log(` voldeduction: ${cedEmpleado}, ${proyName}, ${consecutivePayroll},${consecutivePayslip}`)
   try {
     const pool = await getConnection();
     const result = await pool.request()
@@ -122,7 +121,7 @@ export const insertCostTotalVoluntaryDeductions = async ( cedEmpleado, proyName,
       .input( 'ConsecutivoPlanilla', consecutivePayroll )
       .input( 'ConsecutivoPago', consecutivePayslip )
       .execute( 'insertarDeduccionesVoluntariasEnPago' );
-    console.log( result.recordset );
+      return true;
   } catch ( e ) {
     console.log( e );
     return undefined;

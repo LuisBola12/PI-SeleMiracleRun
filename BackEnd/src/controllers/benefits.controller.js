@@ -151,7 +151,6 @@ export const updateBenefit = async (req, res) => {
 
 export const insertCostTotalBenefits = async ( cedEmpleado, proyName, consecutivePayroll  ) => {
   const consecutivePayslip = await getConsecutivePayNumber(consecutivePayroll,cedEmpleado);
-  console.log(` beneficio: ${cedEmpleado}, ${proyName}, ${consecutivePayroll},${consecutivePayslip}`)
   try {
     const pool = await getConnection();
     const result = await pool.request()
@@ -160,7 +159,7 @@ export const insertCostTotalBenefits = async ( cedEmpleado, proyName, consecutiv
       .input( 'ConsecutivoPlanilla', consecutivePayroll )
       .input( 'ConsecutivoPago', consecutivePayslip )
       .execute( 'insertarBeneficiosEnPago' );
-      console.log(result.recordset)
+      return true;
   } catch ( e ) {
     console.log( e );
     return undefined;

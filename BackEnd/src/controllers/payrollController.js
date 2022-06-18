@@ -17,25 +17,19 @@ const calculateAmount = ( Salary, Percentage ) => {
   }
 }; 
 const clasifyCalculateSalary = ( TotalSalary, TipoJornada ) => {
-  console.log(TotalSalary, TipoJornada); 
   if ( TotalSalary <= ( 863000 / TipoJornada ) ){
-    console.log("NADA")
     return 0;
   } else {
     if ( TotalSalary > ( 863000 / TipoJornada ) && TotalSalary < ( 1267000 / TipoJornada ) ){
-      console.log("NADA2")
       return ( TotalSalary * 0.10 ); 
     } else {
       if ( TotalSalary >= ( 1267000 / TipoJornada ) && TotalSalary < ( 2223000 / TipoJornada ) ){
-        console.log("NADA3")
         return ( TotalSalary * 0.15 ); 
       } else {
         if ( TotalSalary >= ( 2223000 / TipoJornada ) && TotalSalary < ( 4445000 / TipoJornada ) ){
-          console.log("NADA4")
           return ( TotalSalary * 0.20 ); 
         } else {
           if ( TotalSalary >= ( 4445000 / TipoJornada ) ){
-            console.log("NADA5")
             return ( TotalSalary * 0.25 ); 
           }
         }
@@ -46,24 +40,19 @@ const clasifyCalculateSalary = ( TotalSalary, TipoJornada ) => {
 
 const calculateAmountRentTaxes = ( Salary, TipoJornada ) => {
   const salaryI = parseFloat( Salary );
-  console.log(Salary, TipoJornada )
   if ( salaryI === null || salaryI === undefined || salaryI <= 0 ){
-    console.log("PASO ALGO ACA")
     return 0;
   } else {
     if ( TipoJornada === 'Mensual' ){
       const salary = clasifyCalculateSalary( salaryI, 1 );
-      console.log(`salario ${salary}`)
       return salary;
     } else {
       if ( TipoJornada === 'Quincenal' ){
         const salary = clasifyCalculateSalary( salaryI, 2 );
-        console.log(`salario ${salary}`)
         return salary;
       } else {
         if ( TipoJornada === 'Semanal' ){
           const salary = clasifyCalculateSalary( salaryI, 4 );
-          console.log(`salario ${salary}`)
           return salary;
         }
       }
@@ -107,6 +96,7 @@ const insertObligatoryDeductionsPayroll = async ( InfoDeduccionObligatoria ) => 
       .input( 'MontoEmpleador', sql.Float, MontoEmpleador )
       .input( 'MontoEmpleado', sql.Float, MontoEmpleado )
       .query( obligatoryDeductionsQueries.insertObligatoryDeductions );
+      return true
   } catch ( error ) {
     console.log( `Error al insertar una deduccionObligatoria: ${error} NumPago: ${ConsecutivoPago}`);
     return undefined;
@@ -118,17 +108,16 @@ export const obligatoryDeductionsPayRoll = async(cedEmpleado,cedEmpleador,proyNa
   let montoEmpleado = 0.0;
   let montoEmpleador = 0.0;
   let nombreDeduccionObligatoria = '';
-
-  obligatoryDeductions.forEach( element => {
-    if ( element.Nombre === 'ImpuestoSobreLaRenta' ){
+  
+  for(let index = 0; index < obligatoryDeductions.length; index++ ){
+    if ( obligatoryDeductions[index].Nombre === 'ImpuestoSobreLaRenta' ){
       montoEmpleado = calculateAmountRentTaxes( grossSalary, contractType );
-      console.log(`${cedEmpleado} : ${montoEmpleado}`)
       montoEmpleador = 0;
     } else {
-      montoEmpleado = calculateAmount( grossSalary, element.PorcentajeEmpleado );
-      montoEmpleador = calculateAmount( grossSalary, element.PorcentajeEmpleador ); 
+      montoEmpleado = calculateAmount( grossSalary,  obligatoryDeductions[index].PorcentajeEmpleado );
+      montoEmpleador = calculateAmount( grossSalary,  obligatoryDeductions[index].PorcentajeEmpleador ); 
     }
-    nombreDeduccionObligatoria = element.Nombre;
+    nombreDeduccionObligatoria = obligatoryDeductions[index].Nombre;
 
     const data = {
       'ConsecutivoPlanilla': consecutivePlanilla, 
@@ -139,18 +128,18 @@ export const obligatoryDeductionsPayRoll = async(cedEmpleado,cedEmpleador,proyNa
       'MontoEmpleador': montoEmpleador,
       'MontoEmpleado': montoEmpleado
     };
-    insertObligatoryDeductionsPayroll( data );
-  });
+    const result = await insertObligatoryDeductionsPayroll( data );
+    if(result === true){
+      insertOblDeductionsOnPayslip(cedEmpleado,consecutivePlanilla,consecutivePayslip);
+    }
+  }
+  return true;
 };
 const insertAPaySlip = async(
   consecutivoPlanilla,
   cedulaEmpleador,
   cedulaEmpleado,
   salarioBruto) =>{
-  console.log(consecutivoPlanilla,
-      cedulaEmpleador,
-      cedulaEmpleado,
-      salarioBruto);
   try {
     const pool = await getConnection();
     const result = await pool.request()
@@ -159,7 +148,6 @@ const insertAPaySlip = async(
       .input( 'CedulaEmpleado', cedulaEmpleado )
       .input( 'SalarioBruto', salarioBruto )
       .query( payrollQueries.insertAPayslip);
-    console.log(`${result}`);
     return true;
   } catch (error) {
     console.log(`Error al insertar una nomina: ${error}`);
@@ -168,13 +156,11 @@ const insertAPaySlip = async(
 }
 export const getConsecutivePayNumber = async(consecutivePlanilla,cedulaEmpleado)=>{
   try { 
-    console.log(consecutivePlanilla)
     const pool = await getConnection();
     const result = await pool.request()
       .input( 'Cedula', cedulaEmpleado )
       .input( 'ConsecPlanilla', consecutivePlanilla )
       .query( payrollQueries.getPaysilipOfAnEmployee);
-      console.log(result.recordset[0].ConsecutivoPago);
     return result.recordset[0].ConsecutivoPago;
   } catch (error) {
     console.log(`Error al conseguir el numero de nomina: ${error}`)
@@ -237,7 +223,6 @@ const insertNetSalary = async(consecutivePayrroll,cedEmpleado,netSalary) =>{
       .input( 'ConsecPlanilla', consecutivePayrroll )
       .input( 'ConsecPago', consecutivePayslip )
       .query(payrollQueries.insertNetSalaryOfAPayslip);
-      console.log(result)
   } catch ( error ) {
     console.log( `Error al insertar el salario neto: ${error}` );
     return undefined;
@@ -251,7 +236,6 @@ const insertOblDeductionsOnPayslip = async(cedEmpleado,consecutivePayrroll,conse
       .input( 'ConsecutivoPlanilla', consecutivePayrroll )
       .input( 'ConsecutivoPago', consecutivePayslip )
       .execute('insertarDeduccionesObligatoriasPago');
-      console.log(result)
   } catch ( error ) {
     console.log(`Error al insertar las deducciones obligatorias en pago: ${error}` );
     return undefined;
@@ -259,17 +243,26 @@ const insertOblDeductionsOnPayslip = async(cedEmpleado,consecutivePayrroll,conse
 }
 const insertTotalOblgatoryDeductions = async(cedEmpleado,cedEmpleador,proyName,grossSalary,contractType,consecutivePlanilla) =>{
   const consecutivePayslip = await getConsecutivePayNumber(consecutivePlanilla,cedEmpleado);
-  obligatoryDeductionsPayRoll(cedEmpleado,cedEmpleador,proyName,grossSalary,contractType,consecutivePlanilla,consecutivePayslip);
-  insertOblDeductionsOnPayslip(cedEmpleado,consecutivePlanilla,consecutivePayslip);
+  const result = await obligatoryDeductionsPayRoll(cedEmpleado,cedEmpleador,proyName,grossSalary,contractType,consecutivePlanilla,consecutivePayslip);
+  if(result === true){
+    return true;
+  }
 }
 const calculateNetSalaryOfAnEmployee = async(cedEmpleado,proyName,consecutivePayrroll,grossSalary) => {
-  insertCostTotalBenefits(cedEmpleado,proyName,consecutivePayrroll);
-  insertCostTotalVoluntaryDeductions(cedEmpleado,proyName,consecutivePayrroll);
+  const handleBenefits = await insertCostTotalBenefits(cedEmpleado,proyName,consecutivePayrroll);
+  const handleVolDeductions = await insertCostTotalVoluntaryDeductions(cedEmpleado,proyName,consecutivePayrroll);
+  if(handleBenefits === true && handleVolDeductions === true){
+    aplicateDeductionsAndBenefitsToSalary(cedEmpleado,consecutivePayrroll,grossSalary)
+  }
+}
+const aplicateDeductionsAndBenefitsToSalary = async(cedEmpleado,consecutivePayrroll,grossSalary) =>{
   const totalCostBenefits = await getTotalCostBenefits(consecutivePayrroll,cedEmpleado);
   const totalCostVolDeductions = await getTotalCostVolDeductions(consecutivePayrroll,cedEmpleado);
   const totalCostOblDeductions = await getTotalOblDeductions(consecutivePayrroll,cedEmpleado);
-  const netSalary = ((grossSalary - totalCostVolDeductions) - totalCostOblDeductions)+ totalCostBenefits;
-  insertNetSalary(consecutivePayrroll,cedEmpleado,netSalary);
+  if(totalCostBenefits && totalCostVolDeductions && totalCostOblDeductions){
+    const netSalary = ((grossSalary - totalCostVolDeductions) - totalCostOblDeductions)+ totalCostBenefits;
+    insertNetSalary(consecutivePayrroll,cedEmpleado,netSalary);
+  } 
 }
 const individualPayslipInsert = async(element,nombreProyecto,consecutivePlanilla,cedulaEmpleador) =>{
   if(element.contractType === 'Servicios Profesionales'){
@@ -277,8 +270,10 @@ const individualPayslipInsert = async(element,nombreProyecto,consecutivePlanilla
   }else{
     const errorHand = await insertAPaySlip(consecutivePlanilla,cedulaEmpleador,element.employeeID,element.grossSalary);
     if(errorHand === true){
-      insertTotalOblgatoryDeductions(element.employeeID,cedulaEmpleador,nombreProyecto,element.grossSalary,element.paymentPeriod,consecutivePlanilla);
-      calculateNetSalaryOfAnEmployee(element.employeeID,nombreProyecto,consecutivePlanilla,element.grossSalary);
+      const result = await insertTotalOblgatoryDeductions(element.employeeID,cedulaEmpleador,nombreProyecto,element.grossSalary,element.paymentPeriod,consecutivePlanilla);
+      if(result === true){
+        calculateNetSalaryOfAnEmployee(element.employeeID,nombreProyecto,consecutivePlanilla,element.grossSalary);
+      }
     }
   }
 }
