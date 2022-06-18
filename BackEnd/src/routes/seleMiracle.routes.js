@@ -12,7 +12,8 @@ import { getVoluntaryDeductions, createNewVoluntaryDeduction, getVoluntaryDeduct
 import { getTypeOfContracts } from '../controllers/contracts.controller';
 import {
   getBenefits, createBenefit, getBenefitsByName, updateBenefit, getEmployeeBenefitsByEmail,
-  getOfferedBenefits, linkEmployeeToBenefit, CostTotalBenefits, unlinkEmployeeToBenefit, deactivateBenefit
+  getOfferedBenefits, linkEmployeeToBenefit, CostTotalBenefits, unlinkEmployeeToBenefit, deactivateBenefit,
+  validateBenefitSuscription
 } from '../controllers/benefits.controller';
 import { ObligatoryDeductionsPayRoll } from '../controllers/payrollController';
 
@@ -68,7 +69,7 @@ router.put( '/benefits/:NombreAntiguo', updateBenefit );
 router.put( '/benefits', deactivateBenefit );
 router.post( '/myBenefits', linkEmployeeToBenefit );
 router.put( '/myBenefits', unlinkEmployeeToBenefit );
-
+router.get( '/validateBenefit/:projectName/:employeeEmail/:benefitToValidate',  validateBenefitSuscription );
 //VoluntaryDeductions
 router.get( '/voluntaryDeductions/:NombreProyecto', getVoluntaryDeductions );
 router.get( '/voluntaryDeductions/:NombreProyecto/:Nombre', getVoluntaryDeductionsByName );
