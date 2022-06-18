@@ -128,9 +128,39 @@
 
 }
 
-.project-footerCopyRights{
+.project-footerCopyRights {
   position: absolute;
   bottom: 0;
   color: white;
   font-size: 2.2vh;
+}
+
+// Icon From <a href="https://www.flaticon.com/free-icons/trash" title="trash icons">Trash icons created by Phoenix Group - Flaticon</a>
+.eliminateProjects-icon {
+  margin-left: 1vh;
+  background-color: transparent;
+  background-image: url(../../icons/trash.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 8vh;
+  height: 8vh;
+  border-style: none;
+  position: absolute;
+  bottom: 5%;
+}
+
+.eliminateMinus-button {
+  height: 29px;
+  width: 29px;
+  background-color: #c9ced5;
+  border-radius: 70px;
+  color: rgb(40, 39, 39);
+  border-style: none;
+  border: none;
+  font-size: 20px;
+  text-align: center;
+  line-height: 29px;
+  position: fixed;
+  margin-left: -1.3vh;
+  margin-top: -0.2rem;
 }
