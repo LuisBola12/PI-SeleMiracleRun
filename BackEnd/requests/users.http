@@ -23,9 +23,9 @@
 @apiDeleteEmployeeFromProject = http://localhost:4000/deleteEmployeeFromProject
 @apiPagoPruebas = http://localhost:4000/pago
 @apiOfferedVoluntaryDeductions = http://localhost:4000/offeredVoluntaryDeductions
+@apiCreatePayrroll = http://localhost:4000/createPayrroll
 @apiGetEmployeesInfo = http://localhost:4000/getEmployeesInfo
 @apiCostTotalVoluntaryDeductions = http://localhost:4000/CostTotalVoluntaryDeductions
-
 @apiEliminateProject = http://localhost:4000/logicEliminateProject
 
 @apigetProjectsEmailAndName = http://localhost:4000/myProjects
@@ -44,8 +44,21 @@ POST {{apiCreatePayrroll}}
 Content-Type: application/json
 
 {
+  "Cedula":"608110776",
+  "NombreProyecto":"Taquería Milagro" 
+}
+
+
+###
+DELETE {{apiDeleteEmployeeFromProject}}
+Content-Type: application/json
+
+{
+  "Cedula":"608110776",
   "NombreProyecto":"Taquería Milagro"
 }
+
+
 ###
 POST {{apiContractEmployee}}
 Content-Type: application/json
@@ -205,14 +218,13 @@ POST {{apiEmployee}}
 Content-Type: application/json
 
 {
-  "NombreProyecto":"Radiadores Solceri",
-  "Email":"erickV@example.com",
-  "Contrasenia":"1234",
-  "Roles":"empleado",
-  "Nombre":"Erick",
-  "Apellido1":"Valverde",
-  "Apellido2":"Gonzales",
-  "Cedula":"187126112",
+  "NombreProyecto":"Taquería Milagro",
+  "Email":"jdvenegas50@gmail.com",
+  "Roles":"emp",
+  "Nombre":"Buenas",
+  "Apellido1":"Tardes",
+  "Apellido2":"Noches",
+  "Cedula":"123896754",
   "Telefono":87126121,
   "TipoJornada":"Por Horas",
   "FechaFinContrato":"2025-09-19",
@@ -253,16 +265,7 @@ Content-Type: application/json
   "ConsecutivoPlanilla": 1, 
   "ConsecutivoPago" : 1
 }
-###
-POST {{apiCostTotalVoluntaryDeductions}}
-Content-Type: application/json
 
-{
-  "Email": "juan.caras@hotmail.com", 
-  "Proyecto": "Taquería Milagro", 
-  "ConsecutivoPlanilla": 1, 
-  "ConsecutivoPago" : 1
-}
 ### 
 POST {{apiPagoPruebas}}
 Content-Type: application/json
@@ -273,8 +276,8 @@ Content-Type: application/json
     "NombreProyecto": "Taquería Milagro",
     "SalarioBruto": "800000",
     "TipoJornada" : "Semanal",
-    "ConsecutivoPlanilla": 1,
-    "ConsecutivoPago": 1
+    "ConsecutivoPlanilla": 42,
+    "ConsecutivoPago": 21
 }
 ###
 GET {{apiGetEmployeesInfo}}/Taquería Milagro

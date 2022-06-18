@@ -33,4 +33,3 @@ export const benefitsQueries = {
     WHERE Proyecto.Nombre = @ProjectName 
   `
 };
-

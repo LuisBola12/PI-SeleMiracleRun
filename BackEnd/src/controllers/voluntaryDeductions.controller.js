@@ -1,5 +1,6 @@
 import { getConnection,sql } from '../database';
 import { voluntaryDeductionsQueries } from '../database/queries/voluntaryDeductionsQueries';
+import {getConsecutivePayNumber} from './payrollController'
 
 export const getVoluntaryDeductions = async ( req, res ) => {
   const { NombreProyecto } = req.params;
@@ -110,18 +111,17 @@ export const getOfferedVoluntaryDeductions = async ( req, res ) => {
   }
 };
 
-export const CostTotalVoluntaryDeductions = async ( infoBenefits ) => {
-  const { Email, Proyecto, ConsecutivoPlanilla, ConsecutivoPago } = infoBenefits.body;
+export const insertCostTotalVoluntaryDeductions = async ( cedEmpleado, proyName, consecutivePayroll ) => {
+  const consecutivePayslip = await getConsecutivePayNumber(consecutivePayroll,cedEmpleado);
   try {
     const pool = await getConnection();
     const result = await pool.request()
-      .input( 'Email', Email )
-      .input( 'Proyecto', Proyecto )
-      .input( 'ConsecutivoPlanilla', ConsecutivoPlanilla )
-      .input( 'ConsecutivoPago', ConsecutivoPago )
-      .execute( 'calcularTotalDeduccionesVoluntariasDeEmpleado' );
-    console.log( result.recordset );
-    return result.recordset;
+      .input( 'CedulaEmpleado', cedEmpleado )
+      .input( 'Proyecto', proyName )
+      .input( 'ConsecutivoPlanilla', consecutivePayroll )
+      .input( 'ConsecutivoPago', consecutivePayslip )
+      .execute( 'insertarDeduccionesVoluntariasEnPago' );
+      return true;
   } catch ( e ) {
     console.log( e );
     return undefined;
