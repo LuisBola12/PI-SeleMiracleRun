@@ -2,6 +2,7 @@ import { getConnection, sql } from '../database';
 import { projectQueries } from '../database/queries/projectQueries';
 import { eliminateTimeFromDate, isInDateRange } from '../utils/dateManager';
 import { payrollQueries } from './../database/queries/payrollQueries';
+import {executeAPayrroll} from './payrollController'
 
 export const getProjectsByEmail = async ( req, res ) => {
   const { Email, Rol } = req.params;
@@ -39,9 +40,6 @@ export const createProject = async ( req, res ) => {
     res.status( 500 ).send( e.message );
   }
 };
-
-
-
 
 
 export const getEmployeesWorkingData = async ( projectName ) => {
@@ -196,7 +194,6 @@ const calculatePaidServicesGrossSalary = ( endOfContractDate, costOfService ) =>
 
 
 export const calculateGrossSalaryForAllEmployes =  async ( projectName ) => {
-  console.log( 'Entra' );
   let projectWorkedHoursInfo;
   let grossSalary;
   let hoursWorked;
@@ -216,7 +213,6 @@ export const calculateGrossSalaryForAllEmployes =  async ( projectName ) => {
         case 'Tiempo Completo' :
         case  'Medio Tiempo':
           hoursWorked = calculateFullTimeWorkedHours( paymentPeriod , contractType );
-          console.log( contractType );
           grossSalary = salaryPerHour * hoursWorked;
           break;
         case 'Servicios Profesionales': {
@@ -247,44 +243,87 @@ export const calculateGrossSalaryForAllEmployes =  async ( projectName ) => {
   return  grossSalaries;
 }; 
 
-export const createPayrroll = async ( req, res ) => {
-  const { NombreProyecto } = req.body;
+const getPeriodOfAPorject = async(nombreProyecto) =>{
   try {
     const pool = await getConnection();
     const result = await pool
       .request()
-      .input( 'Nombre', NombreProyecto )
+      .input( 'Nombre', nombreProyecto )
       .query( payrollQueries.getPeriodForAEspecificProject );
-    res.json( result.recordset );
-    const periodoProyecto = result.recordset[0].TipoPeriodo;
-    console.log( periodoProyecto );
-    const date = new Date();
-    const [ month, day, year ] = [
-      date.getMonth(),
-      date.getDate(),
-      date.getFullYear(),
-    ];
-    const FechaInicioPago = `${year}-${month + 1}-${day}`;
+    return result.recordset[0].TipoPeriodo;
+  } catch (error) {
+    console.log( `Error: ${error}` );
+    return error;
+  }
+}
+const insertPayrrollOnDB = async (cedula,nombreProyecto,fechaInicio,fechaFin) => {
+  try {
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input( 'CedulaEmpleador', cedula )
+      .input( 'FechaInicio', fechaInicio )
+      .input( 'FechaFin', fechaFin )
+      .input( 'NombreProyecto', nombreProyecto )
+      .query( projectQueries.createNewPayroll );
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}
+const getConsecutiveNumber = async(nombreProyecto,fechaInicio) => {
+  try {
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input( 'NombreProyecto', nombreProyecto )
+      .input( 'FechaInicio',sql.Date, fechaInicio )
+      .query( payrollQueries.getPayrrollConsecutive );
+    return result.recordset[0].Consectivo;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+}
+
+export const createPayrroll = async ( req, res ) => {
+  const { Cedula,NombreProyecto } = req.body;
+  try {
+    const periodoProyecto =  await getPeriodOfAPorject(NombreProyecto);
+    const fechaFinPago = new Date();
+    let fechaInicioPago;
     switch ( periodoProyecto ) {
-    case 'Mensual':
-      console.log( sumDays( date,-7 ) );
+    case 'Semanal':
+      fechaInicioPago = sumDays(-7 );
       break;
     case 'Quincenal':
-      console.log( sumDays( date,-15 ) );
+      fechaInicioPago = sumDays(-15 );
       break;
-    case 'Menusal':
-      console.log( sumDays( date,-30 ) );
+    case 'Mensual':
+      fechaInicioPago = sumDays(-30 );
       break;
     }
+    const result = await insertPayrrollOnDB(Cedula,NombreProyecto,fechaInicioPago,fechaFinPago);
+    if(result === true){
+      const consecutiveNumber = await getConsecutiveNumber(NombreProyecto,fechaInicioPago);
+      executeAPayrroll(consecutiveNumber,NombreProyecto,Cedula)
+    }else{
+      console.log(`Error on create a new payrroll`)
+      res.status( 500 ).send();
+    }
+    res.status(200).send()
   } catch ( e ) {
     console.log( `Error: ${e}` );
     res.status( 500 ).send( e.message );
   }
 };
 
-const sumDays = ( fecha, dias ) =>{
-  fecha.setDate( fecha.getDate() + dias );
-  return fecha;
+
+const sumDays = ( dias ) =>{
+  const newDate = new Date();
+  newDate.setDate( newDate.getDate() + dias );
+  return newDate;
 };
 
 export const logicEliminateProject = async ( req, res ) => {

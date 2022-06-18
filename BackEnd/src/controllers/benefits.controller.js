@@ -1,5 +1,6 @@
 import { getConnection, sql } from '../database';
 import { benefitsQueries } from '../database/queries/benefitsQueries';
+import {getConsecutivePayNumber} from './payrollController'
 
 export const getBenefits = async (req, res) => {
   const { Proyecto } = req.params;
@@ -148,6 +149,22 @@ export const updateBenefit = async (req, res) => {
   }
 };
 
+export const insertCostTotalBenefits = async ( cedEmpleado, proyName, consecutivePayroll  ) => {
+  const consecutivePayslip = await getConsecutivePayNumber(consecutivePayroll,cedEmpleado);
+  try {
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input( 'CedulaEmpleado', cedEmpleado )
+      .input( 'Proyecto', proyName )
+      .input( 'ConsecutivoPlanilla', consecutivePayroll )
+      .input( 'ConsecutivoPago', consecutivePayslip )
+      .execute( 'insertarBeneficiosEnPago' );
+      return true;
+  } catch ( e ) {
+    console.log( e );
+    return undefined;
+  }
+};
 export const deactivateBenefit = async (req, res) => {
   const { Nombre, NombreProyecto } = req.body;
   try {
@@ -161,23 +178,5 @@ export const deactivateBenefit = async (req, res) => {
   } catch (e) {
     console.log(`Error: ${e}`);
     res.status(500).send(e.message);
-  }
-};
-
-export const CostTotalBenefits = async (infoBenefits) => {
-  const { Email, Proyecto, ConsecutivoPlanilla, ConsecutivoPago } = infoBenefits.body;
-  try {
-    const pool = await getConnection();
-    const result = await pool.request()
-      .input('Email', Email)
-      .input('Proyecto', Proyecto)
-      .input('ConsecutivoPlanilla', ConsecutivoPlanilla)
-      .input('ConsecutivoPago', ConsecutivoPago)
-      .execute('calcularTotalBeneficiosDeEmpleado');
-    console.log(result.recordset);
-    return result.recordset;
-  } catch (e) {
-    console.log(e);
-    return undefined;
   }
 };

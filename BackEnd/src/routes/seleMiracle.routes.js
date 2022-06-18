@@ -8,13 +8,13 @@ import {
   getEmployerByID, getUserByEmail, verifyCredentials, registerNewUser,
   getProfileEmployeer, getProfileEmployee, updateProfileEmployeer, updateProfileEmployee
 } from '../controllers/users.controller';
-import { getVoluntaryDeductions, createNewVoluntaryDeduction, getVoluntaryDeductionsByName, updateVoluntaryDeduction, getEmployeeVoluntaryDeductionsByEmail, getOfferedVoluntaryDeductions, CostTotalVoluntaryDeductions } from '../controllers/voluntaryDeductions.controller';
+import { getVoluntaryDeductions, createNewVoluntaryDeduction, getVoluntaryDeductionsByName, updateVoluntaryDeduction, 
+  getEmployeeVoluntaryDeductionsByEmail, getOfferedVoluntaryDeductions } from '../controllers/voluntaryDeductions.controller';
 import { getTypeOfContracts } from '../controllers/contracts.controller';
 import {
   getBenefits, createBenefit, getBenefitsByName, updateBenefit, getEmployeeBenefitsByEmail,
-  getOfferedBenefits, linkEmployeeToBenefit, CostTotalBenefits, unlinkEmployeeToBenefit, deactivateBenefit
+  getOfferedBenefits, linkEmployeeToBenefit, unlinkEmployeeToBenefit, deactivateBenefit
 } from '../controllers/benefits.controller';
-import { ObligatoryDeductionsPayRoll } from '../controllers/payrollController';
 
 const router = Router();
 
@@ -52,6 +52,7 @@ router.post( '/employee/hours', setHoursEmployee );
 //Projects
 router.get( '/projects/:Email/:Rol', getProjectsByEmail );
 router.post( '/projects', createProject );
+router.post( '/createPayrroll', createPayrroll );
 router.post( '/getProjectPeriod', createPayrroll );
 router.get( '/getEmployeesInfo/:projectName', getEmployeesAllInfo );
 
@@ -80,8 +81,4 @@ router.put( '/voluntaryDeductions/:NombreAntiguo', updateVoluntaryDeduction );
 router.get( '/myVoluntaryDeductions/:Proyecto/:Email', getEmployeeVoluntaryDeductionsByEmail );
 router.get( '/offeredVoluntaryDeductions/:Proyecto/:Email', getOfferedVoluntaryDeductions );
 
-// Pago Pruebas 
-router.post( '/pago', ObligatoryDeductionsPayRoll );
-router.post( '/CostTotalBenefits', CostTotalBenefits );
-router.post( '/CostTotalVoluntaryDeductions', CostTotalVoluntaryDeductions );
 export default router;

@@ -23,11 +23,11 @@
 @apiDeleteEmployeeFromProject = http://localhost:4000/deleteEmployeeFromProject
 @apiPagoPruebas = http://localhost:4000/pago
 @apiOfferedVoluntaryDeductions = http://localhost:4000/offeredVoluntaryDeductions
+@apiCreatePayrroll = http://localhost:4000/createPayrroll
 @apiGetEmployeesInfo = http://localhost:4000/getEmployeesInfo
 @apiCostTotalVoluntaryDeductions = http://localhost:4000/CostTotalVoluntaryDeductions
-
-###
 @apiEliminateProject = http://localhost:4000/logicEliminateProject
+
 
 DELETE {{apiDeleteEmployeeFromProject}}
 Content-Type: application/json
@@ -42,8 +42,21 @@ POST {{apiCreatePayrroll}}
 Content-Type: application/json
 
 {
+  "Cedula":"608110776",
+  "NombreProyecto":"Taquería Milagro" 
+}
+
+
+###
+DELETE {{apiDeleteEmployeeFromProject}}
+Content-Type: application/json
+
+{
+  "Cedula":"608110776",
   "NombreProyecto":"Taquería Milagro"
 }
+
+
 ###
 POST {{apiContractEmployee}}
 Content-Type: application/json
@@ -250,16 +263,7 @@ Content-Type: application/json
   "ConsecutivoPlanilla": 1, 
   "ConsecutivoPago" : 1
 }
-###
-POST {{apiCostTotalVoluntaryDeductions}}
-Content-Type: application/json
 
-{
-  "Email": "juan.caras@hotmail.com", 
-  "Proyecto": "Taquería Milagro", 
-  "ConsecutivoPlanilla": 1, 
-  "ConsecutivoPago" : 1
-}
 ### 
 POST {{apiPagoPruebas}}
 Content-Type: application/json

@@ -44,7 +44,7 @@ export const projectQueries = {
     WHERE e.Email = @Email`,
 
   getAllContracts: 'Select TipoJornada from Contrato',
-
+  createNewPayroll: 'Insert into Planilla values(@CedulaEmpleador,@FechaInicio,@FechaFin,@NombreProyecto)',
   logicalEraseProject: `UPDATE Proyecto 
   SET Activo = 0
   WHERE Nombre = @projectName;`
