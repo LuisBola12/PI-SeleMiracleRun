@@ -5,26 +5,42 @@ import useForm from '../../shared/hooks/useForm';
 import { useNavigate } from 'react-router-dom';
 import usePost from '../../shared/hooks/usePost';
 import { useSelector } from 'react-redux';
+import { validAnEntity } from '../../Utils/validAnEntity';
+import Swal from 'sweetalert2';
 
 export const CreateProjectsForm = () => {
   const navigate = useNavigate();
-  const { post } = usePost('http://localhost:4000/projects');
+  const { post } = usePost( 'http://localhost:4000/projects' );
 
-  const emailFromUser = useSelector((state) => state.user.user.Email);
+  const emailFromUser = useSelector( ( state ) => state.user.user.Email );
 
-  const sendToDatabase = () => {
-    let string = JSON.stringify(formValues);
-    string = JSON.stringify({
-      Nombre: formValues.projectName,
-      Periodo: formValues.paymentPeriod,
-      Email: emailFromUser,
-    });
-    post(string);
-    navigate(-1);
+  const sendToDatabase = async () => {
+    const hasUniqueName = await validAnEntity( 'myProjects/' + emailFromUser + '/', formValues.projectName );
+    if ( hasUniqueName === true ) {
+      let string = JSON.stringify( formValues );
+      string = JSON.stringify( {
+        projectName: formValues.projectName,
+        paymentPeriod: formValues.paymentPeriod,
+        email: emailFromUser,
+        description: formValues.description,
+        maxBenefitsMoneyAmount : formValues.maxBenefitsMoneyAmount,
+        maxBenefitsQuantity: formValues.maxBenefitsQuantity 
+      } );
+      post( string );
+      navigate( -1 );
+    } else {
+      Swal.fire( {
+        icon: 'error',
+        title: 'Error...',
+        text: 'Project Name Already Exist',
+        confirmButtonColor: 'darkgreen',
+      } );
+      setIsSubmitting( false );
+    }
   };
 
-  const { formValues, handleInputChange, handleSubmit, errors } = useForm(sendToDatabase, validate);
-
+  const { formValues, handleInputChange, handleSubmit, errors, setIsSubmitting } = useForm( sendToDatabase, validate );
+   
   return (
     <>
       <div className='project-bar'>
@@ -73,8 +89,8 @@ export const CreateProjectsForm = () => {
         </div>
         <div className='row'>
           <div className='row-Element'>
-            <textarea id='Description' className='row-Element__textArea' autoComplete='off' placeholder=' '></textarea>
-            <label htmlFor='Description' className='row-Element__label row-Element__textarea-label center'>Description</label>
+            <textarea id='description' onChange={handleInputChange} className='row-Element__textArea' autoComplete='off' placeholder=' '></textarea>
+            <label htmlFor='description' className='row-Element__label row-Element__textarea-label center'>Description</label>
             <p className='error deeper'>{errors.description}</p>
           </div>
         </div>
@@ -83,7 +99,7 @@ export const CreateProjectsForm = () => {
             <button onClick={handleSubmit} className='project-btn-sumbit' >
               Create
             </button>
-            <button className='project-btn-cancel' onClick={() => navigate('/')}  >
+            <button className='project-btn-cancel' onClick={() => navigate( '/' )}  >
               Cancel
             </button>
           </div>

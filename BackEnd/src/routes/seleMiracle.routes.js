@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getProjectsByEmail, createProject, createPayrroll, logicEliminateProject } from '../controllers/projects.controller';
+import { getProjectsByEmailAndName, getProjectsByEmail, createProject, createPayrroll, logicEliminateProject } from '../controllers/projects.controller';
 import {
   getEmployees, postNewEmployee, getEmployeeByID, verifyEmployeeContractOnProject,
   getEmployeesWithContractOnOtherProyects, contractAEmployee, setHoursEmployee, deleteEmployeeFromProject, getEmployeesAllInfo
@@ -13,7 +13,8 @@ import { getVoluntaryDeductions, createNewVoluntaryDeduction, getVoluntaryDeduct
 import { getTypeOfContracts } from '../controllers/contracts.controller';
 import {
   getBenefits, createBenefit, getBenefitsByName, updateBenefit, getEmployeeBenefitsByEmail,
-  getOfferedBenefits, linkEmployeeToBenefit, unlinkEmployeeToBenefit, deactivateBenefit
+  getOfferedBenefits, linkEmployeeToBenefit,  unlinkEmployeeToBenefit, deactivateBenefit,
+  validateBenefitSuscription
 } from '../controllers/benefits.controller';
 
 const router = Router();
@@ -61,6 +62,7 @@ router.get( '/projects/:Email/:Rol', getProjectsByEmail );
 router.post( '/projects', createProject );
 router.post( '/getProjectPeriod', createPayrroll );
 router.put( '/logicEliminateProject', logicEliminateProject );
+router.get( '/myProjects/:Email/:ProjectName', getProjectsByEmailAndName  );
 
 //Benefits
 router.get( '/benefits/:Proyecto', getBenefits );
@@ -72,7 +74,7 @@ router.put( '/benefits/:NombreAntiguo', updateBenefit );
 router.put( '/benefits', deactivateBenefit );
 router.post( '/myBenefits', linkEmployeeToBenefit );
 router.put( '/myBenefits', unlinkEmployeeToBenefit );
-
+router.get( '/validateBenefit/:projectName/:employeeEmail/:benefitToValidate',  validateBenefitSuscription );
 //VoluntaryDeductions
 router.get( '/voluntaryDeductions/:NombreProyecto', getVoluntaryDeductions );
 router.get( '/voluntaryDeductions/:NombreProyecto/:Nombre', getVoluntaryDeductionsByName );

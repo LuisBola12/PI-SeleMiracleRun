@@ -5,27 +5,36 @@ import { useGetOfferedBenefits } from '../../Utils/Benefits/useGetOfferedBenefit
 import { useGetEmployeeBenefits } from '../../Utils/Benefits/useGetEmployeeBenefits';
 import { usePostToBenefits } from '../../Utils/Benefits/usePostToBenefits.js';
 import { usePutToBenefits } from '../../Utils/Benefits/usePutToBenefits';
-
+import useValidateBenefitSubscription from '../../Utils/Benefits/useValidateBenefitSubscription';
 
 export const EmployeeBenefits = () => {
-  const { submitBenefitToEmplyee } = usePostToBenefits();
+  const {  submitBenefitToEmployee } = usePostToBenefits();
   const { offeredBenefits, offeredInfo, setofferedInfo } = useGetOfferedBenefits();
   const { EmployeeBenefits, EmployeeInfo, setEmployeeInfo } = useGetEmployeeBenefits();
   const { unlinkEmployeeToBenefit } = usePutToBenefits();
-  const handleAddButton = (element) => {
-    submitBenefitToEmplyee(element.Nombre);
-    setofferedInfo(false);
-    setEmployeeInfo(false);
+  const {canSuscribe} = useValidateBenefitSubscription();
+
+  const handleAddButton  = async ( element ) => {
+    const allowedToSubsribe = await canSuscribe(element.Nombre);
+    console.log(allowedToSubsribe);
+
+    if (allowedToSubsribe){
+      await submitBenefitToEmployee( element.Nombre );
+      setofferedInfo( false );
+      setEmployeeInfo( false );
+    }
+
+
   };
 
-  const handleDeleteButton = (element) => {
-    unlinkEmployeeToBenefit(element.NombreBeneficio);
-    setofferedInfo(false);
-    setEmployeeInfo(false);
-  }
+  const handleDeleteButton = ( element ) => {
+    unlinkEmployeeToBenefit( element.NombreBeneficio );
+    setofferedInfo( false );
+    setEmployeeInfo( false );
+  };
   return (
     <>
-      {!EmployeeInfo ? (<div className='loader' ></div >) : (
+      {!EmployeeInfo ? ( <div className='loader' ></div > ) : (
         <>
           <h2 className='table-button'>My Benefits</h2>
           <table className='Table'>
@@ -38,22 +47,22 @@ export const EmployeeBenefits = () => {
               </tr>
             </thead>
             <tbody>
-              {EmployeeBenefits.map((element) => (
+              {EmployeeBenefits.map( ( element ) => (
                 <tr key={element.NombreBeneficio}>
                   <td className='left-td table-left-border benefit-name'>{element.NombreBeneficio}</td>
-                  <td className='description-cell left-td'>{((element.Descripción) ? element.Descripción : 'No description')}</td>
-                  <td className='right-td'>₡ {transformCost(element.CostoActual)}</td>
+                  <td className='description-cell left-td'>{( ( element.Descripción ) ? element.Descripción : 'No description' )}</td>
+                  <td className='right-td'>₡ {transformCost( element.CostoActual )}</td>
                   <td className='right-button table-right-border'>
-                    <button className='button cancel-button' onClick={() => handleDeleteButton(element)}> Delete </button>
+                    <button className='button cancel-button' onClick={() => handleDeleteButton( element )}> Delete </button>
                   </td>
                 </tr>
-              ))}
+              ) )}
             </tbody>
           </table>
-          <label className='Empty-message'>{(EmployeeBenefits.length === 0) ? 'No benefits selected added yet' : ''}</label>
-        </>)}
+          <label className='Empty-message'>{( EmployeeBenefits.length === 0 ) ? 'No benefits selected added yet' : ''}</label>
+        </> )}
 
-      {!offeredInfo ? (<div className='loader' ></div >) : (
+      {!offeredInfo ? ( <div className='loader' ></div > ) : (
         <>
           <h2 className='ofer-benefits'>Offered Benefits</h2>
           <table className='Table'>
@@ -66,22 +75,22 @@ export const EmployeeBenefits = () => {
               </tr>
             </thead>
             <tbody>
-              {offeredBenefits.map((element) => (
+              {offeredBenefits.map( ( element ) => (
                 <tr key={element.Nombre}>
                   <>
                     <td className='left-td table-left-border benefit-name'>{element.Nombre}</td>
-                    <td className='description-cell left-td'>{((element.Descripción) ? element.Descripción : 'No description')}</td>
-                    <td className='right-td'>₡ {transformCost(element.CostoActual)}</td>
+                    <td className='description-cell left-td'>{( ( element.Descripción ) ? element.Descripción : 'No description' )}</td>
+                    <td className='right-td'>₡ {transformCost( element.CostoActual )}</td>
                     <td className='right-button table-right-border'>
-                      <button className='button add-button' onClick={() => handleAddButton(element)}> Add</button>
+                      <button className='button add-button' onClick={() => handleAddButton( element )}> Add</button>
                     </td>
                   </>
                 </tr>
-              ))}
+              ) )}
             </tbody>
           </table>
-          <label className='Empty-message'>{(offeredBenefits.length === 0) ? 'No benefits added added yet' : ''}</label>
-        </>)}
+          <label className='Empty-message'>{( offeredBenefits.length === 0 ) ? 'No benefits added added yet' : ''}</label>
+        </> )}
     </>
   );
 };

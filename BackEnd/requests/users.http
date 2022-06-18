@@ -28,6 +28,8 @@
 @apiCostTotalVoluntaryDeductions = http://localhost:4000/CostTotalVoluntaryDeductions
 @apiEliminateProject = http://localhost:4000/logicEliminateProject
 
+@apigetProjectsEmailAndName = http://localhost:4000/myProjects
+@apiValidateBenefit = http://localhost:4000/validateBenefit
 
 DELETE {{apiDeleteEmployeeFromProject}}
 Content-Type: application/json
@@ -287,3 +289,8 @@ Content-Type: application/json
 {
   "Nombre":"Taquería Milagro"
 }
+
+###
+GET {{apigetProjectsEmailAndName}}/Norman.Os.L@gmail.com/Taquería Milagro
+###
+GET {{apiValidateBenefit}}/Taquería Milagro/crhisCo@hotmail.com/Comida
