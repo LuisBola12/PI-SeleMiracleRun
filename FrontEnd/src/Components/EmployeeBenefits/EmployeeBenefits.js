@@ -15,12 +15,16 @@ export const EmployeeBenefits = () => {
   const {canSuscribe} = useValidateBenefitSubscription();
 
   const handleAddButton  = async ( element ) => {
-    //TODO: Validate
     const allowedToSubsribe = await canSuscribe(element.Nombre);
     console.log(allowedToSubsribe);
-    // submitBenefitToEmployee( element.Nombre );
-    setofferedInfo( false );
-    setEmployeeInfo( false );
+
+    if (allowedToSubsribe){
+      await submitBenefitToEmployee( element.Nombre );
+      setofferedInfo( false );
+      setEmployeeInfo( false );
+    }
+
+
   };
 
   const handleDeleteButton = ( element ) => {

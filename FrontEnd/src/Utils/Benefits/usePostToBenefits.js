@@ -23,7 +23,7 @@ export const usePostToBenefits = () => {
     console.log(postFetch);
   };
 
-  const submitBenefitToEmplyee = async (benefitName) => {
+  const submitBenefitToEmployee = async (benefitName) => {
     const postFetch = await fetch(apiBenefitsToEmplyee, {
       method: 'POST',
       headers: {
@@ -39,6 +39,6 @@ export const usePostToBenefits = () => {
   };
 
   return {
-    submitBenefit, submitBenefitToEmplyee
+    submitBenefit, submitBenefitToEmployee
   };
 };

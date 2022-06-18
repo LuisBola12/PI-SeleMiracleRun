@@ -31,7 +31,7 @@ const useValidateBenefitSubscription = () => {
   return;
   }
   if (validateInfo.isValid){
-  launchInfoMessage('Suscrito a Beneficio', 'info', `Se ha suscrito al beneficio: ${benefitToValidateName}`,'darkgreen');
+  launchInfoMessage('Suscrito a Beneficio', 'success', `Se ha suscrito al beneficio: ${benefitToValidateName}`,'darkgreen');
     return true;
   }
   else if (validateInfo.exceedsMoneyAmountLimit) { 
