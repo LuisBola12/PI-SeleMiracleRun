@@ -1,6 +1,7 @@
 import { getConnection, sql } from '../database';
 import { benefitsQueries } from '../database/queries/benefitsQueries';
-import {getConsecutivePayNumber} from './payrollController'
+import { getConsecutivePayNumber } from './payrollController';
+import { notifyEmployeesForDeletedBenefit } from '../utils/notifyEmployeesForDeletedBenefit';
 
 export const getBenefits = async (req, res) => {
   const { Proyecto } = req.params;
@@ -149,19 +150,19 @@ export const updateBenefit = async (req, res) => {
   }
 };
 
-export const insertCostTotalBenefits = async ( cedEmpleado, proyName, consecutivePayroll  ) => {
-  const consecutivePayslip = await getConsecutivePayNumber(consecutivePayroll,cedEmpleado);
+export const insertCostTotalBenefits = async (cedEmpleado, proyName, consecutivePayroll) => {
+  const consecutivePayslip = await getConsecutivePayNumber(consecutivePayroll, cedEmpleado);
   try {
     const pool = await getConnection();
     const result = await pool.request()
-      .input( 'CedulaEmpleado', cedEmpleado )
-      .input( 'Proyecto', proyName )
-      .input( 'ConsecutivoPlanilla', consecutivePayroll )
-      .input( 'ConsecutivoPago', consecutivePayslip )
-      .execute( 'insertarBeneficiosEnPago' );
-      return true;
-  } catch ( e ) {
-    console.log( e );
+      .input('CedulaEmpleado', cedEmpleado)
+      .input('Proyecto', proyName)
+      .input('ConsecutivoPlanilla', consecutivePayroll)
+      .input('ConsecutivoPago', consecutivePayslip)
+      .execute('insertarBeneficiosEnPago');
+    return true;
+  } catch (e) {
+    console.log(e);
     return undefined;
   }
 };
@@ -174,7 +175,7 @@ export const deactivateBenefit = async (req, res) => {
       .input('NombreBeneficio', sql.VarChar, Nombre)
       .input('Proyecto', sql.VarChar, NombreProyecto)
       .execute('eliminarBeneficio');
-    res.json({ Nombre, NombreProyecto });
+    notifyEmployeesForDeletedBenefit(result.recordset, Nombre, NombreProyecto);
   } catch (e) {
     console.log(`Error: ${e}`);
     res.status(500).send(e.message);

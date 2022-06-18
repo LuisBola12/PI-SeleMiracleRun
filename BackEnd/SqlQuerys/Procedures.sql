@@ -299,9 +299,20 @@ CREATE PROCEDURE eliminarBeneficio (
 ) 
 AS
 BEGIN
-	UPDATE Beneficios SET Activo = 'false' WHERE Nombre = @NombreBeneficio AND NombreProyecto = @Proyecto
+  DECLARE @cedulaEmpleador VARCHAR(15);
+
+  SELECT @cedulaEmpleador = CedulaEmpleador FROM Proyecto
+  WHERE Nombre = @Proyecto;
+
+  UPDATE Beneficios SET Activo = 'false' WHERE Nombre = @NombreBeneficio AND NombreProyecto = @Proyecto;
 	
   UPDATE BeneficioElegido SET fechaFin = GETDATE() WHERE NombreBeneficio = @NombreBeneficio 
-  AND NombreProyecto = @Proyecto AND fechaFin > GETDATE()
-
+  AND NombreProyecto = @Proyecto AND fechaFin > GETDATE();
+  
+  SELECT e.Nombre NombreEmpleado, e.Apellido1 Apellido1Empleado, e.Apellido2 Apellido2Empleado, e.Email EmailEmpleado,
+  ep.Nombre NombreEmpleador, ep.Apellido1 Apellido1Empleador, ep.Apellido2 Apellido2Empleador
+  FROM Empleado e JOIN EmpleadoYContratoSeAsocianAProyecto ecp 
+  on e.Cedula = ecp.CedulaEmpleado JOIN Proyecto p on p.Nombre = ecp.NombreProyecto
+  JOIN Empleador ep on ep.Cedula = p.CedulaEmpleador 
+  WHERE ecp.NombreProyecto = @Proyecto AND ep.Cedula = @cedulaEmpleador
 END;
