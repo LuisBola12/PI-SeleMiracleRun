@@ -5,6 +5,11 @@ export const projectQueries = {
     JOIN Proyecto ON Proyecto.CedulaEmpleador = Empleador.Cedula 
     WHERE Empleador.Email =@Email AND Proyecto.Activo = 1`,
 
+  getProjectsByEmailAndName:
+    `SELECT Proyecto.[Nombre] FROM Empleador 
+    JOIN Proyecto ON Proyecto.CedulaEmpleador = Empleador.Cedula 
+    WHERE Empleador.Email =@email AND Proyecto.Nombre = @projectName`,
+
   createProject:
     `DECLARE @cedulaObtenida VARCHAR(9);
     SELECT  @cedulaObtenida = Empleador.Cedula FROM Empleador
