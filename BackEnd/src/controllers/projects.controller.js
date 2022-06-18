@@ -19,22 +19,27 @@ export const getProjectsByEmail = async ( req, res ) => {
 };
 
 export const createProject = async ( req, res ) => {
-  const { Nombre, Periodo, Email } = req.body;
-  if ( Nombre == null || Periodo == null || Email == null ) {
+  const { projectName, paymentPeriod, email, description, maxBenefitsMoneyAmount, maxBenefitsQuantity } = req.body;
+  if ( projectName == null || paymentPeriod == null || email == null ) {
     const message = 'Bad Request. Please Fill All Fields.';
     return res.status( 400 ).json( { msg: message } );
   }
+  console.log( description );
   try {
     const pool = await getConnection();
     const result = await pool
       .request()
-      .input( 'Nombre', Nombre )
-      .input( 'Periodo', sql.VarChar, Periodo )
-      .input( 'Email', sql.VarChar, Email )
+      .input( 'projectName', projectName )
+      .input( 'paymentPeriod', sql.VarChar, paymentPeriod )
+      .input( 'email', sql.VarChar, email )
+      .input( 'description', sql.VarChar, description )
+      .input( 'maxBenefitsMoneyAmount', maxBenefitsMoneyAmount )
+      .input( 'maxBenefitsQuantity', maxBenefitsQuantity )
       .query( projectQueries.createProject );
     console.log( result );
-    res.json( { Nombre, Periodo, Email } );
+    res.json( `Project: ${projectName} created successfully`  );
   } catch ( e ) {
+    res.error( e );
     console.log( `Error: ${e}` );
     res.status( 500 ).send( e.message );
   }

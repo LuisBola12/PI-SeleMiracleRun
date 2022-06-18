@@ -19,9 +19,12 @@ export const CreateProjectsForm = () => {
     if ( hasUniqueName === true ) {
       let string = JSON.stringify( formValues );
       string = JSON.stringify( {
-        Nombre: formValues.projectName,
-        Periodo: formValues.paymentPeriod,
-        Email: emailFromUser,
+        projectName: formValues.projectName,
+        paymentPeriod: formValues.paymentPeriod,
+        email: emailFromUser,
+        description: formValues.description,
+        maxBenefitsMoneyAmount : formValues.maxBenefitsMoneyAmount,
+        maxBenefitsQuantity: formValues.maxBenefitsQuantity 
       } );
       post( string );
       navigate( -1 );
@@ -32,10 +35,11 @@ export const CreateProjectsForm = () => {
         text: 'Project Name Already Exist',
         confirmButtonColor: 'darkgreen',
       } );
+      setIsSubmitting( false );
     }
   };
 
-  const { formValues, handleInputChange, handleSubmit, errors } = useForm( sendToDatabase, validate );
+  const { formValues, handleInputChange, handleSubmit, errors, setIsSubmitting } = useForm( sendToDatabase, validate );
    
   return (
     <>
@@ -85,8 +89,8 @@ export const CreateProjectsForm = () => {
         </div>
         <div className='row'>
           <div className='row-Element'>
-            <textarea id='Description' className='row-Element__textArea' autoComplete='off' placeholder=' '></textarea>
-            <label htmlFor='Description' className='row-Element__label row-Element__textarea-label center'>Description</label>
+            <textarea id='description' onChange={handleInputChange} className='row-Element__textArea' autoComplete='off' placeholder=' '></textarea>
+            <label htmlFor='description' className='row-Element__label row-Element__textarea-label center'>Description</label>
             <p className='error deeper'>{errors.description}</p>
           </div>
         </div>
