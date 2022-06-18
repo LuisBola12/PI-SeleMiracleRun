@@ -1,5 +1,7 @@
 import { getConnection, sql } from '../database';
 import { benefitsQueries } from '../database/queries/benefitsQueries';
+import { getConsecutivePayNumber } from './payrollController';
+import { notifyEmployeesForDeletedBenefit } from '../utils/notifyEmployeesForDeletedBenefit';
 
 export const getBenefits = async ( req, res ) => {
   const { Proyecto } = req.params;
@@ -148,8 +150,8 @@ export const updateBenefit = async ( req, res ) => {
   }
 };
 
-export const insertCostTotalBenefits = async ( cedEmpleado, proyName, consecutivePayroll  ) => {
-  const consecutivePayslip = await getConsecutivePayNumber( consecutivePayroll,cedEmpleado );
+export const insertCostTotalBenefits = async ( cedEmpleado, proyName, consecutivePayroll ) => {
+  const consecutivePayslip = await getConsecutivePayNumber( consecutivePayroll, cedEmpleado );
   try {
     const pool = await getConnection();
     const result = await pool.request()
