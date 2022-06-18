@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import '../../App.css';
 import './SelectProject.scss';
 import { useProjectsData } from '../../Utils/PayrollProjects/useProjectsData';
@@ -20,18 +21,39 @@ export const SelectProjectComp = () => {
   const { post, postError } = usePost( 'http://localhost:4000/logicEliminateProject', 'PUT' );
 
   const proceedToEliminate = async ( projectName ) => {
-    console.log( `Eliminating: ${projectName}` );
-    console.log( 'proceding eliminate project From database ' );
-    let string = '';
-    string = JSON.stringify( {
-      Nombre: projectName,
-    } );
-    post( string );
-    if ( postError ){
-      console.log( 'Error Trying to delete' );
-    }
 
-    setNeedToRefresh( true );
+    Swal.fire( {
+      title: 'Are you sure?',
+      text: 'You won\'t be able to revert this!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: 'darkgreen',
+      cancelButtonColor: 'darkred',
+      confirmButtonText: 'Yes, delete it!'
+    } ).then( ( result ) => {
+      if ( result.isConfirmed ) {
+        console.log( `Eliminating: ${projectName}` );
+        console.log( 'proceding eliminate project From database ' );
+        let string = '';
+        string = JSON.stringify( {
+          Nombre: projectName,
+        } );
+        post( string );
+        if ( postError ){
+          console.log( 'Error Trying to delete' );
+        }
+        setNeedToRefresh( true );
+        Swal.fire( {
+          title: 'Deleted!',
+          text: `The Ptroject ${projectName} has been deleted.`,
+          icon: 'success',
+          confirmButtonColor: 'darkgreen',
+        } );
+      }
+    } );
+
+
+
 
   };
   
