@@ -1,6 +1,9 @@
 import { getConnection } from '../database';
 import { employeesQueries } from '../database/queries/employeesQueries';
 import { userQueries } from '../database/queries/userQueries';
+import { sendEmail } from '../services/Mailer';
+import { emailNewUserEmployee } from '../FormatEmailMessages/EmailNewUserEmployee';
+import { employerQueries } from '../database/queries/employerQueries';
 
 export const getEmployeeByID = async ( req, res ) => {
   const { Cedula } = req.params;
@@ -80,7 +83,6 @@ export const postNewEmployee = async ( req, res ) => {
   let {
     NombreProyecto,
     Email,
-    Contrasenia,
     Roles,
     Nombre,
     Apellido1,
@@ -95,7 +97,6 @@ export const postNewEmployee = async ( req, res ) => {
   } = req.body;
   console.log( NombreProyecto,
     Email,
-    Contrasenia,
     Roles,
     Nombre,
     Apellido1,
@@ -117,16 +118,22 @@ export const postNewEmployee = async ( req, res ) => {
     ValorServicio = null;
   }
   const pool = await getConnection();
+
+  const ContraseniaRandom = Math.floor(
+    Math.random() * ( 999999 - 100000 + 1 ) + 100000
+  );
+
   try {
     await pool
       .request()
       .input( 'Email', Email )
-      .input( 'Contrasenia', Contrasenia )
+      .input( 'Contrasenia', ContraseniaRandom )
       .input( 'Roles', Roles )
       .query( userQueries.createNewUser );
   } catch ( e ) {
     console.log( e );
   }
+
   try {
     const createEmployee = await pool
       .request()
@@ -153,6 +160,29 @@ export const postNewEmployee = async ( req, res ) => {
       .input( 'ValorServicio', ValorServicio )
       .query( employeesQueries.addContractOfAnEmployee );
   } catch ( e ) {
+    console.log( e );
+  }
+  try {
+    const result = await pool.request()
+      .input( 'CedEmpleado', Cedula )
+      .input( 'Proyecto', NombreProyecto )
+      .query( employerQueries.getEmployerByProjectIDEmployee );
+    const dataInfoUser = {
+      'email': Email, 
+      'password': ContraseniaRandom, 
+      'project': NombreProyecto, 
+      'employer': `${result.recordset[0].Nombre} ${result.recordset[0].Apellido1}`, 
+      'employee': `${Nombre} ${Apellido1} ${Apellido2}`,
+    };
+    let mailFormat = {
+      from: process.env.EMAIL_USER,
+      to: Email,
+      subject: 'Nueva Cuenta SeleMiracleRun',
+      html: emailNewUserEmployee( dataInfoUser ),
+    };
+    await sendEmail( mailFormat );
+    console.log( 'Se envio correctamente' );
+  } catch ( e ){
     console.log( e );
   }
   res.status( 200 ).send();

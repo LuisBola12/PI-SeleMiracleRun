@@ -216,14 +216,13 @@ POST {{apiEmployee}}
 Content-Type: application/json
 
 {
-  "NombreProyecto":"Radiadores Solceri",
-  "Email":"erickV@example.com",
-  "Contrasenia":"1234",
-  "Roles":"empleado",
-  "Nombre":"Erick",
-  "Apellido1":"Valverde",
-  "Apellido2":"Gonzales",
-  "Cedula":"187126112",
+  "NombreProyecto":"Taquería Milagro",
+  "Email":"jdvenegas50@gmail.com",
+  "Roles":"emp",
+  "Nombre":"Buenas",
+  "Apellido1":"Tardes",
+  "Apellido2":"Noches",
+  "Cedula":"123896754",
   "Telefono":87126121,
   "TipoJornada":"Por Horas",
   "FechaFinContrato":"2025-09-19",
