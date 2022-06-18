@@ -4,11 +4,16 @@ import { FaArrowLeft } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
 import "./TerminateContract.scss";
 import { useSelector } from "react-redux";
+import usePost from './../../shared/hooks/usePost';
 export const TerminateContract = () => {
   const activeProject = useSelector((state) => state.activeProject.projectName);
   const [employeevalues, setEmployeeValues] = useState({});
   const [reasonOfEndContract, setReasonOfEndContract] = useState("");
+  const post = usePost('http://localhost:4000/deleteEmployee')
   const location = useLocation();
+  const handleSend = () =>{
+
+  }
   useEffect(() => {
     setEmployeeValues({
       Nombre: location.state.Nombre,
@@ -64,7 +69,7 @@ export const TerminateContract = () => {
         </div>
       </div>
       <div className="buttons-terminate-contract">
-        <button className="create-employee-btn">
+        <button className="create-employee-btn" onClick={handleSend}>
           Send
         </button>
       </div>
