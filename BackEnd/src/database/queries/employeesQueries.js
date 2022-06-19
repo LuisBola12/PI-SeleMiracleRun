@@ -22,6 +22,9 @@ export const employeesQueries = {
     @NombreServicio,@SalarioPorHora,@FechaInicioContrato,@FechaFinContrato,@ValorServicio)`,
   deleteEmployeeFromProject: 'Delete from EmpleadoYContratoSeAsocianAProyecto where CedulaEmpleado = @Cedula and NombreProyecto = @NombreProyecto',
   insertHours: 'EXEC ingresarHoras @Email = @EmailEmpleado , @Proyecto = @ProyectoEmpleado, @Fecha = @FechaEmpleado, @CantidadHoras = @CantHorasEmpleado',
-  getActiveEmployeesInfo:'SELECT * FROM [SeleMiracleRun].[dbo].[EmpleadoYContratoSeAsocianAProyecto] WHERE FechaFin > GETDATE() AND NombreProyecto = @projectName'
+  getActiveEmployeesInfo:'SELECT * FROM [SeleMiracleRun].[dbo].[EmpleadoYContratoSeAsocianAProyecto] WHERE FechaFin > GETDATE() AND NombreProyecto = @projectName',
+  updateEmployee:'Update Empleado set Nombre= @Nombre, Apellido1= @Apellido1 ,Apellido2= @Apellido2,Telefono= @Telefono Where Cedula= @Cedula',
+  updateEmployeer:'Update Empleador set Nombre= @Nombre, Apellido1= @Apellido1 ,Apellido2= @Apellido2,Telefono= @Telefono Where Cedula= @Cedula',
+  udpateEmail: 'Update Usuarios set Email = @Email where Email = @EmailViejo'
   
 };

@@ -47,7 +47,7 @@ router.post( '/employee/contract', verifyEmployeeContractOnProject );
 router.put( '/updateEmployee', updateProfileEmployee );
 router.post( '/employeesWithContractsOnOtherProyects', getEmployeesWithContractOnOtherProyects );
 router.post( '/contractExistentEmployee', contractAEmployee );
-router.delete( '/deleteEmployeeFromProject', deleteEmployeeFromProject );
+router.post( '/deleteEmployeeFromProject', deleteEmployeeFromProject );
 router.post( '/employee/hours', setHoursEmployee );
 
 //Projects

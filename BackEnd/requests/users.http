@@ -50,12 +50,13 @@ Content-Type: application/json
 
 
 ###
-DELETE {{apiDeleteEmployeeFromProject}}
+POST {{apiDeleteEmployeeFromProject}}
 Content-Type: application/json
 
 {
-  "Cedula":"608110776",
-  "NombreProyecto":"Taquería Milagro"
+  "Proyecto":"Taquería Milagro",
+  "EmailEmpleado":"luibv12@hotmail.com",
+  "MotivoDeDespido":"AAAAAAAAAAAAAA"
 }
 
 
