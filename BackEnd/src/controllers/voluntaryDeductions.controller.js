@@ -1,6 +1,7 @@
 import { getConnection,sql } from '../database';
 import { voluntaryDeductionsQueries } from '../database/queries/voluntaryDeductionsQueries';
 import {getConsecutivePayNumber} from './payrollController'
+import { notifyEmployeesForDeletedVoluntaryDeduction } from '../utils/notifyEmployeesForDeletedVoluntaryDeduction';
 
 export const getVoluntaryDeductions = async ( req, res ) => {
   const { NombreProyecto } = req.params;
@@ -172,6 +173,7 @@ export const deactivateVoluntaryDeduction = async (req, res) => {
       .input('NombreDeduccionVoluntaria', sql.VarChar, Nombre)
       .input('Proyecto', sql.VarChar, NombreProyecto)
       .execute('eliminarDeduccionVoluntaria');
+      await notifyEmployeesForDeletedVoluntaryDeduction(result.recordset, Nombre, NombreProyecto);
   } catch (e) {
     console.log(`Error: ${e}`);
     res.status(500).send(e.message);
