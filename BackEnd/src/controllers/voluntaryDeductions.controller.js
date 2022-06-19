@@ -127,3 +127,21 @@ export const insertCostTotalVoluntaryDeductions = async ( cedEmpleado, proyName,
     return undefined;
   }
 };
+
+export const linkEmployeeToVoluntaryDeduction = async (req, res) => {
+  const { Email, NombreDeduccionVoluntaria, NombreProyecto } = req.body;
+  try {
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input('Email', sql.VarChar, Email)
+      .input('NombreProyecto', sql.VarChar, NombreProyecto)
+      .input('NombreDeduccionVoluntaria', sql.VarChar, NombreDeduccionVoluntaria)
+      .execute('vincularDeduccionVoluntariaEmpleado');
+    console.log(result);
+    res.json({ NombreProyecto, NombreDeduccionVoluntaria });
+  } catch (e) {
+    console.log(`Error: ${e}`);
+    res.status(500).send(e.message);
+  }
+};

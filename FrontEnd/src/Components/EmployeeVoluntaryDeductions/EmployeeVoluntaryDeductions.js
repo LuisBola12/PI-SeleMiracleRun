@@ -3,12 +3,16 @@ import '../../App.css';
 import { transformCost } from '../../shared/moneyFormatTransform';
 import { useGetOfferedVoluntaryDeductions } from '../../Utils/VoluntaryDeductions/useGetOfferedVoluntaryDeductions';
 import { useGetEmployeeVoluntaryDeductions } from '../../Utils/VoluntaryDeductions/useGetEmployeeVoluntaryDeductions';
+import { usePostToVoluntaryDeductions } from '../../Utils/VoluntaryDeductions/usePostToVoluntaryDeductions';
 
 export const EmployeeVoluntaryDeductions = () => {
   const { offeredVoluntaryDeductions, offeredInfo, setofferedInfo } = useGetOfferedVoluntaryDeductions();
   const { EmployeeVoluntaryDeductions, EmployeeInfo, setEmployeeInfo } = useGetEmployeeVoluntaryDeductions();
+  const {  submitVoluntaryDeductionToEmployee } = usePostToVoluntaryDeductions();
   const handleAddButton = (element) => {
-
+    submitVoluntaryDeductionToEmployee( element.Nombre );
+    setofferedInfo( false );
+    setEmployeeInfo( false );
   };
   return (
     <>
