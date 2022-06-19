@@ -195,6 +195,27 @@ BEGIN
 END;
 GO
 
+CREATE PROCEDURE desvincularDeduccionVoluntariaDeEmpleado (
+  @Email VARCHAR(50),
+  @Proyecto VARCHAR(50),
+  @NombreDeduccionVoluntaria VARCHAR(50)
+) AS
+BEGIN
+  DECLARE @cedula CHAR(15);
+  DECLARE @fechaInicioDeduccionVoluntaria DATETIME;
+
+  SELECT @cedula = Cedula FROM Empleado WHERE Email = @Email;
+
+  SELECT @fechaInicioDeduccionVoluntaria = fechaInicio FROM DeduccionVoluntariaElegida dve
+  WHERE dve.CedulaEmpleado = @cedula AND dve.NombreProyecto = @Proyecto AND 
+  NombreDeduccionVoluntaria = @NombreDeduccionVoluntaria AND fechaFin > GETDATE()
+
+  UPDATE DeduccionVoluntariaElegida SET fechaFin = GETDATE()
+  WHERE CedulaEmpleado = @cedula AND NombreProyecto = @Proyecto AND 
+  NombreDeduccionVoluntaria = @NombreDeduccionVoluntaria AND fechaInicio = @fechaInicioDeduccionVoluntaria
+
+END;
+
 CREATE PROCEDURE desvincularBeneficioDeEmpleado (
   @Email VARCHAR(50),
   @Proyecto VARCHAR(50),

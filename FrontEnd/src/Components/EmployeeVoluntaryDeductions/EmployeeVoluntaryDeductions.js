@@ -4,13 +4,21 @@ import { transformCost } from '../../shared/moneyFormatTransform';
 import { useGetOfferedVoluntaryDeductions } from '../../Utils/VoluntaryDeductions/useGetOfferedVoluntaryDeductions';
 import { useGetEmployeeVoluntaryDeductions } from '../../Utils/VoluntaryDeductions/useGetEmployeeVoluntaryDeductions';
 import { usePostToVoluntaryDeductions } from '../../Utils/VoluntaryDeductions/usePostToVoluntaryDeductions';
+import { usePutToVoluntaryDeductions } from '../../Utils/VoluntaryDeductions/usePutToVoluntaryDeductions';
 
 export const EmployeeVoluntaryDeductions = () => {
   const { offeredVoluntaryDeductions, offeredInfo, setofferedInfo } = useGetOfferedVoluntaryDeductions();
   const { EmployeeVoluntaryDeductions, EmployeeInfo, setEmployeeInfo } = useGetEmployeeVoluntaryDeductions();
   const {  submitVoluntaryDeductionToEmployee } = usePostToVoluntaryDeductions();
+  const { unlinkEmployeeToVoluntaryDeduction } = usePutToVoluntaryDeductions();
   const handleAddButton = (element) => {
     submitVoluntaryDeductionToEmployee( element.Nombre );
+    setofferedInfo( false );
+    setEmployeeInfo( false );
+  };
+
+  const handleDeleteButton = ( element ) => {
+    unlinkEmployeeToVoluntaryDeduction( element.NombreDeduccionVoluntaria );
     setofferedInfo( false );
     setEmployeeInfo( false );
   };
@@ -35,7 +43,7 @@ export const EmployeeVoluntaryDeductions = () => {
                   <td className='description-cell left-td'>{((element.Descripcion) ? element.Descripcion : 'No description')}</td>
                   <td className='right-td'>₡ {transformCost(element.Costo)}</td>
                   <td className='right-button table-right-border'>
-                    <button className='button cancel-button' > Delete </button>
+                    <button className='button cancel-button' onClick={() => handleDeleteButton( element )}> Delete </button>
                   </td>
                 </tr>
               ))}
