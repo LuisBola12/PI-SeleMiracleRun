@@ -9,7 +9,8 @@ import {
   getProfileEmployeer, getProfileEmployee, updateProfileEmployeer, updateProfileEmployee
 } from '../controllers/users.controller';
 import { getVoluntaryDeductions, createNewVoluntaryDeduction, getVoluntaryDeductionsByName, updateVoluntaryDeduction, 
-  getEmployeeVoluntaryDeductionsByEmail, getOfferedVoluntaryDeductions, linkEmployeeToVoluntaryDeduction,  unlinkEmployeeToVoluntaryDeduction } from '../controllers/voluntaryDeductions.controller';
+  getEmployeeVoluntaryDeductionsByEmail, getOfferedVoluntaryDeductions, linkEmployeeToVoluntaryDeduction,  unlinkEmployeeToVoluntaryDeduction,
+  deactivateVoluntaryDeduction } from '../controllers/voluntaryDeductions.controller';
 import { getTypeOfContracts } from '../controllers/contracts.controller';
 import {
   getBenefits, createBenefit, getBenefitsByName, updateBenefit, getEmployeeBenefitsByEmail,
@@ -85,5 +86,6 @@ router.get( '/myVoluntaryDeductions/:Proyecto/:Email', getEmployeeVoluntaryDeduc
 router.get( '/offeredVoluntaryDeductions/:Proyecto/:Email', getOfferedVoluntaryDeductions );
 router.post( '/myVoluntaryDeductions', linkEmployeeToVoluntaryDeduction );
 router.put( '/myVoluntaryDeductions', unlinkEmployeeToVoluntaryDeduction );
+router.put( '/voluntaryDeductions', deactivateVoluntaryDeduction );
 
 export default router;

@@ -13,8 +13,8 @@ export const useGetVoluntaryDeductionsFromDatabase = () => {
       setInfoReceived(true);
     };
     getVoluntaryDeductions();
-  }, []);
+  }, [infoReceived]);
   return {
-    projectVoluntaryDeductions, infoReceived
+    projectVoluntaryDeductions, infoReceived, setInfoReceived
   };
 };

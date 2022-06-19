@@ -162,3 +162,18 @@ export const unlinkEmployeeToVoluntaryDeduction = async (req, res) => {
     res.status(500).send(e.message);
   }
 };
+
+export const deactivateVoluntaryDeduction = async (req, res) => {
+  const { Nombre, NombreProyecto } = req.body;
+  try {
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input('NombreDeduccionVoluntaria', sql.VarChar, Nombre)
+      .input('Proyecto', sql.VarChar, NombreProyecto)
+      .execute('eliminarDeduccionVoluntaria');
+  } catch (e) {
+    console.log(`Error: ${e}`);
+    res.status(500).send(e.message);
+  }
+};

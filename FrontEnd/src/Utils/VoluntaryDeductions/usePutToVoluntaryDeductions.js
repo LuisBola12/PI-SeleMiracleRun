@@ -37,7 +37,22 @@ export const usePutToVoluntaryDeductions = () => {
     });
     console.log(postFetch);
   };
+
+  const deactivateVoluntaryDeduction = async (name) => {
+    const postFetch = await fetch(apiVoluntaryDeductions, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        Nombre: name,
+        NombreProyecto: activeProject,
+      }),
+    });
+    console.log(postFetch);
+  };
+
   return {
-    updateVoluntaryDeduction, unlinkEmployeeToVoluntaryDeduction
+    updateVoluntaryDeduction, unlinkEmployeeToVoluntaryDeduction, deactivateVoluntaryDeduction
   };
 };
