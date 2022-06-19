@@ -26,8 +26,8 @@ export const EmployeeVoluntaryDeductions = () => {
             </thead>
             <tbody>
               {EmployeeVoluntaryDeductions.map((element) => (
-                <tr key={element.Nombre}>
-                  <td className='left-td table-left-border voluntaryDeduction-name'>{element.NombreDeduccion}</td>
+                <tr key={element.NombreDeduccionVoluntaria}>
+                  <td className='left-td table-left-border voluntaryDeduction-name'>{element.NombreDeduccionVoluntaria}</td>
                   <td className='description-cell left-td'>{((element.Descripcion) ? element.Descripcion : 'No description')}</td>
                   <td className='right-td'>₡ {transformCost(element.Costo)}</td>
                   <td className='right-button table-right-border'>
@@ -48,7 +48,7 @@ export const EmployeeVoluntaryDeductions = () => {
               <tr className='table-header'>
                 <th className='table-left-border left-td'>Deduction</th>
                 <th className='left-td'>Description</th>
-                <th className='right-td'>Actual</th>
+                <th className='right-td'>Cost</th>
                 <th className='table-right-border right-td'>Add</th>
               </tr>
             </thead>

@@ -144,7 +144,8 @@ BEGIN
 					JOIN DeduccionesObligatorias DO ON CSDO.NombreDeduccionObligatoria = DO.Nombre
 	WHERE E.Cedula = @CedulaEmpleado AND ECAP.NombreProyecto = @Proyecto
 END;
-CREATE PROCEDURE getEmployeeVoluntaryDeductions
+
+CREATE PROCEDURE getEmployeeVoluntaryDeductions 
   @Email VARCHAR(50),
   @Proyecto VARCHAR(50)
 as 
@@ -154,17 +155,13 @@ BEGIN
 
   SELECT @cedula = Cedula From Empleado WHERE Email = @Email;
 
-  SELECT @fechaFin = FechaFin from EmpleadoYContratoSeAsocianAProyecto ec
-  WHERE ec.CedulaEmpleado = @cedula and ec.NombreProyecto = @Proyecto;
-
   SELECT dve.NombreDeduccionVoluntaria, dv.Costo, dv.Descripcion from Empleado e
   JOIN DeduccionVoluntariaElegida dve on e.Cedula = dve.CedulaEmpleado
   JOIN DeduccionesVoluntarias dv on dve.NombreDeduccionVoluntaria = dv.Nombre and dve.NombreProyecto = dv.NombreProyecto
   JOIN Proyecto p on dv.NombreProyecto = p.Nombre 
-  where e.Email = @Email and p.Nombre = @Proyecto and @fechaFin > GETDATE();
+  where e.Email = @Email and p.Nombre = @Proyecto and dve.fechaFin > GETDATE();
   
 END;
-GO
 
 CREATE PROCEDURE getOfferedVoluntaryDeductions 
   @Email VARCHAR(50),
@@ -174,7 +171,7 @@ BEGIN
   DECLARE @offeredVoluntaryDeductions TABLE(Nombre VARCHAR(50), Costo real, Descripcion VARCHAR(300));
   INSERT into @offeredVoluntaryDeductions EXEC getEmployeeVoluntaryDeductions @Email = @Email, @Proyecto = @Proyecto;
   SELECT dv.Nombre, dv.Costo, dv.Descripcion from DeduccionesVoluntarias dv where dv.NombreProyecto = @Proyecto
-  and dv.Nombre not in (select Nombre from @offeredVoluntaryDeductions)
+  and dv.Nombre not in (select Nombre from @offeredVoluntaryDeductions)  and dv.Activo = 'True'
 END;
 GO
 
@@ -257,7 +254,7 @@ BEGIN
 	JOIN Empleado E ON U.Email = E.Email
 		JOIN DeduccionVoluntariaElegida DVE ON E.Cedula = DVE.CedulaEmpleado
 			JOIN DeduccionesVoluntarias DV ON	DVE.NombreDeduccionVoluntaria = DV.Nombre and
-												DVE.NombreProyecto = DV.NombreProyecto		
+					 DVE.NombreProyecto = DV.NombreProyecto		
 				JOIN Proyecto P ON DV.NombreProyecto = P.Nombre
 	where U.Email = @Email AND P.Nombre = @Proyecto AND DVE.FechaFin > GETDATE()
 END;
