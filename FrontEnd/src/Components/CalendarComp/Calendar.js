@@ -1,5 +1,5 @@
-import { useState} from 'react'
-import Calendar from 'react-calendar';
+import { useState } from 'react'
+import {  Calendar } from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './calendarStyle.scss';
 import React from 'react';
@@ -7,6 +7,8 @@ import {Modal, Button, Form} from 'react-bootstrap';
 import validate from './calendarValidations';
 import usePost from '../../shared/hooks/usePost';
 import { useSelector } from 'react-redux';
+// import moment from "moment"
+// import 'moment/locale/en'; 
 
 export const CalendarComp = () => {
   const [date, setDate] = useState(new Date());
@@ -14,6 +16,8 @@ export const CalendarComp = () => {
   const [hours, setHours] = useState('');
   const { post } = usePost('http://localhost:4000/employee/hours');
   const dateMin = null;
+  // const localizer = momentLocalizer(moment);
+
   const dateToString = () => {
     return `${date.getFullYear()}/${date.getMonth()+1}/${date.getDay()}`
   };
@@ -57,7 +61,7 @@ export const CalendarComp = () => {
           minDate={dateMin}
           next2Label={null}
           prev2Label={null}
-        
+          locale={'en'}
         />
       </div>
       { date && 
