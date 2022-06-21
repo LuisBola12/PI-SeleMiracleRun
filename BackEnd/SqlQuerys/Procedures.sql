@@ -147,7 +147,28 @@ BEGIN
 					JOIN DeduccionesObligatorias DO ON CSDO.NombreDeduccionObligatoria = DO.Nombre
 	WHERE E.Cedula = @CedulaEmpleado AND ECAP.NombreProyecto = @Proyecto
 END;
-CREATE PROCEDURE getEmployeeVoluntaryDeductions
+
+CREATE PROCEDURE vincularDeduccionVoluntariaEmpleado 
+  @Email VARCHAR(50),
+  @NombreDeduccionVoluntaria VARCHAR(50),
+  @NombreProyecto VARCHAR(50)
+as 
+BEGIN
+  DECLARE @cedula VARCHAR(15);
+  DECLARE @fechaFin DATETIME;
+  DECLARE @fechaInicio DATETIME;
+
+  SET @fechaInicio = GETDATE();
+  SELECT @cedula = Cedula From Empleado WHERE Email = @Email;
+  SELECT @fechaFin = FechaFin from EmpleadoYContratoSeAsocianAProyecto ec
+  WHERE ec.CedulaEmpleado = @cedula and ec.NombreProyecto = @NombreProyecto;
+  
+  INSERT INTO DeduccionVoluntariaElegida VALUES 
+  (@cedula, @NombreDeduccionVoluntaria, @NombreProyecto, @fechaInicio, @fechaFin);
+
+END;
+
+CREATE PROCEDURE getEmployeeVoluntaryDeductions 
   @Email VARCHAR(50),
   @Proyecto VARCHAR(50)
 as 
@@ -157,17 +178,13 @@ BEGIN
 
   SELECT @cedula = Cedula From Empleado WHERE Email = @Email;
 
-  SELECT @fechaFin = FechaFin from EmpleadoYContratoSeAsocianAProyecto ec
-  WHERE ec.CedulaEmpleado = @cedula and ec.NombreProyecto = @Proyecto;
-
   SELECT dve.NombreDeduccionVoluntaria, dv.Costo, dv.Descripcion from Empleado e
   JOIN DeduccionVoluntariaElegida dve on e.Cedula = dve.CedulaEmpleado
   JOIN DeduccionesVoluntarias dv on dve.NombreDeduccionVoluntaria = dv.Nombre and dve.NombreProyecto = dv.NombreProyecto
   JOIN Proyecto p on dv.NombreProyecto = p.Nombre 
-  where e.Email = @Email and p.Nombre = @Proyecto and @fechaFin > GETDATE();
+  where e.Email = @Email and p.Nombre = @Proyecto and dve.fechaFin > GETDATE();
   
 END;
-GO
 
 CREATE PROCEDURE getOfferedVoluntaryDeductions 
   @Email VARCHAR(50),
@@ -177,9 +194,30 @@ BEGIN
   DECLARE @offeredVoluntaryDeductions TABLE(Nombre VARCHAR(50), Costo real, Descripcion VARCHAR(300));
   INSERT into @offeredVoluntaryDeductions EXEC getEmployeeVoluntaryDeductions @Email = @Email, @Proyecto = @Proyecto;
   SELECT dv.Nombre, dv.Costo, dv.Descripcion from DeduccionesVoluntarias dv where dv.NombreProyecto = @Proyecto
-  and dv.Nombre not in (select Nombre from @offeredVoluntaryDeductions)
+  and dv.Nombre not in (select Nombre from @offeredVoluntaryDeductions)  and dv.Activo = 'True'
 END;
 GO
+
+CREATE PROCEDURE desvincularDeduccionVoluntariaDeEmpleado (
+  @Email VARCHAR(50),
+  @Proyecto VARCHAR(50),
+  @NombreDeduccionVoluntaria VARCHAR(50)
+) AS
+BEGIN
+  DECLARE @cedula CHAR(15);
+  DECLARE @fechaInicioDeduccionVoluntaria DATETIME;
+
+  SELECT @cedula = Cedula FROM Empleado WHERE Email = @Email;
+
+  SELECT @fechaInicioDeduccionVoluntaria = fechaInicio FROM DeduccionVoluntariaElegida dve
+  WHERE dve.CedulaEmpleado = @cedula AND dve.NombreProyecto = @Proyecto AND 
+  NombreDeduccionVoluntaria = @NombreDeduccionVoluntaria AND fechaFin > GETDATE()
+
+  UPDATE DeduccionVoluntariaElegida SET fechaFin = GETDATE()
+  WHERE CedulaEmpleado = @cedula AND NombreProyecto = @Proyecto AND 
+  NombreDeduccionVoluntaria = @NombreDeduccionVoluntaria AND fechaInicio = @fechaInicioDeduccionVoluntaria
+
+END;
 
 CREATE PROCEDURE desvincularBeneficioDeEmpleado (
   @Email VARCHAR(50),
@@ -260,7 +298,7 @@ BEGIN
 	JOIN Empleado E ON U.Email = E.Email
 		JOIN DeduccionVoluntariaElegida DVE ON E.Cedula = DVE.CedulaEmpleado
 			JOIN DeduccionesVoluntarias DV ON	DVE.NombreDeduccionVoluntaria = DV.Nombre and
-												DVE.NombreProyecto = DV.NombreProyecto		
+					 DVE.NombreProyecto = DV.NombreProyecto		
 				JOIN Proyecto P ON DV.NombreProyecto = P.Nombre
 	where U.Email = @Email AND P.Nombre = @Proyecto AND DVE.FechaFin > GETDATE()
 END;
@@ -358,3 +396,26 @@ As
 	Select * from @Resultados;
 	End
 Go;
+CREATE PROCEDURE eliminarDeduccionVoluntaria (
+		@NombreDeduccionVoluntaria VARCHAR(50),
+		@Proyecto VARCHAR(50)
+) 
+AS
+BEGIN
+  DECLARE @cedulaEmpleador VARCHAR(15);
+
+  SELECT @cedulaEmpleador = CedulaEmpleador FROM Proyecto
+  WHERE Nombre = @Proyecto;
+
+  UPDATE DeduccionesVoluntarias SET Activo = 'false' WHERE Nombre = @NombreDeduccionVoluntaria AND NombreProyecto = @Proyecto;
+	
+  UPDATE DeduccionVoluntariaElegida SET fechaFin = GETDATE() WHERE NombreDeduccionVoluntaria = @NombreDeduccionVoluntaria 
+  AND NombreProyecto = @Proyecto AND fechaFin > GETDATE();
+  
+  SELECT e.Nombre NombreEmpleado, e.Apellido1 Apellido1Empleado, e.Apellido2 Apellido2Empleado, e.Email EmailEmpleado,
+  ep.Nombre NombreEmpleador, ep.Apellido1 Apellido1Empleador, ep.Apellido2 Apellido2Empleador
+  FROM Empleado e JOIN EmpleadoYContratoSeAsocianAProyecto ecp 
+  on e.Cedula = ecp.CedulaEmpleado JOIN Proyecto p on p.Nombre = ecp.NombreProyecto
+  JOIN Empleador ep on ep.Cedula = p.CedulaEmpleador 
+  WHERE ecp.NombreProyecto = @Proyecto AND ep.Cedula = @cedulaEmpleador
+END;
