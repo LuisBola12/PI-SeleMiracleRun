@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import "./TerminateContract.scss";
 import { useSelector } from "react-redux";
 import usePost from './../../shared/hooks/usePost';
+import Swal from 'sweetalert2';
 export const TerminateContract = () => {
   const activeProject = useSelector((state) => state.activeProject.projectName);
   const [employeevalues, setEmployeeValues] = useState({});
@@ -14,16 +15,34 @@ export const TerminateContract = () => {
   const { post } = usePost( 'http://localhost:4000/deleteEmployeeFromProject' );
   const location = useLocation();
   const handleSend = async() =>{
-    let string = JSON.stringify({
-      Proyecto:activeProject,
-      EmailEmpleado: employeevalues.Email,
-      Cedula:employeevalues.Cedula,
-      MotivoDeDespido: reasonOfEndContract
-    });
-    const result = await post(string);
-    if(result=== true){
-      navigate(-1);
-    }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: 'darkgreen',
+      cancelButtonColor: 'darkred',
+      confirmButtonText: 'Terminate Contract'
+    }).then(async(result) => {
+      if (result.isConfirmed) {
+        let string = JSON.stringify({
+          Proyecto:activeProject,
+          EmailEmpleado: employeevalues.Email,
+          Cedula:employeevalues.Cedula,
+          MotivoDeDespido: reasonOfEndContract
+        });
+        const resultOfQ = await post(string);
+        Swal.fire({
+          title: 'Contract Terminated!',
+          text: `${location.state.Nombre} contract has been terminated successfully!`,
+          icon: 'success',
+          confirmButtonColor: 'darkgreen',
+        })
+        if(resultOfQ === true){
+          navigate(-1);
+        }
+      }
+    })
   }
   useEffect(() => {
     setEmployeeValues({
