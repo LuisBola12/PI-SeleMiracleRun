@@ -28,6 +28,7 @@ import { UserPage } from './Pages/userProfile';
 import { HireAEmployee } from './Pages/crudHireEmployees';
 import { HireEmployee } from './Pages/hireEmployee';
 import { EndContractWithEmployee } from './Pages/endContractWithEmployee';
+import { EmployeeMyPayments  } from './Pages/employeeMyPayments';
 function App() {
 
   const userRoll = useSelector((state) => state.user.user);
@@ -76,11 +77,11 @@ function App() {
             <Route path='userProfile' element={<UserPage />} />
             <Route path='myBenefits' element={<EmployeesBenefits />} />
             <Route path='myVoluntaryDeductions' element={<EmployeesVoluntaryDeductions />} />
+            <Route path='myPayments' element={<EmployeeMyPayments />} />
           </Route>
         ) }
       </Routes>
     </Router>
   );
 }
-
 export default App;
