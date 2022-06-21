@@ -36,7 +36,7 @@ export const UserProfile = () => {
     <>
       <div className='user-info-container'>
         <div className='user-profile-header'>
-          <div className='user-profile-logo'>LB</div>
+          <div className='user-profile-logo'>{`${formValues.name[0]}${formValues.lastname[0]}`}</div>
           <div className='user-profile-edit-icon'>
             <IconContext.Provider
               value={{

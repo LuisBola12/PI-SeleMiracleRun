@@ -37,7 +37,7 @@ export const CrudEmployee = () => {
           () => {
             navigate('hireAEmployee')
           }
-        }>Hire a Employee</button>
+        }>Hire Employee From Other Project</button>
       </div>
       <table className='Table'>
         <thead>
