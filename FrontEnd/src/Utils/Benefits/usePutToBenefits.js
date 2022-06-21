@@ -7,7 +7,7 @@ export const usePutToBenefits = () => {
   const apiBenefits = 'http://localhost:4000/benefits'
 
   const updateBenefit = async (name, cost, description, apiBenefits) => {
-    const newCost = cost.split('.').join('');
+    const newCost = cost.split(' ').join('');
     const postFetch = await fetch(apiBenefits, {
       method: 'PUT',
       headers: {

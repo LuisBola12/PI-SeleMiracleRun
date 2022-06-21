@@ -7,7 +7,7 @@ export const usePutToVoluntaryDeductions = () => {
   const apiVoluntaryDeductions = 'http://localhost:4000/voluntaryDeductions'
 
   const updateVoluntaryDeduction = async (name, cost, description, apiVoluntaryDeductions) => {
-    const newCost = cost.split('.').join('');
+    const newCost = cost.split(' ').join('');
     const postFetch = await fetch(apiVoluntaryDeductions, {
       method: 'PUT',
       headers: {

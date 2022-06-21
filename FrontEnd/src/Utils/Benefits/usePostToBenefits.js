@@ -7,7 +7,7 @@ export const usePostToBenefits = () => {
   const employeeEmail = useSelector((state) => state.user.user.Email);
 
   const submitBenefit = async (name, cost, description) => {
-    const newCost = cost.split('.').join('');
+    const newCost = cost.split(' ').join('');
     const postFetch = await fetch(apiBenefits, {
       method: 'POST',
       headers: {

@@ -61,9 +61,9 @@ export const CrudVoluntaryDeductions = () => {
             <tr key={element.Nombre}>
               <td className='left-td'>{element.Nombre}</td>
               <td className='description-cell left-td'>{((element.Descripcion) ? element.Descripcion : 'No description')}</td>
-              <td className='right-td'>₡ {transformCost(element.Costo)}</td>
+              <td className='right-td'> {transformCost(element.Costo)}</td>
               <td className='right-button'>
-                <button className=' button'  onClick={() => handleEditClick(element)}> Edit </button>
+                <button className=' button' onClick={() => handleEditClick(element)}> Edit </button>
               </td>
               <td className='right-button'>
                 <button className=' button cancel-button' onClick={() => handleDeleteClick(element)}> Delete </button>
