@@ -6,7 +6,7 @@ export const usePostToVoluntaryDeductions = () => {
   const apiVoluntaryDeductionsToEmplyee = 'http://localhost:4000/myVoluntaryDeductions'
   const employeeEmail = useSelector((state) => state.user.user.Email);
   const submitVoluntaryDeduction = async (name, cost, description) => {
-    const newCost = cost.split('.').join('');
+    const newCost = cost.split(' ').join('');
     const postFetch = await fetch(apiVoluntaryDeductions, {
       method: 'POST',
       headers: {

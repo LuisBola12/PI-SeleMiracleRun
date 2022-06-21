@@ -9,24 +9,24 @@ import { usePutToVoluntaryDeductions } from '../../Utils/VoluntaryDeductions/use
 export const EmployeeVoluntaryDeductions = () => {
   const { offeredVoluntaryDeductions, offeredInfo, setofferedInfo } = useGetOfferedVoluntaryDeductions();
   const { EmployeeVoluntaryDeductions, EmployeeInfo, setEmployeeInfo } = useGetEmployeeVoluntaryDeductions();
-  const {  submitVoluntaryDeductionToEmployee } = usePostToVoluntaryDeductions();
+  const { submitVoluntaryDeductionToEmployee } = usePostToVoluntaryDeductions();
   const { unlinkEmployeeToVoluntaryDeduction } = usePutToVoluntaryDeductions();
   const handleAddButton = (element) => {
-    submitVoluntaryDeductionToEmployee( element.Nombre );
-    setofferedInfo( false );
-    setEmployeeInfo( false );
+    submitVoluntaryDeductionToEmployee(element.Nombre);
+    setofferedInfo(false);
+    setEmployeeInfo(false);
   };
 
-  const handleDeleteButton = ( element ) => {
-    unlinkEmployeeToVoluntaryDeduction( element.NombreDeduccionVoluntaria );
-    setofferedInfo( false );
-    setEmployeeInfo( false );
+  const handleDeleteButton = (element) => {
+    unlinkEmployeeToVoluntaryDeduction(element.NombreDeduccionVoluntaria);
+    setofferedInfo(false);
+    setEmployeeInfo(false);
   };
   return (
     <>
       {!EmployeeInfo ? <div className='loader' ></div > : (
         <>
-          <h2 className = 'table-button'>My Voluntary Deductions</h2>
+          <h2 className='table-button'>My Voluntary Deductions</h2>
           <table className='Table'>
             <thead>
               <tr className='table-header'>
@@ -41,9 +41,9 @@ export const EmployeeVoluntaryDeductions = () => {
                 <tr key={element.NombreDeduccionVoluntaria}>
                   <td className='left-td table-left-border voluntaryDeduction-name'>{element.NombreDeduccionVoluntaria}</td>
                   <td className='description-cell left-td'>{((element.Descripcion) ? element.Descripcion : 'No description')}</td>
-                  <td className='right-td'>₡ {transformCost(element.Costo)}</td>
+                  <td className='right-td'>₡{transformCost(element.Costo)}</td>
                   <td className='right-button table-right-border'>
-                    <button className='button cancel-button' onClick={() => handleDeleteButton( element )}> Delete </button>
+                    <button className='button cancel-button' onClick={() => handleDeleteButton(element)}> Delete </button>
                   </td>
                 </tr>
               ))}
@@ -70,7 +70,7 @@ export const EmployeeVoluntaryDeductions = () => {
                   <>
                     <td className='left-td table-left-border voluntaryDeduction-name'>{element.Nombre}</td>
                     <td className='description-cell left-td'>{((element.Descripcion) ? element.Descripción : 'No description')}</td>
-                    <td className='right-td'>₡ {transformCost(element.Costo)}</td>
+                    <td className='right-td'>₡{transformCost(element.Costo)}</td>
                     <td className='right-button table-right-border'>
                       <button className='button add-button' onClick={() => handleAddButton(element)}> Add</button>
                     </td>
