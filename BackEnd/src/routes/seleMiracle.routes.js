@@ -17,6 +17,7 @@ import {
   getOfferedBenefits, linkEmployeeToBenefit,  unlinkEmployeeToBenefit, deactivateBenefit,
   validateBenefitSuscription
 } from '../controllers/benefits.controller';
+import { getAllPayslipsOfAProject, getPayrrollsOfAProject } from '../controllers/payrollController';
 
 const router = Router();
 
@@ -48,7 +49,7 @@ router.post( '/employee/contract', verifyEmployeeContractOnProject );
 router.put( '/updateEmployee', updateProfileEmployee );
 router.post( '/employeesWithContractsOnOtherProyects', getEmployeesWithContractOnOtherProyects );
 router.post( '/contractExistentEmployee', contractAEmployee );
-router.delete( '/deleteEmployeeFromProject', deleteEmployeeFromProject );
+router.post( '/deleteEmployeeFromProject', deleteEmployeeFromProject );
 router.post( '/employee/hours', setHoursEmployee );
 
 //Projects
@@ -87,5 +88,9 @@ router.get( '/offeredVoluntaryDeductions/:Proyecto/:Email', getOfferedVoluntaryD
 router.post( '/myVoluntaryDeductions', linkEmployeeToVoluntaryDeduction );
 router.put( '/myVoluntaryDeductions', unlinkEmployeeToVoluntaryDeduction );
 router.put( '/voluntaryDeductions', deactivateVoluntaryDeduction );
+
+//Payrrolls
+router.get('/payrrolls/:Proyecto',getPayrrollsOfAProject)
+router.post('/payslipsOfaProject',getAllPayslipsOfAProject);
 
 export default router;

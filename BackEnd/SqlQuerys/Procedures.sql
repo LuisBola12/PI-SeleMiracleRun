@@ -20,12 +20,15 @@ END;
  ------ Eliminar un empleado del proyecto
 Create Procedure DeleteAnEmployeeFromAProject @Cedula varchar(15), @Proyecto varchar(50)
 AS
+Begin
     Declare @NumeroDeBeneficios int;
-    Select @NumeroDeBeneficios = Count() from EmpleadoGozaBeneficios 
-    where CedulaEmpleado = @Cedula and NombreProyecto = @Proyecto;
+	Declare @FechaFinContrato DateTime;
+	Select @FechaFinContrato = ECP.FechaFin from EmpleadoYContratoSeAsocianAProyecto ECP where ECP.CedulaEmpleado = @Cedula and ECP.NombreProyecto = @Proyecto
+    Select @NumeroDeBeneficios = Count(*) from BeneficioElegido
+    where CedulaEmpleado = @Cedula and NombreProyecto = @Proyecto and FechaFin > GETDATE();
     If(@NumeroDeBeneficios > 0)
     Begin
-        Delete from EmpleadoGozaBeneficios where CedulaEmpleado = @Cedula and NombreProyecto = @Proyecto;
+        UPDATE BeneficioElegido set FechaFin = GETDATE()  where CedulaEmpleado =	@Cedula and NombreProyecto = @Proyecto;
     End
     Else
         Begin
@@ -33,11 +36,11 @@ AS
         End
 
     Declare @NumeroDeDeduccionesVoluntarias int;
-    Select @NumeroDeDeduccionesVoluntarias = Count() from EmpleadoAplicaDeduccionesVolundarias 
-    where CedulaEmpleado = @Cedula and NombreProyecto = @Proyecto;
+    Select @NumeroDeDeduccionesVoluntarias = Count(*) from DeduccionVoluntariaElegida 
+    where CedulaEmpleado = @Cedula and NombreProyecto = @Proyecto and FechaFin > GETDATE();
     If(@NumeroDeDeduccionesVoluntarias > 0)
     Begin
-        Delete from EmpleadoAplicaDeduccionesVolundarias where CedulaEmpleado = @Cedula and NombreProyecto = @Proyecto;
+        UPDATE DeduccionVoluntariaElegida set FechaFin = GETDATE()  where CedulaEmpleado =	@Cedula and NombreProyecto = @Proyecto;
     End
     Else
         Begin
@@ -354,7 +357,45 @@ BEGIN
   JOIN Empleador ep on ep.Cedula = p.CedulaEmpleador 
   WHERE ecp.NombreProyecto = @Proyecto AND ep.Cedula = @cedulaEmpleador
 END;
+GO;
+Create Procedure conseguirNominaEmpleados (@NombreProyecto varchar(50), @NumeroPagoPlanilla int)
+As
+	Begin
+	Declare @Resultados table(Cedula VARCHAR(15),NombreCompleto VARCHAR(100),TipoContrato VARCHAR(30),HorasTrabajadas int,SalarioPorHora real,SalarioBruto real,
+	DeduccionesObligatoriasEmpleador real, DeduccionesObligatoriasEmpleado real,DeduccionesVoluntarias real,Beneficios real,SalarioNeto real)
 
+	Declare @Cedula VARCHAR(15),@NombreCompleto VARCHAR(100),@TipoContrato VARCHAR(30),@HorasTrabajadas int,@SalarioPorHora real,@SalarioBruto real,
+	@DeduccionesObligatoriasEmpleador real, @DeduccionesObligatoriasEmpleado real,@DeduccionesVoluntarias real,@Beneficios real,@SalarioNeto real
+	DECLARE cursor__ CURSOR FOR
+	SELECT p.CedulaEmpleado, p.SalarioBruto, p.SalarioNeto, p.MontoTotalDeduccionesObligatoriasEmpleado,p.MontoTotalDeduccionesObligatoriasEmpleador,
+	p.MontoTotalBeneficios,p.MontoTotalDeduccionesVoluntarias
+	FROM Pago p
+	where p.ConsecutivoPlanilla = @NumeroPagoPlanilla;
+	OPEN cursor__
+
+	FETCH NEXT FROM cursor__ INTO @Cedula , @SalarioBruto , @SalarioNeto , @DeduccionesObligatoriasEmpleado,@DeduccionesObligatoriasEmpleador,@Beneficios,@DeduccionesVoluntarias
+	WHILE @@FETCH_STATUS = 0 
+		BEGIN
+			Declare @Nombre varchar(15),@Apellido1 varchar(15), @Apellido2 varchar(15)
+			Select @Nombre = Nombre, @Apellido1 = Apellido1, @Apellido2 = Apellido2 from Empleado where Cedula = @Cedula;
+			Set @NombreCompleto = @Nombre + ' ' + @Apellido1 + ' ' + @Apellido2
+
+			Declare @FechaInicioPago Date,@FechaFinPago Date
+			Select @FechaInicioPago = FechaIncio, @FechaFinPago = FechaFin from Planilla where Consectivo = @NumeroPagoPlanilla
+			Print @FechaInicioPago 
+			Print @FechaFinPago
+			Select @HorasTrabajadas = sum(Cantidad) from HorasRegistradas where Fecha between @FechaInicioPago and @FechaFinPago and  CedulaEmpleado = @Cedula ;
+			Select @SalarioPorHora = SalarioPorHoras, @TipoContrato = TipoContrato from EmpleadoYContratoSeAsocianAProyecto  
+			where CedulaEmpleado = @Cedula and NombreProyecto = @NombreProyecto 
+			INSERT INTO @Resultados values(@Cedula,@NombreCompleto,@TipoContrato,@HorasTrabajadas,@SalarioPorHora,@SalarioBruto,
+			@DeduccionesObligatoriasEmpleador,@DeduccionesObligatoriasEmpleado,@DeduccionesVoluntarias,@Beneficios,@SalarioNeto)
+			FETCH NEXT FROM cursor__ INTO @Cedula , @SalarioBruto , @SalarioNeto , @DeduccionesObligatoriasEmpleado,@DeduccionesObligatoriasEmpleador,@Beneficios,@DeduccionesVoluntarias
+		END;
+	Close cursor__
+	Deallocate cursor__
+	Select * from @Resultados;
+	End
+Go;
 CREATE PROCEDURE eliminarDeduccionVoluntaria (
 		@NombreDeduccionVoluntaria VARCHAR(50),
 		@Proyecto VARCHAR(50)

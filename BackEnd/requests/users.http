@@ -30,13 +30,29 @@
 
 @apigetProjectsEmailAndName = http://localhost:4000/myProjects
 @apiValidateBenefit = http://localhost:4000/validateBenefit
+@apiPayrroll = http://localhost:4000/payrrolls
+@apiGetPayslips =  http://localhost:4000/payslipsOfaProject
 
+
+
+
+GET {{apiPayrroll}}/Taquería Milagro
+###
 DELETE {{apiDeleteEmployeeFromProject}}
 Content-Type: application/json
 
 {
   "Cedula":"118706423",
   "NombreProyecto":"Taquería Milagro"
+}
+
+###
+POST {{apiGetPayslips}}
+Content-Type: application/json
+
+{
+  "Proyecto":"Taquería Milagro",
+  "ConsecutivoPlanilla":"90" 
 }
 
 ###
@@ -50,12 +66,13 @@ Content-Type: application/json
 
 
 ###
-DELETE {{apiDeleteEmployeeFromProject}}
+POST {{apiDeleteEmployeeFromProject}}
 Content-Type: application/json
 
 {
-  "Cedula":"608110776",
-  "NombreProyecto":"Taquería Milagro"
+  "Proyecto":"Taquería Milagro",
+  "EmailEmpleado":"luibv12@hotmail.com",
+  "MotivoDeDespido":"AAAAAAAAAAAAAA"
 }
 
 
