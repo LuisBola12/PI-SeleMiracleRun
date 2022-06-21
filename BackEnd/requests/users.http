@@ -30,7 +30,13 @@
 
 @apigetProjectsEmailAndName = http://localhost:4000/myProjects
 @apiValidateBenefit = http://localhost:4000/validateBenefit
+@apiPayrroll = http://localhost:4000/payrrolls
 
+
+
+
+GET {{apiPayrroll}}/Taquería Milagro
+###
 DELETE {{apiDeleteEmployeeFromProject}}
 Content-Type: application/json
 

@@ -183,6 +183,20 @@ const getTotalCostBenefits = async(consecutivePayroll,cedEmpleado) =>{
     return undefined;
   }
 }
+export const getPayrrollsOfAProject = async(req,res) =>{
+  try {
+    const { Proyecto } = req.params;
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input( 'Proyecto', Proyecto )
+      .query( payrollQueries.getPayrrollsOfAproject );
+    res.json( result.recordset );
+  } catch ( e ) {
+    res.status( 500 );
+    res.send( e.message );
+  }
+}
 const getTotalCostVolDeductions = async(consecutivePayroll,cedEmpleado) =>{
   const consecutivePayslip = await getConsecutivePayNumber(consecutivePayroll,cedEmpleado);
   try {
