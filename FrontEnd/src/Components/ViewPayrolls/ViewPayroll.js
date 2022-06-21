@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 
 export const ViewPayroll = () => {
   const [infoReceived, setInfoReceived] = useState(false);
+  const user = useSelector((state) => state.user.user);
   const activeProject = useSelector((state) => state.activeProject.projectName);
   const [data, setData] = useState();
   const navigate = useNavigate();
@@ -18,6 +19,23 @@ export const ViewPayroll = () => {
     let noTimeDate = new Date(myDate.getFullYear(), myDate.getMonth(), myDate.getDate());
     return noTimeDate.toDateString();
   }
+  const handlePayment = async() =>{
+    const seleUrl = 'http://localhost:4000/createPayrroll'
+    console.log(user.Cedula,activeProject)
+    const postFetch = await fetch(seleUrl, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        Cedula: user.Cedula,
+        NombreProyecto: activeProject,
+      }),
+    });
+    if(postFetch.ok === true){
+      setInfoReceived(false)
+    }
+  }
   useEffect(() => {
     const getData = async () => {
       const newData = await getAnEntity('payrrolls/', activeProject);
@@ -25,12 +43,12 @@ export const ViewPayroll = () => {
       setInfoReceived(true);
     };
     getData();
-  }, []);
+  }, [infoReceived]);
   return !infoReceived ? <div className='loader' ></div > : (
     <>
       <div className='table-button'>
         <br />
-        <button className='create-button'>Pay Payroll</button>
+        <button className='create-button' onClick={handlePayment}>Pay Payroll</button>
         <br />
       </div>
       <table className='Table'>
@@ -45,7 +63,7 @@ export const ViewPayroll = () => {
         </thead>
         <tbody>
           {data.map((element) => (
-            <tr key={element.consecutiveNumber}>
+            <tr key={element.Consectivo}>
               <td className=''>{element.Consectivo}</td>
               <td className=''>{removeTimeFromDate(element.FechaIncio)}</td>
               <td className=''>{removeTimeFromDate(element.FechaFin)}</td>

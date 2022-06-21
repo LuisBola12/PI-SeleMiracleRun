@@ -200,7 +200,6 @@ export const getPayrrollsOfAProject = async(req,res) =>{
 export const getAllPayslipsOfAProject = async(req,res) =>{
   try {
     const { Proyecto,ConsecutivoPlanilla } = req.body;
-    console.log(Proyecto,ConsecutivoPlanilla);
     const pool = await getConnection();
     const result = await pool
       .request()
@@ -312,4 +311,5 @@ export const executeAPayrroll = async(consecutivePlanilla,nombreProyecto,cedulaE
   payslips.forEach(element=>{
     individualPayslipInsert(element,nombreProyecto,consecutivePlanilla,cedulaEmpleador)
   });
+  return true;
 };
