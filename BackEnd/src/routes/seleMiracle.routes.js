@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { getProjectsByEmailAndName, getProjectsByEmail, createProject, createPayrroll, logicEliminateProject } from '../controllers/projects.controller';
 import {
   getEmployees, postNewEmployee, getEmployeeByID, verifyEmployeeContractOnProject,
-  getEmployeesWithContractOnOtherProyects, contractAEmployee, setHoursEmployee, deleteEmployeeFromProject, getEmployeesAllInfo
+  getEmployeesWithContractOnOtherProyects, contractAEmployee, setHoursEmployee, deleteEmployeeFromProject, getEmployeesAllInfo, getLastDateForCalendar, getFirstContractDate
 } from '../controllers/employees.contoller';
 import {
   getEmployerByID, getUserByEmail, verifyCredentials, registerNewUser,
@@ -49,6 +49,8 @@ router.post( '/employeesWithContractsOnOtherProyects', getEmployeesWithContractO
 router.post( '/contractExistentEmployee', contractAEmployee );
 router.delete( '/deleteEmployeeFromProject', deleteEmployeeFromProject );
 router.post( '/employee/hours', setHoursEmployee );
+router.get( '/lastDateForCalendar/:CedEmpleado/:Proyecto/:FechaActual', getLastDateForCalendar );
+router.get( '/firstContractDate/:CedEmpleado/:Proyecto', getFirstContractDate );
 
 //Projects
 router.get( '/projects/:Email/:Rol', getProjectsByEmail );

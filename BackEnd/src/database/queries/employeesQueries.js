@@ -22,6 +22,7 @@ export const employeesQueries = {
     @NombreServicio,@SalarioPorHora,@FechaInicioContrato,@FechaFinContrato,@ValorServicio)`,
   deleteEmployeeFromProject: 'Delete from EmpleadoYContratoSeAsocianAProyecto where CedulaEmpleado = @Cedula and NombreProyecto = @NombreProyecto',
   insertHours: 'EXEC ingresarHoras @Email = @EmailEmpleado , @Proyecto = @ProyectoEmpleado, @Fecha = @FechaEmpleado, @CantidadHoras = @CantHorasEmpleado',
-  getActiveEmployeesInfo:'SELECT * FROM [SeleMiracleRun].[dbo].[EmpleadoYContratoSeAsocianAProyecto] WHERE FechaFin > GETDATE() AND NombreProyecto = @projectName'
-  
+  getActiveEmployeesInfo:'SELECT * FROM [SeleMiracleRun].[dbo].[EmpleadoYContratoSeAsocianAProyecto] WHERE FechaFin > GETDATE() AND NombreProyecto = @projectName',
+  getLastDateForCalendar: 'select Fecha FROM HorasRegistradas WHERE CedulaEmpleado = @CedEmpleado AND NombreProyecto = @Proyecto AND Fecha > @FechaActual',
+  getFirstContractDate: 'select ECAP.FechaInicio FROM EmpleadoYContratoSeAsocianAProyecto ECAP WHERE ECAP.CedulaEmpleado =  @CedEmpleado AND ECAP.NombreProyecto = @Proyecto'
 };

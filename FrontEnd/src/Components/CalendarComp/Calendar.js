@@ -1,28 +1,27 @@
-import { useState } from 'react'
+import React, { useState, useEffect } from 'react';
 import {  Calendar } from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './calendarStyle.scss';
-import React from 'react';
 import {Modal, Button, Form} from 'react-bootstrap';
-import validate from './calendarValidations';
+import validate from '../../Utils/Calendar/calendarValidations';
 import usePost from '../../shared/hooks/usePost';
 import { useSelector } from 'react-redux';
-// import moment from "moment"
-// import 'moment/locale/en'; 
+import { getLastDate, getFirstDate } from '../../Utils/Calendar/datesFromDB';
 
 export const CalendarComp = () => {
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
   const [hours, setHours] = useState('');
   const { post } = usePost('http://localhost:4000/employee/hours');
-  const dateMin = null;
-  // const localizer = momentLocalizer(moment);
+  const [dateMin, setDateMin ] = useState(null);
 
-  const dateToString = () => {
-    return `${date.getFullYear()}/${date.getMonth()+1}/${date.getDay()}`
+  const dateToString = (Idate) => {
+    return `${Idate.getFullYear()}-${Idate.getMonth()+1}-${Idate.getDay()}`
   };
   const userEmail = useSelector((state) => state.user.user.Email);
-  const proyecto = useSelector((state) => state.activeProject.projectName);
+  const project = useSelector((state) => state.activeProject.projectName);
+  const employeeID = useSelector((state) => state.user.user.Cedula);
+  const actualDate = new Date();
 
   const handleClose = () => {
     setShow(false);
@@ -33,20 +32,30 @@ export const CalendarComp = () => {
     setShow(true);
   }
 
-  const handleSave = () => {
-    const actualDate = dateToString(date);
+  const handleSave = async () => {
+    const dateToGetInto = dateToString(date);
     if (validate(hours) === false){
       let string = '';
       string = JSON.stringify({
         Email: userEmail,
-        Proyecto: proyecto,
-        Fecha: actualDate,
+        Proyecto: project,
+        Fecha: dateToGetInto,
         CantidadHoras: hours
       });
       post(string);
       handleClose();
     }
+    handleClose();
   }
+
+  useEffect(() => {
+    const dateToSend = dateToString(actualDate);
+    let results = getLastDate(employeeID, project, dateToSend);
+    if(results.length === 0){
+      results = getFirstDate(employeeID, project);
+      // setDateMin(new Date (results[0].FechaInicio))
+    }
+  },[dateMin]);
 
   return (
     <div className='calendar-page'>

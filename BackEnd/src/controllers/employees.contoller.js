@@ -266,3 +266,36 @@ export const getEmployeesAllInfo = async ( req, res ) => {
     return error;
   }
 };
+
+export const getLastDateForCalendar = async ( req, res ) => {
+  const { CedEmpleado, Proyecto, FechaActual } = req.params;
+  try {
+    const pool = await getConnection(); 
+    const result = await pool
+      .request()
+      .input( 'CedEmpleado', CedEmpleado )
+      .input( 'Proyecto', Proyecto )
+      .input( 'FechaActual', FechaActual )
+      .query( employeesQueries.getLastDateForCalendar );
+    res.json( result.recordset );
+  } catch ( error ) {
+    res.status( 500 );
+    res.send( error );
+  }
+};
+
+export const getFirstContractDate = async ( req, res ) => {
+  const { CedEmpleado, Proyecto } = req.params;
+  try {
+    const pool = await getConnection(); 
+    const result = await pool
+      .request()
+      .input( 'CedEmpleado', CedEmpleado )
+      .input( 'Proyecto', Proyecto )
+      .query( employeesQueries.getFirstContractDate );
+    res.json( result.recordset );
+  } catch ( error ) {
+    res.status( 500 );
+    res.send( error );
+  }
+};
