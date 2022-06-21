@@ -275,3 +275,23 @@ export const getEmployeesAllInfo = async ( req, res ) => {
     return error;
   }
 };
+
+export const getEmployeePayments = async ( req, res ) => {
+  const { projectName, employeeEmail } = req.params;
+  if ( projectName == null || employeeEmail == '' ) {
+    const message = 'Bad Request. Please Fill All Fields.';
+    return res.status( 400 ).json( { msg: message } );
+  }
+  try {
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input( 'projectName', projectName )
+      .input( 'employeeEmail', employeeEmail )
+      .query( employeesQueries.getPaymentsOfEmployee );
+    console.log( result );
+    res.status( 200 ).json( result.recordset );
+  } catch ( e ) {
+    res.status( 404 );
+    res.send( e.message );
+  }
+};

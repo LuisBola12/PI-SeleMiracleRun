@@ -25,6 +25,8 @@ export const employeesQueries = {
   getActiveEmployeesInfo:'SELECT * FROM [SeleMiracleRun].[dbo].[EmpleadoYContratoSeAsocianAProyecto] WHERE FechaFin > GETDATE() AND NombreProyecto = @projectName',
   updateEmployee:'Update Empleado set Nombre= @Nombre, Apellido1= @Apellido1 ,Apellido2= @Apellido2,Telefono= @Telefono Where Cedula= @Cedula',
   updateEmployeer:'Update Empleador set Nombre= @Nombre, Apellido1= @Apellido1 ,Apellido2= @Apellido2,Telefono= @Telefono Where Cedula= @Cedula',
-  udpateEmail: 'Update Usuarios set Email = @Email where Email = @EmailViejo'
-  
+  udpateEmail: 'Update Usuarios set Email = @Email where Email = @EmailViejo',
+  getPaymentsOfEmployee: `SELECT * FROM [Pago] JOIN Planilla ON Planilla.Consectivo = Pago.ConsecutivoPlanilla
+  JOIN Empleado ON Empleado.Cedula = Pago.CedulaEmpleado WHERE Empleado.Email = @employeeEmail
+  AND Planilla.NombreProyecto = @projectName` 
 };

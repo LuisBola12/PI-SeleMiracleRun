@@ -32,6 +32,7 @@
 @apiValidateBenefit = http://localhost:4000/validateBenefit
 @apiPayrroll = http://localhost:4000/payrrolls
 @apiGetPayslips =  http://localhost:4000/payslipsOfaProject
+@apiEmployeePayments = http://localhost:4000/employeePayments
 
 
 
@@ -311,3 +312,7 @@ Content-Type: application/json
 GET {{apigetProjectsEmailAndName}}/Norman.Os.L@gmail.com/Taquería Milagro
 ###
 GET {{apiValidateBenefit}}/Taquería Milagro/crhisCo@hotmail.com/Comida
+
+
+###
+GET {{apiEmployeePayments}}/Taquería Milagro/crhisCo@hotmail.com
