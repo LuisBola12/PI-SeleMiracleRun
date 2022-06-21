@@ -64,6 +64,7 @@ function App() {
             <Route path='newProjectForm' element={<CreateProjectsForm />} />
             <Route path='payroll'element={<Payroll/>}/>
             <Route path='payroll/details' element={<PayrollDetailsPage />} />
+            <Route path='projectSettings' element={<EmployeesBenefits />} />
             {/* quiter esto */}
             <Route path='registerHours' element={<RegisterHours />} />
             <Route path='myBenefits' element={<EmployeesBenefits />} />
