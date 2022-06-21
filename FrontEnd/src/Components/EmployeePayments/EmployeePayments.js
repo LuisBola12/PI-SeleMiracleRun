@@ -9,6 +9,10 @@ export const EmployeePayments = () => {
 
   const [ employeePayments, setEmployeePayments ] = useState( [] );
   const [ isLoading, setIsLoading ] = useState( true ); 
+  let formatter = new Intl.NumberFormat( undefined, {
+    style: 'currency',
+    currency: 'CRC',
+  } );
 
   const removeTimeFromDate = ( date ) =>{
     let myDate = new Date( date );
@@ -55,13 +59,13 @@ export const EmployeePayments = () => {
               <td  className='left-td table-left-border'>{row.TipoContrato}</td>
               <td  className='right-td'>{removeTimeFromDate(  row.FechaIncio )}</td>
               <td className='right-td'>{removeTimeFromDate( row.FechaFin )}</td>
-              <td className='right-td'>{ row.SalarioBruto / row.SalarioPorHoras }</td>
-              <td className='right-td'>{ row.SalarioPorHoras }</td>
-              <td className='right-td'>{ row.SalarioBruto }</td>
-              <td className='right-td'>{ row.MontoTotalDeduccionesObligatoriasEmpleado }</td>
-              <td className='right-td'>{ row.MontoTotalDeduccionesObligatoriasEmpleador }</td>
-              <td className='right-td'>{ row.MontoTotalBeneficios }</td>
-              <td className='right-td'>{ row.SalarioNeto }</td>
+              <td className='right-td'>{ row.TipoContrato === 'Por horas' ? row.SalarioBruto / row.SalarioPorHoras : '-' }</td>
+              <td className='right-td'>{ formatter.format( row.SalarioPorHoras ) }</td>
+              <td className='right-td'>{ formatter.format( row.SalarioBruto ) }</td>
+              <td className='right-td'>{ row.TipoContrato === 'Servicios Profesionales' ? '-' : formatter.format( row.MontoTotalDeduccionesObligatoriasEmpleado ) }</td>
+              <td className='right-td'>{ row.TipoContrato === 'Servicios Profesionales' ? '-' : formatter.format( row.MontoTotalDeduccionesObligatoriasEmpleador ) }</td>
+              <td className='right-td'>{ row.TipoContrato === 'Servicios Profesionales' ? '-' : formatter.format( row.MontoTotalBeneficios ) }</td>
+              <td className='right-td'>{ formatter.format( row.SalarioNeto ) }</td>
             </tr>
           ) )}
         </tbody>
