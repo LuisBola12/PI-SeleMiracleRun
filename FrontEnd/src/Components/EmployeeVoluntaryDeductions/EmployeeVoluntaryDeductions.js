@@ -3,12 +3,24 @@ import '../../App.css';
 import { transformCost } from '../../shared/moneyFormatTransform';
 import { useGetOfferedVoluntaryDeductions } from '../../Utils/VoluntaryDeductions/useGetOfferedVoluntaryDeductions';
 import { useGetEmployeeVoluntaryDeductions } from '../../Utils/VoluntaryDeductions/useGetEmployeeVoluntaryDeductions';
+import { usePostToVoluntaryDeductions } from '../../Utils/VoluntaryDeductions/usePostToVoluntaryDeductions';
+import { usePutToVoluntaryDeductions } from '../../Utils/VoluntaryDeductions/usePutToVoluntaryDeductions';
 
 export const EmployeeVoluntaryDeductions = () => {
   const { offeredVoluntaryDeductions, offeredInfo, setofferedInfo } = useGetOfferedVoluntaryDeductions();
   const { EmployeeVoluntaryDeductions, EmployeeInfo, setEmployeeInfo } = useGetEmployeeVoluntaryDeductions();
+  const {  submitVoluntaryDeductionToEmployee } = usePostToVoluntaryDeductions();
+  const { unlinkEmployeeToVoluntaryDeduction } = usePutToVoluntaryDeductions();
   const handleAddButton = (element) => {
+    submitVoluntaryDeductionToEmployee( element.Nombre );
+    setofferedInfo( false );
+    setEmployeeInfo( false );
+  };
 
+  const handleDeleteButton = ( element ) => {
+    unlinkEmployeeToVoluntaryDeduction( element.NombreDeduccionVoluntaria );
+    setofferedInfo( false );
+    setEmployeeInfo( false );
   };
   return (
     <>
@@ -26,12 +38,12 @@ export const EmployeeVoluntaryDeductions = () => {
             </thead>
             <tbody>
               {EmployeeVoluntaryDeductions.map((element) => (
-                <tr key={element.Nombre}>
-                  <td className='left-td table-left-border voluntaryDeduction-name'>{element.NombreDeduccion}</td>
+                <tr key={element.NombreDeduccionVoluntaria}>
+                  <td className='left-td table-left-border voluntaryDeduction-name'>{element.NombreDeduccionVoluntaria}</td>
                   <td className='description-cell left-td'>{((element.Descripcion) ? element.Descripcion : 'No description')}</td>
                   <td className='right-td'>₡ {transformCost(element.Costo)}</td>
                   <td className='right-button table-right-border'>
-                    <button className='button cancel-button' > Delete </button>
+                    <button className='button cancel-button' onClick={() => handleDeleteButton( element )}> Delete </button>
                   </td>
                 </tr>
               ))}
@@ -48,7 +60,7 @@ export const EmployeeVoluntaryDeductions = () => {
               <tr className='table-header'>
                 <th className='table-left-border left-td'>Deduction</th>
                 <th className='left-td'>Description</th>
-                <th className='right-td'>Actual</th>
+                <th className='right-td'>Cost</th>
                 <th className='table-right-border right-td'>Add</th>
               </tr>
             </thead>

@@ -9,7 +9,8 @@ import {
   getProfileEmployeer, getProfileEmployee, updateProfileEmployeer, updateProfileEmployee
 } from '../controllers/users.controller';
 import { getVoluntaryDeductions, createNewVoluntaryDeduction, getVoluntaryDeductionsByName, updateVoluntaryDeduction, 
-  getEmployeeVoluntaryDeductionsByEmail, getOfferedVoluntaryDeductions } from '../controllers/voluntaryDeductions.controller';
+  getEmployeeVoluntaryDeductionsByEmail, getOfferedVoluntaryDeductions, linkEmployeeToVoluntaryDeduction,  unlinkEmployeeToVoluntaryDeduction,
+  deactivateVoluntaryDeduction } from '../controllers/voluntaryDeductions.controller';
 import { getTypeOfContracts } from '../controllers/contracts.controller';
 import {
   getBenefits, createBenefit, getBenefitsByName, updateBenefit, getEmployeeBenefitsByEmail,
@@ -76,6 +77,7 @@ router.put( '/benefits', deactivateBenefit );
 router.post( '/myBenefits', linkEmployeeToBenefit );
 router.put( '/myBenefits', unlinkEmployeeToBenefit );
 router.get( '/validateBenefit/:projectName/:employeeEmail/:benefitToValidate',  validateBenefitSuscription );
+
 //VoluntaryDeductions
 router.get( '/voluntaryDeductions/:NombreProyecto', getVoluntaryDeductions );
 router.get( '/voluntaryDeductions/:NombreProyecto/:Nombre', getVoluntaryDeductionsByName );
@@ -83,6 +85,9 @@ router.post( '/voluntaryDeductions', createNewVoluntaryDeduction );
 router.put( '/voluntaryDeductions/:NombreAntiguo', updateVoluntaryDeduction );
 router.get( '/myVoluntaryDeductions/:Proyecto/:Email', getEmployeeVoluntaryDeductionsByEmail );
 router.get( '/offeredVoluntaryDeductions/:Proyecto/:Email', getOfferedVoluntaryDeductions );
+router.post( '/myVoluntaryDeductions', linkEmployeeToVoluntaryDeduction );
+router.put( '/myVoluntaryDeductions', unlinkEmployeeToVoluntaryDeduction );
+router.put( '/voluntaryDeductions', deactivateVoluntaryDeduction );
 
 //Payrrolls
 router.get('/payrrolls/:Proyecto',getPayrrollsOfAProject)

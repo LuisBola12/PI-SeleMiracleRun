@@ -1,5 +1,5 @@
-export const emailDeletedBenefit = (data) => {
-  const { project, employer, employee, benefit } = data;
+export const emailDeletedVoluntaryDeduction = (data) => {
+  const { project, employer, employee, voluntaryDeduction } = data;
   const emailFormat = `
   <div>
     <div style='
@@ -16,12 +16,12 @@ export const emailDeletedBenefit = (data) => {
       Hello ${employee}!
       <br></br>
       <br></br>
-      The following email is to notify you that the ${benefit} benefit is no longer
+      The following email is to notify you that the ${voluntaryDeduction} voluntary deduction is no longer
       offered in ${project},
       <br></br>
-      if you are subscribed to this benefit, you will be automatically unsubscribed.
+      if you are subscribed to this voluntary deduction, you will be automatically unsubscribed.
       <br></br>
-      This benefit will not be reflected in your next payment.
+      This voluntary deduction will not be reflected in your next payment.
       <br></br>
       <br></br>
       by ${employer}
