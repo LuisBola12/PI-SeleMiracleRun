@@ -16,6 +16,15 @@ export const PayrollDetails = () => {
   const [data,setData] = useState([]);
   const [infoReceived,setInfoReceived] = useState(false);
   const location = useLocation();
+  let formatter = new Intl.NumberFormat(undefined, {
+    style: 'currency',
+    currency: 'CRC',
+  });
+  const removeTimeFromDate = (date) =>{
+    let myDate = new Date(date);
+    let noTimeDate = new Date(myDate.getFullYear(), myDate.getMonth(), myDate.getDate());
+    return noTimeDate.toDateString();
+  }
   const back = () => {
     history.push('/payroll');
     history.go();
@@ -23,8 +32,8 @@ export const PayrollDetails = () => {
   useEffect(() => {
     const getData = async () => {
       const newData = await getPayrrollPayslips(activeProject,location.state.Consectivo);
-      setStartDate(location.state.StartDate);
-      setEndDate(location.state.EndDate);
+      setStartDate(removeTimeFromDate(location.state.FechaIncio));
+      setEndDate(removeTimeFromDate(location.state.FechaFin));
       setData(newData);
       setInfoReceived(true);
     };
@@ -66,14 +75,14 @@ export const PayrollDetails = () => {
               <td className='left-td table-left-border'>{element.Cedula}</td>
               <td className='left-td'>{element.NombreCompleto}</td>
               <td className='left-td'>{element.TipoContrato}</td>
-              <td className='right-td'>{element.HorasTrabajadas}</td>
-              <td className='right-td'>{transformCost(element.SalarioPorHora)}</td>
-              <td className='right-td'>{transformCost(element.SalarioBruto)}</td>
-              <td className='right-td'>{transformCost(element.DeduccionesObligatoriasEmpleador)}</td>
-              <td className='right-td'>{transformCost(element.DeduccionesObligatoriasEmpleado)}</td>
-              <td className='right-td'>{transformCost(element.DeduccionesVoluntarias)}</td>
-              <td className='right-td'>{transformCost(element.Beneficios)}</td>
-              <td className='table-right-border right-td'>{transformCost(element.SalarioNeto)}</td>
+              <td className='right-td'>{element.TipoContrato === 'Por horas' ? element.HorasTrabajadas : '-'}</td>
+              <td className='right-td'>{element.TipoContrato === 'Por horas' ? formatter.format(element.SalarioPorHora) : '-'}</td>
+              <td className='right-td'>{formatter.format(element.SalarioBruto)}</td>
+              <td className='right-td'>{element.TipoContrato === 'Servicios Profesionales' ? '-' : formatter.format(element.DeduccionesObligatoriasEmpleador)}</td>
+              <td className='right-td'>{element.TipoContrato === 'Servicios Profesionales' ? '-' : formatter.format(element.DeduccionesObligatoriasEmpleado)}</td>
+              <td className='right-td'>{element.TipoContrato === 'Servicios Profesionales' ? '-' : formatter.format(element.DeduccionesVoluntarias)}</td>
+              <td className='right-td'>{element.TipoContrato === 'Servicios Profesionales' ? '-' : formatter.format(element.Beneficios)}</td>
+              <td className='table-right-border right-td'>{ formatter.format(element.SalarioNeto)}</td>
             </tr>
           ))}
         </tbody>
