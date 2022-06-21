@@ -1,4 +1,5 @@
 import { getConnection, sql } from '../database';
+import { employeesQueries } from '../database/queries/employeesQueries';
 import { userQueries } from '../database/queries/userQueries';
 
 export const getUsers = async ( req, res ) => {
@@ -201,7 +202,7 @@ export const updateProfileEmployee = async ( req, res ) => {
       .request()
       .input( 'Email', sql.VarChar, Email )
       .input( 'EmailViejo', sql.VarChar, EmailViejo )
-      .query( queries.udpateEmail );
+      .query( employeesQueries.udpateEmail );
     console.log( result.recordset );
   } catch ( e ) {
     console.log( `Error: ${e}` );
@@ -216,7 +217,7 @@ export const updateProfileEmployee = async ( req, res ) => {
       .input( 'Apellido2', sql.VarChar, Apellido2 )
       .input( 'Cedula', sql.VarChar, Cedula )
       .input( 'Telefono', sql.VarChar, Telefono )
-      .query( queries.updateEmployee );
+      .query( employeesQueries.updateEmployee );
     res.send( result.recordset );
   } catch ( e ) {
     console.log( `Error: ${e}` );
@@ -237,7 +238,7 @@ export const updateProfileEmployeer = async ( req, res ) => {
       .request()
       .input( 'Email', sql.VarChar, Email )
       .input( 'EmailViejo', sql.VarChar, EmailViejo )
-      .query( queries.udpateEmail );
+      .query( employeesQueries.udpateEmail );
     console.log( result.recordset );
   } catch ( e ) {
     console.log( `Error: ${e}` );
@@ -252,7 +253,7 @@ export const updateProfileEmployeer = async ( req, res ) => {
       .input( 'Apellido2', sql.VarChar, Apellido2 )
       .input( 'Cedula', sql.VarChar, Cedula )
       .input( 'Telefono', sql.VarChar, Telefono )
-      .query( queries.updateEmployeer );
+      .query( employeesQueries.updateEmployeer );
     res.send( result.recordset );
   } catch ( e ) {
     console.log( `Error: ${e}` );

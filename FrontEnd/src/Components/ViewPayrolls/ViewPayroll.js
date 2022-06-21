@@ -1,35 +1,32 @@
-import React from 'react';
 import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
+import { useEffect,React,useState } from 'react';
+import { getAnEntity } from '../../Utils/getAnEntity';
+import { useSelector } from 'react-redux';
 
 export const ViewPayroll = () => {
+  const [infoReceived, setInfoReceived] = useState(false);
+  const activeProject = useSelector((state) => state.activeProject.projectName);
+  const [data, setData] = useState();
   const navigate = useNavigate();
-  const data = [
-    {
-      'consecutiveNumber':3,
-      'StartDate': '6/1/2022',
-      'EndDate': '6/15/2022',
-      'Status': 'Open'
-    },
-    {
-      'consecutiveNumber':2,
-      'StartDate': '5/15/2022',
-      'EndDate': '5/31/2022',
-      'Status': 'Closed'
-    },
-    {
-      'consecutiveNumber':1,
-      'StartDate': '5/1/2022',
-      'EndDate': '5/14/2022',
-      'Status': 'Closed'
-    }
-  ];
   const goToDetails = (element) => {
     navigate('/payroll/details', { state: element });
   };
-
-  return /*!infoReceived ? <div className='loader' ></div > : */(
+  const removeTimeFromDate = (date) =>{
+    let myDate = new Date(date);
+    let noTimeDate = new Date(myDate.getFullYear(), myDate.getMonth(), myDate.getDate());
+    return noTimeDate.toDateString();
+  }
+  useEffect(() => {
+    const getData = async () => {
+      const newData = await getAnEntity('payrrolls/', activeProject);
+      setData(newData);
+      setInfoReceived(true);
+    };
+    getData();
+  }, []);
+  return !infoReceived ? <div className='loader' ></div > : (
     <>
       <div className='table-button'>
         <br />
@@ -49,9 +46,9 @@ export const ViewPayroll = () => {
         <tbody>
           {data.map((element) => (
             <tr key={element.consecutiveNumber}>
-              <td className=''>{element.consecutiveNumber}</td>
-              <td className=''>{element.StartDate}</td>
-              <td className=''>{element.EndDate}</td>
+              <td className=''>{element.Consectivo}</td>
+              <td className=''>{removeTimeFromDate(element.FechaIncio)}</td>
+              <td className=''>{removeTimeFromDate(element.FechaFin)}</td>
               <td className=''>
                     Closed</td>
               <td className=''>

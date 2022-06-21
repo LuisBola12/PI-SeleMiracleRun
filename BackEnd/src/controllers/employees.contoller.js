@@ -4,6 +4,7 @@ import { userQueries } from '../database/queries/userQueries';
 import { sendEmail } from '../services/Mailer';
 import { emailNewUserEmployee } from '../FormatEmailMessages/EmailNewUserEmployee';
 import { employerQueries } from '../database/queries/employerQueries';
+import {emailTerminateContract} from '../FormatEmailMessages/EmailTerminateContract';
 
 export const getEmployeeByID = async ( req, res ) => {
   const { Cedula } = req.params;
@@ -218,15 +219,23 @@ export const contractAEmployee = async ( req,res ) =>{
   }
 };
 export const deleteEmployeeFromProject = async( req,res ) =>{
-  //TODO: EnviarMotivoDeDespido a correo y ampliar el borrado
+
+  const { Proyecto,EmailEmpleado,Cedula,MotivoDeDespido } = req.body;
+  let mailFormat = {
+    from: process.env.EMAIL_USER,
+    to: EmailEmpleado,
+    subject: 'Terminacion de Contrato',
+    html: ( emailTerminateContract(MotivoDeDespido) ),
+  };
+  await sendEmail( mailFormat );
+  console.log( 'Se envio correctamente' );
   try {
-    const { Cedula,NombreProyecto } = req.body;
     const pool = await getConnection();
     const result = await pool
       .request()
       .input( 'Cedula',Cedula )
-      .input( 'NombreProyecto',NombreProyecto )
-      .query( employeesQueries.deleteEmployeeFromProject );
+      .input( 'Proyecto',Proyecto )
+      .execute( 'DeleteAnEmployeeFromAProject' );
     res.json( result.recordset );
   } catch ( error ) {
     res.status( 500 );

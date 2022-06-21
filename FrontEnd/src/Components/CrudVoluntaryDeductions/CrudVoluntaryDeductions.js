@@ -4,22 +4,47 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useGetVoluntaryDeductionsFromDatabase } from '../../Utils/VoluntaryDeductions/useGetVoluntaryDeductionsFromDatabase';
 import { useNavigate } from 'react-router-dom';
 import { transformCost } from '../../shared/moneyFormatTransform';
+import { usePutToVoluntaryDeductions } from '../../Utils/VoluntaryDeductions/usePutToVoluntaryDeductions';
+import Swal from 'sweetalert2';
 
 export const CrudVoluntaryDeductions = () => {
   const navigate = useNavigate();
+  const { deactivateVoluntaryDeduction } = usePutToVoluntaryDeductions();
   const handleCreateClick = () => {
     navigate('/voluntaryDeductions/CreateVoluntaryDeductions');
   };
   const handleEditClick = (element) => {
     navigate('/voluntaryDeductions/editVoluntaryDeduction', { state: element });
   };
-  const { projectVoluntaryDeductions, infoReceived } = useGetVoluntaryDeductionsFromDatabase();
+  const handleDeleteClick = (element) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: 'darkgreen',
+      cancelButtonColor: 'darkred',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deactivateVoluntaryDeduction(element.Nombre);
+        setInfoReceived(false);
+        Swal.fire({
+          title: 'Deleted!',
+          text: `The voluntary deduction ${element.Nombre} has been deleted.`,
+          icon: 'success',
+          confirmButtonColor: 'darkgreen',
+        })
+      }
+    })
+  };
+  const { projectVoluntaryDeductions, infoReceived, setInfoReceived } = useGetVoluntaryDeductionsFromDatabase();
   return !infoReceived ? <div className='loader' ></div > : (
     <>
       <div className='table-button'>
         <button className='create-button'
           onClick={handleCreateClick}
-        >Create New Voluntary Deduction</button><br />
+        >Create New Voluntary Deduction</button>
       </div>
       <table className='Table'>
         <thead>
@@ -41,7 +66,7 @@ export const CrudVoluntaryDeductions = () => {
                 <button className=' button'  onClick={() => handleEditClick(element)}> Edit </button>
               </td>
               <td className='right-button'>
-                <button className=' button cancel-button' > Delete </button>
+                <button className=' button cancel-button' onClick={() => handleDeleteClick(element)}> Delete </button>
               </td>
             </tr>
           ))}
