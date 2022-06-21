@@ -26,7 +26,14 @@ export const employeesQueries = {
   updateEmployee:'Update Empleado set Nombre= @Nombre, Apellido1= @Apellido1 ,Apellido2= @Apellido2,Telefono= @Telefono Where Cedula= @Cedula',
   updateEmployeer:'Update Empleador set Nombre= @Nombre, Apellido1= @Apellido1 ,Apellido2= @Apellido2,Telefono= @Telefono Where Cedula= @Cedula',
   udpateEmail: 'Update Usuarios set Email = @Email where Email = @EmailViejo',
-  getPaymentsOfEmployee: `SELECT * FROM [Pago] JOIN Planilla ON Planilla.Consectivo = Pago.ConsecutivoPlanilla
-  JOIN Empleado ON Empleado.Cedula = Pago.CedulaEmpleado WHERE Empleado.Email = @employeeEmail
-  AND Planilla.NombreProyecto = @projectName` 
+  getPaymentsOfEmployee: `SELECT pa.ConsecutivoPago, pa.ConsecutivoPlanilla, pa.CedulaEmpleado,
+  pa.MontoTotalBeneficios, pa.MontoTotalDeduccionesObligatoriasEmpleado,
+  pa.MontoTotalDeduccionesObligatoriasEmpleador, pa.MontoTotalDeduccionesVoluntarias,
+  pa.SalarioBruto, pa.SalarioNeto, pl.FechaIncio, pl.FechaFin, e.SalarioPorHoras, 
+  e.TipoContrato, e.ValorDeServicio
+  FROM [Pago] pa JOIN Planilla pl ON pl.Consectivo = pa.ConsecutivoPlanilla
+    JOIN Empleado ON Empleado.Cedula = pa.CedulaEmpleado 
+    JOIN EmpleadoYContratoSeAsocianAProyecto e ON e.CedulaEmpleado = Empleado.Cedula
+  WHERE Empleado.Email = @employeeEmail
+  AND pl.NombreProyecto = @projectName` 
 };
