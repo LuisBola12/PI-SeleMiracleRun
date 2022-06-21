@@ -16,7 +16,7 @@ import {
   getOfferedBenefits, linkEmployeeToBenefit,  unlinkEmployeeToBenefit, deactivateBenefit,
   validateBenefitSuscription
 } from '../controllers/benefits.controller';
-import { getPayrrollsOfAProject } from '../controllers/payrollController';
+import { getAllPayslipsOfAProject, getPayrrollsOfAProject } from '../controllers/payrollController';
 
 const router = Router();
 
@@ -86,5 +86,6 @@ router.get( '/offeredVoluntaryDeductions/:Proyecto/:Email', getOfferedVoluntaryD
 
 //Payrrolls
 router.get('/payrrolls/:Proyecto',getPayrrollsOfAProject)
+router.post('/payslipsOfaProject',getAllPayslipsOfAProject);
 
 export default router;

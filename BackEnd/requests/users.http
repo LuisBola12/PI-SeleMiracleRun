@@ -31,6 +31,7 @@
 @apigetProjectsEmailAndName = http://localhost:4000/myProjects
 @apiValidateBenefit = http://localhost:4000/validateBenefit
 @apiPayrroll = http://localhost:4000/payrrolls
+@apiGetPayslips =  http://localhost:4000/payslipsOfaProject
 
 
 
@@ -43,6 +44,15 @@ Content-Type: application/json
 {
   "Cedula":"118706423",
   "NombreProyecto":"Taquería Milagro"
+}
+
+###
+POST {{apiGetPayslips}}
+Content-Type: application/json
+
+{
+  "Proyecto":"Taquería Milagro",
+  "ConsecutivoPlanilla":"90" 
 }
 
 ###

@@ -197,6 +197,22 @@ export const getPayrrollsOfAProject = async(req,res) =>{
     res.send( e.message );
   }
 }
+export const getAllPayslipsOfAProject = async(req,res) =>{
+  try {
+    const { Proyecto,ConsecutivoPlanilla } = req.body;
+    console.log(Proyecto,ConsecutivoPlanilla);
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input( 'NombreProyecto', Proyecto )
+      .input( 'NumeroPagoPlanilla', ConsecutivoPlanilla )
+      .execute( 'conseguirNominaEmpleados' );
+    res.json( result.recordset );
+  } catch ( e ) {
+    res.status( 500 );
+    res.send( e.message );
+  }
+}
 const getTotalCostVolDeductions = async(consecutivePayroll,cedEmpleado) =>{
   const consecutivePayslip = await getConsecutivePayNumber(consecutivePayroll,cedEmpleado);
   try {
