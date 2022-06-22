@@ -3,6 +3,7 @@ use [SeleMiracleRun]
 Create Table Usuarios(
 	Email varchar(50) check(Email Like '%@%'),
 	Contrasenia varchar(20) not null,
+	Roles varchar(20),
 	primary key(Email),
 );
 
@@ -27,28 +28,37 @@ Create Table Empleador(
 	primary key(Cedula),
 	foreign key(Email) references Usuarios(Email) on update cascade on delete cascade
 );
+
 Create Table Periodo(
 	Tipo varchar(30),
 	primary key(Tipo)
 );
+
 Create Table Contrato(
 	TipoJornada varchar(30),
 	primary key(TipoJornada)
 );
+
 Create Table Proyecto(
 	Nombre varchar(50),
 	CedulaEmpleador varchar(15)not null,
 	TipoPeriodo varchar(30)not null,
+	Activo bit,
+	Descripcion varchar(30),
+	MontoMaximoBeneficiosEmpleado real,
+	CantidadMaximaBeneficiosEmpleado tinyint,
 	primary key(Nombre),
 	foreign key(CedulaEmpleador) references Empleador(Cedula)on delete cascade,
 	foreign key(TipoPeriodo) references Periodo(Tipo)
 );
+
 Create Table DeduccionesObligatorias(
 	Nombre varchar(50),
 	PorcentajeEmpleador float not null,
 	PorcentajeEmpleado float not null,
 	primary key(Nombre)
 );
+
 Create Table HorasRegistradas(
 	CedulaEmpleado varchar(15),
 	NombreProyecto varchar(50),
@@ -58,32 +68,41 @@ Create Table HorasRegistradas(
 	foreign key(CedulaEmpleado) references Empleado(Cedula),
 	foreign key(NombreProyecto) references Proyecto(Nombre),
 );
+
 Create Table Beneficios(
 	Nombre varchar(50),
 	NombreProyecto varchar(50),
 	CostoActual real not null,
   Descripción varchar(300),
+	Activo bit,
 	primary key(NombreProyecto,Nombre),
 	foreign key(NombreProyecto) references Proyecto(Nombre) on update cascade on delete cascade
 );	
+
 Create Table DeduccionesVoluntarias(
 	Nombre		      varchar(50),
 	NombreProyecto  varchar(50),
 	Costo						real default 0,
 	Descripcion			varchar(200) default '',
+	Activo					bit,
 	primary key(Nombre,NombreProyecto),
 	foreign key(NombreProyecto) references Proyecto(Nombre) on update cascade on delete cascade
 );
+
 Create Table Pago(
-	NumeroConsecutivo bigint,
-	CedulaEmpleador varchar(15),
-	FechaYHora DateTime not null,
-	NombreProyecto varchar(50) not null,
+	ConsecutivoPago int not null IDENTITY(1,1),
+	ConsecutivoPlanilla int not null,
+	CedulaEmpleador varchar(15) not null,
 	CedulaEmpleado varchar(15) not null,
-	SalarioBruto real not null,
-	primary key(NumeroConsecutivo,CedulaEmpleador),
+	SalarioBruto real,
+	SalarioNeto real,
+	MontoTotalDeduccionesObligatoriasEmpleado real,
+	MontoTotalDeduccionesObligatoriasEmpleador real,
+	MontoTotalBeneficios real,
+	MontoTotalDeduccionesVoluntarias real,
+	primary key(ConsecutivoPago, ConsecutivoPlanilla, CedulaEmpleador),
+	foreign key(ConsecutivoPlanilla) references Planilla(Consectivo),
 	foreign key(CedulaEmpleador) references Empleador(Cedula)on delete cascade,
-	foreign key(NombreProyecto) references Proyecto(Nombre),
 	foreign key(CedulaEmpleado) references Empleado(Cedula),
 );
 
@@ -95,6 +114,7 @@ Create table EmpleadoYContratoSeAsocianAProyecto(
 	SalarioPorHoras float,
 	FechaInicio date,
 	FechaFin date,
+	ValorDeServicio real,
 	primary key(CedulaEmpleado,TipoContrato,NombreProyecto),
 	foreign key(CedulaEmpleado) references Empleado(Cedula),
 	foreign key(TipoContrato) references Contrato(TipoJornada),
@@ -104,17 +124,18 @@ Create table EmpleadoYContratoSeAsocianAProyecto(
 Create Table BeneficioElegido(
     CedulaEmpleado varchar(15),
     NombreBeneficio varchar(50),
-	NombreProyecto varchar(50),
+		NombreProyecto varchar(50),
     fechaInicio DateTime,
     fechaFin DateTime,
     primary key(CedulaEmpleado, NombreBeneficio, NombreProyecto,FechaInicio),
     foreign key(CedulaEmpleado) references Empleado(Cedula),
     foreign key(NombreProyecto, NombreBeneficio) references Beneficios(NombreProyecto, Nombre) on update cascade
 );
+
 Create Table DeduccionVoluntariaElegida(
     CedulaEmpleado varchar(15),
     NombreDeduccionVoluntaria varchar(50),
-	NombreProyecto varchar(50),
+		NombreProyecto varchar(50),
     FechaInicio DateTime,
     FechaFin DateTime,
     primary key(CedulaEmpleado, NombreDeduccionVoluntaria, NombreProyecto,FechaInicio),
@@ -153,15 +174,7 @@ Create Table Planilla(
 	foreign key(CedulaEmpleador) references Empleador(Cedula),
 	foreign key(NombreProyecto) references Proyecto(Nombre),
 	);
-Create Table Pago(
-	ConsecutivoPago int not null IDENTITY(1,1),
-	ConsecutivoPlanilla int,
-	CedulaEmpleador varchar(15),
-	CedulaEmpleado varchar(15) not null,
-	SalarioBruto real not null,
-	primary key(ConsecutivoPago, ConsecutivoPlanilla, CedulaEmpleador),
-	foreign key(ConsecutivoPlanilla, CedulaEmpleador) references Planilla(Consectivo, CedulaEmpleador),
-);
+
 Create Table PagoContieneBeneficios(
 	ConsecutivoPlanilla int,
 	CedulaEmpleador varchar(15),
@@ -174,7 +187,6 @@ Create Table PagoContieneBeneficios(
 	foreign key(NombreProyecto, NombreBeneficio) references Beneficios (NombreProyecto, Nombre),
 );
 
-
 Create Table PagoPoseeDeduccionesVoluntarias(
 	ConsecutivoPlanilla int,
 	CedulaEmpleador varchar(15),
@@ -186,26 +198,5 @@ Create Table PagoPoseeDeduccionesVoluntarias(
 	foreign key(ConsecutivoPago, ConsecutivoPlanilla, CedulaEmpleador) references Pago(ConsecutivoPago, ConsecutivoPlanilla, CedulaEmpleador)on delete cascade,
 	foreign key(NombreDeduccion,NombreProyecto) references DeduccionesVoluntarias(Nombre, NombreProyecto),
 );
-
-SELECT * FROM Empleado;
-
-INSERT INTO Empleado values ('198761121','Jarod','Venegas','Alpizar','84581885','carlosSo@example.com');
-INSERT INTO Empleado values ('187618721','Carlos','Solorzano','Cerdas','84589816','jarodV@example.com');
-
-INSERT INTO Periodo values('Semanal');
-INSERT INTO Periodo values('Quincenal');
-INSERT INTO Periodo values('Mensual');
-
-select * from Proyecto;
-Insert into Proyecto values('Radiadores Solceri','121121121','Mensual');
-
-Insert into EmpleadoYContratoSeAsocianAProyecto(CedulaEmpleado,TipoContrato,NombreProyecto,SalarioPorHoras,FechaInicio,FechaFin) 
-values ('187612921','Medio Tiempo','Radiadores Solceri',7000,'2022-08-12','2025-05-12');
-
-
-Select e.Nombre, e.Apellido1, e.Apellido2, e.Cedula,e.Email, ecp.TipoContrato 
-from  Empleado e 
-inner join EmpleadoYContratoSeAsocianAProyecto ecp on e.Cedula = ecp.CedulaEmpleado 
-			AND ecp.NombreProyecto = 'Radiadores Solceri';
 
 

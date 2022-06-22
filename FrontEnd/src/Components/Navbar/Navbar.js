@@ -32,7 +32,7 @@ export const Navbar = () => {
             }
             {user.Roles === 'emp' &&
               <>
-                <NavLink to="/ee" activestyle='true'>
+                <NavLink to="/myPayments" activestyle='true'>
                   My Payments
                 </NavLink>
                 <NavLink to='/myBenefits' activestyle='true'>

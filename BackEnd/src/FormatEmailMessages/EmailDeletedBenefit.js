@@ -16,7 +16,7 @@ export const emailDeletedBenefit = (data) => {
       Hello ${employee}!
       <br></br>
       <br></br>
-      The fallowing email is to notify you that the ${benefit} benefit is no longer
+      The following email is to notify you that the ${benefit} benefit is no longer
       offered in ${project},
       <br></br>
       if you are subscribed to this benefit, you will be automatically unsubscribed.

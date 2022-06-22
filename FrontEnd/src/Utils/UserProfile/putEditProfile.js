@@ -1,9 +1,8 @@
-import { validAnEntity } from "./../validAnEntity";
 import { useSelector } from "react-redux";
 export const usePutEditUser = () => {
   const user = useSelector((state) => state.user.user);
   const updateEmployee = async (formValues) => {
-    const apiEmployee = `http://localhost:4000/updateEmployee`;
+    const apiEmployee = process.env.REACT_APP_BACKEND_LOCALHOST + 'updateEmployee';
     let string = JSON.stringify(formValues);
     string = JSON.stringify({
       Email: formValues.email,
@@ -12,7 +11,7 @@ export const usePutEditUser = () => {
       Apellido2: formValues.secondlastname,
       Cedula: formValues.id,
       Telefono: formValues.phoneNumber,
-      EmailViejo:user.Email,
+      EmailViejo: user.Email,
     });
     const result = await fetch(apiEmployee, {
       method: 'PUT',
@@ -24,7 +23,7 @@ export const usePutEditUser = () => {
     console.log(result);
   }
   const updateEmployeer = async (formValues) => {
-    const apiEmployeer = `http://localhost:4000/updateEmployeer`;
+    const apiEmployeer = process.env.REACT_APP_BACKEND_LOCALHOST + 'updateEmployeer';
     let string = JSON.stringify(formValues);
     string = JSON.stringify({
       Email: formValues.email,
@@ -33,7 +32,7 @@ export const usePutEditUser = () => {
       Apellido2: formValues.secondlastname,
       Cedula: formValues.id,
       Telefono: formValues.phoneNumber,
-      EmailViejo:user.Email,
+      EmailViejo: user.Email,
     });
     const result = await fetch(apiEmployeer, {
       method: 'PUT',
@@ -45,6 +44,6 @@ export const usePutEditUser = () => {
     console.log(result);
   }
   return {
-    updateEmployee,updateEmployeer
+    updateEmployee, updateEmployeer
   };
 };

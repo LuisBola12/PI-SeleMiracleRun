@@ -2,7 +2,7 @@ import { emailDeletedBenefit } from "../FormatEmailMessages/EmailDeletedBenefit"
 import { sendEmail } from "../services/Mailer";
 
 
-export const notifyEmployeesForDeletedBenefit = (employees, benefit, project) => {
+export const notifyEmployeesForDeletedBenefit = async (employees, benefit, project) => {
   for (let i = 0; i < employees.length; i++) {
     const dataInfoUser = {
       'benefit': benefit,
@@ -16,6 +16,6 @@ export const notifyEmployeesForDeletedBenefit = (employees, benefit, project) =>
       subject: `${benefit} benefit is no longer offered`,
       html: emailDeletedBenefit(dataInfoUser),
     };
-    sendEmail(mailFormat);
+    await sendEmail(mailFormat);
   }
 }

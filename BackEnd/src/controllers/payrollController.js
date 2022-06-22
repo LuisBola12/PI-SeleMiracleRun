@@ -183,6 +183,35 @@ const getTotalCostBenefits = async(consecutivePayroll,cedEmpleado) =>{
     return undefined;
   }
 }
+export const getPayrrollsOfAProject = async(req,res) =>{
+  try {
+    const { Proyecto } = req.params;
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input( 'Proyecto', Proyecto )
+      .query( payrollQueries.getPayrrollsOfAproject );
+    res.json( result.recordset );
+  } catch ( e ) {
+    res.status( 500 );
+    res.send( e.message );
+  }
+}
+export const getAllPayslipsOfAProject = async(req,res) =>{
+  try {
+    const { Proyecto,ConsecutivoPlanilla } = req.body;
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input( 'NombreProyecto', Proyecto )
+      .input( 'NumeroPagoPlanilla', ConsecutivoPlanilla )
+      .execute( 'conseguirNominaEmpleados' );
+    res.json( result.recordset );
+  } catch ( e ) {
+    res.status( 500 );
+    res.send( e.message );
+  }
+}
 const getTotalCostVolDeductions = async(consecutivePayroll,cedEmpleado) =>{
   const consecutivePayslip = await getConsecutivePayNumber(consecutivePayroll,cedEmpleado);
   try {
@@ -282,4 +311,5 @@ export const executeAPayrroll = async(consecutivePlanilla,nombreProyecto,cedulaE
   payslips.forEach(element=>{
     individualPayslipInsert(element,nombreProyecto,consecutivePlanilla,cedulaEmpleador)
   });
+  return true;
 };

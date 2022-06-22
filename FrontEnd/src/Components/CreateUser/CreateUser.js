@@ -11,15 +11,14 @@ import './CreateUserStyle.scss';
 
 export const CreateUser = () => {
   const dispatch = useDispatch();
-  const { post } = usePost('http://localhost:4000/createEmployer');
+  const { post } = usePost(process.env.REACT_APP_BACKEND_LOCALHOST + 'createEmployer');
 
   const sendToDatabase = async () => {
     const user = await validAnEntity('users/', formValues.email_register);
-    const employer = await validAnEntity('employer/', formValues.id_register);
-    
-    console.log(formValues.email_register, formValues.id_register)
-    if (user === true && employer === true) {
-    
+    const employee = await validAnEntity('employer/', formValues.id_register);
+
+    if (user === true && employee === true) {
+
       let string = JSON.stringify(formValues);
       string = JSON.stringify({
         Cedula: formValues.id_register,

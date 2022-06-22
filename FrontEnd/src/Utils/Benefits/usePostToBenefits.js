@@ -2,12 +2,12 @@ import { useSelector } from 'react-redux';
 
 export const usePostToBenefits = () => {
   const activeProject = useSelector((state) => state.activeProject.projectName);
-  const apiBenefits = 'http://localhost:4000/benefits';
-  const apiBenefitsToEmplyee = 'http://localhost:4000/myBenefits'
+  const apiBenefits = process.env.REACT_APP_BACKEND_LOCALHOST + 'benefits';
+  const apiBenefitsToEmplyee = process.env.REACT_APP_BACKEND_LOCALHOST + 'myBenefits'
   const employeeEmail = useSelector((state) => state.user.user.Email);
 
   const submitBenefit = async (name, cost, description) => {
-    const newCost = cost.split('.').join('');
+    const newCost = cost.split(' ').join('');
     const postFetch = await fetch(apiBenefits, {
       method: 'POST',
       headers: {

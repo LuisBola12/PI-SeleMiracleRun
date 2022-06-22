@@ -16,16 +16,18 @@ BEGIN
 	Values (@CedulaEmpleado, @Proyecto, @CantidadHoras, @Fecha)
 
 END;
-
- ------ Eliminar un empleado del proyecto
+---------------------------------------------------------------------------------------------------------------
 Create Procedure DeleteAnEmployeeFromAProject @Cedula varchar(15), @Proyecto varchar(50)
 AS
+Begin
     Declare @NumeroDeBeneficios int;
-    Select @NumeroDeBeneficios = Count() from EmpleadoGozaBeneficios 
-    where CedulaEmpleado = @Cedula and NombreProyecto = @Proyecto;
+	Declare @FechaFinContrato DateTime;
+	Select @FechaFinContrato = ECP.FechaFin from EmpleadoYContratoSeAsocianAProyecto ECP where ECP.CedulaEmpleado = @Cedula and ECP.NombreProyecto = @Proyecto
+    Select @NumeroDeBeneficios = Count(*) from BeneficioElegido
+    where CedulaEmpleado = @Cedula and NombreProyecto = @Proyecto and FechaFin > GETDATE();
     If(@NumeroDeBeneficios > 0)
     Begin
-        Delete from EmpleadoGozaBeneficios where CedulaEmpleado = @Cedula and NombreProyecto = @Proyecto;
+        UPDATE BeneficioElegido set FechaFin = GETDATE()  where CedulaEmpleado =	@Cedula and NombreProyecto = @Proyecto;
     End
     Else
         Begin
@@ -33,18 +35,18 @@ AS
         End
 
     Declare @NumeroDeDeduccionesVoluntarias int;
-    Select @NumeroDeDeduccionesVoluntarias = Count() from EmpleadoAplicaDeduccionesVolundarias 
-    where CedulaEmpleado = @Cedula and NombreProyecto = @Proyecto;
+    Select @NumeroDeDeduccionesVoluntarias = Count(*) from DeduccionVoluntariaElegida 
+    where CedulaEmpleado = @Cedula and NombreProyecto = @Proyecto and FechaFin > GETDATE();
     If(@NumeroDeDeduccionesVoluntarias > 0)
     Begin
-        Delete from EmpleadoAplicaDeduccionesVolundarias where CedulaEmpleado = @Cedula and NombreProyecto = @Proyecto;
+        UPDATE DeduccionVoluntariaElegida set FechaFin = GETDATE()  where CedulaEmpleado =	@Cedula and NombreProyecto = @Proyecto;
     End
     Else
         Begin
             Print 'This Employee doesnt have Voluntary Deductions'
         End
     Delete from EmpleadoYContratoSeAsocianAProyecto where CedulaEmpleado = @Cedula and NombreProyecto = @Proyecto;
-
+---------------------------------------------------------------------------------------------------------------
 CREATE PROCEDURE obtenerDatosUsuario (
 				@Email VARCHAR(50),
 				@Contrasenia VARCHAR(20)
@@ -60,25 +62,30 @@ BEGIN
 
 	IF (@Roles = 'admin')
 		BEGIN
-			SELECT @Cedula = E.Cedula, @EmailEmp = e.Email
+			SELECT @Cedula = E.Cedula, @EmailEmp = E.Email
 			FROM Empleador E
 			WHERE E.Email = @Email
 			SET @TipoContrato = ''
 		END;
 	ELSE
 		BEGIN
-		SELECT  @Cedula = E.Cedula,  @EmailEmp = E.Email ,@TipoContrato = EAP.TipoContrato
-		FROM Empleado E 
-		JOIN EmpleadoYContratoSeAsocianAProyecto EAP ON E.Cedula = EAP.CedulaEmpleado
-		WHERE E.Email = @Email
+			IF (@Roles = 'emp')
+		
+			BEGIN
+			SELECT  @Cedula = E.Cedula,  @EmailEmp = E.Email ,@TipoContrato = EAP.TipoContrato
+			FROM Empleado E 
+			JOIN EmpleadoYContratoSeAsocianAProyecto EAP ON E.Cedula = EAP.CedulaEmpleado
+			WHERE E.Email = @Email
 		END;
+		
+	END;
 
 	INSERT INTO @Resultados(Cedula,Email, Roles , TipoContrato )
 	VALUES(@Cedula, @EmailEmp, @Roles, @TipoContrato)
 
 	SELECT * FROM @Resultados WHERE Cedula IS NOT NULL;
 END;
-
+---------------------------------------------------------------------------------------------------------------
 CREATE PROCEDURE vincularBeneficioEmpleado 
   @Email VARCHAR(50),
   @NombreBeneficio VARCHAR(50),
@@ -99,7 +106,7 @@ BEGIN
 
 END;
 GO
-
+---------------------------------------------------------------------------------------------------------------
 CREATE PROCEDURE getEmployeeBenefits 
   @Email VARCHAR(50),
   @Proyecto VARCHAR(50)
@@ -117,7 +124,7 @@ BEGIN
   where e.Email = @Email and p.Nombre = @Proyecto and be.fechaFin > GETDATE();
   
 END;
-
+---------------------------------------------------------------------------------------------------------------
 CREATE PROCEDURE getOfferedBenefits 
   @Email VARCHAR(50),
   @Proyecto VARCHAR(50)
@@ -129,7 +136,7 @@ BEGIN
   and b.Nombre not in (select Nombre from @offeredBenefits) and b.Activo = True
 END;
 GO
-
+---------------------------------------------------------------------------------------------------------------
 CREATE PROCEDURE ObtenerDeduccionesObligatorias(
 				@CedulaEmpleado VARCHAR(15),
 				@Proyecto VARCHAR(50)
@@ -144,7 +151,28 @@ BEGIN
 					JOIN DeduccionesObligatorias DO ON CSDO.NombreDeduccionObligatoria = DO.Nombre
 	WHERE E.Cedula = @CedulaEmpleado AND ECAP.NombreProyecto = @Proyecto
 END;
-CREATE PROCEDURE getEmployeeVoluntaryDeductions
+---------------------------------------------------------------------------------------------------------------
+CREATE PROCEDURE vincularDeduccionVoluntariaEmpleado 
+  @Email VARCHAR(50),
+  @NombreDeduccionVoluntaria VARCHAR(50),
+  @NombreProyecto VARCHAR(50)
+as 
+BEGIN
+  DECLARE @cedula VARCHAR(15);
+  DECLARE @fechaFin DATETIME;
+  DECLARE @fechaInicio DATETIME;
+
+  SET @fechaInicio = GETDATE();
+  SELECT @cedula = Cedula From Empleado WHERE Email = @Email;
+  SELECT @fechaFin = FechaFin from EmpleadoYContratoSeAsocianAProyecto ec
+  WHERE ec.CedulaEmpleado = @cedula and ec.NombreProyecto = @NombreProyecto;
+  
+  INSERT INTO DeduccionVoluntariaElegida VALUES 
+  (@cedula, @NombreDeduccionVoluntaria, @NombreProyecto, @fechaInicio, @fechaFin);
+
+END;
+---------------------------------------------------------------------------------------------------------------
+CREATE PROCEDURE getEmployeeVoluntaryDeductions 
   @Email VARCHAR(50),
   @Proyecto VARCHAR(50)
 as 
@@ -154,18 +182,14 @@ BEGIN
 
   SELECT @cedula = Cedula From Empleado WHERE Email = @Email;
 
-  SELECT @fechaFin = FechaFin from EmpleadoYContratoSeAsocianAProyecto ec
-  WHERE ec.CedulaEmpleado = @cedula and ec.NombreProyecto = @Proyecto;
-
   SELECT dve.NombreDeduccionVoluntaria, dv.Costo, dv.Descripcion from Empleado e
   JOIN DeduccionVoluntariaElegida dve on e.Cedula = dve.CedulaEmpleado
   JOIN DeduccionesVoluntarias dv on dve.NombreDeduccionVoluntaria = dv.Nombre and dve.NombreProyecto = dv.NombreProyecto
   JOIN Proyecto p on dv.NombreProyecto = p.Nombre 
-  where e.Email = @Email and p.Nombre = @Proyecto and @fechaFin > GETDATE();
+  where e.Email = @Email and p.Nombre = @Proyecto and dve.fechaFin > GETDATE();
   
 END;
-GO
-
+---------------------------------------------------------------------------------------------------------------
 CREATE PROCEDURE getOfferedVoluntaryDeductions 
   @Email VARCHAR(50),
   @Proyecto VARCHAR(50)
@@ -174,10 +198,31 @@ BEGIN
   DECLARE @offeredVoluntaryDeductions TABLE(Nombre VARCHAR(50), Costo real, Descripcion VARCHAR(300));
   INSERT into @offeredVoluntaryDeductions EXEC getEmployeeVoluntaryDeductions @Email = @Email, @Proyecto = @Proyecto;
   SELECT dv.Nombre, dv.Costo, dv.Descripcion from DeduccionesVoluntarias dv where dv.NombreProyecto = @Proyecto
-  and dv.Nombre not in (select Nombre from @offeredVoluntaryDeductions)
+  and dv.Nombre not in (select Nombre from @offeredVoluntaryDeductions)  and dv.Activo = 'True'
 END;
 GO
+---------------------------------------------------------------------------------------------------------------
+CREATE PROCEDURE desvincularDeduccionVoluntariaDeEmpleado (
+  @Email VARCHAR(50),
+  @Proyecto VARCHAR(50),
+  @NombreDeduccionVoluntaria VARCHAR(50)
+) AS
+BEGIN
+  DECLARE @cedula CHAR(15);
+  DECLARE @fechaInicioDeduccionVoluntaria DATETIME;
 
+  SELECT @cedula = Cedula FROM Empleado WHERE Email = @Email;
+
+  SELECT @fechaInicioDeduccionVoluntaria = fechaInicio FROM DeduccionVoluntariaElegida dve
+  WHERE dve.CedulaEmpleado = @cedula AND dve.NombreProyecto = @Proyecto AND 
+  NombreDeduccionVoluntaria = @NombreDeduccionVoluntaria AND fechaFin > GETDATE()
+
+  UPDATE DeduccionVoluntariaElegida SET fechaFin = GETDATE()
+  WHERE CedulaEmpleado = @cedula AND NombreProyecto = @Proyecto AND 
+  NombreDeduccionVoluntaria = @NombreDeduccionVoluntaria AND fechaInicio = @fechaInicioDeduccionVoluntaria
+
+END;
+---------------------------------------------------------------------------------------------------------------
 CREATE PROCEDURE desvincularBeneficioDeEmpleado (
   @Email VARCHAR(50),
   @Proyecto VARCHAR(50),
@@ -199,24 +244,24 @@ BEGIN
 
 END;
 GO
+---------------------------------------------------------------------------------------------------------------
 CREATE PROCEDURE ObtenerBeneficiosEmpleado(
-				@Email VARCHAR(50),
+				@CedulaEmpleado VARCHAR(15),
 				@Proyecto VARCHAR(50)
 )
 AS
 BEGIN
 	SELECT P.CedulaEmpleador, B.Nombre, P.Nombre, B.CostoActual
-	FROM Usuarios U
-	JOIN Empleado E ON U.Email = E.Email
+	FROM Empleado E 
 		JOIN BeneficioElegido BE ON E.Cedula = BE.CedulaEmpleado
 			JOIN Beneficios B ON	BE.NombreBeneficio = B.Nombre and
 												BE.NombreProyecto = B.NombreProyecto		
 				JOIN Proyecto P ON B.NombreProyecto = P.Nombre
-	where U.Email = @Email AND P.Nombre = @Proyecto AND BE.FechaFin > GETDATE()
+	where E.Cedula = @CedulaEmpleado AND P.Nombre = @Proyecto AND BE.FechaFin > GETDATE()
 END;
-
-CREATE PROCEDURE calcularTotalBeneficiosDeEmpleado (
-				@Email VARCHAR(50),
+---------------------------------------------------------------------------------------------------------------
+CREATE PROCEDURE insertarBeneficiosEnPago (
+				@CedulaEmpleado VARCHAR(15),
 				@Proyecto VARCHAR(50),
 				@ConsecutivoPlanilla int,
 				@ConsecutivoPago int
@@ -225,7 +270,7 @@ AS
 BEGIN
 	DECLARE @Resultados TABLE(CedulaEmpleador VARCHAR(15),NombreBeneficio VARCHAR(50), NombreProyecto VARCHAR(50), CostoBeneficio real)
 	DECLARE @CedulaEmpleador VARCHAR(15), @NombreBeneficio VARCHAR(50), @NombreProyecto VARCHAR(50), @CostoBeneficio real
-	INSERT INTO @Resultados EXEC ObtenerBeneficiosEmpleado @Email = @Email, @Proyecto = @Proyecto
+	INSERT INTO @Resultados EXEC ObtenerBeneficiosEmpleado @CedulaEmpleado = @CedulaEmpleado, @Proyecto = @Proyecto
 
 	DECLARE cursor__ CURSOR FOR
 	SELECT R.CedulaEmpleador, R.NombreBeneficio, R.NombreProyecto, R.CostoBeneficio
@@ -240,39 +285,45 @@ BEGIN
 		
 			FETCH NEXT FROM cursor__ INTO @CedulaEmpleador , @NombreBeneficio , @NombreProyecto , @CostoBeneficio
 		END;
+	CLOSE cursor__
+	DEALLOCATE cursor__
 
-	SELECT SUM(R.CostoBeneficio) CostoDeduccion
+	DECLARE @MontoTotalBeneficios real
+	SELECT @MontoTotalBeneficios = SUM(R.CostoBeneficio)
 	FROM @Resultados R
 
-END;
+	UPDATE PAGO 
+	SET MontoTotalBeneficios = @MontoTotalBeneficios
+	WHERE ConsecutivoPago = @ConsecutivoPago AND ConsecutivoPlanilla = @ConsecutivoPlanilla AND CedulaEmpleado = @CedulaEmpleado
 
+END;
+---------------------------------------------------------------------------------------------------------------
 CREATE PROCEDURE ObtenerDeduccionesVoluntariasEmpleado(
-				@Email VARCHAR(50),
+				@CedulaEmpleado VARCHAR(15),
 				@Proyecto VARCHAR(50)
 )
 AS
 BEGIN
 	SELECT P.CedulaEmpleador, DV.Nombre, P.Nombre, DV.Costo
-	FROM Usuarios U
-	JOIN Empleado E ON U.Email = E.Email
+	FROM Empleado E
 		JOIN DeduccionVoluntariaElegida DVE ON E.Cedula = DVE.CedulaEmpleado
 			JOIN DeduccionesVoluntarias DV ON	DVE.NombreDeduccionVoluntaria = DV.Nombre and
 												DVE.NombreProyecto = DV.NombreProyecto		
 				JOIN Proyecto P ON DV.NombreProyecto = P.Nombre
-	where U.Email = @Email AND P.Nombre = @Proyecto AND DVE.FechaFin > GETDATE()
+	where E.Cedula = @CedulaEmpleado AND P.Nombre = @Proyecto AND DVE.FechaFin > GETDATE()
 END;
-
-CREATE PROCEDURE calcularTotalDeduccionesVoluntariasDeEmpleado (
-		@Email VARCHAR(50),
-		@Proyecto VARCHAR(50),
-		@ConsecutivoPlanilla int,
-		@ConsecutivoPago int
+---------------------------------------------------------------------------------------------------------------
+CREATE PROCEDURE insertarDeduccionesVoluntariasEnPago (
+				@CedulaEmpleado VARCHAR(15),
+				@Proyecto VARCHAR(50),
+				@ConsecutivoPlanilla int,
+				@ConsecutivoPago int
 ) 
 AS
 BEGIN
 	DECLARE @Resultados TABLE(CedulaEmpleador VARCHAR(15),NombreDeduccionVoluntaria VARCHAR(50), NombreProyecto VARCHAR(50), CostoDeduccionVoluntaria real)
 	DECLARE @CedulaEmpleador VARCHAR(15), @NombreDeduccionVoluntaria VARCHAR(50), @NombreProyecto VARCHAR(50), @CostoDeduccionVoluntaria real
-	INSERT INTO @Resultados EXEC ObtenerDeduccionesVoluntariasEmpleado @Email = @Email, @Proyecto = @Proyecto
+	INSERT INTO @Resultados EXEC ObtenerDeduccionesVoluntariasEmpleado @CedulaEmpleado = @CedulaEmpleado, @Proyecto = @Proyecto
 
 	DECLARE cursor__ CURSOR FOR
 	SELECT R.CedulaEmpleador, R.NombreDeduccionVoluntaria, R.NombreProyecto, R.CostoDeduccionVoluntaria
@@ -288,11 +339,19 @@ BEGIN
 			FETCH NEXT FROM cursor__ INTO @CedulaEmpleador , @NombreDeduccionVoluntaria , @NombreProyecto , @CostoDeduccionVoluntaria
 		END;
 
-	SELECT SUM(R.CostoDeduccionVoluntaria) CostoDeduccion
+	CLOSE cursor__
+	DEALLOCATE cursor__
+
+	DECLARE @MontoTotalDeduccionesVoluntarias real
+	SELECT @MontoTotalDeduccionesVoluntarias = SUM(R.CostoDeduccionVoluntaria)
 	FROM @Resultados R
 
-END;
+	UPDATE PAGO 
+	SET MontoTotalDeduccionesVoluntarias = @MontoTotalDeduccionesVoluntarias
+	WHERE ConsecutivoPago = @ConsecutivoPago AND ConsecutivoPlanilla = @ConsecutivoPlanilla AND CedulaEmpleado = @CedulaEmpleado
 
+END;
+---------------------------------------------------------------------------------------------------------------
 CREATE PROCEDURE eliminarBeneficio (
 		@NombreBeneficio VARCHAR(50),
 		@Proyecto VARCHAR(50)
@@ -315,4 +374,85 @@ BEGIN
   on e.Cedula = ecp.CedulaEmpleado JOIN Proyecto p on p.Nombre = ecp.NombreProyecto
   JOIN Empleador ep on ep.Cedula = p.CedulaEmpleador 
   WHERE ecp.NombreProyecto = @Proyecto AND ep.Cedula = @cedulaEmpleador
+END;
+GO;
+---------------------------------------------------------------------------------------------------------------
+Create Procedure conseguirNominaEmpleados (@NombreProyecto varchar(50), @NumeroPagoPlanilla int)
+As
+	Begin
+	Declare @Resultados table(Cedula VARCHAR(15),NombreCompleto VARCHAR(100),TipoContrato VARCHAR(30),HorasTrabajadas int,SalarioPorHora real,SalarioBruto real,
+	DeduccionesObligatoriasEmpleador real, DeduccionesObligatoriasEmpleado real,DeduccionesVoluntarias real,Beneficios real,SalarioNeto real)
+
+	Declare @Cedula VARCHAR(15),@NombreCompleto VARCHAR(100),@TipoContrato VARCHAR(30),@HorasTrabajadas int,@SalarioPorHora real,@SalarioBruto real,
+	@DeduccionesObligatoriasEmpleador real, @DeduccionesObligatoriasEmpleado real,@DeduccionesVoluntarias real,@Beneficios real,@SalarioNeto real
+	DECLARE cursor__ CURSOR FOR
+	SELECT p.CedulaEmpleado, p.SalarioBruto, p.SalarioNeto, p.MontoTotalDeduccionesObligatoriasEmpleado,p.MontoTotalDeduccionesObligatoriasEmpleador,
+	p.MontoTotalBeneficios,p.MontoTotalDeduccionesVoluntarias
+	FROM Pago p
+	where p.ConsecutivoPlanilla = @NumeroPagoPlanilla;
+	OPEN cursor__
+
+	FETCH NEXT FROM cursor__ INTO @Cedula , @SalarioBruto , @SalarioNeto , @DeduccionesObligatoriasEmpleado,@DeduccionesObligatoriasEmpleador,@Beneficios,@DeduccionesVoluntarias
+	WHILE @@FETCH_STATUS = 0 
+		BEGIN
+			Declare @Nombre varchar(15),@Apellido1 varchar(15), @Apellido2 varchar(15)
+			Select @Nombre = Nombre, @Apellido1 = Apellido1, @Apellido2 = Apellido2 from Empleado where Cedula = @Cedula;
+			Set @NombreCompleto = @Nombre + ' ' + @Apellido1 + ' ' + @Apellido2
+
+			Declare @FechaInicioPago Date,@FechaFinPago Date
+			Select @FechaInicioPago = FechaIncio, @FechaFinPago = FechaFin from Planilla where Consectivo = @NumeroPagoPlanilla
+			Print @FechaInicioPago 
+			Print @FechaFinPago
+			Select @HorasTrabajadas = sum(Cantidad) from HorasRegistradas where Fecha between @FechaInicioPago and @FechaFinPago and  CedulaEmpleado = @Cedula ;
+			Select @SalarioPorHora = SalarioPorHoras, @TipoContrato = TipoContrato from EmpleadoYContratoSeAsocianAProyecto  
+			where CedulaEmpleado = @Cedula and NombreProyecto = @NombreProyecto 
+			INSERT INTO @Resultados values(@Cedula,@NombreCompleto,@TipoContrato,@HorasTrabajadas,@SalarioPorHora,@SalarioBruto,
+			@DeduccionesObligatoriasEmpleador,@DeduccionesObligatoriasEmpleado,@DeduccionesVoluntarias,@Beneficios,@SalarioNeto)
+			FETCH NEXT FROM cursor__ INTO @Cedula , @SalarioBruto , @SalarioNeto , @DeduccionesObligatoriasEmpleado,@DeduccionesObligatoriasEmpleador,@Beneficios,@DeduccionesVoluntarias
+		END;
+	Close cursor__
+	Deallocate cursor__
+	Select * from @Resultados;
+	End
+Go;
+---------------------------------------------------------------------------------------------------------------
+CREATE PROCEDURE eliminarDeduccionVoluntaria (
+		@NombreDeduccionVoluntaria VARCHAR(50),
+		@Proyecto VARCHAR(50)
+) 
+AS
+BEGIN
+  DECLARE @cedulaEmpleador VARCHAR(15);
+
+  SELECT @cedulaEmpleador = CedulaEmpleador FROM Proyecto
+  WHERE Nombre = @Proyecto;
+
+  UPDATE DeduccionesVoluntarias SET Activo = 'false' WHERE Nombre = @NombreDeduccionVoluntaria AND NombreProyecto = @Proyecto;
+	
+  UPDATE DeduccionVoluntariaElegida SET fechaFin = GETDATE() WHERE NombreDeduccionVoluntaria = @NombreDeduccionVoluntaria 
+  AND NombreProyecto = @Proyecto AND fechaFin > GETDATE();
+  
+  SELECT e.Nombre NombreEmpleado, e.Apellido1 Apellido1Empleado, e.Apellido2 Apellido2Empleado, e.Email EmailEmpleado,
+  ep.Nombre NombreEmpleador, ep.Apellido1 Apellido1Empleador, ep.Apellido2 Apellido2Empleador
+  FROM Empleado e JOIN EmpleadoYContratoSeAsocianAProyecto ecp 
+  on e.Cedula = ecp.CedulaEmpleado JOIN Proyecto p on p.Nombre = ecp.NombreProyecto
+  JOIN Empleador ep on ep.Cedula = p.CedulaEmpleador 
+  WHERE ecp.NombreProyecto = @Proyecto AND ep.Cedula = @cedulaEmpleador
+END;
+---------------------------------------------------------------------------------------------------------------
+CREATE PROCEDURE insertarDeduccionesObligatoriasPago (
+				@CedulaEmpleado VARCHAR(15),
+				@ConsecutivoPlanilla int,
+				@ConsecutivoPago int
+) 
+AS
+BEGIN
+	DECLARE @MontoTotalEmpleado real, @MontoTotalEmpleador real
+	SELECT @MontoTotalEmpleado = SUM(P.MontoEmpleado), @MontoTotalEmpleador= SUM(P.MontoEmpleador)
+	FROM PagoAplicaDeduccionesObligatorias P
+	WHERE P.ConsecutivoPlanilla = @ConsecutivoPlanilla AND P.ConsecutivoPago = @ConsecutivoPago;
+
+	UPDATE PAGO 
+	SET MontoTotalDeduccionesObligatoriasEmpleado = @MontoTotalEmpleado, MontoTotalDeduccionesObligatoriasEmpleador = @MontoTotalEmpleador
+	WHERE ConsecutivoPago = @ConsecutivoPago AND ConsecutivoPlanilla = @ConsecutivoPlanilla AND CedulaEmpleado = @CedulaEmpleado
 END;

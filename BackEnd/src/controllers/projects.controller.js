@@ -295,6 +295,7 @@ const getConsecutiveNumber = async(nombreProyecto,fechaInicio) => {
 export const createPayrroll = async ( req, res ) => {
   const { Cedula,NombreProyecto } = req.body;
   try {
+    console.log(Cedula,NombreProyecto );
     const periodoProyecto =  await getPeriodOfAPorject(NombreProyecto);
     const fechaFinPago = new Date();
     let fechaInicioPago;
@@ -312,7 +313,7 @@ export const createPayrroll = async ( req, res ) => {
     const result = await insertPayrrollOnDB(Cedula,NombreProyecto,fechaInicioPago,fechaFinPago);
     if(result === true){
       const consecutiveNumber = await getConsecutiveNumber(NombreProyecto,fechaInicioPago);
-      executeAPayrroll(consecutiveNumber,NombreProyecto,Cedula)
+      await executeAPayrroll(consecutiveNumber,NombreProyecto,Cedula);
     }else{
       console.log(`Error on create a new payrroll`)
       res.status( 500 ).send();

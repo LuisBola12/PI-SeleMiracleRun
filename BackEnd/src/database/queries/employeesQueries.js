@@ -1,5 +1,5 @@
 export const employeesQueries = {
-  getAllEmployees: 'Select e.Nombre, e.Apellido1, e.Apellido2, e.Cedula,e.Email, ecp.TipoContrato from  Empleado e inner join EmpleadoYContratoSeAsocianAProyecto ecp on e.Cedula = ecp.CedulaEmpleado and ecp.NombreProyecto = @Proyecto;',
+  getAllEmployees: 'Select e.Nombre, e.Apellido1, e.Apellido2, e.Cedula,e.Email, ecp.TipoContrato from  Empleado e inner join EmpleadoYContratoSeAsocianAProyecto ecp on e.Cedula = ecp.CedulaEmpleado and ecp.NombreProyecto = @Proyecto where ecp.FechaFin > GETDATE();',
   getEmployeeByID: 'Select * From Empleado Where Cedula = @Cedula',
   verifyEmployeeContractProject: 'Select * from EmpleadoYContratoSeAsocianAProyecto ecp where ecp.CedulaEmpleado = @Cedula AND ecp.NombreProyecto = @Proyecto',
   addContractOfAnEmployee: `Insert into EmpleadoYContratoSeAsocianAProyecto 
@@ -22,6 +22,18 @@ export const employeesQueries = {
     @NombreServicio,@SalarioPorHora,@FechaInicioContrato,@FechaFinContrato,@ValorServicio)`,
   deleteEmployeeFromProject: 'Delete from EmpleadoYContratoSeAsocianAProyecto where CedulaEmpleado = @Cedula and NombreProyecto = @NombreProyecto',
   insertHours: 'EXEC ingresarHoras @Email = @EmailEmpleado , @Proyecto = @ProyectoEmpleado, @Fecha = @FechaEmpleado, @CantidadHoras = @CantHorasEmpleado',
-  getActiveEmployeesInfo:'SELECT * FROM [SeleMiracleRun].[dbo].[EmpleadoYContratoSeAsocianAProyecto] WHERE FechaFin > GETDATE() AND NombreProyecto = @projectName'
-  
+  getActiveEmployeesInfo:'SELECT * FROM [SeleMiracleRun].[dbo].[EmpleadoYContratoSeAsocianAProyecto] WHERE FechaFin > GETDATE() AND NombreProyecto = @projectName',
+  updateEmployee:'Update Empleado set Nombre= @Nombre, Apellido1= @Apellido1 ,Apellido2= @Apellido2,Telefono= @Telefono Where Cedula= @Cedula',
+  updateEmployeer:'Update Empleador set Nombre= @Nombre, Apellido1= @Apellido1 ,Apellido2= @Apellido2,Telefono= @Telefono Where Cedula= @Cedula',
+  udpateEmail: 'Update Usuarios set Email = @Email where Email = @EmailViejo',
+  getPaymentsOfEmployee: `SELECT pa.ConsecutivoPago, pa.ConsecutivoPlanilla, pa.CedulaEmpleado,
+  pa.MontoTotalBeneficios, pa.MontoTotalDeduccionesObligatoriasEmpleado,
+  pa.MontoTotalDeduccionesObligatoriasEmpleador, pa.MontoTotalDeduccionesVoluntarias,
+  pa.SalarioBruto, pa.SalarioNeto, pl.FechaIncio, pl.FechaFin, e.SalarioPorHoras, 
+  e.TipoContrato, e.ValorDeServicio
+  FROM [Pago] pa JOIN Planilla pl ON pl.Consectivo = pa.ConsecutivoPlanilla
+    JOIN Empleado ON Empleado.Cedula = pa.CedulaEmpleado 
+    JOIN EmpleadoYContratoSeAsocianAProyecto e ON e.CedulaEmpleado = Empleado.Cedula
+  WHERE Empleado.Email = @employeeEmail
+  AND pl.NombreProyecto = @projectName` 
 };

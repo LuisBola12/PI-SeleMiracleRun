@@ -1,4 +1,5 @@
 import { getConnection, sql } from '../database';
+import { employeesQueries } from '../database/queries/employeesQueries';
 import { userQueries } from '../database/queries/userQueries';
 import { sendEmail } from '../services/Mailer';
 import { emailNewUserEmployer } from '../FormatEmailMessages/EmailNewUserEmployer';

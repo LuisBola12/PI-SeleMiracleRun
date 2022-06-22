@@ -2,7 +2,6 @@
 
 import { isInDateRange } from '../src/utils/dateManager';
 
-
 test( 'Verify date in range', () => {
   const initialDate = new Date();
   const dateToVerify = new Date();

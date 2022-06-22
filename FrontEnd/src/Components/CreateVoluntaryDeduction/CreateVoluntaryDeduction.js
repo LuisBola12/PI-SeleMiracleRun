@@ -20,6 +20,12 @@ export const CreateVoluntaryDeduction = () => {
     if (notExists === true) {
       submitVoluntaryDeduction(formValues.Name, formValues.Cost, formValues.Description);
       navigate('/voluntaryDeductions');
+      Swal.fire({
+        title: 'Done!',
+        text: `${formValues.Name} has been created successfully.`,
+        icon: 'success',
+        confirmButtonColor: 'darkgreen',
+      })
     } else {
       setIsSubmitting(false);
       Swal.fire({
@@ -53,7 +59,7 @@ export const CreateVoluntaryDeduction = () => {
                 onChange={handleInputChange} />
               <label htmlFor='Name' className='animated-input__label'>Name<span className='req'>*</span></label>
             </div>
-            <label  className = 'error-message' > {errors.Name} </label>
+            <label className='error-message' > {errors.Name} </label>
           </div>
           <div className='Cost-input'>
             <div className='animated-input'>
@@ -68,7 +74,7 @@ export const CreateVoluntaryDeduction = () => {
                 onChange={(e) => { handleInputChange(maskCurrency(e)); }} ></input>
               <label htmlFor='Cost' className='animated-input__label'>Cost<span className='req'>*</span></label>
             </div>
-            <label  className = 'error-message' > {errors.Cost} </label>
+            <label className='error-message' > {errors.Cost} </label>
           </div>
         </div>
         <div className='animated-input'>
@@ -76,13 +82,13 @@ export const CreateVoluntaryDeduction = () => {
             type='text'
             id='Description'
             className='animated-input__textarea'
-            autoComplete='off' 
+            autoComplete='off'
             placeholder=' '
             maxLength={300}
             value={formValues.Description || ''}
             onChange={handleInputChange} />
           <label htmlFor='Description' className='animated-input__label'>Description</label>
-          <label  className = 'error' > {errors.Description} </label>
+          <label className='error' > {errors.Description} </label>
         </div>
         <div className='buttons-voluntaryDeduction'>
           <button

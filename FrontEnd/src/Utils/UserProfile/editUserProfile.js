@@ -12,6 +12,11 @@ export const removeNoEdit = () => {
   document.getElementById('email').removeAttribute('readOnly');
   document.getElementById('phoneNumber').removeAttribute('readOnly');
   document.getElementById('user-profile-buttons-div').style.display = 'flex';
+  document.getElementById('name').style.border = 'solid 1px black';
+  document.getElementById('lastname').style.border = 'solid 1px black';
+  document.getElementById('secondlastname').style.border = 'solid 1px black';
+  document.getElementById('email').style.border = 'solid 1px black';
+  document.getElementById('phoneNumber').style.border = 'solid 1px black';
 };
 
 export const applyNoEdit = () => {
@@ -26,6 +31,11 @@ export const applyNoEdit = () => {
     document.getElementById('email').setAttribute('readOnly','true');
     document.getElementById('phoneNumber').setAttribute('readOnly','true');
     document.getElementById('user-profile-buttons-div').style.display = 'none';
+    document.getElementById('name').style.border = 'none';
+   document.getElementById('lastname').style.border = 'none';
+    document.getElementById('secondlastname').style.border = 'none';
+    document.getElementById('email').style.border = 'none';
+    document.getElementById('phoneNumber').style.border = 'none';
 }
 export const validateEditUserForm = (data) =>{
     let errors = {}

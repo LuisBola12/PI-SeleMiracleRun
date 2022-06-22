@@ -2,13 +2,48 @@ import { React, useEffect, useState } from "react";
 import { IconContext } from "react-icons";
 import { FaArrowLeft } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import "./TerminateContract.scss";
 import { useSelector } from "react-redux";
+import usePost from './../../shared/hooks/usePost';
+import Swal from 'sweetalert2';
 export const TerminateContract = () => {
   const activeProject = useSelector((state) => state.activeProject.projectName);
   const [employeevalues, setEmployeeValues] = useState({});
   const [reasonOfEndContract, setReasonOfEndContract] = useState("");
+  const navigate = useNavigate();
+  const { post } = usePost(process.env.REACT_APP_BACKEND_LOCALHOST + 'deleteEmployeeFromProject');
   const location = useLocation();
+  const handleSend = async () => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: 'darkgreen',
+      cancelButtonColor: 'darkred',
+      confirmButtonText: 'Terminate Contract'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        let string = JSON.stringify({
+          Proyecto: activeProject,
+          EmailEmpleado: employeevalues.Email,
+          Cedula: employeevalues.Cedula,
+          MotivoDeDespido: reasonOfEndContract
+        });
+        const resultOfQ = await post(string);
+        Swal.fire({
+          title: 'Contract Terminated!',
+          text: `${location.state.Nombre} contract has been terminated successfully!`,
+          icon: 'success',
+          confirmButtonColor: 'darkgreen',
+        })
+        if (resultOfQ === true) {
+          navigate(-1);
+        }
+      }
+    })
+  }
   useEffect(() => {
     setEmployeeValues({
       Nombre: location.state.Nombre,
@@ -16,6 +51,7 @@ export const TerminateContract = () => {
       Apellido2: location.state.Apellido2,
       Cedula: location.state.Cedula,
       TipoContrato: location.state.TipoContrato,
+      Email: location.state.Email,
     });
   }, []);
   return (
@@ -28,7 +64,7 @@ export const TerminateContract = () => {
             size: "2.6rem",
           }}
         >
-          <button className="back-arrow-button" onClick={() => {}}>
+          <button className="back-arrow-button" onClick={() => { navigate(-1) }}>
             <FaArrowLeft />
           </button>
         </IconContext.Provider>
@@ -64,7 +100,7 @@ export const TerminateContract = () => {
         </div>
       </div>
       <div className="buttons-terminate-contract">
-        <button className="create-employee-btn">
+        <button className="create-employee-btn" onClick={handleSend}>
           Send
         </button>
       </div>

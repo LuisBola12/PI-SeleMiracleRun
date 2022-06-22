@@ -1,7 +1,7 @@
 export const getEmployeesToHire = async (activeProject, userEmail) => {
-  const otherContractsUrl = `http://localhost:4000/employeesWithContractsOnOtherProyects`;
+  const otherContractsUrl = process.env.REACT_APP_BACKEND_LOCALHOST + `employeesWithContractsOnOtherProyects`;
   try {
-    console.log(activeProject,userEmail)
+    console.log(activeProject, userEmail)
     const result = await fetch(otherContractsUrl, {
       method: "POST",
       headers: {
