@@ -148,8 +148,6 @@
   margin-top: 30px;
   width: 100%;
   display: flex;
-  align-items: baseline;
-  border: solid 4px #000;
 }
 
 .edit-profile-button {
@@ -686,7 +684,10 @@ tr:nth-child(even) {
 }
 
 .projectEditTitle {
-  font-size: 20px;
   width: 50rem;
-  border: solid 4px #000;
+  font-weight: 600;
+}
+
+.project-info-header {
+  margin-top: 3%;
 }

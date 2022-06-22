@@ -13,20 +13,20 @@ import validateEditProject from './editProjectValidate';
 
 export const ProjectInfo = () => {
 
-  const [ isEditing, setIsEditing ] = useState( false );
-  const [ inputCss, setInputCss ] = useState( 'user-profile-input' );
-  const [ isLoading, setIsLoading ] = useState( true );
-  const activeProject = useSelector( ( state ) => state.activeProject.projectName );
-  const [ projectData, setProjectData ] = useState( [] );
+  const [isEditing, setIsEditing] = useState(false);
+  const [inputCss, setInputCss] = useState('user-profile-input');
+  const [isLoading, setIsLoading] = useState(true);
+  const activeProject = useSelector((state) => state.activeProject.projectName);
+  const [projectData, setProjectData] = useState([]);
 
 
-  const { post, postError } = usePost( process.env.REACT_APP_BACKEND_LOCALHOST + 'logicEliminateProject', 'PUT' );
+  const { post, postError } = usePost(process.env.REACT_APP_BACKEND_LOCALHOST + 'logicEliminateProject', 'PUT');
 
   const submit = async () => {
-    console.log( 'entra a submit' );
+    console.log('entra a submit');
   };
-  const proceedToEliminate = async ( projectName ) => {
-    Swal.fire( {
+  const proceedToEliminate = async (projectName) => {
+    Swal.fire({
       title: 'Are you sure?',
       text: 'You won\'t be able to revert this!',
       icon: 'warning',
@@ -34,71 +34,72 @@ export const ProjectInfo = () => {
       confirmButtonColor: 'darkgreen',
       cancelButtonColor: 'darkred',
       confirmButtonText: 'Yes, delete it!'
-    } ).then( ( result ) => {
-      if ( result.isConfirmed ) {
-        console.log( `Eliminating: ${projectName}` );
-        console.log( 'proceding eliminate project From database ' );
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log(`Eliminating: ${projectName}`);
+        console.log('proceding eliminate project From database ');
         let string = '';
-        string = JSON.stringify( {
+        string = JSON.stringify({
           Nombre: projectName,
-        } );
-        post( string );
-        if ( postError ) {
-          console.log( 'Error Trying to delete' );
+        });
+        post(string);
+        if (postError) {
+          console.log('Error Trying to delete');
         }
-        Swal.fire( {
+        Swal.fire({
           title: 'Deleted!',
           text: `The Ptroject ${projectName} has been deleted.`,
           icon: 'success',
           confirmButtonColor: 'darkgreen',
-        } );
+        });
       }
-    } );
+    });
   };
 
-  const eliminateProject = async ( projectName ) => {
+  const eliminateProject = async (projectName) => {
     try {
-      const activeEmployeesApiResponse = await fetch( process.env.REACT_APP_BACKEND_LOCALHOST + `getEmployeesInfo/${projectName}` );
+      const activeEmployeesApiResponse = await fetch(process.env.REACT_APP_BACKEND_LOCALHOST + `getEmployeesInfo/${projectName}`);
       const activeEmployees = await activeEmployeesApiResponse.json();
-      if ( activeEmployees.length == 0 ) {
-        proceedToEliminate( projectName );
+      if (activeEmployees.length == 0) {
+        proceedToEliminate(projectName);
       } else {
-        Swal.fire( {
+        Swal.fire({
           icon: 'error',
           title: 'Oops... Can\'t Delete Project',
           text: 'This project have active Employees',
           confirmButtonColor: 'darkgreen',
-        } );
+        });
 
 
-        console.log( 'NO se puede eliminar: El proyecto Tiene empleados' );
-      } console.log( 'entra' );
+        console.log('NO se puede eliminar: El proyecto Tiene empleados');
+      } console.log('entra');
 
-    } catch ( error ) {
-      console.log( `Error en la solicitud de base de datos: ${error}` );
+    } catch (error) {
+      console.log(`Error en la solicitud de base de datos: ${error}`);
     }
 
   };
 
-  const { formValues, handleInputChange, handleSubmit, errors, setFormValues, setErrors } = useForm( submit, validateEditProject );
+  const { formValues, handleInputChange, handleSubmit, errors, setFormValues, setErrors } = useForm(submit, validateEditProject);
   //Cargar el contenido inicial
-  useEffect( () => {
-    setIsLoading( true );
+  useEffect(() => {
+    setIsLoading(true);
     const loadProjectData = async () => {
-      const result = await getAnEntity( 'projects/', activeProject );
-      console.log( result );
-      setProjectData( result[0] );
-      setIsLoading( false );
-      setFormValues( { ...formValues, ['projectName']: projectData.Nombre } );    };
+      const result = await getAnEntity('projects/', activeProject);
+      console.log(result);
+      setProjectData(result[0]);
+      setIsLoading(false);
+      setFormValues({ ...formValues, ['projectName']: projectData.Nombre });
+    };
     loadProjectData();
-  }, [ activeProject ] );
+  }, [activeProject]);
 
   return isLoading ? (
     <div className='loader'></div>
   ) : (
     <>
 
-      <div className='user-info-container'>
+      <div className='user-info-container project-info-header'>
         <div className='user-profile-header'>
           <h2 className='projectEditTitle' >Project Info</h2>
           <div className='user-profile-edit-icon'>
@@ -108,8 +109,8 @@ export const ProjectInfo = () => {
               }}
             >
               <button className='edit-profile-button' onClick={() => {
-                setIsEditing( true );
-                setInputCss( 'input-editing' );
+                setIsEditing(true);
+                setInputCss('input-editing');
               }
               } >
                 <FaEdit />
@@ -168,14 +169,14 @@ export const ProjectInfo = () => {
           <div className='user-profile-inner-div'>
             <div className='div-profile'>
               <label className='user-profile-label'>Max Benefits Quantity</label>
-              <label id='errorMaxBenefitsQuantity ' className= {`error-label ${errors.projectNameErrorCss}`}>
+              <label id='errorMaxBenefitsQuantity ' className={`error-label ${errors.projectNameErrorCss}`}>
                 {errors.maxBenefitsQuantity}
               </label>
             </div>
             <input
               id='maxBenefitsQuantity'
               className={inputCss}
-              disabled= {true}
+              disabled={true}
               autoComplete='off'
               placeholder={isEditing ? `Can't edit max benefits quantity: ${projectData.CantidadMaximaBeneficiosEmpleado} ` : projectData.CantidadMaximaBeneficiosEmpleado}
               value={isEditing ? '' : projectData.CantidadMaximaBeneficiosEmpleado}
@@ -193,7 +194,7 @@ export const ProjectInfo = () => {
             <input
               id='maxBenefitsMoneyAmount'
               className={inputCss}
-              disabled= {true}
+              disabled={true}
               placeholder={isEditing ? `Can't edit max benefits money amount: ${projectData.MontoMaximoBeneficiosEmpleado}` : projectData.MontoMaximoBeneficiosEmpleado}
               autoComplete='off'
               value={isEditing ? '' : projectData.MontoMaximoBeneficiosEmpleado}
@@ -207,18 +208,18 @@ export const ProjectInfo = () => {
 
                 <br></br>
                 <div id='user-profile-buttons-div addFlex' className='editProjectButtons'>
-                  <button onClick={ () => eliminateProject( activeProject )} className='button cancel-button' style={ { marginRight: '33rem', width:'10rem' }  } >Delete Project </button>
+                  <button onClick={() => eliminateProject(activeProject)} className='button cancel-button' style={{ marginRight: '33rem', width: '10rem' }} >Delete Project </button>
                   <button className='create-button' style={{ width: '5rem' }} onClick={handleSubmit}>
-                  Submit
+                    Submit
                   </button>
                   <button className='button cancel-button' onClick={() => {
-                    setIsEditing( false );
-                    setInputCss( 'user-profile-input' );
-                    setFormValues( [] );
-                    setFormValues( { ...formValues, ['projectName']: projectData.Nombre } );
-                    setErrors( [] );    
+                    setIsEditing(false);
+                    setInputCss('user-profile-input');
+                    setFormValues([]);
+                    setFormValues({ ...formValues, ['projectName']: projectData.Nombre });
+                    setErrors([]);
                   }}>
-                  Cancel
+                    Cancel
                   </button>
                 </div>
               </>
