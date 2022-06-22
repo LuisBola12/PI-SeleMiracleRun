@@ -29,9 +29,11 @@ import { HireAEmployee } from './Pages/crudHireEmployees';
 import { HireEmployee } from './Pages/hireEmployee';
 import { EndContractWithEmployee } from './Pages/endContractWithEmployee';
 import { EmployeeMyPayments  } from './Pages/employeeMyPayments';
+import { EditProjectPage } from './Pages/editProject';
+
 function App() {
 
-  const userRoll = useSelector((state) => state.user.user);
+  const userRoll = useSelector( ( state ) => state.user.user );
 
   return (
 
@@ -44,7 +46,7 @@ function App() {
         {/* Routes for the employer */}
         {userRoll && userRoll.Roles === 'admin' ? 
         (
-          <Route element={<PrivateRoute allowedRoles={['admin']} />}>
+          <Route element={<PrivateRoute allowedRoles={[ 'admin' ]} />}>
           {/* <Route path='/' element={<SelectProject />} /> */}
             <Route path='benefits' element={<Benefits />} />
             <Route path='employees' element={<Employees />} />
@@ -64,13 +66,13 @@ function App() {
             <Route path='newProjectForm' element={<CreateProjectsForm />} />
             <Route path='payroll'element={<Payroll/>}/>
             <Route path='payroll/details' element={<PayrollDetailsPage />} />
-            <Route path='projectSettings' element={<EmployeesBenefits />} />
+            <Route path='projectSettings' element={<EditProjectPage />} />
             {/* quiter esto */}
             <Route path='registerHours' element={<RegisterHours />} />
             <Route path='myBenefits' element={<EmployeesBenefits />} />
           </Route>
         ) : (
-          <Route element={<PrivateRoute allowedRoles={['emp']} />}>
+          <Route element={<PrivateRoute allowedRoles={[ 'emp' ]} />}>
             <Route path='home' element={<Home />} />
             <Route path='projectAdmin' element={<SelectProject />} />
             <Route path='registerHours' element={<RegisterHours />} />
