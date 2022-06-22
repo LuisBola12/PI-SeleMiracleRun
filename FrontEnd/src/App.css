@@ -218,7 +218,11 @@
   height: 80px;
 
 }
-
+.error-label-userprofile{
+  color: red;
+  margin-left: 15px;
+  font-size: 15px;
+}
 .error-label {
   color: red;
   display: none;

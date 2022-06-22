@@ -32,60 +32,60 @@ export const applyNoEdit = () => {
     document.getElementById('phoneNumber').setAttribute('readOnly','true');
     document.getElementById('user-profile-buttons-div').style.display = 'none';
     document.getElementById('name').style.border = 'none';
-   document.getElementById('lastname').style.border = 'none';
+    document.getElementById('lastname').style.border = 'none';
     document.getElementById('secondlastname').style.border = 'none';
     document.getElementById('email').style.border = 'none';
     document.getElementById('phoneNumber').style.border = 'none';
 }
 export const validateEditUserForm = (data) =>{
-    let errors = {}
+    let error = {}
     const {email,name,lastname,secondlastname} = data;
     console.log(data);
     if(email){
       if(!validateEmail(email)){
-        errors.email = 'You must enter a valid format for an email.';
+        error.email = 'You must enter a valid format for an email.';
         document.getElementById('email').style.borderColor = 'red';
       }else{
-        document.getElementById('email').style.border = 'gray';
+        document.getElementById('email').style.borderColor = 'gray';
       }
     }else{
-      errors.email = 'Please enter an email.';
+      error.email = 'Please enter an email.';
       document.getElementById('email').style.borderColor = 'red';
     }
     if(name){
       if(!validateName(name)){
-        errors.name = 'Please enter a valid name.';
+        error.name = 'Please enter a valid name.';
         document.getElementById('name').style.borderColor = 'red';
       }else{
-        document.getElementById('name').style.border = 'gray';
+        document.getElementById('name').style.borderColor = 'gray';
       }
     }else{
-        errors.name = 'Please enter a name.';
+        error.name = 'Please enter a name.';
         document.getElementById('name').style.borderColor = 'red';
     }
   
     if(lastname){
       if(!validateName(lastname)){
-        errors.lastname = 'Please enter a valid lastname.';
+        error.lastname = 'Please enter a valid lastname.';
         document.getElementById('lastname').style.borderColor = 'red';
       }else{
-        document.getElementById('lastname').style.border = 'gray';
+        document.getElementById('lastname').style.borderColor = 'gray';
       }
     }else{
-        errors.lastname = 'Please enter a lastname.';
+        error.lastname = 'Please enter a lastname.';
         document.getElementById('lastname').style.borderColor = 'red';
     }
   
     if(secondlastname){
       if(!validateName(secondlastname)){
-        errors.secondlastname = 'Please enter valid a second last name.';
+        error.secondlastname = 'Please enter valid a second last name.';
         document.getElementById('secondlastname').style.borderColor = 'red';
       }else{
-        document.getElementById('secondlastname').style.border = 'none';
+        document.getElementById('secondlastname').style.borderColor = 'gray';
       }
     }else{
-        errors.secondlastname = 'Please enter a secondlastname.';
+        error.secondlastname = 'Please enter a secondlastname.';
         document.getElementById('secondlastname').style.borderColor = 'red';
     }
-    return errors;
+    return error;
   }
