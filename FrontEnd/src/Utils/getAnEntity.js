@@ -1,5 +1,5 @@
 export const getAnEntity = async (url, project) => {
-  const seleUrl = `http://localhost:4000/${url}${project}`;
+  const seleUrl = process.env.REACT_APP_BACKEND_LOCALHOST + `${url}${project}`;
   try {
     const response = await fetch(seleUrl);
     const newData = await response.json();

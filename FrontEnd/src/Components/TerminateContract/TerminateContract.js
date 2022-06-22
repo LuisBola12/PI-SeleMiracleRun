@@ -12,9 +12,9 @@ export const TerminateContract = () => {
   const [employeevalues, setEmployeeValues] = useState({});
   const [reasonOfEndContract, setReasonOfEndContract] = useState("");
   const navigate = useNavigate();
-  const { post } = usePost( 'http://localhost:4000/deleteEmployeeFromProject' );
+  const { post } = usePost(process.env.REACT_APP_BACKEND_LOCALHOST + 'deleteEmployeeFromProject');
   const location = useLocation();
-  const handleSend = async() =>{
+  const handleSend = async () => {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -23,12 +23,12 @@ export const TerminateContract = () => {
       confirmButtonColor: 'darkgreen',
       cancelButtonColor: 'darkred',
       confirmButtonText: 'Terminate Contract'
-    }).then(async(result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
         let string = JSON.stringify({
-          Proyecto:activeProject,
+          Proyecto: activeProject,
           EmailEmpleado: employeevalues.Email,
-          Cedula:employeevalues.Cedula,
+          Cedula: employeevalues.Cedula,
           MotivoDeDespido: reasonOfEndContract
         });
         const resultOfQ = await post(string);
@@ -38,7 +38,7 @@ export const TerminateContract = () => {
           icon: 'success',
           confirmButtonColor: 'darkgreen',
         })
-        if(resultOfQ === true){
+        if (resultOfQ === true) {
           navigate(-1);
         }
       }
@@ -64,7 +64,7 @@ export const TerminateContract = () => {
             size: "2.6rem",
           }}
         >
-          <button className="back-arrow-button" onClick={() => {navigate(-1)}}>
+          <button className="back-arrow-button" onClick={() => { navigate(-1) }}>
             <FaArrowLeft />
           </button>
         </IconContext.Provider>

@@ -14,7 +14,7 @@ import { usePutToVoluntaryDeductions } from '../../Utils/VoluntaryDeductions/use
 import Swal from 'sweetalert2';
 
 export const EditVoluntaryDeduction = () => {
-  const apiVoluntaryDeductions = 'http://localhost:4000/voluntaryDeductions';
+  const apiVoluntaryDeductions = process.env.REACT_APP_BACKEND_LOCALHOST + 'voluntaryDeductions';
   const activeProject = useSelector((state) => state.activeProject.projectName);
   const location = useLocation();
   const oldName = location.state.Nombre;

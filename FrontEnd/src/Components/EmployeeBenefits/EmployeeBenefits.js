@@ -6,6 +6,7 @@ import { useGetEmployeeBenefits } from '../../Utils/Benefits/useGetEmployeeBenef
 import { usePostToBenefits } from '../../Utils/Benefits/usePostToBenefits.js';
 import { usePutToBenefits } from '../../Utils/Benefits/usePutToBenefits';
 import useValidateBenefitSubscription from '../../Utils/Benefits/useValidateBenefitSubscription';
+import Swal from 'sweetalert2';
 
 export const EmployeeBenefits = () => {
   const { submitBenefitToEmployee } = usePostToBenefits();
@@ -29,6 +30,12 @@ export const EmployeeBenefits = () => {
 
   const handleDeleteButton = (element) => {
     unlinkEmployeeToBenefit(element.NombreBeneficio);
+    Swal.fire({
+      icon: 'success',
+      title: 'unsubscribed',
+      text: `You unsubscribed from ${element.NombreBeneficio} successfuly`,
+      confirmButtonColor: 'darkgreen'
+    });
     setofferedInfo(false);
     setEmployeeInfo(false);
   };

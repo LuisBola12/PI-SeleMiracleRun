@@ -10,37 +10,37 @@ import Swal from 'sweetalert2';
 
 export const CreateProjectsForm = () => {
   const navigate = useNavigate();
-  const { post } = usePost( 'http://localhost:4000/projects' );
+  const { post } = usePost(process.env.REACT_APP_BACKEND_LOCALHOST + 'projects');
 
-  const emailFromUser = useSelector( ( state ) => state.user.user.Email );
+  const emailFromUser = useSelector((state) => state.user.user.Email);
 
   const sendToDatabase = async () => {
-    const hasUniqueName = await validAnEntity( 'myProjects/' + emailFromUser + '/', formValues.projectName );
-    if ( hasUniqueName === true ) {
-      let string = JSON.stringify( formValues );
-      string = JSON.stringify( {
+    const hasUniqueName = await validAnEntity('myProjects/' + emailFromUser + '/', formValues.projectName);
+    if (hasUniqueName === true) {
+      let string = JSON.stringify(formValues);
+      string = JSON.stringify({
         projectName: formValues.projectName,
         paymentPeriod: formValues.paymentPeriod,
         email: emailFromUser,
         description: formValues.description,
-        maxBenefitsMoneyAmount : formValues.maxBenefitsMoneyAmount,
-        maxBenefitsQuantity: formValues.maxBenefitsQuantity 
-      } );
-      post( string );
-      navigate( -1 );
+        maxBenefitsMoneyAmount: formValues.maxBenefitsMoneyAmount,
+        maxBenefitsQuantity: formValues.maxBenefitsQuantity
+      });
+      post(string);
+      navigate(-1);
     } else {
-      Swal.fire( {
+      Swal.fire({
         icon: 'error',
         title: 'Error...',
         text: 'Project Name Already Exist',
         confirmButtonColor: 'darkgreen',
-      } );
-      setIsSubmitting( false );
+      });
+      setIsSubmitting(false);
     }
   };
 
-  const { formValues, handleInputChange, handleSubmit, errors, setIsSubmitting } = useForm( sendToDatabase, validate );
-   
+  const { formValues, handleInputChange, handleSubmit, errors, setIsSubmitting } = useForm(sendToDatabase, validate);
+
   return (
     <>
       <div className='project-bar'>
@@ -99,7 +99,7 @@ export const CreateProjectsForm = () => {
             <button onClick={handleSubmit} className='project-btn-sumbit' >
               Create
             </button>
-            <button className='project-btn-cancel' onClick={() => navigate( '/' )}  >
+            <button className='project-btn-cancel' onClick={() => navigate('/')}  >
               Cancel
             </button>
           </div>
