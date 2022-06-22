@@ -20,7 +20,6 @@ export const CreateUser = () => {
     if (user === true && employee === true) {
 
       let string = JSON.stringify(formValues);
-
       string = JSON.stringify({
         Cedula: formValues.id_register,
         Nombre: formValues.name_register,
@@ -31,8 +30,7 @@ export const CreateUser = () => {
         Contrasenia: formValues.password_register,
         Roles: 'admin'
       });
-
-      post(string);
+      await post(string);
       dispatch(postLogin({
         email: formValues.email_register,
         password: formValues.password_register

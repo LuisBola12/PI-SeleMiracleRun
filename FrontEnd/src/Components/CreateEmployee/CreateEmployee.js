@@ -79,7 +79,7 @@ export const CreateEmployee = () => {
             <div className='animated-input-employee'>
               <input type='text' id='lastname' className='animated-input-employee__input'
                 value={formValues.lastname || ''} maxLength={15} onChange={handleInputChange} autoComplete='off' placeholder=' '></input>
-              <label htmlFor='first-last-name-employee' className='animated-input-employee__label'>First Last Name<span className='req'>*</span></label>
+              <label htmlFor='lastname' className='animated-input-employee__label'>First Last Name<span className='req'>*</span></label>
             </div>
             <div>
               <label className='errorForm' id='error-first-lastname-input'>{errors.lastname}</label>
@@ -132,19 +132,6 @@ export const CreateEmployee = () => {
               <label className='errorForm' id='error-email-input'>{errors.email}</label>
             </div>
           </div>
-          {/* <div>
-            <div className='animated-input-employee-credentials'>
-              <input type='password' id='password' className='animated-input-employee-credentials__input'
-                value={formValues.password || ''}
-                maxLength={20}
-                onChange={handleInputChange}
-                autoComplete='off' placeholder=' '></input>
-              <label htmlFor='password' className='animated-input-employee-credentials__label'>Password<span className='req'>*</span></label>
-            </div>
-            <div>
-              <label className='errorForm' id='error-password-input'>{errors.password}</label>
-            </div>
-          </div> */}
         </div>
         <div className='form-contract-employee'>
           <div>
