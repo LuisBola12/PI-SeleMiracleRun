@@ -367,3 +367,15 @@ export const getProjectsByEmailAndName = async ( req, res ) => {
     res.error( e );
   }
 };
+
+export const getProjectInfoByName = async ( req, res ) => {
+  const {projectName} = req.params;
+  try {
+    const pool = await getConnection();
+    const result = await pool.request().input( 'projectName', projectName ).query( projectQueries.getProjectByName );
+    res.json( result.recordset );
+    console.log(result.recordset)
+  } catch ( e ) {
+    console.log( e );
+  }
+};
