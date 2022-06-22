@@ -14,7 +14,7 @@ import { usePutToBenefits } from '../../Utils/Benefits/usePutToBenefits';
 import Swal from 'sweetalert2';
 
 export const EditBenefit = () => {
-  const apiBenefits = 'http://localhost:4000/benefits';
+  const apiBenefits = process.env.REACT_APP_BACKEND_LOCALHOST + 'benefits';
   const activeProject = useSelector((state) => state.activeProject.projectName);
   const location = useLocation();
   const oldName = location.state.Nombre;

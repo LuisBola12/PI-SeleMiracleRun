@@ -5,7 +5,7 @@ export const useGetTypeOfContracts = () => {
 
   useEffect(() => {
     const fetchTypeContracts = async () => {
-      const seleUrl = "http://localhost:4000/typeContracts";
+      const seleUrl = process.env.REACT_APP_BACKEND_LOCALHOST + "typeContracts";
       try {
         const response = await fetch(seleUrl);
         const newData = await response.json();
