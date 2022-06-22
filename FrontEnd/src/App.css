@@ -149,6 +149,7 @@
   width: 100%;
   display: flex;
   align-items: baseline;
+  border: solid 4px #000;
 }
 
 .edit-profile-button {
@@ -261,7 +262,7 @@
   height: 65px;
   font-size: 20px;
   width: 75%;
-  border: solid 2 px #000;
+  border: solid 1px #000;
 }
 
 .input-editing:focus {
@@ -670,4 +671,22 @@ tr:nth-child(even) {
   margin-bottom: 40px;
 }
 
-.project-info-title {}
+
+.editProjectsErrors {
+  color: red;
+  margin-left: 15px;
+  /* font-size: 20px; */
+
+}
+
+.editborderRed,
+.editborderRed:hover {
+  border-color: red;
+
+}
+
+.projectEditTitle {
+  font-size: 20px;
+  width: 50rem;
+  border: solid 4px #000;
+}

@@ -53,5 +53,6 @@ export const projectQueries = {
   logicalEraseProject: `UPDATE Proyecto 
   SET Activo = 0
   WHERE Nombre = @projectName`,
-  getProjectByName: 'Select * FROM Proyecto WHERE Proyecto.Nombre = @projectName'
+  getProjectByName: 'Select * FROM Proyecto WHERE Proyecto.Nombre = @projectName',
+  updateProject:'Update Proyecto set Nombre= @name, TipoPeriodo= @paymentPeriod',
 };
