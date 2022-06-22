@@ -71,7 +71,7 @@ export const PayrollDetails = () => {
         </thead>
         <tbody>
           {data.map((element) => (
-            <tr key={element.id}>
+            <tr key={element.Cedula}>
               <td className='left-td table-left-border'>{element.Cedula}</td>
               <td className='left-td'>{element.NombreCompleto}</td>
               <td className='left-td'>{element.TipoContrato}</td>
