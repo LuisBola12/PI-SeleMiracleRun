@@ -79,7 +79,7 @@ export const CreateEmployee = () => {
             <div className='animated-input-employee'>
               <input type='text' id='lastname' className='animated-input-employee__input'
                 value={formValues.lastname || ''} maxLength={15} onChange={handleInputChange} autoComplete='off' placeholder=' '></input>
-              <label htmlFor='first-last-name-employee' className='animated-input-employee__label'>First Last Name<span className='req'>*</span></label>
+              <label htmlFor='lastname' className='animated-input-employee__label'>First Last Name<span className='req'>*</span></label>
             </div>
             <div>
               <label className='errorForm' id='error-first-lastname-input'>{errors.lastname}</label>

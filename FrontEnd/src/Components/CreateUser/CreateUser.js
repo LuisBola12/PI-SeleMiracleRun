@@ -15,12 +15,12 @@ export const CreateUser = () => {
 
   const sendToDatabase = async () => {
     const user = await validAnEntity('users/', formValues.email_register);
-    const employee = await validAnEntity('employer/', formValues.id_register);
-
-    if (user === true && employee === true) {
+    const employer = await validAnEntity('employer/', formValues.id_register);
+    
+    console.log(formValues.email_register, formValues.id_register)
+    if (user === true && employer === true) {
     
       let string = JSON.stringify(formValues);
-
       string = JSON.stringify({
         Cedula: formValues.id_register,
         Nombre: formValues.name_register,
@@ -31,8 +31,7 @@ export const CreateUser = () => {
         Contrasenia: formValues.password_register,
         Roles: 'admin'
       });
-
-      post(string);
+      await post(string);
       dispatch(postLogin({
         email: formValues.email_register,
         password: formValues.password_register
