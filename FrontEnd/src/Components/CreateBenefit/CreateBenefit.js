@@ -20,6 +20,12 @@ export const CreateBenefit = () => {
     if (notExists === true) {
       submitBenefit(formValues.Name, formValues.Cost, formValues.Description);
       navigate('/benefits');
+      Swal.fire({
+        title: 'Done!',
+        text: `${formValues.Name} has been created successfully.`,
+        icon: 'success',
+        confirmButtonColor: 'darkgreen',
+      })
     } else {
       setIsSubmitting(false);
       Swal.fire({

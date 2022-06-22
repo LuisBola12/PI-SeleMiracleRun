@@ -3,11 +3,11 @@ import { useSelector } from 'react-redux';
 export const usePutToVoluntaryDeductions = () => {
   const activeProject = useSelector((state) => state.activeProject.projectName);
   const employeeEmail = useSelector((state) => state.user.user.Email);
-  const unlinkVoluntaryDeductionApi = 'http://localhost:4000/myVoluntaryDeductions'
-  const apiVoluntaryDeductions = 'http://localhost:4000/voluntaryDeductions'
+  const unlinkVoluntaryDeductionApi = process.env.REACT_APP_BACKEND_LOCALHOST + 'myVoluntaryDeductions'
+  const apiVoluntaryDeductions = process.env.REACT_APP_BACKEND_LOCALHOST + 'voluntaryDeductions'
 
   const updateVoluntaryDeduction = async (name, cost, description, apiVoluntaryDeductions) => {
-    const newCost = cost.split('.').join('');
+    const newCost = cost.split(' ').join('');
     const postFetch = await fetch(apiVoluntaryDeductions, {
       method: 'PUT',
       headers: {

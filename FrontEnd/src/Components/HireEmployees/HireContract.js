@@ -12,7 +12,7 @@ export const HireContract = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const activeProject = useSelector((state) => state.activeProject.projectName);
-  const { post } = usePost("http://localhost:4000/contractExistentEmployee");
+  const { post } = usePost(process.env.REACT_APP_BACKEND_LOCALHOST + "contractExistentEmployee");
   const sendToDataBase = () => {
     let string = JSON.stringify(formValues);
     string = JSON.stringify({

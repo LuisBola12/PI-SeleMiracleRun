@@ -1,7 +1,7 @@
 import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
-import { useEffect,React,useState } from 'react';
+import { useEffect, React, useState } from 'react';
 import { getAnEntity } from '../../Utils/getAnEntity';
 import { useSelector } from 'react-redux';
 
@@ -14,14 +14,14 @@ export const ViewPayroll = () => {
   const goToDetails = (element) => {
     navigate('/payroll/details', { state: element });
   };
-  const removeTimeFromDate = (date) =>{
+  const removeTimeFromDate = (date) => {
     let myDate = new Date(date);
     let noTimeDate = new Date(myDate.getFullYear(), myDate.getMonth(), myDate.getDate());
     return noTimeDate.toDateString();
   }
-  const handlePayment = async() =>{
-    const seleUrl = 'http://localhost:4000/createPayrroll'
-    console.log(user.Cedula,activeProject)
+  const handlePayment = async () => {
+    const seleUrl = process.env.REACT_APP_BACKEND_LOCALHOST + 'createPayrroll'
+    console.log(user.Cedula, activeProject)
     const postFetch = await fetch(seleUrl, {
       method: 'POST',
       headers: {
@@ -32,7 +32,7 @@ export const ViewPayroll = () => {
         NombreProyecto: activeProject,
       }),
     });
-    if(postFetch.ok === true){
+    if (postFetch.ok === true) {
       setInfoReceived(false)
     }
   }
@@ -68,9 +68,9 @@ export const ViewPayroll = () => {
               <td className=''>{removeTimeFromDate(element.FechaIncio)}</td>
               <td className=''>{removeTimeFromDate(element.FechaFin)}</td>
               <td className=''>
-                    Closed</td>
+                Closed</td>
               <td className=''>
-                <button className='details-button' onClick={ () => {
+                <button className='details-button' onClick={() => {
                   goToDetails(element);
                 }}>Details</button>
               </td>

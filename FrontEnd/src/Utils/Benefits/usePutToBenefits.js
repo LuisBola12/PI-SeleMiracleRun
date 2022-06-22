@@ -3,11 +3,11 @@ import { useSelector } from 'react-redux';
 export const usePutToBenefits = () => {
   const activeProject = useSelector((state) => state.activeProject.projectName);
   const employeeEmail = useSelector((state) => state.user.user.Email);
-  const unlinkBenefitApi = 'http://localhost:4000/myBenefits'
-  const apiBenefits = 'http://localhost:4000/benefits'
+  const unlinkBenefitApi = process.env.REACT_APP_BACKEND_LOCALHOST + 'myBenefits'
+  const apiBenefits = process.env.REACT_APP_BACKEND_LOCALHOST + 'benefits'
 
   const updateBenefit = async (name, cost, description, apiBenefits) => {
-    const newCost = cost.split('.').join('');
+    const newCost = cost.split(' ').join('');
     const postFetch = await fetch(apiBenefits, {
       method: 'PUT',
       headers: {

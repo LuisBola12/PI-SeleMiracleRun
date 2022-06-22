@@ -5,28 +5,40 @@ import { useGetOfferedVoluntaryDeductions } from '../../Utils/VoluntaryDeduction
 import { useGetEmployeeVoluntaryDeductions } from '../../Utils/VoluntaryDeductions/useGetEmployeeVoluntaryDeductions';
 import { usePostToVoluntaryDeductions } from '../../Utils/VoluntaryDeductions/usePostToVoluntaryDeductions';
 import { usePutToVoluntaryDeductions } from '../../Utils/VoluntaryDeductions/usePutToVoluntaryDeductions';
-
+import Swal from 'sweetalert2';
 export const EmployeeVoluntaryDeductions = () => {
   const { offeredVoluntaryDeductions, offeredInfo, setofferedInfo } = useGetOfferedVoluntaryDeductions();
   const { EmployeeVoluntaryDeductions, EmployeeInfo, setEmployeeInfo } = useGetEmployeeVoluntaryDeductions();
-  const {  submitVoluntaryDeductionToEmployee } = usePostToVoluntaryDeductions();
+  const { submitVoluntaryDeductionToEmployee } = usePostToVoluntaryDeductions();
   const { unlinkEmployeeToVoluntaryDeduction } = usePutToVoluntaryDeductions();
   const handleAddButton = (element) => {
-    submitVoluntaryDeductionToEmployee( element.Nombre );
-    setofferedInfo( false );
-    setEmployeeInfo( false );
+    submitVoluntaryDeductionToEmployee(element.Nombre);
+    Swal.fire({
+      icon: 'success',
+      title: 'subscribed',
+      text: `You subscribed to ${element.Nombre}`,
+      confirmButtonColor: 'darkgreen'
+    });
+    setofferedInfo(false);
+    setEmployeeInfo(false);
   };
 
-  const handleDeleteButton = ( element ) => {
-    unlinkEmployeeToVoluntaryDeduction( element.NombreDeduccionVoluntaria );
-    setofferedInfo( false );
-    setEmployeeInfo( false );
+  const handleDeleteButton = (element) => {
+    unlinkEmployeeToVoluntaryDeduction(element.NombreDeduccionVoluntaria);
+    Swal.fire({
+      icon: 'success',
+      title: 'unsubscribed',
+      text: `You unsubscribed from ${element.NombreDeduccionVoluntaria} successfuly`,
+      confirmButtonColor: 'darkgreen'
+    });
+    setofferedInfo(false);
+    setEmployeeInfo(false);
   };
   return (
     <>
       {!EmployeeInfo ? <div className='loader' ></div > : (
         <>
-          <h2 className = 'table-button'>My Voluntary Deductions</h2>
+          <h2 className='table-button'>My Voluntary Deductions</h2>
           <table className='Table'>
             <thead>
               <tr className='table-header'>
@@ -41,9 +53,9 @@ export const EmployeeVoluntaryDeductions = () => {
                 <tr key={element.NombreDeduccionVoluntaria}>
                   <td className='left-td table-left-border voluntaryDeduction-name'>{element.NombreDeduccionVoluntaria}</td>
                   <td className='description-cell left-td'>{((element.Descripcion) ? element.Descripcion : 'No description')}</td>
-                  <td className='right-td'>₡ {transformCost(element.Costo)}</td>
+                  <td className='right-td'>₡{transformCost(element.Costo)}</td>
                   <td className='right-button table-right-border'>
-                    <button className='button cancel-button' onClick={() => handleDeleteButton( element )}> Delete </button>
+                    <button className='button cancel-button' onClick={() => handleDeleteButton(element)}> Delete </button>
                   </td>
                 </tr>
               ))}
@@ -69,8 +81,8 @@ export const EmployeeVoluntaryDeductions = () => {
                 <tr key={element.Nombre}>
                   <>
                     <td className='left-td table-left-border voluntaryDeduction-name'>{element.Nombre}</td>
-                    <td className='description-cell left-td'>{((element.Descripcion) ? element.Descripción : 'No description')}</td>
-                    <td className='right-td'>₡ {transformCost(element.Costo)}</td>
+                    <td className='description-cell left-td'>{((element.Descripcion) ? element.Descripcion : 'No description')}</td>
+                    <td className='right-td'>₡{transformCost(element.Costo)}</td>
                     <td className='right-button table-right-border'>
                       <button className='button add-button' onClick={() => handleAddButton(element)}> Add</button>
                     </td>

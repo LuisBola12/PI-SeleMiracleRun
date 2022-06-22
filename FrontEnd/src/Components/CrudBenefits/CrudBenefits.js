@@ -61,7 +61,7 @@ export const CrudBenefits = () => {
             <tr key={element.Nombre}>
               <td className='left-td table-left-border'>{element.Nombre}</td>
               <td className='description-cell left-td '>{((element.Descripción) ? element.Descripción : 'No description')}</td>
-              <td className='right-td'>₡ {transformCost(element.CostoActual)}</td>
+              <td className='right-td'>₡{transformCost(element.CostoActual)}</td>
               <td className='right-button'>
                 <button className='button' onClick={() => handleEditClick(element)}> Edit </button>
               </td>

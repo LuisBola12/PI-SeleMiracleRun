@@ -8,13 +8,13 @@ import { validAnEntity } from '../../Utils/validAnEntity';
 import { verifyEmployeeProject } from '../../Utils/CreateEmployee/CreateEmployee';
 
 export const CreateEmployee = () => {
-  const [ contractsReceived, setContractsReceived ] = useState( false );
-  const [ typeOfContracts, setTypeOfContracts ] = useState();
-  const activeProject = useSelector( ( state ) => state.activeProject.projectName );
-  const { post } = usePost( 'http://localhost:4000/employee' );
+  const [contractsReceived, setContractsReceived] = useState(false);
+  const [typeOfContracts, setTypeOfContracts] = useState();
+  const activeProject = useSelector((state) => state.activeProject.projectName);
+  const { post } = usePost(process.env.REACT_APP_BACKEND_LOCALHOST + 'employee');
   const sendToDatabase = async () => {
-    let string = JSON.stringify( formValues );
-    string = JSON.stringify( {
+    let string = JSON.stringify(formValues);
+    string = JSON.stringify({
       NombreProyecto: activeProject,
       Email: formValues.email,
       Roles: 'emp',
@@ -28,34 +28,34 @@ export const CreateEmployee = () => {
       SalarioPorHora: formValues.hWage,
       NombreServicio: formValues.serviceName,
       ValorServicio: formValues.serviceValue,
-    } );
-    const user = await validAnEntity( 'users/', formValues.email );
-    const employee = await validAnEntity( 'employee/', formValues.id );
-    const employeeContract = await verifyEmployeeProject( formValues.id, activeProject );
-    if ( user === true && employee === true && employeeContract === true ) {
-      post( string );
+    });
+    const user = await validAnEntity('users/', formValues.email);
+    const employee = await validAnEntity('employee/', formValues.id);
+    const employeeContract = await verifyEmployeeProject(formValues.id, activeProject);
+    if (user === true && employee === true && employeeContract === true) {
+      post(string);
       back();
     } else {
-      setIsSubmitting( false );
-      alert( 'There is already an user with those credentials.' );
+      setIsSubmitting(false);
+      alert('There is already an user with those credentials.');
     }
   };
-  const { formValues, handleInputChange, handleSubmit, errors, setIsSubmitting } = useForm( sendToDatabase, validateForm );
-  useEffect( () => {
+  const { formValues, handleInputChange, handleSubmit, errors, setIsSubmitting } = useForm(sendToDatabase, validateForm);
+  useEffect(() => {
     const fetchTypeContracts = async () => {
-      const seleUrl = 'http://localhost:4000/typeContracts';
+      const seleUrl = process.env.REACT_APP_BACKEND_LOCALHOST + 'typeContracts';
       try {
-        const response = await fetch( seleUrl );
+        const response = await fetch(seleUrl);
         const newData = await response.json();
-        setTypeOfContracts( newData );
-        setContractsReceived( true );
-      } catch ( error ) {
-        console.log( error );
+        setTypeOfContracts(newData);
+        setContractsReceived(true);
+      } catch (error) {
+        console.log(error);
       }
     };
     fetchTypeContracts();
-  }, [] );
-  
+  }, []);
+
   return !contractsReceived ? <div className='loader'></div> : (
     <>
       <div className='employees-form'>
@@ -151,15 +151,15 @@ export const CreateEmployee = () => {
             <div className='animated-input-employee-contract'>
               <select id='contract' className='animated-input-employee-contract__input'
                 value={formValues.contract || ''}
-                onChange={( e ) => {
-                  handleInputChange( e );
-                  showContractValues( e );
+                onChange={(e) => {
+                  handleInputChange(e);
+                  showContractValues(e);
                 }}
               >
                 <option value={''}>Select a Contract </option>
-                {typeOfContracts.map( ( element ) => (
+                {typeOfContracts.map((element) => (
                   <option key={element.TipoJornada} value={element.TipoJornada}>{element.TipoJornada}</option>
-                ) )}
+                ))}
               </select>
               <label htmlFor='contract' className='animated-input-employee-contract__label'>Type of Contract<span className='req'>*</span></label>
             </div>

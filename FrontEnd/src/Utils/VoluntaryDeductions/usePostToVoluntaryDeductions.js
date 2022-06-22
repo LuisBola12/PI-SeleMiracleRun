@@ -2,11 +2,11 @@ import { useSelector } from 'react-redux';
 
 export const usePostToVoluntaryDeductions = () => {
   const activeProject = useSelector((state) => state.activeProject.projectName);
-  const apiVoluntaryDeductions = 'http://localhost:4000/voluntaryDeductions';
-  const apiVoluntaryDeductionsToEmplyee = 'http://localhost:4000/myVoluntaryDeductions'
+  const apiVoluntaryDeductions = process.env.REACT_APP_BACKEND_LOCALHOST + 'voluntaryDeductions';
+  const apiVoluntaryDeductionsToEmplyee = process.env.REACT_APP_BACKEND_LOCALHOST + 'myVoluntaryDeductions'
   const employeeEmail = useSelector((state) => state.user.user.Email);
   const submitVoluntaryDeduction = async (name, cost, description) => {
-    const newCost = cost.split('.').join('');
+    const newCost = cost.split(' ').join('');
     const postFetch = await fetch(apiVoluntaryDeductions, {
       method: 'POST',
       headers: {

@@ -1,5 +1,5 @@
 export const validAnEntity = async (url, entity) => {
-  const seleUrl = `http://localhost:4000/${url}${entity}`;
+  const seleUrl = process.env.REACT_APP_BACKEND_LOCALHOST + `${url}${entity}`;
   try {
     const response = await fetch(seleUrl);
     const newData = await response.json();
