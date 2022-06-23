@@ -40,7 +40,7 @@ export const UserProfile = () => {
     applyNoEdit();
     setIsEditing(false);
   }
-  const submit = async () => {
+  const submit = async () => 
     if(user.Roles === 'admin'){
       const result = await updateEmployeer(formValues);
       if(result=== true){
@@ -48,7 +48,6 @@ export const UserProfile = () => {
         applyChangesToForm();
         applyNoEdit();
         setIsEditing(false);
-      }
     }else{
       const result = await updateEmployee(formValues);
       if(result=== true){

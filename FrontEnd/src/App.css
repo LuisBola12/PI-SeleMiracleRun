@@ -74,7 +74,6 @@
   margin-top: 40px;
   justify-content: center;
   display: flex;
-  width: 80%;
 }
 
 .page-content {
@@ -109,7 +108,8 @@
   border-style: none;
   width: 100px;
 }
-.hire-button{
+
+.hire-button {
   margin-bottom: 20px;
   background-color: gray;
   padding: 10px;
@@ -119,8 +119,9 @@
   border-style: none;
   width: 200px;
 }
-.end-contract-button{
-  color:white;
+
+.end-contract-button {
+  color: white;
   padding: 10px;
   border-radius: 8px;
   background-color: darkred;
@@ -146,7 +147,8 @@
   margin-top: 30px;
   width: 100%;
   display: flex;
-  align-items: baseline;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .edit-profile-button {
@@ -162,10 +164,6 @@
   margin-bottom: 40px;
 }
 
-.user-profile-edit-icon {
-  text-align: right;
-  margin-left: 87%;
-}
 
 .submit-change-btn {
   padding: 13px;
@@ -192,12 +190,14 @@
   width: 50px;
   height: 50px;
 }
-.employee-to-EndContract{
+
+.employee-to-EndContract {
   font-size: 20px;
   text-align: center;
   width: 100%;
 }
-.reason-to-end-contract{
+
+.reason-to-end-contract {
   width: 87.5%;
   display: flex;
   flex-direction: row;
@@ -218,11 +218,13 @@
   height: 80px;
 
 }
-.error-label-userprofile{
+
+.error-label-userprofile {
   color: red;
   margin-left: 15px;
   font-size: 15px;
 }
+
 .error-label {
   color: red;
   display: none;
@@ -254,19 +256,34 @@
   border: solid 1px white;
 }
 
+.input-editing {
+  padding-left: 15px;
+  font-family: sans-serif;
+  height: 65px;
+  font-size: 20px;
+  width: 75%;
+  border: solid 1px #000;
+}
+
+.input-editing:focus {
+  border: solid 1px white;
+}
+
 .user-profile-form {
   display: flex;
   flex-direction: column;
   margin-top: 30px;
   width: 100%;
 }
-.form-end-contract{
+
+.form-end-contract {
   width: 90%;
   margin-top: 2rem;
   gap: 1.8rem;
   display: flex;
   flex-direction: row;
 }
+
 .image-terminateContract {
   background-image: url(./icons/tContractIcon.png);
   background-color: transparent;
@@ -275,18 +292,21 @@
   width: 6rem;
   height: 6rem;
 }
-.form-terminateContract-employee{
+
+.form-terminateContract-employee {
   font-size: 40px;
 }
-.form-end-contract-title{
+
+.form-end-contract-title {
   height: 15%;
   width: 80%;
-  gap:10px;
+  gap: 10px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
 }
+
 .user-profile-logo {
   text-align: center;
   border-radius: 50%;
@@ -402,6 +422,7 @@ tr:nth-child(even) {
 .right-td {
   text-align: right;
 }
+
 .center-td {
   text-align: center;
 }
@@ -410,6 +431,7 @@ tr:nth-child(even) {
   text-align: right;
   padding: 0;
 }
+
 .center-button {
   text-align: center;
   padding: 0;
@@ -480,17 +502,20 @@ tr:nth-child(even) {
   border-radius: 0.25rem;
   text-align: center;
 }
-.hire-header-button{
-  
+
+.hire-header-button {
+
   text-align: left;
 }
-.hire-header{
+
+.hire-header {
   display: flex;
   flex-direction: row;
   width: 90%;
   margin-top: 3%;
 }
-.hire-header-title{
+
+.hire-header-title {
   font-size: 2.5rem;
   color: #133c54;
   padding: 0.5rem;
@@ -500,8 +525,9 @@ tr:nth-child(even) {
   gap: 5.7rem;
   width: 75%;
   font-weight: bold;
-  margin-top:2%;
+  margin-top: 2%;
 }
+
 .employee-input-address {
   height: 100px;
   width: 500px;
@@ -635,4 +661,69 @@ tr:nth-child(even) {
 
 .offer-voluntaryDeductions {
   width: 90%;
+}
+
+.editProjectButtons {
+  width: 100%;
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+
+.editProjectsErrors {
+  color: red;
+  margin-left: 15px;
+  /* font-size: 20px; */
+
+}
+
+.editborderRed,
+.editborderRed:hover {
+  border-color: red;
+
+}
+
+.projectEditTitle {
+  width: 50rem;
+  font-weight: 600;
+}
+
+.project-info-header {
+  margin-top: 3%;
+}
+
+.projectCancelButton {
+  background-color: darkred;
+}
+
+.projectCreateButton {
+  background-color: darkgreen;
+  margin-right: 20px;
+}
+
+.projectButon {
+  width: 9rem;
+  padding: 10px;
+  border-radius: 8px;
+  color: white;
+  border-color: white;
+  border-style: none;
+}
+
+.project-button-icons {
+  display: flex;
+  gap: 20px;
+}
+
+.delete-project-button {
+  color: #133c54;
+  width: 55px;
+  height: 55px;
+  margin-top: 3.5px;
+}
+
+.details-table-button {
+  margin-top: 75px;
 }

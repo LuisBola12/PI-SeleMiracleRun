@@ -1,6 +1,9 @@
 import { getConnection, sql } from '../database';
 import { employeesQueries } from '../database/queries/employeesQueries';
 import { userQueries } from '../database/queries/userQueries';
+import { sendEmail } from '../services/Mailer';
+import { emailNewUserEmployer } from '../FormatEmailMessages/EmailNewUserEmployer';
+import { employerQueries } from '../database/queries/employerQueries';
 
 export const getUsers = async ( req, res ) => {
   try {
@@ -101,7 +104,7 @@ export const getEmployerByID = async ( req, res ) => {
     const pool = await getConnection();
     const result = await pool.request()
       .input( 'Cedula', Cedula )
-      .query( userQueries.getEmployerByID );
+      .query( employerQueries.getEmployerByID );
     console.log( result );
     res.status( 200 ).json( result.recordset );
   } catch ( e ) {
@@ -126,9 +129,8 @@ export const registerNewUser = async ( req, res ) => {
     const message = 'Please Fill All Fields.';
     return res.status( 400 ).json( { msg: message } );
   }
-
+  const pool = await getConnection();
   try {
-    const pool = await getConnection();
     const result = await pool
       .request()
       .input( 'Email', sql.VarChar, Email )
@@ -142,7 +144,6 @@ export const registerNewUser = async ( req, res ) => {
   }
 
   try {
-    const pool = await getConnection();
     const result = await pool
       .request()
       .input( 'Cedula', sql.VarChar, Cedula )
@@ -151,14 +152,33 @@ export const registerNewUser = async ( req, res ) => {
       .input( 'Apellido2', sql.VarChar, Apellido2 )
       .input( 'Telefono', sql.VarChar, Telefono )
       .input( 'Email', sql.VarChar, Email )
-      .query( userQueries.createNewEmployer );
+      .query( employerQueries.createNewEmployer );
     console.log( result );
     res.status( 200 ).send();
   } catch ( e ) {
     console.log( `Error: ${e}` );
     res.status( 500 ).send( e.message );
   }
+  try {
+    const dataInfoUser = {
+      'email': Email, 
+      'password': Contrasenia, 
+      'employer': `${Nombre} ${Apellido1} ${Apellido2}`, 
+    };
+
+    let mailFormat = {
+      from: process.env.EMAIL_USER,
+      to: Email,
+      subject: 'Nueva Cuenta SeleMiracleRun',
+      html: emailNewUserEmployer( dataInfoUser ),
+    };
+    await sendEmail( mailFormat );
+    console.log( 'Se envio correctamente' );
+  } catch ( e ){
+    console.log( e );
+  }
 };
+
 export const getProfileEmployee = async ( req, res ) => {
   try {
     const { Email } = req.params;
@@ -202,7 +222,7 @@ export const updateProfileEmployee = async ( req, res ) => {
       .request()
       .input( 'Email', sql.VarChar, Email )
       .input( 'EmailViejo', sql.VarChar, EmailViejo )
-      .query( employeesQueries.udpateEmail );
+      .query( userQueries.udpateEmail );
     console.log( result.recordset );
   } catch ( e ) {
     console.log( `Error: ${e}` );
@@ -217,7 +237,7 @@ export const updateProfileEmployee = async ( req, res ) => {
       .input( 'Apellido2', sql.VarChar, Apellido2 )
       .input( 'Cedula', sql.VarChar, Cedula )
       .input( 'Telefono', sql.VarChar, Telefono )
-      .query( employeesQueries.updateEmployee );
+      .query( userQueries.updateEmployee );
     res.send( result.recordset );
   } catch ( e ) {
     console.log( `Error: ${e}` );
@@ -239,7 +259,7 @@ export const updateProfileEmployeer = async ( req, res ) => {
       .request()
       .input( 'Email', sql.VarChar, Email )
       .input( 'EmailViejo', sql.VarChar, EmailViejo )
-      .query( employeesQueries.udpateEmail );
+      .query( userQueries.udpateEmail );
     console.log( result.recordset );
   } catch ( e ) {
     console.log( `Error: ${e}` );
@@ -254,7 +274,7 @@ export const updateProfileEmployeer = async ( req, res ) => {
       .input( 'Apellido2', sql.VarChar, Apellido2 )
       .input( 'Cedula', sql.VarChar, Cedula )
       .input( 'Telefono', sql.VarChar, Telefono )
-      .query( employeesQueries.updateEmployeer );
+      .query( userQueries.updateEmployeer );
     res.send( result.recordset );
   } catch ( e ) {
     console.log( `Error: ${e}` );

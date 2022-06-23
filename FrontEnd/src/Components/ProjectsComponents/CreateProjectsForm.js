@@ -105,7 +105,7 @@ export const CreateProjectsForm = () => {
           </div>
         </div>
       </form>
-      <footer className='logIn-footerCopyRights'> &copy; SeleMiracleRun </footer>
+      <footer className='createProject-footerCopyRights'> &copy; SeleMiracleRun </footer>
     </>
 
   );
