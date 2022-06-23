@@ -11,16 +11,16 @@ import { useSelector } from 'react-redux';
 
 export const PayrollDetails = () => {
   const activeProject = useSelector((state) => state.activeProject.projectName);
-  const [startDate,setStartDate] = useState();
-  const [endDate,setEndDate] = useState();
-  const [data,setData] = useState([]);
-  const [infoReceived,setInfoReceived] = useState(false);
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
+  const [data, setData] = useState([]);
+  const [infoReceived, setInfoReceived] = useState(false);
   const location = useLocation();
   let formatter = new Intl.NumberFormat(undefined, {
     style: 'currency',
     currency: 'CRC',
   });
-  const removeTimeFromDate = (date) =>{
+  const removeTimeFromDate = (date) => {
     let myDate = new Date(date);
     let noTimeDate = new Date(myDate.getFullYear(), myDate.getMonth(), myDate.getDate());
     return noTimeDate.toDateString();
@@ -31,7 +31,7 @@ export const PayrollDetails = () => {
   };
   useEffect(() => {
     const getData = async () => {
-      const newData = await getPayrrollPayslips(activeProject,location.state.Consectivo);
+      const newData = await getPayrrollPayslips(activeProject, location.state.Consectivo);
       setStartDate(removeTimeFromDate(location.state.FechaIncio));
       setEndDate(removeTimeFromDate(location.state.FechaFin));
       setData(newData);
@@ -39,19 +39,19 @@ export const PayrollDetails = () => {
     };
     getData();
   }, []);
-  return !infoReceived ? <div className='loader'></div> :(
+  return !infoReceived ? <div className='loader'></div> : (
     <>
       <div className='details-table-button'>
-        <IconContext.Provider value={{ color: 'gray', className: 'global-class-name', size: '2.6rem'}}>
-          <button className='back-arrow-button' onClick={()=>{back();}}>
+        <IconContext.Provider value={{ color: 'gray', className: 'global-class-name', size: '2.6rem' }}>
+          <button className='back-arrow-button' onClick={() => { back(); }}>
             <FaArrowLeft />
           </button>
         </IconContext.Provider>
         <h2 className='details-head-title'>
-        {`PaySlips from: ${startDate} - ${endDate}`}
-      </h2>
+          {`PaySlips from: ${startDate} - ${endDate}`}
+        </h2>
       </div>
-      
+
       <table className='Table'>
         <thead>
           <tr className='table-header'>
@@ -82,7 +82,7 @@ export const PayrollDetails = () => {
               <td className='right-td'>{element.TipoContrato === 'Servicios Profesionales' ? '-' : formatter.format(element.DeduccionesObligatoriasEmpleado)}</td>
               <td className='right-td'>{element.TipoContrato === 'Servicios Profesionales' ? '-' : formatter.format(element.DeduccionesVoluntarias)}</td>
               <td className='right-td'>{element.TipoContrato === 'Servicios Profesionales' ? '-' : formatter.format(element.Beneficios)}</td>
-              <td className='table-right-border right-td'>{ formatter.format(element.SalarioNeto)}</td>
+              <td className='table-right-border right-td'>{formatter.format(element.SalarioNeto)}</td>
             </tr>
           ))}
         </tbody>

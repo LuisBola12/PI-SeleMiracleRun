@@ -54,7 +54,7 @@ export const EmployeePayments = () => {
           </tr>
         </thead>
         <tbody>
-          {employeePayments.map((row) => (
+          {employeePayments.slice(0).reverse().map((row) => (
             <tr key={row.ConsecutivoPago}>
               <td className='left-td table-left-border'>{row.TipoContrato}</td>
               <td className='right-td'>{removeTimeFromDate(row.FechaIncio)}</td>

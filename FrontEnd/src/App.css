@@ -218,11 +218,13 @@
   height: 80px;
 
 }
-.error-label-userprofile{
+
+.error-label-userprofile {
   color: red;
   margin-left: 15px;
   font-size: 15px;
 }
+
 .error-label {
   color: red;
   display: none;
@@ -720,4 +722,8 @@ tr:nth-child(even) {
   width: 55px;
   height: 55px;
   margin-top: 3.5px;
+}
+
+.details-table-button {
+  margin-top: 75px;
 }
