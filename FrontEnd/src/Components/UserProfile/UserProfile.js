@@ -31,7 +31,7 @@ export const UserProfile = () => {
     setIsEditing(false);
   }
   const submit = async () => {
-    if(user.Roles === 'admin'){
+    if (user.Roles === 'admin') {
       updateEmployeer(formValues);
         applyNoEdit();
     }else{
