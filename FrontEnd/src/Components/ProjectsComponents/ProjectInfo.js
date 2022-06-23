@@ -3,7 +3,7 @@ import { IconContext } from 'react-icons';
 import { FaEdit } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import { useForm } from './../../shared/hooks/useForm';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { getAnEntity } from '../../Utils/getAnEntity';
@@ -11,18 +11,22 @@ import Swal from 'sweetalert2';
 import usePost from '../../shared/hooks/usePost';
 import validateEditProject from './editProjectValidate';
 import { validAnEntity } from '../../Utils/validAnEntity';
+import { updateActiveProject } from '../../Slices/projectSlice/activeProjectSlice';
+import { useNavigate } from 'react-router-dom';
 
 export const ProjectInfo = () => {
 
+  const navigate = useNavigate();
   const [ isEditing, setIsEditing ] = useState( false );
   const [ inputCss, setInputCss ] = useState( 'user-profile-input' );
   const [ isLoading, setIsLoading ] = useState( true );
   const activeProject = useSelector( ( state ) => state.activeProject.projectName );
   const [ projectData, setProjectData ] = useState( [] );
   const employerID = useSelector( ( state ) => state.user.user.Cedula );
-
   const { post, postError } = usePost( process.env.REACT_APP_BACKEND_LOCALHOST + 'logicEliminateProject', 'PUT' );
   const { post:updateProject } = usePost( process.env.REACT_APP_BACKEND_LOCALHOST + 'updateProject', 'PUT' );
+  const dispatch = useDispatch();
+  const [changeMade, setChangeMade] = useState(false)
 
   const submit = async () => {
     const availableName = await validAnEntity( 'projects/',formValues.projectName );
@@ -37,9 +41,14 @@ export const ProjectInfo = () => {
       } );
       console.log( 'puede' );
       updateProject( string );
+      dispatch(updateActiveProject(formValues.projectName))
+      setFormValues([]);
+      setIsEditing(false);
+      setProjectData([]);
+      setChangeMade(true);
+
     }
     else {
-      projectData.Nombre;
       Swal.fire( {
         icon: 'error',
         title: 'Error...',
@@ -85,8 +94,9 @@ export const ProjectInfo = () => {
     try {
       const activeEmployeesApiResponse = await fetch( process.env.REACT_APP_BACKEND_LOCALHOST + `getEmployeesInfo/${projectName}` );
       const activeEmployees = await activeEmployeesApiResponse.json();
-      if ( activeEmployees.length == 0 ) {
+      if ( activeEmployees.length === 0 ) {
         proceedToEliminate( projectName );
+        navigate('/')
       } else {
         Swal.fire( {
           icon: 'error',
@@ -114,10 +124,11 @@ export const ProjectInfo = () => {
       console.log( result );
       setProjectData( result[0] );
       setIsLoading( false );
-      setFormValues( { ...formValues, ['projectName']: projectData.Nombre } );
+      setFormValues( { ...formValues, 'projectName': projectData.Nombre } );
     };
     loadProjectData();
-  }, [ activeProject ] );
+    setChangeMade(false);
+  }, [ changeMade  ] );
 
   return isLoading ? (
     <div className='loader'></div>
@@ -169,7 +180,7 @@ export const ProjectInfo = () => {
               className={inputCss + ' ' + errors.projectNameErrorCss}
               placeholder={projectData.Nombre}
               autoComplete='off'
-              value={isEditing ? formValues.projectName || '' : projectData.Nombre}
+              value={isEditing ? formValues.projectName : projectData.Nombre}
               onChange={handleInputChange}
               disabled={!isEditing}
             ></input>
@@ -250,7 +261,7 @@ export const ProjectInfo = () => {
                     setIsEditing( false );
                     setInputCss( 'user-profile-input' );
                     setFormValues( [] );
-                    setFormValues( { ...formValues, ['projectName']: projectData.Nombre } );
+                    setFormValues( { ...formValues, 'projectName': projectData.Nombre } );
                     setErrors( [] );
                   }}>
                     Cancel
