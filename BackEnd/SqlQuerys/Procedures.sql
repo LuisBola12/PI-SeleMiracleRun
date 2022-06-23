@@ -288,9 +288,15 @@ BEGIN
 	CLOSE cursor__
 	DEALLOCATE cursor__
 
-	DECLARE @MontoTotalBeneficios real
-	SELECT @MontoTotalBeneficios = SUM(R.CostoBeneficio)
+	DECLARE @MontoTotalBeneficios real = 0, @MontoTotalBeneficiosTemp real
+	SELECT @MontoTotalBeneficiosTemp = SUM(R.CostoBeneficio)
 	FROM @Resultados R
+	
+	IF (@MontoTotalBeneficiosTemp > 0)
+	BEGIN
+		PRINT('Empleado si tienen deducciones voluntarias')
+		SET @MontoTotalBeneficios = @MontoTotalBeneficiosTemp
+	END;
 
 	UPDATE PAGO 
 	SET MontoTotalBeneficios = @MontoTotalBeneficios
@@ -342,9 +348,15 @@ BEGIN
 	CLOSE cursor__
 	DEALLOCATE cursor__
 
-	DECLARE @MontoTotalDeduccionesVoluntarias real
-	SELECT @MontoTotalDeduccionesVoluntarias = SUM(R.CostoDeduccionVoluntaria)
+	DECLARE @MontoTotalDeduccionesVoluntarias real = 0, @MontoTotalDeduccionesVoluntariasTemp real
+	SELECT @MontoTotalDeduccionesVoluntariasTemp = SUM(R.CostoDeduccionVoluntaria)
 	FROM @Resultados R
+	
+	IF (@MontoTotalDeduccionesVoluntariasTemp > 0)
+	BEGIN
+		PRINT('Empleado si tienen deducciones voluntarias')
+		SET @MontoTotalDeduccionesVoluntarias = @MontoTotalDeduccionesVoluntariasTemp
+	END;
 
 	UPDATE PAGO 
 	SET MontoTotalDeduccionesVoluntarias = @MontoTotalDeduccionesVoluntarias
