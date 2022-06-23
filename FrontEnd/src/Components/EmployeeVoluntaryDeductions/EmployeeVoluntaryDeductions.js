@@ -27,8 +27,8 @@ export const EmployeeVoluntaryDeductions = () => {
     unlinkEmployeeToVoluntaryDeduction(element.NombreDeduccionVoluntaria);
     Swal.fire({
       icon: 'success',
-      title: 'unsubscribed',
-      text: `You unsubscribed from ${element.NombreDeduccionVoluntaria} successfuly`,
+      title: 'Unsubscribed',
+      text: `You unsubscribed to ${element.NombreDeduccionVoluntaria} successfully`,
       confirmButtonColor: 'darkgreen'
     });
     setofferedInfo(false);

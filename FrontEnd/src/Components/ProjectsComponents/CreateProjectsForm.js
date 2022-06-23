@@ -32,7 +32,7 @@ export const CreateProjectsForm = () => {
       Swal.fire({
         icon: 'error',
         title: 'Error...',
-        text: 'Project Name Already Exist',
+        text: 'That project name already exists',
         confirmButtonColor: 'darkgreen',
       });
       setIsSubmitting(false);

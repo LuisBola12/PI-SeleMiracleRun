@@ -25,8 +25,12 @@ export const EmployeePayments = () => {
     const getEmployeeInfo = async () => {
 
       const infoReceived = await getAnEntity('employeePayments', `/${activeProject}/${employeeEmail}`);
-      setEmployeePayments(infoReceived);
-      console.log(infoReceived);
+      if (infoReceived === undefined) {
+        setEmployeePayments([]);
+      } else {
+        setEmployeePayments(infoReceived);
+        console.log(infoReceived);
+      }
       setIsLoading(false);
     };
     getEmployeeInfo();
@@ -34,16 +38,12 @@ export const EmployeePayments = () => {
 
   return (isLoading ? <div className='loader' ></div > :
     <>
-      {/* <div className='details-table-button'>
-      </div> */}
       <h2 className='table-button'>My Payments</h2>
       <table className='Table'>
         <thead>
           <tr className='table-header'>
-            {/* <th className='left-td table-left-border'>Type of Contract</th> */}
             <th className='left-td table-left-border'>Contract Type</th>
-            <th className='right-td'>Start Date</th>
-            <th className='right-td'>End Date</th>
+            <th className='right-td'>Payment Date</th>
             <th className='right-td'>Hours Worked</th>
             <th className='right-td'>Hourly Wage</th>
             <th className='right-td'>Gross Salary</th>
@@ -57,19 +57,19 @@ export const EmployeePayments = () => {
           {employeePayments.slice(0).reverse().map((row) => (
             <tr key={row.ConsecutivoPago}>
               <td className='left-td table-left-border'>{row.TipoContrato}</td>
-              <td className='right-td'>{removeTimeFromDate(row.FechaIncio)}</td>
               <td className='right-td'>{removeTimeFromDate(row.FechaFin)}</td>
               <td className='right-td'>{row.TipoContrato === 'Por horas' ? row.SalarioBruto / row.SalarioPorHoras : '-'}</td>
               <td className='right-td'>{formatter.format(row.SalarioPorHoras)}</td>
               <td className='right-td'>{formatter.format(row.SalarioBruto)}</td>
               <td className='right-td'>{row.TipoContrato === 'Servicios Profesionales' ? '-' : formatter.format(row.MontoTotalDeduccionesObligatoriasEmpleado)}</td>
-              <td className='right-td'>{row.TipoContrato === 'Servicios Profesionales' ? '-' : formatter.format(row.MontoTotalDeduccionesObligatoriasEmpleador)}</td>
+              <td className='right-td'>{row.TipoContrato === 'Servicios Profesionales' ? '-' : formatter.format(row.MontoTotalDeduccionesVoluntarias)}</td>
               <td className='right-td'>{row.TipoContrato === 'Servicios Profesionales' ? '-' : formatter.format(row.MontoTotalBeneficios)}</td>
               <td className='right-td'>{formatter.format(row.SalarioNeto)}</td>
             </tr>
           ))}
         </tbody>
       </table>
+      <label className='Empty-message'>{(employeePayments.length === 0) ? 'No Payments made to me yet' : ''}</label>
     </>
   );
 };
