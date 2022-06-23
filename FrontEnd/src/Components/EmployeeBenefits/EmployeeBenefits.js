@@ -32,8 +32,8 @@ export const EmployeeBenefits = () => {
     unlinkEmployeeToBenefit(element.NombreBeneficio);
     Swal.fire({
       icon: 'success',
-      title: 'unsubscribed',
-      text: `You unsubscribed from ${element.NombreBeneficio} successfuly`,
+      title: 'Unsubscribed',
+      text: `You unsubscribed to ${element.NombreBeneficio} successfully`,
       confirmButtonColor: 'darkgreen'
     });
     setofferedInfo(false);

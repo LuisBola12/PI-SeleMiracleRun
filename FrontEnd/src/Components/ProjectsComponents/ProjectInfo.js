@@ -17,31 +17,30 @@ import { useNavigate } from 'react-router-dom';
 export const ProjectInfo = () => {
 
   const navigate = useNavigate();
-  const [ isEditing, setIsEditing ] = useState( false );
-  const [ inputCss, setInputCss ] = useState( 'user-profile-input' );
-  const [ isLoading, setIsLoading ] = useState( true );
-  const activeProject = useSelector( ( state ) => state.activeProject.projectName );
-  const [ projectData, setProjectData ] = useState( [] );
-  const employerID = useSelector( ( state ) => state.user.user.Cedula );
-  const { post, postError } = usePost( process.env.REACT_APP_BACKEND_LOCALHOST + 'logicEliminateProject', 'PUT' );
-  const { post:updateProject } = usePost( process.env.REACT_APP_BACKEND_LOCALHOST + 'updateProject', 'PUT' );
+  const [isEditing, setIsEditing] = useState(false);
+  const [inputCss, setInputCss] = useState('user-profile-input');
+  const [isLoading, setIsLoading] = useState(true);
+  const activeProject = useSelector((state) => state.activeProject.projectName);
+  const [projectData, setProjectData] = useState([]);
+  const employerID = useSelector((state) => state.user.user.Cedula);
+  const { post, postError } = usePost(process.env.REACT_APP_BACKEND_LOCALHOST + 'logicEliminateProject', 'PUT');
+  const { post: updateProject } = usePost(process.env.REACT_APP_BACKEND_LOCALHOST + 'updateProject', 'PUT');
   const dispatch = useDispatch();
   const [changeMade, setChangeMade] = useState(false)
 
   const submit = async () => {
-    const availableName = await validAnEntity( 'projects/',formValues.projectName );
-    if ( formValues.projectName === activeProject || availableName ){
-      console.log( 'entra a submit' );
-      let string = JSON.stringify( formValues );
-      string = JSON.stringify( {
+    const availableName = await validAnEntity('projects/', formValues.projectName);
+    if (formValues.projectName === activeProject || availableName) {
+      console.log('entra a submit');
+      let string = JSON.stringify(formValues);
+      string = JSON.stringify({
         projectName: formValues.projectName,
         paymentPeriod: formValues.paymentPeriod,
         oldProjectName: activeProject,
         employerID: employerID,
-      } );
-      console.log( 'puede' );
-      updateProject( string );
-      dispatch(updateActiveProject(formValues.projectName))
+      });
+      updateProject(string);
+      dispatch(updateActiveProject(formValues.projectName));
       setFormValues([]);
       setIsEditing(false);
       setProjectData([]);
@@ -49,18 +48,18 @@ export const ProjectInfo = () => {
 
     }
     else {
-      Swal.fire( {
+      Swal.fire({
         icon: 'error',
         title: 'Error...',
-        text: 'Project Name Already Exist',
+        text: 'That project name already exists',
         confirmButtonColor: 'darkgreen',
-      } );
-    }   
-    setIsSubmitting( false );
+      });
+    }
+    setIsSubmitting(false);
   };
 
-  const proceedToEliminate = async ( projectName ) => {
-    Swal.fire( {
+  const proceedToEliminate = async (projectName) => {
+    Swal.fire({
       title: 'Are you sure?',
       text: 'You won\'t be able to revert this!',
       icon: 'warning',
@@ -68,67 +67,65 @@ export const ProjectInfo = () => {
       confirmButtonColor: 'darkgreen',
       cancelButtonColor: 'darkred',
       confirmButtonText: 'Yes, delete it!'
-    } ).then( ( result ) => {
-      if ( result.isConfirmed ) {
-        console.log( `Eliminating: ${projectName}` );
-        console.log( 'proceding eliminate project From database ' );
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log(`Eliminating: ${projectName}`);
+        console.log('proceding eliminate project From database ');
         let string = '';
-        string = JSON.stringify( {
+        string = JSON.stringify({
           Nombre: projectName,
-        } );
-        post( string );
-        if ( postError ) {
-          console.log( 'Error Trying to delete' );
+        });
+        post(string);
+        if (postError) {
+          console.log('Error Trying to delete');
         }
-        Swal.fire( {
+        Swal.fire({
           title: 'Deleted!',
-          text: `The Ptroject ${projectName} has been deleted.`,
+          text: `The Project ${projectName} has been deleted.`,
           icon: 'success',
           confirmButtonColor: 'darkgreen',
-        } );
+        });
+        dispatch(updateActiveProject(''));
+        navigate('/');
       }
-    } );
+    });
   };
 
-  const eliminateProject = async ( projectName ) => {
+  const eliminateProject = async (projectName) => {
     try {
-      const activeEmployeesApiResponse = await fetch( process.env.REACT_APP_BACKEND_LOCALHOST + `getEmployeesInfo/${projectName}` );
+      const activeEmployeesApiResponse = await fetch(process.env.REACT_APP_BACKEND_LOCALHOST + `getEmployeesInfo/${projectName}`);
       const activeEmployees = await activeEmployeesApiResponse.json();
-      if ( activeEmployees.length === 0 ) {
-        proceedToEliminate( projectName );
-        navigate('/')
+      if (activeEmployees.length === 0) {
+        proceedToEliminate(projectName);
       } else {
-        Swal.fire( {
+        Swal.fire({
           icon: 'error',
           title: 'Oops... Can\'t Delete Project',
-          text: 'This project have active Employees',
+          text: 'This project has active employees',
           confirmButtonColor: 'darkgreen',
-        } );
+        });
 
+      };
 
-        console.log( 'NO se puede eliminar: El proyecto Tiene empleados' );
-      } console.log( 'entra' );
-
-    } catch ( error ) {
-      console.log( `Error en la solicitud de base de datos: ${error}` );
+    } catch (error) {
+      console.log(`Error: ${error}`);
     }
 
   };
 
-  const { formValues, handleInputChange, handleSubmit, errors, setFormValues, setErrors, setIsSubmitting } = useForm( submit, validateEditProject );
-  //Cargar el contenido inicial
-  useEffect( () => {
-    setIsLoading( true );
+  const { formValues, handleInputChange, handleSubmit, errors, setFormValues, setErrors, setIsSubmitting } = useForm(submit, validateEditProject);
+  useEffect(() => {
+    setIsLoading(true);
     const loadProjectData = async () => {
-      const result = await getAnEntity( 'projects/', activeProject );
-      console.log( result );
-      setProjectData( result[0] );
-      setFormValues( { ...formValues, 'projectName': projectData.Nombre } );
-      setIsLoading( false );
+      const result = await getAnEntity('projects/', activeProject);
+      console.log(result);
+      setProjectData(result[0]);
+      setFormValues({ ...formValues, 'projectName': projectData.Nombre });
+      setIsLoading(false);
     };
     loadProjectData();
     setChangeMade(false);
-  }, [ changeMade ] );
+  }, [changeMade]);
 
   return isLoading ? (
     <div className='loader'></div>
@@ -145,8 +142,8 @@ export const ProjectInfo = () => {
               }}
             >
               <button className='edit-profile-button' onClick={() => {
-                setIsEditing( true );
-                setInputCss( 'input-editing' );
+                setIsEditing(true);
+                setInputCss('input-editing');
                 setChangeMade(true);
               }
               } >
@@ -159,7 +156,7 @@ export const ProjectInfo = () => {
                 className: 'delete-project-button',
               }}
             >
-              <button className='edit-profile-button' onClick={() => eliminateProject( activeProject )}>
+              <button className='edit-profile-button' onClick={() => eliminateProject(activeProject)}>
                 <MdDelete />
               </button>
             </IconContext.Provider>
@@ -181,7 +178,7 @@ export const ProjectInfo = () => {
               className={inputCss + ' ' + errors.projectNameErrorCss}
               placeholder={projectData.Nombre}
               autoComplete='off'
-              value={(isEditing&&!isLoading) ? formValues.projectName || ''  : projectData.Nombre}
+              value={(isEditing && !isLoading) ? formValues.projectName || '' : projectData.Nombre}
               onChange={handleInputChange}
               disabled={!isEditing}
             ></input>
@@ -259,11 +256,11 @@ export const ProjectInfo = () => {
                     Submit
                   </button>
                   <button className='projectButon projectCancelButton' onClick={() => {
-                    setIsEditing( false );
-                    setInputCss( 'user-profile-input' );
-                    setFormValues( [] );
-                    setFormValues( { ...formValues, 'projectName': projectData.Nombre } );
-                    setErrors( [] );
+                    setIsEditing(false);
+                    setInputCss('user-profile-input');
+                    setFormValues([]);
+                    setFormValues({ ...formValues, 'projectName': projectData.Nombre });
+                    setErrors([]);
                   }}>
                     Cancel
                   </button>

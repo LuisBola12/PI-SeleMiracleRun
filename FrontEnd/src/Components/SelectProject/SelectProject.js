@@ -45,7 +45,7 @@ export const SelectProjectComp = () => {
         setNeedToRefresh(true);
         Swal.fire({
           title: 'Deleted!',
-          text: `The Ptroject ${projectName} has been deleted.`,
+          text: `The Project ${projectName} has been deleted.`,
           icon: 'success',
           confirmButtonColor: 'darkgreen',
         });
