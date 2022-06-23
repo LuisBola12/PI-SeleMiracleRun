@@ -1,4 +1,4 @@
-import React from 'react';
+import {useState,React} from 'react';
 import { IconContext } from 'react-icons';
 import { FaEdit } from 'react-icons/fa';
 import { useForm } from './../../shared/hooks/useForm';
@@ -12,13 +12,29 @@ import {
 } from './../../Utils/UserProfile/editUserProfile';
 
 export const UserProfile = () => {
-  const { updateEmployee, updateEmployeer } = usePutEditUser();
+  const {updateEmployee,updateEmployeer} = usePutEditUser();
+  const [userId, setUserId] = useState('');
+  const [formValuesCopy,setFormValuesCopy] = useState({})
+  const [isEditing, setIsEditing] = useState(false);
   const user = useSelector((state) => state.user.user);
+  const handleEdit = () => {
+    setIsEditing(true);
+    removeNoEdit();
+  }
+  const handleCancel = () =>{
+    formValues.name = formValuesCopy.name;
+    formValues.lastname = formValuesCopy.lastname;
+    formValues.secondlastname = formValuesCopy.secondlastname;
+    formValues.email = formValuesCopy.email;
+    formValues.phoneNumber = formValuesCopy.phoneNumber;
+    applyNoEdit();
+    setIsEditing(false);
+  }
   const submit = async () => {
     if (user.Roles === 'admin') {
       updateEmployeer(formValues);
-      applyNoEdit();
-    } else {
+        applyNoEdit();
+    }else{
       updateEmployee(formValues);
       applyNoEdit();
     }
@@ -29,21 +45,21 @@ export const UserProfile = () => {
     handleSubmit,
     errors,
   } = useForm(submit, validateEditUserForm);
-  const { infoReceived } = useGetProfileData(formValues);
+  const {infoReceived } = useGetProfileData(formValues,setUserId,setFormValuesCopy);
   return !infoReceived ? (
     <div className='loader'></div>
   ) : (
     <>
       <div className='user-info-container'>
         <div className='user-profile-header'>
-          <div className='user-profile-logo'>{`${formValues.name[0]}${formValues.lastname[0]}`}</div>
-          <div>
+          <div className='user-profile-logo'>{userId}</div>
+          <div className='user-profile-edit-icon'>
             <IconContext.Provider
               value={{
                 className: 'user-profile-edit-button',
               }}
             >
-              <button className='edit-profile-button' onClick={removeNoEdit}>
+              <button className='edit-profile-button' onClick={handleEdit}>
                 <FaEdit />
               </button>
             </IconContext.Provider>
@@ -53,7 +69,7 @@ export const UserProfile = () => {
           <div className='user-profile-inner-div'>
             <div className='div-profile'>
               <label className='user-profile-label'>Name</label>
-              <label id='error-name-user' className='error-label'>
+              <label id='error-name-user' className='error-label-userprofile'>
                 {errors.name}
               </label>
             </div>
@@ -61,7 +77,7 @@ export const UserProfile = () => {
               id='name'
               className='user-profile-input'
               disabled
-              value={formValues.name}
+              value={!isEditing ? formValuesCopy.name : formValues.name}
               onChange={handleInputChange}
               readOnly
             ></input>
@@ -69,7 +85,7 @@ export const UserProfile = () => {
           <div className='user-profile-inner-div'>
             <div className='div-profile'>
               <label className='user-profile-label'>First Last Name</label>
-              <label id='error-fLastname-user' className='error-label'>
+              <label id='error-fLastname-user' className='error-label-userprofile'>
                 {errors.lastname}
               </label>
             </div>
@@ -77,7 +93,7 @@ export const UserProfile = () => {
               id='lastname'
               className='user-profile-input'
               disabled
-              value={formValues.lastname}
+              value={!isEditing ? formValuesCopy.lastname : formValues.lastname}
               onChange={handleInputChange}
               readOnly
             ></input>
@@ -85,7 +101,7 @@ export const UserProfile = () => {
           <div className='user-profile-inner-div'>
             <div className='div-profile'>
               <label className='user-profile-label'>Second Last Name</label>
-              <label id='error-Slastname-user' className='error-label'>
+              <label id='error-Slastname-user' className='error-label-userprofile'>
                 {errors.secondlastname}
               </label>
             </div>
@@ -93,7 +109,7 @@ export const UserProfile = () => {
               id='secondlastname'
               className='user-profile-input'
               disabled
-              value={formValues.secondlastname}
+              value={!isEditing ? formValuesCopy.secondlastname : formValues.secondlastname}
               onChange={handleInputChange}
               readOnly
             ></input>
@@ -101,9 +117,6 @@ export const UserProfile = () => {
           <div className='user-profile-inner-div'>
             <div className='div-profile'>
               <label className='user-profile-label'>Identification</label>
-              <label id='error-id-user' className='error-label'>
-                {errors.email}
-              </label>
             </div>
             <input
               id='id'
@@ -117,7 +130,7 @@ export const UserProfile = () => {
           <div className='user-profile-inner-div'>
             <div className='div-profile'>
               <label className='user-profile-label'>Email</label>
-              <label id='error-email-user' className='error-label'>
+              <label id='error-email-user' className='error-label-userprofile'>
                 {errors.email}
               </label>
             </div>
@@ -125,7 +138,7 @@ export const UserProfile = () => {
               id='email'
               className='user-profile-input'
               disabled
-              value={formValues.email}
+              value={!isEditing ? formValuesCopy.email : formValues.email}
               onChange={handleInputChange}
               readOnly
             ></input>
@@ -133,15 +146,12 @@ export const UserProfile = () => {
           <div className='user-profile-inner-div'>
             <div className='div-profile'>
               <label className='user-profile-label'>Phone Number</label>
-              <label id='error-phoneNumber-user' className='error-label'>
-                {errors.phoneNumber}
-              </label>
             </div>
             <input
               id='phoneNumber'
               className='user-profile-input'
               disabled
-              value={formValues.phoneNumber}
+              value={!isEditing ? formValuesCopy.phoneNumber : formValues.phoneNumber}
               onChange={handleInputChange}
               readOnly
             ></input>
@@ -152,7 +162,7 @@ export const UserProfile = () => {
             <button className='submit-change-btn' onClick={handleSubmit}>
               Submit
             </button>
-            <button className='dont-change-btn' onClick={applyNoEdit}>
+            <button className='dont-change-btn' onClick={handleCancel}>
               Cancel
             </button>
           </div>

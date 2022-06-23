@@ -66,7 +66,7 @@
 .details-head-title {
   font-family: sans-serif;
   text-align: center;
-  width: 80%;
+  width: 100%;
 }
 
 
@@ -218,7 +218,11 @@
   height: 80px;
 
 }
-
+.error-label-userprofile{
+  color: red;
+  margin-left: 15px;
+  font-size: 15px;
+}
 .error-label {
   color: red;
   display: none;
