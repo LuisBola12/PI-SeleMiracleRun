@@ -98,7 +98,7 @@ export const SelectProjectComp = () => {
           } else {
             rolFromUser === 'admin' ?
               (navigate('/employees')) :
-              (navigate('/home'));
+              (navigate('/myPayments'));
           }
         }}
         >
