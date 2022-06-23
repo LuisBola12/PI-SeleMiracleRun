@@ -14,8 +14,9 @@ export const CalendarComp = () => {
   const [hours, setHours] = useState('');
   const { post } = usePost(process.env.REACT_APP_BACKEND_LOCALHOST + 'employee/hours');
   const dateMin = null;
+
   const dateToString = () => {
-    return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDay()}`
+    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
   };
   const userEmail = useSelector((state) => state.user.user.Email);
   const proyecto = useSelector((state) => state.activeProject.projectName);
@@ -30,7 +31,7 @@ export const CalendarComp = () => {
   }
 
   const handleSave = () => {
-    const actualDate = dateToString(date);
+    const actualDate = dateToString();
     if (validate(hours) === false) {
       let string = '';
       string = JSON.stringify({
