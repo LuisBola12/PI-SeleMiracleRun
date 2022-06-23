@@ -113,6 +113,7 @@ export const CreateEmployee = () => {
           <div className='animated-input-employee-id'>
             <input type='number' id='phoneNumber' className='animated-input-employee-id__input'
               value={formValues.phoneNumber || ''}
+              maxLength={8}
               onChange={handleInputChange}
               autoComplete='off' placeholder=' '></input>
             <label htmlFor='phoneNumber' className='animated-input-employee-id__label'>Phone Number</label>

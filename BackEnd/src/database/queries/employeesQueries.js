@@ -22,18 +22,18 @@ export const employeesQueries = {
     @NombreServicio,@SalarioPorHora,@FechaInicioContrato,@FechaFinContrato,@ValorServicio)`,
   deleteEmployeeFromProject: 'Delete from EmpleadoYContratoSeAsocianAProyecto where CedulaEmpleado = @Cedula and NombreProyecto = @NombreProyecto',
   insertHours: 'EXEC ingresarHoras @Email = @EmailEmpleado , @Proyecto = @ProyectoEmpleado, @Fecha = @FechaEmpleado, @CantidadHoras = @CantHorasEmpleado',
-  getActiveEmployeesInfo:'SELECT * FROM [SeleMiracleRun].[dbo].[EmpleadoYContratoSeAsocianAProyecto] WHERE FechaFin > GETDATE() AND NombreProyecto = @projectName',
-  updateEmployee:'Update Empleado set Nombre= @Nombre, Apellido1= @Apellido1 ,Apellido2= @Apellido2,Telefono= @Telefono Where Cedula= @Cedula',
-  updateEmployeer:'Update Empleador set Nombre= @Nombre, Apellido1= @Apellido1 ,Apellido2= @Apellido2,Telefono= @Telefono Where Cedula= @Cedula',
+  getActiveEmployeesInfo: 'SELECT * FROM [SeleMiracleRun].[dbo].[EmpleadoYContratoSeAsocianAProyecto] WHERE FechaFin > GETDATE() AND NombreProyecto = @projectName',
+  updateEmployee: 'Update Empleado set Nombre= @Nombre, Apellido1= @Apellido1 ,Apellido2= @Apellido2,Telefono= @Telefono Where Cedula= @Cedula',
+  updateEmployeer: 'Update Empleador set Nombre= @Nombre, Apellido1= @Apellido1 ,Apellido2= @Apellido2,Telefono= @Telefono Where Cedula= @Cedula',
   udpateEmail: 'Update Usuarios set Email = @Email where Email = @EmailViejo',
   getPaymentsOfEmployee: `SELECT pa.ConsecutivoPago, pa.ConsecutivoPlanilla, pa.CedulaEmpleado,
   pa.MontoTotalBeneficios, pa.MontoTotalDeduccionesObligatoriasEmpleado,
-  pa.MontoTotalDeduccionesObligatoriasEmpleador, pa.MontoTotalDeduccionesVoluntarias,
+  pa.MontoTotalDeduccionesVoluntarias,
   pa.SalarioBruto, pa.SalarioNeto, pl.FechaIncio, pl.FechaFin, e.SalarioPorHoras, 
   e.TipoContrato, e.ValorDeServicio
   FROM [Pago] pa JOIN Planilla pl ON pl.Consectivo = pa.ConsecutivoPlanilla
     JOIN Empleado ON Empleado.Cedula = pa.CedulaEmpleado 
     JOIN EmpleadoYContratoSeAsocianAProyecto e ON e.CedulaEmpleado = Empleado.Cedula AND e.NombreProyecto = pl.NombreProyecto
   WHERE Empleado.Email = @employeeEmail
-  AND pl.NombreProyecto = @projectName` 
+  AND pl.NombreProyecto = @projectName`
 };
