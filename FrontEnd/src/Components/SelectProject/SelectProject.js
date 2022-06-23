@@ -134,13 +134,6 @@ export const SelectProjectComp = () => {
       </div>
       {isDeletingProject && rolFromUser === 'admin' ? <button onClick={() => setIsDeletingProject(false)}  >cancel</button> : <></>}
       <div>
-
-        {rolFromUser === 'admin' ? (
-          <>
-            <button className='eliminateProjects-icon' onClick={() => setIsDeletingProject(true)}> </button>
-
-          </>
-        ) : <></>}
         <footer className='project-footerCopyRights'> &copy; SeleMiracleRun </footer>
       </div>
     </div >

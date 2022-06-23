@@ -123,12 +123,12 @@ export const ProjectInfo = () => {
       const result = await getAnEntity( 'projects/', activeProject );
       console.log( result );
       setProjectData( result[0] );
-      setIsLoading( false );
       setFormValues( { ...formValues, 'projectName': projectData.Nombre } );
+      setIsLoading( false );
     };
     loadProjectData();
     setChangeMade(false);
-  }, [ changeMade  ] );
+  }, [ changeMade ] );
 
   return isLoading ? (
     <div className='loader'></div>
@@ -147,6 +147,7 @@ export const ProjectInfo = () => {
               <button className='edit-profile-button' onClick={() => {
                 setIsEditing( true );
                 setInputCss( 'input-editing' );
+                setChangeMade(true);
               }
               } >
                 <FaEdit />
@@ -180,7 +181,7 @@ export const ProjectInfo = () => {
               className={inputCss + ' ' + errors.projectNameErrorCss}
               placeholder={projectData.Nombre}
               autoComplete='off'
-              value={isEditing ? formValues.projectName : projectData.Nombre}
+              value={(isEditing&&!isLoading) ? formValues.projectName || ''  : projectData.Nombre}
               onChange={handleInputChange}
               disabled={!isEditing}
             ></input>
