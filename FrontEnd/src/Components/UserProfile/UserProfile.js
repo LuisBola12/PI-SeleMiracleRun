@@ -1,4 +1,4 @@
-import {useState,React} from 'react';
+import { useState, React } from 'react';
 import { IconContext } from 'react-icons';
 import { FaEdit } from 'react-icons/fa';
 import { useForm } from './../../shared/hooks/useForm';
@@ -12,45 +12,46 @@ import {
 } from './../../Utils/UserProfile/editUserProfile';
 
 export const UserProfile = () => {
-  const {updateEmployee,updateEmployeer} = usePutEditUser();
+  const { updateEmployee, updateEmployeer } = usePutEditUser();
   const [userId, setUserId] = useState('');
-  const [formValuesCopy,setFormValuesCopy] = useState({})
+  const [formValuesCopy, setFormValuesCopy] = useState({})
   const [isEditing, setIsEditing] = useState(false);
   const user = useSelector((state) => state.user.user);
   const handleEdit = () => {
     setIsEditing(true);
     removeNoEdit();
   }
-  const applyFormValues = () =>{
+  const applyFormValues = () => {
     formValues.name = formValuesCopy.name;
     formValues.lastname = formValuesCopy.lastname;
     formValues.secondlastname = formValuesCopy.secondlastname;
     formValues.email = formValuesCopy.email;
     formValues.phoneNumber = formValuesCopy.phoneNumber;
   }
-  const applyChangesToForm = () =>{
+  const applyChangesToForm = () => {
     formValuesCopy.name = formValues.name;
     formValuesCopy.lastname = formValues.lastname;
     formValuesCopy.secondlastname = formValues.secondlastname;
     formValuesCopy.email = formValues.email;
     formValuesCopy.phoneNumber = formValues.phoneNumber;
   }
-  const handleCancel = () =>{
+  const handleCancel = () => {
     applyFormValues();
     applyNoEdit();
     setIsEditing(false);
   }
-  const submit = async () => 
-    if(user.Roles === 'admin'){
+  const submit = async () => {
+    if (user.Roles === 'admin') {
       const result = await updateEmployeer(formValues);
-      if(result=== true){
+      if (result === true) {
         setIsSubmitting(false);
         applyChangesToForm();
         applyNoEdit();
         setIsEditing(false);
-    }else{
+      }
+    } else {
       const result = await updateEmployee(formValues);
-      if(result=== true){
+      if (result === true) {
         setIsSubmitting(false);
         applyChangesToForm();
         applyNoEdit();
@@ -58,6 +59,7 @@ export const UserProfile = () => {
       }
     }
   }
+
   const {
     formValues,
     handleInputChange,
@@ -65,7 +67,7 @@ export const UserProfile = () => {
     setIsSubmitting,
     errors,
   } = useForm(submit, validateEditUserForm);
-  const {infoReceived } = useGetProfileData(formValues,setUserId,setFormValuesCopy);
+  const { infoReceived } = useGetProfileData(formValues, setUserId, setFormValuesCopy);
   return !infoReceived ? (
     <div className='loader'></div>
   ) : (

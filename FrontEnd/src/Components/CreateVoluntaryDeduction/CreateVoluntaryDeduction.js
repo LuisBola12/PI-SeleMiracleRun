@@ -94,12 +94,12 @@ export const CreateVoluntaryDeduction = () => {
           <button
             className='create-voluntaryDeduction-btn'
             onClick={handleSubmit}>
-            create
+            Create
           </button>
           <button
             className='cancel-voluntaryDeduction-btn'
             onClick={() => { navigate('/voluntaryDeductions'); }}>
-            cancel
+            Cancel
           </button>
         </div>
       </div>
