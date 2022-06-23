@@ -2,7 +2,8 @@ import { getConnection, sql } from '../database';
 import { projectQueries } from '../database/queries/projectQueries';
 import { eliminateTimeFromDate, isInDateRange } from '../utils/dateManager';
 import { payrollQueries } from './../database/queries/payrollQueries';
-import {executeAPayrroll} from './payrollController'
+import {executeAPayrroll} from './payrollController';
+import { calculateFullTimeWorkedHours } from '../utils/dateManager';
 
 export const getProjectsByEmail = async ( req, res ) => {
   const { Email, Rol } = req.params;
@@ -120,32 +121,6 @@ const calculateHourlyEmployeeWorkedHours = async ( paymentPeriod, employeeID, pr
 
 
 };
-
-
-const calculateFullTimeWorkedHours = (  paymentPeriod, contractType ) => {
-  let hoursWorkWeek = 40;
-  if ( contractType === 'Medio Tiempo' ){
-    hoursWorkWeek = 20;
-  }
-  let hoursWorked = null;
-  switch ( paymentPeriod ) {
-  case 'Quincenal':
-    hoursWorked = hoursWorkWeek * 2;
-    break;
-  case 'Semanal':
-    hoursWorked = hoursWorkWeek ;
-    break;
-  case 'Mensual':
-    hoursWorked = hoursWorkWeek * 4 ;
-    break;
-  default:
-    hoursWorked = null;
-    break;
-  }  
-  return hoursWorked;
-};
-
-
 const hasWorkedLongEnough = ( contractStartDate, paymentPeriod ) =>{
   contractStartDate = eliminateTimeFromDate( contractStartDate );
   const today = eliminateTimeFromDate( new Date() );
@@ -326,9 +301,10 @@ export const createPayrroll = async ( req, res ) => {
 };
 
 
-const sumDays = ( dias ) =>{
-  const newDate = new Date();
+export const sumDays = ( dias ) =>{
+  let newDate = new Date();
   newDate.setDate( newDate.getDate() + dias );
+  newDate = eliminateTimeFromDate(newDate)
   return newDate;
 };
 
