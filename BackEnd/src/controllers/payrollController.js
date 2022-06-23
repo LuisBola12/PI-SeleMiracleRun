@@ -4,55 +4,22 @@ import { calculateGrossSalaryForAllEmployes } from './projects.controller';
 import { payrollQueries } from './../database/queries/payrollQueries';
 import {insertCostTotalBenefits} from './benefits.controller'
 import {insertCostTotalVoluntaryDeductions} from './voluntaryDeductions.controller';
-
-const calculateAmount = ( Salary, Percentage ) => {
-  const salaryI = parseFloat( Salary );
-  const percentageI = parseFloat( Percentage );
-  if ( salaryI === null || percentageI === null ||
-    salaryI === undefined || percentageI === undefined ||
-    salaryI <= 0 || percentageI <= 0 ){
-    return 0;
-  } else {
-    return ( salaryI * ( percentageI / 100 ) );
-  }
-}; 
-const clasifyCalculateSalary = ( TotalSalary, TipoJornada ) => {
-  if ( TotalSalary <= ( 863000 / TipoJornada ) ){
-    return 0;
-  } else {
-    if ( TotalSalary > ( 863000 / TipoJornada ) && TotalSalary < ( 1267000 / TipoJornada ) ){
-      return ( TotalSalary * 0.10 ); 
-    } else {
-      if ( TotalSalary >= ( 1267000 / TipoJornada ) && TotalSalary < ( 2223000 / TipoJornada ) ){
-        return ( TotalSalary * 0.15 ); 
-      } else {
-        if ( TotalSalary >= ( 2223000 / TipoJornada ) && TotalSalary < ( 4445000 / TipoJornada ) ){
-          return ( TotalSalary * 0.20 ); 
-        } else {
-          if ( TotalSalary >= ( 4445000 / TipoJornada ) ){
-            return ( TotalSalary * 0.25 ); 
-          }
-        }
-      }
-    }
-  }
-};
-
+import { calculateNetSalary,calculateAmount,estimateIncomeTax} from '../utils/estimateCalculator';
 const calculateAmountRentTaxes = ( Salary, TipoJornada ) => {
   const salaryI = parseFloat( Salary );
   if ( salaryI === null || salaryI === undefined || salaryI <= 0 ){
     return 0;
   } else {
     if ( TipoJornada === 'Mensual' ){
-      const salary = clasifyCalculateSalary( salaryI, 1 );
+      const salary = estimateIncomeTax( salaryI, 1 );
       return salary;
     } else {
       if ( TipoJornada === 'Quincenal' ){
-        const salary = clasifyCalculateSalary( salaryI, 2 );
+        const salary = estimateIncomeTax( salaryI, 2 );
         return salary;
       } else {
         if ( TipoJornada === 'Semanal' ){
-          const salary = clasifyCalculateSalary( salaryI, 4 );
+          const salary = estimateIncomeTax( salaryI, 4 );
           return salary;
         }
       }
@@ -288,8 +255,8 @@ const aplicateDeductionsAndBenefitsToSalary = async(cedEmpleado,consecutivePayrr
   const totalCostBenefits = await getTotalCostBenefits(consecutivePayrroll,cedEmpleado);
   const totalCostVolDeductions = await getTotalCostVolDeductions(consecutivePayrroll,cedEmpleado);
   const totalCostOblDeductions = await getTotalOblDeductions(consecutivePayrroll,cedEmpleado);
-  if(totalCostBenefits && totalCostVolDeductions && totalCostOblDeductions){
-    const netSalary = ((grossSalary - totalCostVolDeductions) - totalCostOblDeductions)+ totalCostBenefits;
+  if(totalCostBenefits !== undefined && totalCostVolDeductions !== undefined && totalCostOblDeductions!== undefined){
+    const netSalary = calculateNetSalary(grossSalary,totalCostVolDeductions,totalCostOblDeductions);
     insertNetSalary(consecutivePayrroll,cedEmpleado,netSalary);
   } 
 }
