@@ -21,28 +21,48 @@ export const UserProfile = () => {
     setIsEditing(true);
     removeNoEdit();
   }
-  const handleCancel = () =>{
+  const applyFormValues = () =>{
     formValues.name = formValuesCopy.name;
     formValues.lastname = formValuesCopy.lastname;
     formValues.secondlastname = formValuesCopy.secondlastname;
     formValues.email = formValuesCopy.email;
     formValues.phoneNumber = formValuesCopy.phoneNumber;
+  }
+  const applyChangesToForm = () =>{
+    formValuesCopy.name = formValues.name;
+    formValuesCopy.lastname = formValues.lastname;
+    formValuesCopy.secondlastname = formValues.secondlastname;
+    formValuesCopy.email = formValues.email;
+    formValuesCopy.phoneNumber = formValues.phoneNumber;
+  }
+  const handleCancel = () =>{
+    applyFormValues();
     applyNoEdit();
     setIsEditing(false);
   }
-  const submit = async () => {
-    if (user.Roles === 'admin') {
-      updateEmployeer(formValues);
+  const submit = async () => 
+    if(user.Roles === 'admin'){
+      const result = await updateEmployeer(formValues);
+      if(result=== true){
+        setIsSubmitting(false);
+        applyChangesToForm();
         applyNoEdit();
+        setIsEditing(false);
     }else{
-      updateEmployee(formValues);
-      applyNoEdit();
+      const result = await updateEmployee(formValues);
+      if(result=== true){
+        setIsSubmitting(false);
+        applyChangesToForm();
+        applyNoEdit();
+        setIsEditing(false);
+      }
     }
   }
   const {
     formValues,
     handleInputChange,
     handleSubmit,
+    setIsSubmitting,
     errors,
   } = useForm(submit, validateEditUserForm);
   const {infoReceived } = useGetProfileData(formValues,setUserId,setFormValuesCopy);

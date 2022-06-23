@@ -21,6 +21,7 @@ export const usePutEditUser = () => {
       body: string
     });
     console.log(result);
+    return true;
   }
   const updateEmployeer = async (formValues) => {
     const apiEmployeer = process.env.REACT_APP_BACKEND_LOCALHOST + 'updateEmployeer';
@@ -42,6 +43,7 @@ export const usePutEditUser = () => {
       body: string
     });
     console.log(result);
+    return true;
   }
   return {
     updateEmployee, updateEmployeer

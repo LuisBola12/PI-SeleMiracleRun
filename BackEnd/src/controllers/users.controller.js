@@ -247,6 +247,7 @@ export const updateProfileEmployee = async ( req, res ) => {
 
 export const updateProfileEmployeer = async ( req, res ) => {
   const { Nombre, Apellido1,Apellido2,Email,Telefono,Cedula,EmailViejo } = req.body;
+  console.log(Nombre, Apellido1,Apellido2,Email,Telefono,Cedula,EmailViejo);
   if ( Nombre == null || Apellido1 == null || Apellido2 == null || 
     Email == null  || Cedula == null ) {
     const message = 'Bad Request. Please Fill All Fields.';
