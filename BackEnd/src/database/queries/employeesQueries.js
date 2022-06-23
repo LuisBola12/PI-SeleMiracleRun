@@ -5,7 +5,7 @@ export const employeesQueries = {
   addContractOfAnEmployee: `Insert into EmpleadoYContratoSeAsocianAProyecto 
   values(@Cedula,@TipoJornada,@NombreProyecto,@NombreServicio,@SalarioPorHora,
     @FechaInicioContrato,@FechaFinContrato,@ValorServicio)`,
-  getEmployeesWithContractsOnOtherProyects: `Select E.Cedula, E.Nombre, ECP.NombreProyecto,ECP.TipoContrato from Empleado E 
+  getEmployeesWithContractsOnOtherProyects: `Select E.Cedula, E.Nombre, E.Apellido1, E.Apellido2, ECP.NombreProyecto,ECP.TipoContrato from Empleado E 
   inner join EmpleadoYContratoSeAsocianAProyecto ECP on ECP.CedulaEmpleado = E.Cedula
   inner join Proyecto PR on PR.Nombre = ECP.NombreProyecto
   inner join Empleador EP on EP.Cedula = PR.CedulaEmpleador
