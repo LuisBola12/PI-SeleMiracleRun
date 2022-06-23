@@ -74,7 +74,6 @@
   margin-top: 40px;
   justify-content: center;
   display: flex;
-  width: 80%;
 }
 
 .page-content {
@@ -148,8 +147,8 @@
   margin-top: 30px;
   width: 100%;
   display: flex;
-  align-items: baseline;
-  border: solid 4px #000;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .edit-profile-button {
@@ -165,11 +164,6 @@
   margin-bottom: 40px;
 }
 
-
-.user-profile-edit-icon {
-  text-align: right;
-  margin-left: 87%;
-}
 
 .submit-change-btn {
   padding: 13px;
@@ -686,7 +680,40 @@ tr:nth-child(even) {
 }
 
 .projectEditTitle {
-  font-size: 20px;
   width: 50rem;
-  border: solid 4px #000;
+  font-weight: 600;
+}
+
+.project-info-header {
+  margin-top: 3%;
+}
+
+.projectCancelButton {
+  background-color: darkred;
+}
+
+.projectCreateButton {
+  background-color: darkgreen;
+  margin-right: 20px;
+}
+
+.projectButon {
+  width: 9rem;
+  padding: 10px;
+  border-radius: 8px;
+  color: white;
+  border-color: white;
+  border-style: none;
+}
+
+.project-button-icons {
+  display: flex;
+  gap: 20px;
+}
+
+.delete-project-button {
+  color: #133c54;
+  width: 55px;
+  height: 55px;
+  margin-top: 3.5px;
 }

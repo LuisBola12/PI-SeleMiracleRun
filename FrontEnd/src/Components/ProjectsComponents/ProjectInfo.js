@@ -1,6 +1,7 @@
 import React from 'react';
 import { IconContext } from 'react-icons';
 import { FaEdit } from 'react-icons/fa';
+import { MdDelete } from 'react-icons/md';
 import { useForm } from './../../shared/hooks/useForm';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
@@ -113,7 +114,8 @@ export const ProjectInfo = () => {
       console.log( result );
       setProjectData( result[0] );
       setIsLoading( false );
-      setFormValues( { ...formValues, ['projectName']: projectData.Nombre } );    };
+      setFormValues( { ...formValues, ['projectName']: projectData.Nombre } );
+    };
     loadProjectData();
   }, [ activeProject ] );
 
@@ -122,10 +124,10 @@ export const ProjectInfo = () => {
   ) : (
     <>
 
-      <div className='user-info-container'>
+      <div className='user-info-container project-info-header'>
         <div className='user-profile-header'>
           <h2 className='projectEditTitle' >Project Info</h2>
-          <div className='user-profile-edit-icon'>
+          <div className='project-button-icons'>
             <IconContext.Provider
               value={{
                 className: 'user-profile-edit-button',
@@ -137,6 +139,16 @@ export const ProjectInfo = () => {
               }
               } >
                 <FaEdit />
+              </button>
+            </IconContext.Provider>
+
+            <IconContext.Provider
+              value={{
+                className: 'delete-project-button',
+              }}
+            >
+              <button className='edit-profile-button' onClick={() => eliminateProject( activeProject )}>
+                <MdDelete />
               </button>
             </IconContext.Provider>
           </div>
@@ -192,14 +204,14 @@ export const ProjectInfo = () => {
           <div className='user-profile-inner-div'>
             <div className='div-profile'>
               <label className='user-profile-label'>Max Benefits Quantity</label>
-              <label id='errorMaxBenefitsQuantity ' className= {`error-label ${errors.projectNameErrorCss}`}>
+              <label id='errorMaxBenefitsQuantity ' className={`error-label ${errors.projectNameErrorCss}`}>
                 {errors.maxBenefitsQuantity}
               </label>
             </div>
             <input
               id='maxBenefitsQuantity'
               className={inputCss}
-              disabled= {true}
+              disabled={true}
               autoComplete='off'
               placeholder={isEditing ? `Can't edit max benefits quantity: ${projectData.CantidadMaximaBeneficiosEmpleado} ` : projectData.CantidadMaximaBeneficiosEmpleado}
               value={isEditing ? '' : projectData.CantidadMaximaBeneficiosEmpleado}
@@ -217,32 +229,31 @@ export const ProjectInfo = () => {
             <input
               id='maxBenefitsMoneyAmount'
               className={inputCss}
-              disabled= {true}
+              disabled={true}
               placeholder={isEditing ? `Can't edit max benefits money amount: ${projectData.MontoMaximoBeneficiosEmpleado}` : projectData.MontoMaximoBeneficiosEmpleado}
               autoComplete='off'
               value={isEditing ? '' : projectData.MontoMaximoBeneficiosEmpleado}
             ></input>
           </div>
-
+          <div className='user-profile-inner-div' />
 
           {
             isEditing ? (
               <>
 
                 <br></br>
-                <div id='user-profile-buttons-div addFlex' className='editProjectButtons'>
-                  <button onClick={ () => eliminateProject( activeProject )} className='button cancel-button' style={ { marginRight: '33rem', width:'10rem' }  } >Delete Project </button>
-                  <button className='create-button' style={{ width: '5rem' }} onClick={handleSubmit}>
-                  Submit
+                <div id='user-profile-buttons-div' className='editProjectButtons'>
+                  <button className='projectButon projectCreateButton' onClick={handleSubmit}>
+                    Submit
                   </button>
-                  <button className='button cancel-button' onClick={() => {
+                  <button className='projectButon projectCancelButton' onClick={() => {
                     setIsEditing( false );
                     setInputCss( 'user-profile-input' );
                     setFormValues( [] );
                     setFormValues( { ...formValues, ['projectName']: projectData.Nombre } );
-                    setErrors( [] );    
+                    setErrors( [] );
                   }}>
-                  Cancel
+                    Cancel
                   </button>
                 </div>
               </>

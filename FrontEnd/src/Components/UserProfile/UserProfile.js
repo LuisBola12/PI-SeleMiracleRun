@@ -12,13 +12,13 @@ import {
 } from './../../Utils/UserProfile/editUserProfile';
 
 export const UserProfile = () => {
-  const {updateEmployee,updateEmployeer} = usePutEditUser();
+  const { updateEmployee, updateEmployeer } = usePutEditUser();
   const user = useSelector((state) => state.user.user);
   const submit = async () => {
-    if(user.Roles === 'admin'){
+    if (user.Roles === 'admin') {
       updateEmployeer(formValues);
       applyNoEdit();
-    }else{
+    } else {
       updateEmployee(formValues);
       applyNoEdit();
     }
@@ -29,7 +29,7 @@ export const UserProfile = () => {
     handleSubmit,
     errors,
   } = useForm(submit, validateEditUserForm);
-  const {infoReceived } = useGetProfileData(formValues);
+  const { infoReceived } = useGetProfileData(formValues);
   return !infoReceived ? (
     <div className='loader'></div>
   ) : (
@@ -37,7 +37,7 @@ export const UserProfile = () => {
       <div className='user-info-container'>
         <div className='user-profile-header'>
           <div className='user-profile-logo'>{`${formValues.name[0]}${formValues.lastname[0]}`}</div>
-          <div className='user-profile-edit-icon'>
+          <div>
             <IconContext.Provider
               value={{
                 className: 'user-profile-edit-button',
