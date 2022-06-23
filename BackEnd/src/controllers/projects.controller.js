@@ -379,3 +379,29 @@ export const getProjectInfoByName = async ( req, res ) => {
     console.log( e );
   }
 };
+
+export const updateProject = async (req, res) => {
+  const { projectName, paymentPeriod, oldProjectName, employerID } = req.body;
+  console.log(projectName, paymentPeriod, oldProjectName)
+  
+  console.log('Estoy entrando en el backend')
+  if (projectName == null || paymentPeriod == null || oldProjectName == null || employerID == null) {
+    const message = 'Bad Request. Please Fill All Fields.';
+    return res.status(400).json({ msg: message });
+  }
+  try {
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input('projectName', sql.VarChar, projectName)
+      .input('paymentPeriod', sql.VarChar, paymentPeriod)
+      .input('oldProjectName', sql.VarChar, oldProjectName)
+      .input('employerID', sql.VarChar, employerID)
+      .query(projectQueries.updateProject);
+    res.json(result);
+    console.log (result)
+  } catch (e) {
+    console.log(`Error: ${e}`);
+    res.status(500).send(e.message);
+  }
+}

@@ -9,7 +9,7 @@ import { getAnEntity } from '../../Utils/getAnEntity';
 import Swal from 'sweetalert2';
 import usePost from '../../shared/hooks/usePost';
 import validateEditProject from './editProjectValidate';
-
+import { validAnEntity } from '../../Utils/validAnEntity';
 
 export const ProjectInfo = () => {
 
@@ -18,13 +18,37 @@ export const ProjectInfo = () => {
   const [ isLoading, setIsLoading ] = useState( true );
   const activeProject = useSelector( ( state ) => state.activeProject.projectName );
   const [ projectData, setProjectData ] = useState( [] );
-
+  const employerID = useSelector( ( state ) => state.user.user.Cedula );
 
   const { post, postError } = usePost( process.env.REACT_APP_BACKEND_LOCALHOST + 'logicEliminateProject', 'PUT' );
+  const { post:updateProject } = usePost( process.env.REACT_APP_BACKEND_LOCALHOST + 'updateProject', 'PUT' );
 
   const submit = async () => {
-    console.log( 'entra a submit' );
+    const availableName = await validAnEntity( 'projects/',formValues.projectName );
+    if ( formValues.projectName === activeProject || availableName ){
+      console.log( 'entra a submit' );
+      let string = JSON.stringify( formValues );
+      string = JSON.stringify( {
+        projectName: formValues.projectName,
+        paymentPeriod: formValues.paymentPeriod,
+        oldProjectName: activeProject,
+        employerID: employerID,
+      } );
+      console.log( 'puede' );
+      updateProject( string );
+    }
+    else {
+      projectData.Nombre;
+      Swal.fire( {
+        icon: 'error',
+        title: 'Error...',
+        text: 'Project Name Already Exist',
+        confirmButtonColor: 'darkgreen',
+      } );
+    }   
+    setIsSubmitting( false );
   };
+
   const proceedToEliminate = async ( projectName ) => {
     Swal.fire( {
       title: 'Are you sure?',
@@ -80,7 +104,7 @@ export const ProjectInfo = () => {
 
   };
 
-  const { formValues, handleInputChange, handleSubmit, errors, setFormValues, setErrors } = useForm( submit, validateEditProject );
+  const { formValues, handleInputChange, handleSubmit, errors, setFormValues, setErrors, setIsSubmitting } = useForm( submit, validateEditProject );
   //Cargar el contenido inicial
   useEffect( () => {
     setIsLoading( true );

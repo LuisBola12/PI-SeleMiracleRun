@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { getProjectsByEmailAndName, getProjectsByEmail, createProject, createPayrroll,
-  logicEliminateProject, getProjectInfoByName } from '../controllers/projects.controller';
+  logicEliminateProject, getProjectInfoByName, updateProject } from '../controllers/projects.controller';
 import {
   getEmployees, postNewEmployee, getEmployeeByID, verifyEmployeeContractOnProject,
   getEmployeesWithContractOnOtherProyects, contractAEmployee, setHoursEmployee, deleteEmployeeFromProject, getEmployeesAllInfo,
@@ -69,6 +69,7 @@ router.post( '/getProjectPeriod', createPayrroll );
 router.put( '/logicEliminateProject', logicEliminateProject );
 router.get( '/myProjects/:Email/:ProjectName', getProjectsByEmailAndName  );
 router.get( '/projects/:projectName', getProjectInfoByName  );
+router.put( '/updateProject', updateProject );
 
 //Benefits
 router.get( '/benefits/:Proyecto', getBenefits );

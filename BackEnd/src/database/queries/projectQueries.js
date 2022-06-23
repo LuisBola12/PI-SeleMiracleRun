@@ -54,5 +54,5 @@ export const projectQueries = {
   SET Activo = 0
   WHERE Nombre = @projectName`,
   getProjectByName: 'Select * FROM Proyecto WHERE Proyecto.Nombre = @projectName',
-  updateProject:'Update Proyecto set Nombre= @name, TipoPeriodo= @paymentPeriod',
+  updateProject:'Update Proyecto set Nombre= @projectName, TipoPeriodo= @paymentPeriod WHERE Nombre =@oldProjectName AND CedulaEmpleador = @employerID',
 };
