@@ -17,17 +17,17 @@ BEGIN
 
 END;
 ---------------------------------------------------------------------------------------------------------------
-Create Procedure DeleteAnEmployeeFromAProject @Cedula varchar(15), @Proyecto varchar(50)
+Create Procedure [dbo].[DeleteAnEmployeeFromAProject] @Cedula varchar(15), @Proyecto varchar(50), @CedulaEmpleador varchar(15)
 AS
 Begin
     Declare @NumeroDeBeneficios int;
 	Declare @FechaFinContrato DateTime;
-	Select @FechaFinContrato = ECP.FechaFin from EmpleadoYContratoSeAsocianAProyecto ECP where ECP.CedulaEmpleado = @Cedula and ECP.NombreProyecto = @Proyecto
+	Select @FechaFinContrato = ECP.FechaFin from EmpleadoYContratoSeAsocianAProyecto ECP where ECP.CedulaEmpleado = @Cedula and ECP.NombreProyecto = @Proyecto and ECP.CedulaEmpleador = @CedulaEmpleador
     Select @NumeroDeBeneficios = Count(*) from BeneficioElegido
-    where CedulaEmpleado = @Cedula and NombreProyecto = @Proyecto and FechaFin > GETDATE();
+    where CedulaEmpleado = @Cedula and NombreProyecto = @Proyecto and FechaFin > GETDATE() and CedulaEmpleador = @CedulaEmpleador;
     If(@NumeroDeBeneficios > 0)
     Begin
-        UPDATE BeneficioElegido set FechaFin = GETDATE()  where CedulaEmpleado =	@Cedula and NombreProyecto = @Proyecto;
+        UPDATE BeneficioElegido set FechaFin = GETDATE()  where CedulaEmpleado =	@Cedula and NombreProyecto = @Proyecto and CedulaEmpleador = @CedulaEmpleador;
     End
     Else
         Begin
@@ -36,17 +36,17 @@ Begin
 
     Declare @NumeroDeDeduccionesVoluntarias int;
     Select @NumeroDeDeduccionesVoluntarias = Count(*) from DeduccionVoluntariaElegida 
-    where CedulaEmpleado = @Cedula and NombreProyecto = @Proyecto and FechaFin > GETDATE();
+    where CedulaEmpleado = @Cedula and NombreProyecto = @Proyecto and FechaFin > GETDATE() and CedulaEmpleador = @CedulaEmpleador;
     If(@NumeroDeDeduccionesVoluntarias > 0)
     Begin
-        UPDATE DeduccionVoluntariaElegida set FechaFin = GETDATE()  where CedulaEmpleado =	@Cedula and NombreProyecto = @Proyecto;
+        UPDATE DeduccionVoluntariaElegida set FechaFin = GETDATE()  where CedulaEmpleado =	@Cedula and NombreProyecto = @Proyecto and CedulaEmpleador = @CedulaEmpleador;
     End
     Else
         Begin
             Print 'This Employee doesnt have Voluntary Deductions'
         End
-    Delete from EmpleadoYContratoSeAsocianAProyecto where CedulaEmpleado = @Cedula and NombreProyecto = @Proyecto;
----------------------------------------------------------------------------------------------------------------
+    UPDATE EmpleadoYContratoSeAsocianAProyecto set FechaFin = GETDATE()  where CedulaEmpleado =	@Cedula and NombreProyecto = @Proyecto and CedulaEmpleador = @CedulaEmpleador;
+End---------------------------------------------------------------------------------------------------------------
 CREATE PROCEDURE obtenerDatosUsuario (
 				@Email VARCHAR(50),
 				@Contrasenia VARCHAR(20)
@@ -468,3 +468,35 @@ BEGIN
 	SET MontoTotalDeduccionesObligatoriasEmpleado = @MontoTotalEmpleado, MontoTotalDeduccionesObligatoriasEmpleador = @MontoTotalEmpleador
 	WHERE ConsecutivoPago = @ConsecutivoPago AND ConsecutivoPlanilla = @ConsecutivoPlanilla AND CedulaEmpleado = @CedulaEmpleado
 END;
+---------------------------------------------------------------------------------------------------------------
+Create Procedure [dbo].[DeleteAllEmployees]  @projectName varchar(50), @employerID varchar(15)
+AS
+Begin
+    Declare @NumeroDeBeneficios int;
+	Declare @FechaFinContrato DateTime;
+	Select @FechaFinContrato = ECP.FechaFin from EmpleadoYContratoSeAsocianAProyecto ECP where  ECP.NombreProyecto = @projectName and ECP.CedulaEmpleador = @employerID
+    Select @NumeroDeBeneficios = Count(*) from BeneficioElegido
+    where  NombreProyecto = @projectName and FechaFin > GETDATE() and CedulaEmpleador = @employerID;
+    If(@NumeroDeBeneficios > 0)
+    Begin
+        UPDATE BeneficioElegido set FechaFin = GETDATE()  where  NombreProyecto = @projectName and CedulaEmpleador = @employerID;
+    End
+    Else
+        Begin
+            Print 'This Employee doesnt have benefits'
+        End
+
+    Declare @NumeroDeDeduccionesVoluntarias int;
+    Select @NumeroDeDeduccionesVoluntarias = Count(*) from DeduccionVoluntariaElegida 
+    where  NombreProyecto = @projectName and FechaFin > GETDATE() and CedulaEmpleador = @employerID;
+    If(@NumeroDeDeduccionesVoluntarias > 0)
+    Begin
+        UPDATE DeduccionVoluntariaElegida set FechaFin = GETDATE()  where NombreProyecto = @projectName and CedulaEmpleador = @employerID;
+    End
+    Else
+        Begin
+            Print 'This Employee doesnt have Voluntary Deductions'
+        End
+    UPDATE EmpleadoYContratoSeAsocianAProyecto set FechaFin = GETDATE()  where  NombreProyecto = @projectName and CedulaEmpleador = @employerID;
+End
+---------------------------------------------------------------------------------------------------------------
