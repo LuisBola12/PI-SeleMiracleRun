@@ -309,7 +309,7 @@ export const sumDays = ( dias ) =>{
 };
 
 export const logicEliminateProject = async ( req, res ) => {
-  const { Nombre } = req.body;
+  const { projectName, employerID } = req.body;
   if ( Nombre == null ) {
     const message = 'Bad Request Invalid Project Name';
     return res.status( 400 ).json( { msg: message } );
@@ -319,7 +319,8 @@ export const logicEliminateProject = async ( req, res ) => {
     const pool = await getConnection();
     await pool
       .request()
-      .input( 'projectName', Nombre )
+      .input( 'projectName', projectName )
+      .input( 'employerID', employerID )
       .query( projectQueries.logicalEraseProject );
     res.json( 'Success' );
   }

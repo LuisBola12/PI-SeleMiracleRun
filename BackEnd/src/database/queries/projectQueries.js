@@ -52,7 +52,7 @@ export const projectQueries = {
   createNewPayroll: 'Insert into Planilla values(@CedulaEmpleador,@FechaInicio,@FechaFin,@NombreProyecto)',
   logicalEraseProject: `UPDATE Proyecto 
   SET Activo = 0
-  WHERE Nombre = @projectName`,
+  WHERE Nombre = @projectName AND CedulaEmpleador =@employerID`,
   getProjectByName: 'Select * FROM Proyecto WHERE Proyecto.Nombre = @projectName',
   updateProject:'Update Proyecto set Nombre= @projectName, TipoPeriodo= @paymentPeriod WHERE Nombre =@oldProjectName AND CedulaEmpleador = @employerID',
 };
