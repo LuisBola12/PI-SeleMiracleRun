@@ -4,11 +4,12 @@ import { getConsecutivePayNumber } from './payrollController';
 import { notifyEmployeesForDeletedBenefit } from '../utils/notifyEmployeesForDeletedBenefit';
 
 export const getBenefits = async (req, res) => {
-  const { Proyecto } = req.params;
+  const { Proyecto, CedulaEmpleador } = req.params;
   try {
     const pool = await getConnection();
     const result = await pool.request()
       .input('Proyecto', Proyecto)
+      .input('CedulaEmpleador', CedulaEmpleador)
       .query(benefitsQueries.getBenefits);
     res.json(result.recordset);
   } catch (e) {
