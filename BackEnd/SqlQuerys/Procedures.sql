@@ -92,20 +92,23 @@ CREATE PROCEDURE vincularBeneficioEmpleado
   @NombreProyecto VARCHAR(50)
 as 
 BEGIN
-  DECLARE @cedula VARCHAR(15);
+  DECLARE @cedulaEmpleado VARCHAR(15);
+  DECLARE @CedulaEmpleador VARCHAR(15);
   DECLARE @fechaFin DATETIME;
   DECLARE @fechaInicio DATETIME;
 
   SET @fechaInicio = GETDATE();
-  SELECT @cedula = Cedula From Empleado WHERE Email = @Email;
+  SELECT @cedulaEmpleado = Cedula From Empleado WHERE Email = @Email;
   SELECT @fechaFin = FechaFin from EmpleadoYContratoSeAsocianAProyecto ec
-  WHERE ec.CedulaEmpleado = @cedula and ec.NombreProyecto = @NombreProyecto;
+  WHERE ec.CedulaEmpleado = @cedulaEmpleado and ec.NombreProyecto = @NombreProyecto;
+
+  SELECT @CedulaEmpleador = CedulaEmpleador from EmpleadoYContratoSeAsocianAProyecto
+  where CedulaEmpleado = @cedulaEmpleado and NombreProyecto = @NombreProyecto
   
   INSERT INTO BeneficioElegido VALUES 
-  (@cedula, @NombreBeneficio, @NombreProyecto, @fechaInicio, @fechaFin);
+  (@cedulaEmpleado, @NombreBeneficio, @NombreProyecto, @CedulaEmpleador, @fechaInicio, @fechaFin);
 
 END;
-GO
 ---------------------------------------------------------------------------------------------------------------
 CREATE PROCEDURE getEmployeeBenefits 
   @Email VARCHAR(50),
@@ -130,10 +133,17 @@ CREATE PROCEDURE getOfferedBenefits
   @Proyecto VARCHAR(50)
 AS 
 BEGIN
+  DECLARE @cedulaEmpleado VARCHAR(15);
+  DECLARE @cedulaEmpleador VARCHAR(15);
+
+  SELECT @cedulaEmpleado = Cedula From Empleado WHERE Email = @Email;
+  SELECT @CedulaEmpleador = CedulaEmpleador from EmpleadoYContratoSeAsocianAProyecto
+  where CedulaEmpleado = @cedulaEmpleado and NombreProyecto = @Proyecto
+
   DECLARE @offeredBenefits TABLE(Nombre VARCHAR(50), CostoActual real, Descripción VARCHAR(300));
   INSERT into @offeredBenefits EXEC getEmployeeBenefits @Email = @Email, @Proyecto = @Proyecto;
-  SELECT b.Nombre, b.CostoActual, b.Descripción from Beneficios b where b.NombreProyecto = @Proyecto
-  and b.Nombre not in (select Nombre from @offeredBenefits) and b.Activo = True
+  SELECT b.Nombre, b.CostoActual, b.Descripción from Beneficios b where b.NombreProyecto = @Proyecto and b.CedulaEmpleador = @cedulaEmpleador
+  and b.Nombre not in (select Nombre from @offeredBenefits) and b.Activo = 'True'
 END;
 GO
 ---------------------------------------------------------------------------------------------------------------
@@ -229,18 +239,25 @@ CREATE PROCEDURE desvincularBeneficioDeEmpleado (
   @NombreBeneficio VARCHAR(50)
 ) AS
 BEGIN
-  DECLARE @cedula CHAR(15);
+  DECLARE @cedulaEmpleado CHAR(15);
+  DECLARE @cedulaEmpleador CHAR(15);
   DECLARE @fechaInicioBeneficio DATETIME;
 
-  SELECT @cedula = Cedula FROM Empleado WHERE Email = @Email;
+  SELECT @cedulaEmpleado = Cedula FROM Empleado WHERE Email = @Email;
+
+  SELECT @CedulaEmpleador = CedulaEmpleador from EmpleadoYContratoSeAsocianAProyecto
+  where CedulaEmpleado = @cedulaEmpleado and NombreProyecto = @Proyecto
 
   SELECT @fechaInicioBeneficio = fechaInicio FROM BeneficioElegido be
-  WHERE be.CedulaEmpleado = @cedula AND be.NombreProyecto = @Proyecto AND 
+  WHERE be.CedulaEmpleado = @cedulaEmpleado AND be.NombreProyecto = @Proyecto AND 
   NombreBeneficio = @NombreBeneficio AND fechaFin > GETDATE()
 
+
+
   UPDATE BeneficioElegido SET fechaFin = GETDATE()
-  WHERE CedulaEmpleado = @cedula AND NombreProyecto = @Proyecto AND 
+  WHERE CedulaEmpleado = @cedulaEmpleado AND NombreProyecto = @Proyecto AND 
   NombreBeneficio = @NombreBeneficio AND fechaInicio = @fechaInicioBeneficio
+  and CedulaEmpleador = @cedulaEmpleador
 
 END;
 GO
