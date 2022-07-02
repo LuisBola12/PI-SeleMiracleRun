@@ -77,7 +77,7 @@ router.put('/updateProject', updateProject);
 
 //Benefits
 router.get('/benefits/:Proyecto/:CedulaEmpleador', getBenefits);
-router.get('/benefits/:Proyecto/:Nombre', getBenefitsByName);
+router.get('/benefits/:Proyecto/:CedulaEmpleador/:Nombre', getBenefitsByName);
 router.get('/myBenefits/:Proyecto/:Email', getEmployeeBenefitsByEmail);
 router.get('/offeredBenefits/:Proyecto/:Email', getOfferedBenefits);
 router.post('/benefits', createBenefit);

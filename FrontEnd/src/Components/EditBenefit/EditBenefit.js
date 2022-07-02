@@ -18,10 +18,11 @@ export const EditBenefit = () => {
   const activeProject = useSelector((state) => state.activeProject.projectName);
   const location = useLocation();
   const oldName = location.state.Nombre;
+  const employerId = useSelector((state) => state.user.user.Cedula);
   const navigate = useNavigate();
   const { updateBenefit } = usePutToBenefits();
   const submit = async () => {
-    const notExists = await validAnEntity('benefits/' + activeProject + '/', formValues.Name);
+    const notExists = await validAnEntity('benefits/' + activeProject + '/' + employerId + '/', formValues.Name);
     if (notExists === true || oldName === formValues.Name) {
       updateBenefit(formValues.Name, formValues.Cost, formValues.Description, apiBenefits + `/${oldName}`);
       navigate('/benefits');

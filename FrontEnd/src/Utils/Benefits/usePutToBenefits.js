@@ -5,7 +5,7 @@ export const usePutToBenefits = () => {
   const employeeEmail = useSelector((state) => state.user.user.Email);
   const unlinkBenefitApi = process.env.REACT_APP_BACKEND_LOCALHOST + 'myBenefits'
   const apiBenefits = process.env.REACT_APP_BACKEND_LOCALHOST + 'benefits'
-
+  const employerId = useSelector((state) => state.user.user.Cedula);
   const updateBenefit = async (name, cost, description, apiBenefits) => {
     const newCost = cost.split(' ').join('');
     const postFetch = await fetch(apiBenefits, {
@@ -16,6 +16,7 @@ export const usePutToBenefits = () => {
       body: JSON.stringify({
         Nombre: name,
         NombreProyecto: activeProject,
+        CedulaEmpleador: employerId,
         CostoActual: parseInt(newCost),
         Descripción: description,
       }),

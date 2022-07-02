@@ -1,8 +1,8 @@
 export const benefitsQueries = {
   getBenefits: 'Select * from Beneficios b where NombreProyecto = @Proyecto and CedulaEmpleador = @CedulaEmpleador and b.Activo = \'true\'',
-  getBenefitsByName: 'select Nombre from Beneficios where Nombre = @Nombre and NombreProyecto = @Proyecto',
+  getBenefitsByName: 'select Nombre from Beneficios where Nombre = @Nombre and NombreProyecto = @Proyecto and CedulaEmpleador = @CedulaEmpleador',
   createBenefit: 'Insert into Beneficios (Nombre, NombreProyecto, CedulaEmpleador, CostoActual, Descripción, Activo) values (@Nombre, @NombreProyecto,@CedulaEmpleador,@CostoActual, @Descripción, \'true\')',
-  editBenefit: 'Update Beneficios set Nombre = @Nombre, CostoActual = @CostoActual, Descripción = @Descripción where NombreProyecto=@NombreProyecto and Nombre=@NombreAntiguo and Activo = \'true\'',
+  editBenefit: 'Update Beneficios set Nombre = @Nombre, CostoActual = @CostoActual, Descripción = @Descripción where NombreProyecto=@NombreProyecto and CedulaEmpleador = @CedulaEmpleador and Nombre=@NombreAntiguo and Activo = \'true\'',
   getBenefitInfo: 'SELECT * FROM Beneficios  WHERE NombreProyecto = @projectName AND  Nombre = @benefitName',
   benefitUsedInfo:
     `
