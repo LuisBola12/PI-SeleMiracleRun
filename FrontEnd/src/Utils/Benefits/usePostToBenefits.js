@@ -5,7 +5,7 @@ export const usePostToBenefits = () => {
   const apiBenefits = process.env.REACT_APP_BACKEND_LOCALHOST + 'benefits';
   const apiBenefitsToEmplyee = process.env.REACT_APP_BACKEND_LOCALHOST + 'myBenefits'
   const employeeEmail = useSelector((state) => state.user.user.Email);
-
+  const employerId = useSelector((state) => state.user.user.Cedula);
   const submitBenefit = async (name, cost, description) => {
     const newCost = cost.split(' ').join('');
     const postFetch = await fetch(apiBenefits, {
@@ -16,6 +16,7 @@ export const usePostToBenefits = () => {
       body: JSON.stringify({
         Nombre: name,
         NombreProyecto: activeProject,
+        CedulaEmpleador: employerId,
         CostoActual: parseInt(newCost),
         Descripción: description,
       }),

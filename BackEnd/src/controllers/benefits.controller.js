@@ -105,7 +105,7 @@ export const unlinkEmployeeToBenefit = async (req, res) => {
 
 
 export const createBenefit = async (req, res) => {
-  const { Nombre, NombreProyecto, CostoActual, Descripción } = req.body;
+  const { Nombre, NombreProyecto, CedulaEmpleador, CostoActual, Descripción } = req.body;
   if (Nombre == null || CostoActual == null || NombreProyecto == null) {
     const message = 'Bad Request. Please Fill All Fields.';
     return res.status(400).json({ msg: message });
@@ -116,6 +116,7 @@ export const createBenefit = async (req, res) => {
       .request()
       .input('Nombre', sql.VarChar, Nombre)
       .input('NombreProyecto', sql.VarChar, NombreProyecto)
+      .input('CedulaEmpleador', sql.VarChar, CedulaEmpleador)
       .input('CostoActual', sql.Int, CostoActual)
       .input('Descripción', sql.VarChar, Descripción)
       .query(benefitsQueries.createBenefit);
