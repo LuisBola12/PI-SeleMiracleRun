@@ -20,7 +20,6 @@ import { CreateProjectsForm } from './Components/ProjectsComponents/CreateProjec
 import { EditBenefits } from './Pages/editBenefits';
 import { RegisterHours } from './Pages/registerHours';
 import { useSelector } from 'react-redux';
-import { Home } from './Pages/home';
 import { Payroll } from './Pages/payroll';
 import { PayrollDetailsPage } from './Pages/payrollDetails';
 import { EmployeesBenefits } from './Pages/employeesBenefits';
