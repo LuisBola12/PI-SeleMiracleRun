@@ -727,3 +727,16 @@ tr:nth-child(even) {
 .details-table-button {
   margin-top: 75px;
 }
+
+.export-excel-button {
+  background-color: darkgreen;
+  width: 10rem;
+}
+
+.report-header {
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 50px;
+}
