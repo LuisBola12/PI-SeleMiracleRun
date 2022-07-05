@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { getProjectsByEmailAndName, getProjectsByEmail, createProject, createPayrroll,
-  logicEliminateProject, getProjectInfoByName, updateProject } from '../controllers/projects.controller';
+  getProjectInfoByName, updateProject, deleteAllEmployees } from '../controllers/projects.controller';
 import {
   getEmployees, postNewEmployee, getEmployeeByID, verifyEmployeeContractOnProject,
   getEmployeesWithContractOnOtherProyects, contractAEmployee, setHoursEmployee, deleteEmployeeFromProject, getEmployeesAllInfo,
@@ -66,7 +66,8 @@ router.get( '/getEmployeesInfo/:projectName', getEmployeesAllInfo );
 router.get( '/projects/:Email/:Rol', getProjectsByEmail );
 router.post( '/projects', createProject );
 router.post( '/getProjectPeriod', createPayrroll );
-router.put( '/logicEliminateProject', logicEliminateProject );
+//   TODO: Cambiar ruta de logicEliminateProject 
+router.put( '/logicEliminateProject', deleteAllEmployees );
 router.get( '/myProjects/:Email/:ProjectName', getProjectsByEmailAndName  );
 router.get( '/projects/:projectName', getProjectInfoByName  );
 router.put( '/updateProject', updateProject );
@@ -95,7 +96,7 @@ router.put( '/myVoluntaryDeductions', unlinkEmployeeToVoluntaryDeduction );
 router.put( '/voluntaryDeductions', deactivateVoluntaryDeduction );
 
 //Payrrolls
-router.get('/payrrolls/:Proyecto',getPayrrollsOfAProject)
-router.post('/payslipsOfaProject',getAllPayslipsOfAProject);
+router.get( '/payrrolls/:Proyecto',getPayrrollsOfAProject );
+router.post( '/payslipsOfaProject',getAllPayslipsOfAProject );
 
 export default router;
