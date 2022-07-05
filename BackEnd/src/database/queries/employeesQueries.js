@@ -35,5 +35,17 @@ export const employeesQueries = {
     JOIN Empleado ON Empleado.Cedula = pa.CedulaEmpleado 
     JOIN EmpleadoYContratoSeAsocianAProyecto e ON e.CedulaEmpleado = Empleado.Cedula AND e.NombreProyecto = pl.NombreProyecto
   WHERE Empleado.Email = @employeeEmail
-  AND pl.NombreProyecto = @projectName`
+  AND pl.NombreProyecto = @projectName`,
+  getAllPaymentsOfEmployee: `SELECT pl.NombreProyecto, pa.ConsecutivoPago, pa.ConsecutivoPlanilla, pa.CedulaEmpleado,
+  pa.MontoTotalBeneficios, pa.MontoTotalDeduccionesObligatoriasEmpleado,
+  pa.MontoTotalDeduccionesVoluntarias,
+  pa.SalarioBruto, pa.SalarioNeto, pl.FechaIncio, pl.FechaFin, e.SalarioPorHoras, 
+  e.TipoContrato, e.ValorDeServicio
+  FROM [Pago] pa JOIN Planilla pl ON pl.Consectivo = pa.ConsecutivoPlanilla
+    JOIN Empleado ON Empleado.Cedula = pa.CedulaEmpleado 
+    JOIN EmpleadoYContratoSeAsocianAProyecto e ON e.CedulaEmpleado = Empleado.Cedula AND e.NombreProyecto = pl.NombreProyecto
+  WHERE Empleado.Email = @employeeEmail`
+
 };
+
+

@@ -6,7 +6,7 @@ import {
 import {
   getEmployees, postNewEmployee, getEmployeeByID, verifyEmployeeContractOnProject,
   getEmployeesWithContractOnOtherProyects, contractAEmployee, setHoursEmployee, deleteEmployeeFromProject, getEmployeesAllInfo,
-  getEmployeePayments
+  getEmployeePayments, getAllEmployeePayments
 } from '../controllers/employees.contoller';
 import {
   getEmployerByID, getUserByEmail, verifyCredentials, registerNewUser,
@@ -58,6 +58,7 @@ router.post('/contractExistentEmployee', contractAEmployee);
 router.post('/deleteEmployeeFromProject', deleteEmployeeFromProject);
 router.post('/employee/hours', setHoursEmployee);
 router.get('/employeePayments/:projectName/:employeeEmail', getEmployeePayments);
+router.get('/employeePayments/:employeeEmail', getAllEmployeePayments);
 
 //Projects
 router.get('/projects/:Email/:Rol', getProjectsByEmail);
