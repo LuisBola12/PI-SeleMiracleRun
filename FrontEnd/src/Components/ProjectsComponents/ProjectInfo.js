@@ -54,7 +54,6 @@ export const ProjectInfo = () => {
   };
 
   const eliminateProject = async ( projectName ) => {
-    let confirmation = true;
     try {
       Swal.fire( {
         title: 'Are you sure?',
@@ -65,47 +64,46 @@ export const ProjectInfo = () => {
         cancelButtonColor: 'darkred',
         confirmButtonText: 'Yes, delete it!'
       } ).then( async ( result ) => {
+
         if ( result.isConfirmed ) {
           const activeEmployeesApiResponse = await fetch( process.env.REACT_APP_BACKEND_LOCALHOST + `getEmployeesInfo/${projectName}` );
           const activeEmployees = await activeEmployeesApiResponse.json();
           console.log( activeEmployees );
           if ( activeEmployees.length > 0 ) {
-            confirmation = false;
             Swal.fire( {
-              icon: 'info',
               title: 'Confirmation',
               text: 'This project has active employees, do you want to eliminate it and notify all employees',
+              icon: 'info',
+              showCancelButton: true,
               confirmButtonColor: 'darkgreen',
               cancelButtonColor: 'darkred'
-            } ).then( ( selectedOption ) => {
-              if ( selectedOption.isConfirmed ) {
-                confirmation = true;
+            } ).then( ( result ) => {
+              if ( result.isConfirmed ){
+                try {
+                  let string = '';
+                  string = JSON.stringify( { projectName: projectName, employerID: employerID } );
+                  eliminateProjectFromDatabase( string );
+
+                  Swal.fire( {
+                    title: 'Deleted!',
+                    text: `The Project ${projectName} has been deleted.`,
+                    icon: 'success',
+                    confirmButtonColor: 'darkgreen',
+                    cancelButtonColor: 'darkred'
+                  } );
+                  dispatch( updateActiveProject( '' ) );
+                  navigate( '/' );
+                } catch ( error ) {
+                  Swal.fire( {
+                    icon: 'error',
+                    title: 'Error...',
+                    text: 'There was an error connecting to database',
+                    confirmButtonColor: 'darkgreen'
+                  } );
+                  console.log( `Error: ${error}\n databaseError:${eliminateProjectFromDatabaseError} ` );
+                }
               }
             } );
-          }
-          if ( confirmation ) {
-            try {
-              let string = '';
-              string = JSON.stringify( { projectName: projectName, employerID: employerID } );
-              eliminateProjectFromDatabase( string );
-
-              Swal.fire( {
-                title: 'Deleted!',
-                text: `The Project ${projectName} has been deleted.`,
-                icon: 'success',
-                confirmButtonColor: 'darkgreen'
-              } );
-              dispatch( updateActiveProject( '' ) );
-              navigate( '/' );
-            } catch ( error ) {
-              Swal.fire( {
-                icon: 'error',
-                title: 'Error...',
-                text: 'There was an error connecting to database',
-                confirmButtonColor: 'darkgreen'
-              } );
-              console.log( `Error: ${error}\n databaseError:${eliminateProjectFromDatabaseError} ` );
-            }
           }
         }
       } );
