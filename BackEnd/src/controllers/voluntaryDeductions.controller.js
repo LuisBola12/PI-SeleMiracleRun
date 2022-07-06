@@ -50,7 +50,7 @@ export const getEmployeeVoluntaryDeductionsByEmail = async ( req, res ) => {
 };
 
 export const createNewVoluntaryDeduction = async ( req, res ) => {
-  const { Nombre, NombreProyecto, Costo, Descripcion } = req.body;
+  const { Nombre, NombreProyecto, CedulaEmpleador, Costo, Descripcion } = req.body;
   if ( Nombre == null || NombreProyecto == null || Costo == null ) {
     const message = 'Bad Request. Please Fill All Fields.';
     return res.status( 400 ).json( { msg: message } );
@@ -61,6 +61,7 @@ export const createNewVoluntaryDeduction = async ( req, res ) => {
       .request()
       .input( 'Nombre', sql.VarChar, Nombre )
       .input( 'NombreProyecto', sql.VarChar, NombreProyecto )
+      .input('CedulaEmpleador', sql.VarChar, CedulaEmpleador)
       .input( 'Costo', sql.Int, Costo )
       .input( 'Descripcion', sql.VarChar, Descripcion )
       .query( voluntaryDeductionsQueries.createNewVoluntaryDeduction );
