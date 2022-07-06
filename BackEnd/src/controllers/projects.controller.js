@@ -392,7 +392,6 @@ const setProjectAsInactive = async ( projectName, employerID ) => {
     .input( 'projectName', projectName )
     .input( 'employerID', employerID )
     .query( projectQueries.logicalEraseProject );
-
 };
 
 export const deleteProject = async ( req, res ) => {
@@ -404,6 +403,7 @@ export const deleteProject = async ( req, res ) => {
   }
 
   try {
+    await setProjectAsInactive( projectName,employerID );
     const employeesInfo = await employeesFromProjectInfo( projectName, employerID );
 
     let mailFormat = {
@@ -419,7 +419,6 @@ export const deleteProject = async ( req, res ) => {
     }
 
     await deleteAllEmployees( projectName, employerID );
-    await setProjectAsInactive( projectName,employerID );
 
   } catch ( error ) {
     res.status( 500 );
