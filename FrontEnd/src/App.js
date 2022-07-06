@@ -29,6 +29,7 @@ import { HireEmployee } from './Pages/hireEmployee';
 import { EndContractWithEmployee } from './Pages/endContractWithEmployee';
 import { EmployeeMyPayments } from './Pages/employeeMyPayments';
 import { EditProjectPage } from './Pages/editProject';
+import { EmployeePaymentsReport } from './Pages/employeePaymentsReport';
 
 function App() {
 
@@ -76,6 +77,7 @@ function App() {
               <Route path='myBenefits' element={<EmployeesBenefits />} />
               <Route path='myVoluntaryDeductions' element={<EmployeesVoluntaryDeductions />} />
               <Route path='myPayments' element={<EmployeeMyPayments />} />
+              <Route path='PaymentsReport' element={<EmployeePaymentsReport />} />
             </Route>
           )}
       </Routes>
