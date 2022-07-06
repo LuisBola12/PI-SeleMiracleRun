@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import '../../App.css';
 import { getAnEntity } from '../../Utils/getAnEntity';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { removeTimeFromDate } from '../../shared/removeTimeFromDate';
 export const EmployeePaymentsReports = () => {
   const employeeEmail = useSelector((state) => state.user.user.Email);
@@ -32,8 +33,20 @@ export const EmployeePaymentsReports = () => {
 
   return (isLoading ? <div className='loader' ></div > :
     <>
-      <h2 className='table-button'>My Payments Report</h2>
-      <table className='Table'>
+      <div className='report-header'>
+        <h2>My Payments Report</h2>
+
+        <ReactHTMLTableToExcel
+          id='exportButtonExcel'
+          table='EmployeePaymentsTable'
+          filename='MyPaymentsReport'
+          sheet='MyPayments'
+          buttonText='Export to Excel'
+          className='export-excel-button button'
+        />
+      </div>
+
+      <table className='Table' id='EmployeePaymentsTable'>
         <thead>
           <tr className='table-header'>
             <th className='left-td table-left-border'>Project</th>
