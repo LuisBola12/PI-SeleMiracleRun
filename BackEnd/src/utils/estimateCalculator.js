@@ -24,6 +24,9 @@ export const calculateAmount = (Salary, Percentage) => {
   }
 };
 export const estimateIncomeTax = (TotalSalary, TipoJornada) => {
+  const firstQuarter  = 40400;
+  const secondQuarter = 143400;
+  const thirdQuarter  = 444400;
   if (TotalSalary <= 863000 / TipoJornada) {
     return 0;
   } else {
@@ -31,22 +34,23 @@ export const estimateIncomeTax = (TotalSalary, TipoJornada) => {
       TotalSalary > 863000 / TipoJornada &&
       TotalSalary < 1267000 / TipoJornada
     ) {
-      return TotalSalary * 0.1;
+      return firstQuarter;
     } else {
       if (
         TotalSalary >= 1267000 / TipoJornada &&
         TotalSalary < 2223000 / TipoJornada
       ) {
-        return TotalSalary * 0.15;
+        return (firstQuarter + secondQuarter);
       } else {
         if (
           TotalSalary >= 2223000 / TipoJornada &&
           TotalSalary < 4445000 / TipoJornada
         ) {
-          return TotalSalary * 0.2;
+          return (firstQuarter + secondQuarter + thirdQuarter);
         } else {
           if (TotalSalary >= 4445000 / TipoJornada) {
-            return TotalSalary * 0.25;
+            const fourthQuarter = (TotalSalary / TipoJornada) - (4445000 / TipoJornada);
+            return (firstQuarter + secondQuarter + thirdQuarter + fourthQuarter);
           }
         }
       }

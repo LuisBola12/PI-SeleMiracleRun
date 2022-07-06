@@ -3,7 +3,7 @@ export const employeesQueries = {
   getEmployeeByID: 'Select * From Empleado Where Cedula = @Cedula',
   verifyEmployeeContractProject: 'Select * from EmpleadoYContratoSeAsocianAProyecto ecp where ecp.CedulaEmpleado = @Cedula AND ecp.NombreProyecto = @Proyecto',
   addContractOfAnEmployee: `Insert into EmpleadoYContratoSeAsocianAProyecto 
-  values(@Cedula,@TipoJornada,@NombreProyecto,@NombreServicio,@SalarioPorHora,
+  values(@Cedula,@TipoJornada,@NombreProyecto,@CedulaEmpleador,@NombreServicio,@SalarioPorHora,
     @FechaInicioContrato,@FechaFinContrato,@ValorServicio)`,
   getEmployeesWithContractsOnOtherProyects: `Select E.Cedula, E.Nombre, E.Apellido1, E.Apellido2, ECP.NombreProyecto,ECP.TipoContrato from Empleado E 
   inner join EmpleadoYContratoSeAsocianAProyecto ECP on ECP.CedulaEmpleado = E.Cedula
@@ -18,7 +18,7 @@ export const employeesQueries = {
             where ECP.NombreProyecto = @Proyecto
           )`,
   createNewEmployee: 'Insert into Empleado (Cedula, Nombre, Apellido1, Apellido2, Telefono, Email) values(@Cedula, @Nombre, @Apellido1, @Apellido2, @Telefono, @Email)',
-  contractExistentEmployee: `Insert into EmpleadoYContratoSeAsocianAProyecto values (@Cedula,@TipoJornada,@NombreProyecto,
+  contractExistentEmployee: `Insert into EmpleadoYContratoSeAsocianAProyecto values (@Cedula,@TipoJornada,@NombreProyecto,@CedulaEmpleador,
     @NombreServicio,@SalarioPorHora,@FechaInicioContrato,@FechaFinContrato,@ValorServicio)`,
   deleteEmployeeFromProject: 'Delete from EmpleadoYContratoSeAsocianAProyecto where CedulaEmpleado = @Cedula and NombreProyecto = @NombreProyecto',
   insertHours: 'EXEC ingresarHoras @Email = @EmailEmpleado , @Proyecto = @ProyectoEmpleado, @Fecha = @FechaEmpleado, @CantidadHoras = @CantHorasEmpleado',
