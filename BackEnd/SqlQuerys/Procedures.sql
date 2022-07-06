@@ -4,7 +4,7 @@ CREATE PROCEDURE ingresarHoras (
 				@Fecha date,
 				@CantidadHoras int
 ) 
-AS
+AS 
 BEGIN
 	DECLARE @CedulaEmpleado VARCHAR(15)
 
@@ -168,17 +168,21 @@ CREATE PROCEDURE vincularDeduccionVoluntariaEmpleado
   @NombreProyecto VARCHAR(50)
 as 
 BEGIN
-  DECLARE @cedula VARCHAR(15);
+	DECLARE @cedulaEmpleado VARCHAR(15);
+  DECLARE @CedulaEmpleador VARCHAR(15);
   DECLARE @fechaFin DATETIME;
   DECLARE @fechaInicio DATETIME;
 
   SET @fechaInicio = GETDATE();
-  SELECT @cedula = Cedula From Empleado WHERE Email = @Email;
+  SELECT @cedulaEmpleado = Cedula From Empleado WHERE Email = @Email;
   SELECT @fechaFin = FechaFin from EmpleadoYContratoSeAsocianAProyecto ec
-  WHERE ec.CedulaEmpleado = @cedula and ec.NombreProyecto = @NombreProyecto;
-  
+  WHERE ec.CedulaEmpleado = @cedulaEmpleado and ec.NombreProyecto = @NombreProyecto;
+
+	SELECT @CedulaEmpleador = CedulaEmpleador from EmpleadoYContratoSeAsocianAProyecto
+  where CedulaEmpleado = @cedulaEmpleado and NombreProyecto = @NombreProyecto
+ 
   INSERT INTO DeduccionVoluntariaElegida VALUES 
-  (@cedula, @NombreDeduccionVoluntaria, @NombreProyecto, @fechaInicio, @fechaFin);
+  (@cedulaEmpleado, @NombreDeduccionVoluntaria, @NombreProyecto, @CedulaEmpleador, @fechaInicio, @fechaFin);
 
 END;
 ---------------------------------------------------------------------------------------------------------------
@@ -205,9 +209,16 @@ CREATE PROCEDURE getOfferedVoluntaryDeductions
   @Proyecto VARCHAR(50)
 AS 
 BEGIN
+	DECLARE @cedulaEmpleado VARCHAR(15);
+  DECLARE @cedulaEmpleador VARCHAR(15);
+
+	SELECT @cedulaEmpleado = Cedula From Empleado WHERE Email = @Email;
+  SELECT @CedulaEmpleador = CedulaEmpleador from EmpleadoYContratoSeAsocianAProyecto
+  where CedulaEmpleado = @cedulaEmpleado and NombreProyecto = @Proyecto
+
   DECLARE @offeredVoluntaryDeductions TABLE(Nombre VARCHAR(50), Costo real, Descripcion VARCHAR(300));
   INSERT into @offeredVoluntaryDeductions EXEC getEmployeeVoluntaryDeductions @Email = @Email, @Proyecto = @Proyecto;
-  SELECT dv.Nombre, dv.Costo, dv.Descripcion from DeduccionesVoluntarias dv where dv.NombreProyecto = @Proyecto
+  SELECT dv.Nombre, dv.Costo, dv.Descripcion from DeduccionesVoluntarias dv where dv.NombreProyecto = @Proyecto and dv.CedulaEmpleador = @cedulaEmpleador
   and dv.Nombre not in (select Nombre from @offeredVoluntaryDeductions)  and dv.Activo = 'True'
 END;
 GO
@@ -218,19 +229,23 @@ CREATE PROCEDURE desvincularDeduccionVoluntariaDeEmpleado (
   @NombreDeduccionVoluntaria VARCHAR(50)
 ) AS
 BEGIN
-  DECLARE @cedula CHAR(15);
+  DECLARE @cedulaEmpleado CHAR(15);
+  DECLARE @cedulaEmpleador CHAR(15);
   DECLARE @fechaInicioDeduccionVoluntaria DATETIME;
 
-  SELECT @cedula = Cedula FROM Empleado WHERE Email = @Email;
+  SELECT @cedulaEmpleado = Cedula FROM Empleado WHERE Email = @Email;
+
+	SELECT @cedulaEmpleador = CedulaEmpleador from EmpleadoYContratoSeAsocianAProyecto
+  where CedulaEmpleado = @cedulaEmpleado and NombreProyecto = @Proyecto
 
   SELECT @fechaInicioDeduccionVoluntaria = fechaInicio FROM DeduccionVoluntariaElegida dve
-  WHERE dve.CedulaEmpleado = @cedula AND dve.NombreProyecto = @Proyecto AND 
+  WHERE dve.CedulaEmpleado = @cedulaEmpleado AND dve.NombreProyecto = @Proyecto AND 
   NombreDeduccionVoluntaria = @NombreDeduccionVoluntaria AND fechaFin > GETDATE()
 
   UPDATE DeduccionVoluntariaElegida SET fechaFin = GETDATE()
   WHERE CedulaEmpleado = @cedula AND NombreProyecto = @Proyecto AND 
   NombreDeduccionVoluntaria = @NombreDeduccionVoluntaria AND fechaInicio = @fechaInicioDeduccionVoluntaria
-
+	AND CedulaEmpleador = @cedulaEmpleador
 END;
 ---------------------------------------------------------------------------------------------------------------
 CREATE PROCEDURE desvincularBeneficioDeEmpleado (
