@@ -89,7 +89,7 @@ router.put('/myBenefits', unlinkEmployeeToBenefit);
 router.get('/validateBenefit/:projectName/:employeeEmail/:benefitToValidate', validateBenefitSuscription);
 
 //VoluntaryDeductions
-router.get('/voluntaryDeductions/:NombreProyecto', getVoluntaryDeductions);
+router.get('/voluntaryDeductions/:NombreProyecto/:CedulaEmpleador', getVoluntaryDeductions);
 router.get('/voluntaryDeductions/:NombreProyecto/:CedulaEmpleador/:Nombre', getVoluntaryDeductionsByName);
 router.post('/voluntaryDeductions', createNewVoluntaryDeduction);
 router.put('/voluntaryDeductions/:NombreAntiguo', updateVoluntaryDeduction);
