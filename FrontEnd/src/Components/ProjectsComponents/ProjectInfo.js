@@ -104,6 +104,13 @@ export const ProjectInfo = () => {
                 }
               }
             } );
+          } else {
+
+            let string = '';
+            string = JSON.stringify( { projectName: projectName, employerID: employerID } );
+            eliminateProjectFromDatabase( string );
+            dispatch( updateActiveProject( '' ) );
+            navigate( '/' );
           }
         }
       } );
