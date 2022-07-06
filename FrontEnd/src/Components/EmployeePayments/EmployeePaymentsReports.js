@@ -5,11 +5,20 @@ import '../../App.css';
 import { getAnEntity } from '../../Utils/getAnEntity';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { removeTimeFromDate } from '../../shared/removeTimeFromDate';
+import { useProjectsData } from '../../Utils/PayrollProjects/useProjectsData';
+import { IconContext } from 'react-icons';
+import { FaFilter } from 'react-icons/fa';
+
 export const EmployeePaymentsReports = () => {
   const employeeEmail = useSelector((state) => state.user.user.Email);
 
   const [employeePayments, setEmployeePayments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [projectNameFilter, setProjectNameFilter] = useState('Any');
+  const [datesFilter, setDatesFilter] = useState([]);
+  const { projects } = useProjectsData();
+  console.log(projects)
+
   let formatter = new Intl.NumberFormat(undefined, {
     style: 'currency',
     currency: 'CRC',
@@ -33,9 +42,44 @@ export const EmployeePaymentsReports = () => {
 
   return (isLoading ? <div className='loader' ></div > :
     <>
+      <h2 className='table-button'>My Payments Report</h2>
       <div className='report-header'>
-        <h2>My Payments Report</h2>
+        <div className='filter-payments-report'>
+          <IconContext.Provider
+            value={{
+              className: 'filter-icon',
+            }}
+          >
+            <label>
+              <FaFilter />
+            </label>
+          </IconContext.Provider>
+          <label>By Project Name</label>
+          <select
+            className='project-Name-Filter'
+            value={projectNameFilter}
+            onChange={(e) => {
+              setProjectNameFilter(e.target.value);
+            }}
+          >
+            <option value={""}> Any </option>
+            {projects.map((element) => (
+              <option key={element.Nombre} value={element.Nombre}>
+                {element.Nombre}
+              </option>
+            ))
+            }
+          </select>
 
+          <br />
+          <label>By Date</label>
+          <input
+            className='project-date-filter'
+            type={'date'}>
+          </input>
+
+
+        </div>
         <ReactHTMLTableToExcel
           id='exportButtonExcel'
           table='EmployeePaymentsTable'
@@ -44,6 +88,7 @@ export const EmployeePaymentsReports = () => {
           buttonText='Export to Excel'
           className='export-excel-button button'
         />
+
       </div>
 
       <table className='Table' id='EmployeePaymentsTable'>
