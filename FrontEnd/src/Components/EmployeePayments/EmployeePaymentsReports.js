@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import '../../App.css';
 import { getAnEntity } from '../../Utils/getAnEntity';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
-
+import { removeTimeFromDate } from '../../shared/removeTimeFromDate';
 export const EmployeePaymentsReports = () => {
   const employeeEmail = useSelector((state) => state.user.user.Email);
 
@@ -14,12 +14,6 @@ export const EmployeePaymentsReports = () => {
     style: 'currency',
     currency: 'CRC',
   });
-
-  const removeTimeFromDate = (date) => {
-    let myDate = new Date(date);
-    let noTimeDate = new Date(myDate.getFullYear(), myDate.getMonth(), myDate.getDate());
-    return noTimeDate.toDateString();
-  };
 
   useEffect(() => {
     setIsLoading(true);

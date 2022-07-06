@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import '../../App.css';
 import { getAnEntity } from '../../Utils/getAnEntity';
+import { removeTimeFromDate } from '../../shared/removeTimeFromDate';
 export const EmployeePayments = () => {
   const activeProject = useSelector((state) => state.activeProject.projectName);
   const employeeEmail = useSelector((state) => state.user.user.Email);
@@ -13,12 +14,6 @@ export const EmployeePayments = () => {
     style: 'currency',
     currency: 'CRC',
   });
-
-  const removeTimeFromDate = (date) => {
-    let myDate = new Date(date);
-    let noTimeDate = new Date(myDate.getFullYear(), myDate.getMonth(), myDate.getDate());
-    return noTimeDate.toDateString();
-  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -49,7 +44,6 @@ export const EmployeePayments = () => {
             <th className='right-td'>Gross Salary</th>
             <th className='right-td'>Mandatory Deductions</th>
             <th className='right-td'>Voluntary Deductions</th>
-            <th className='right-td'>Benefits</th>
             <th className='table-right-border right-td'>Net Salary</th>
           </tr>
         </thead>
@@ -63,7 +57,6 @@ export const EmployeePayments = () => {
               <td className='right-td'>{formatter.format(row.SalarioBruto)}</td>
               <td className='right-td'>{row.TipoContrato === 'Servicios Profesionales' ? '-' : formatter.format(row.MontoTotalDeduccionesObligatoriasEmpleado)}</td>
               <td className='right-td'>{row.TipoContrato === 'Servicios Profesionales' ? '-' : formatter.format(row.MontoTotalDeduccionesVoluntarias)}</td>
-              <td className='right-td'>{row.TipoContrato === 'Servicios Profesionales' ? '-' : formatter.format(row.MontoTotalBeneficios)}</td>
               <td className='right-td'>{formatter.format(row.SalarioNeto)}</td>
             </tr>
           ))}
