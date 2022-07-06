@@ -240,6 +240,7 @@ const getPeriodOfAPorject = async( nombreProyecto ) =>{
 };
 const insertPayrrollOnDB = async ( cedula,nombreProyecto,fechaInicio,fechaFin ) => {
   try {
+    console.log(cedula,nombreProyecto,fechaInicio,fechaFin)
     const pool = await getConnection();
     const result = await pool
       .request()
@@ -249,8 +250,9 @@ const insertPayrrollOnDB = async ( cedula,nombreProyecto,fechaInicio,fechaFin ) 
       .input( 'NombreProyecto', nombreProyecto )
       .query( projectQueries.createNewPayroll );
     return true;
-  } catch ( error ) {
-    console.log( error );
+  } catch (error) {
+    console.log("ESACA")
+    console.log(error);
     return false;
   }
 };

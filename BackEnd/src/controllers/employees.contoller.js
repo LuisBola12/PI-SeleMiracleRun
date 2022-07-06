@@ -83,6 +83,7 @@ export const postNewEmployee = async (req, res) => {
   const fecha = `${year}-${month + 1}-${day}`;
   let {
     NombreProyecto,
+    CedulaEmpleador,
     Email,
     Roles,
     Nombre,
@@ -153,6 +154,7 @@ export const postNewEmployee = async (req, res) => {
       .request()
       .input('Cedula', Cedula)
       .input('NombreProyecto', NombreProyecto)
+      .input('CedulaEmpleador',CedulaEmpleador)
       .input('TipoJornada', TipoJornada)
       .input('FechaInicioContrato', fecha)
       .input('FechaFinContrato', FechaFinContrato)
@@ -191,8 +193,8 @@ export const postNewEmployee = async (req, res) => {
 
 export const contractAEmployee = async (req, res) => {
   try {
-    const { Cedula, TipoContrato, Proyecto, NombreServicio, SalarioPorHora, FechaFinContrato, ValorServicio } = req.body;
-    console.log(Cedula, TipoContrato, Proyecto, NombreServicio, SalarioPorHora, FechaFinContrato, ValorServicio);
+    const { Cedula, TipoContrato,CedulaEmpleador, Proyecto, NombreServicio, SalarioPorHora, FechaFinContrato, ValorServicio } = req.body;
+    console.log(req.body);
     const date = new Date();
     const [month, day, year] = [
       date.getMonth(),
@@ -206,6 +208,7 @@ export const contractAEmployee = async (req, res) => {
       .input('Cedula', Cedula)
       .input('TipoJornada', TipoContrato)
       .input('NombreProyecto', Proyecto)
+      .input('CedulaEmpleador', CedulaEmpleador)
       .input('NombreServicio', NombreServicio)
       .input('SalarioPorHora', SalarioPorHora)
       .input('FechaInicioContrato', FechaInicioContrato)
@@ -220,7 +223,7 @@ export const contractAEmployee = async (req, res) => {
 };
 export const deleteEmployeeFromProject = async (req, res) => {
 
-  const { Proyecto, EmailEmpleado, Cedula, MotivoDeDespido } = req.body;
+  const { Proyecto, EmailEmpleado, Cedula,CedulaEmpleador, MotivoDeDespido } = req.body;
   let mailFormat = {
     from: process.env.EMAIL_USER,
     to: EmailEmpleado,
@@ -235,6 +238,7 @@ export const deleteEmployeeFromProject = async (req, res) => {
       .request()
       .input('Cedula', Cedula)
       .input('Proyecto', Proyecto)
+      .input('CedulaEmpleador', CedulaEmpleador)
       .execute('DeleteAnEmployeeFromAProject');
     res.json(result.recordset);
   } catch (error) {
@@ -288,6 +292,25 @@ export const getEmployeePayments = async (req, res) => {
       .input('projectName', projectName)
       .input('employeeEmail', employeeEmail)
       .query(employeesQueries.getPaymentsOfEmployee);
+    console.log(result.recordset[0].MontoTotalDeduccionesVoluntarias);
+    res.status(200).json(result.recordset);
+  } catch (e) {
+    res.status(404);
+    res.send(e.message);
+  }
+};
+
+export const getAllEmployeePayments = async (req, res) => {
+  const { employeeEmail } = req.params;
+  if (employeeEmail == '') {
+    const message = 'Bad Request. Please Fill All Fields.';
+    return res.status(400).json({ msg: message });
+  }
+  try {
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input('employeeEmail', employeeEmail)
+      .query(employeesQueries.getAllPaymentsOfEmployee);
     console.log(result.recordset[0].MontoTotalDeduccionesVoluntarias);
     res.status(200).json(result.recordset);
   } catch (e) {

@@ -3,7 +3,7 @@
 @apiUpdateEmployeer = http://localhost:4000/updateEmployeer
 @apiProfileEmployee = http://localhost:4000/profileEmployee
 @apiProfileEmployeer = http://localhost:4000/profileEmployeer
-@apiEmployees = http://localhost:4000/employees
+@apiEmployees = http://localhost:4000/employee
 @apiEmployee = http://localhost:4000/employee
 @apiEmployeeContract = http://localhost:4000/employee/contract
 @apiProjects = http://localhost:4000/projects
@@ -181,7 +181,7 @@ GET {{apiUsers}}
 GET {{apiUsers}}/josefR@example.com
 
 ###
-GET {{apiEmployees}}/Super La Esquina
+GET {{apiEmployees}}/Cine Milagro
 
 ###
 GET {{apiProjects}}/norman.os.l@gmail.com/admin

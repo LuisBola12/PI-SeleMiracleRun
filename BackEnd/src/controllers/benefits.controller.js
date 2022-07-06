@@ -4,11 +4,12 @@ import { getConsecutivePayNumber } from './payrollController';
 import { notifyEmployeesForDeletedBenefit } from '../utils/notifyEmployeesForDeletedBenefit';
 
 export const getBenefits = async (req, res) => {
-  const { Proyecto } = req.params;
+  const { Proyecto, CedulaEmpleador } = req.params;
   try {
     const pool = await getConnection();
     const result = await pool.request()
       .input('Proyecto', Proyecto)
+      .input('CedulaEmpleador', CedulaEmpleador)
       .query(benefitsQueries.getBenefits);
     res.json(result.recordset);
   } catch (e) {
@@ -18,12 +19,13 @@ export const getBenefits = async (req, res) => {
 };
 
 export const getBenefitsByName = async (req, res) => {
-  const { Proyecto, Nombre } = req.params;
+  const { Proyecto, CedulaEmpleador, Nombre } = req.params;
   try {
     const pool = await getConnection();
     const result = await pool.request()
       .input('Nombre', Nombre)
       .input('Proyecto', Proyecto)
+      .input('CedulaEmpleador', CedulaEmpleador)
       .query(benefitsQueries.getBenefitsByName);
     res.json(result.recordset);
     console.log(result.recordset);
@@ -104,7 +106,7 @@ export const unlinkEmployeeToBenefit = async (req, res) => {
 
 
 export const createBenefit = async (req, res) => {
-  const { Nombre, NombreProyecto, CostoActual, Descripción } = req.body;
+  const { Nombre, NombreProyecto, CedulaEmpleador, CostoActual, Descripción } = req.body;
   if (Nombre == null || CostoActual == null || NombreProyecto == null) {
     const message = 'Bad Request. Please Fill All Fields.';
     return res.status(400).json({ msg: message });
@@ -115,6 +117,7 @@ export const createBenefit = async (req, res) => {
       .request()
       .input('Nombre', sql.VarChar, Nombre)
       .input('NombreProyecto', sql.VarChar, NombreProyecto)
+      .input('CedulaEmpleador', sql.VarChar, CedulaEmpleador)
       .input('CostoActual', sql.Int, CostoActual)
       .input('Descripción', sql.VarChar, Descripción)
       .query(benefitsQueries.createBenefit);
@@ -127,7 +130,7 @@ export const createBenefit = async (req, res) => {
 };
 
 export const updateBenefit = async (req, res) => {
-  const { Nombre, NombreProyecto, CostoActual, Descripción } = req.body;
+  const { Nombre, NombreProyecto, CedulaEmpleador, CostoActual, Descripción } = req.body;
   const { NombreAntiguo } = req.params;
   if (Nombre == null || CostoActual == null || NombreProyecto == null) {
     const message = 'Bad Request. Please Fill All Fields.';
@@ -140,6 +143,7 @@ export const updateBenefit = async (req, res) => {
       .input('Nombre', sql.VarChar, Nombre)
       .input('NombreAntiguo', sql.VarChar, NombreAntiguo)
       .input('NombreProyecto', sql.VarChar, NombreProyecto)
+      .input('CedulaEmpleador', sql.VarChar, CedulaEmpleador)
       .input('CostoActual', sql.Int, CostoActual)
       .input('Descripción', sql.VarChar, Descripción)
       .query(benefitsQueries.editBenefit);

@@ -20,7 +20,6 @@ import { CreateProjectsForm } from './Components/ProjectsComponents/CreateProjec
 import { EditBenefits } from './Pages/editBenefits';
 import { RegisterHours } from './Pages/registerHours';
 import { useSelector } from 'react-redux';
-import { Home } from './Pages/home';
 import { Payroll } from './Pages/payroll';
 import { PayrollDetailsPage } from './Pages/payrollDetails';
 import { EmployeesBenefits } from './Pages/employeesBenefits';
@@ -30,6 +29,7 @@ import { HireEmployee } from './Pages/hireEmployee';
 import { EndContractWithEmployee } from './Pages/endContractWithEmployee';
 import { EmployeeMyPayments } from './Pages/employeeMyPayments';
 import { EditProjectPage } from './Pages/editProject';
+import { EmployeePaymentsReport } from './Pages/employeePaymentsReport';
 
 function App() {
 
@@ -77,6 +77,7 @@ function App() {
               <Route path='myBenefits' element={<EmployeesBenefits />} />
               <Route path='myVoluntaryDeductions' element={<EmployeesVoluntaryDeductions />} />
               <Route path='myPayments' element={<EmployeeMyPayments />} />
+              <Route path='PaymentsReport' element={<EmployeePaymentsReport />} />
             </Route>
           )}
       </Routes>

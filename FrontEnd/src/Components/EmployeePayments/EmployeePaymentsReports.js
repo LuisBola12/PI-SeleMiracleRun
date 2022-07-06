@@ -3,9 +3,9 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import '../../App.css';
 import { getAnEntity } from '../../Utils/getAnEntity';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { removeTimeFromDate } from '../../shared/removeTimeFromDate';
-export const EmployeePayments = () => {
-  const activeProject = useSelector((state) => state.activeProject.projectName);
+export const EmployeePaymentsReports = () => {
   const employeeEmail = useSelector((state) => state.user.user.Email);
 
   const [employeePayments, setEmployeePayments] = useState([]);
@@ -19,7 +19,7 @@ export const EmployeePayments = () => {
     setIsLoading(true);
     const getEmployeeInfo = async () => {
 
-      const infoReceived = await getAnEntity('employeePayments', `/${activeProject}/${employeeEmail}`);
+      const infoReceived = await getAnEntity('employeePayments', `/${employeeEmail}`);
       if (infoReceived === undefined) {
         setEmployeePayments([]);
       } else {
@@ -29,15 +29,28 @@ export const EmployeePayments = () => {
       setIsLoading(false);
     };
     getEmployeeInfo();
-  }, [activeProject, employeeEmail]);
+  }, [employeeEmail]);
 
   return (isLoading ? <div className='loader' ></div > :
     <>
-      <h2 className='table-button'>My {activeProject} Payments</h2>
-      <table className='Table'>
+      <div className='report-header'>
+        <h2>My Payments Report</h2>
+
+        <ReactHTMLTableToExcel
+          id='exportButtonExcel'
+          table='EmployeePaymentsTable'
+          filename='MyPaymentsReport'
+          sheet='MyPayments'
+          buttonText='Export to Excel'
+          className='export-excel-button button'
+        />
+      </div>
+
+      <table className='Table' id='EmployeePaymentsTable'>
         <thead>
           <tr className='table-header'>
-            <th className='left-td table-left-border'>Contract Type</th>
+            <th className='left-td table-left-border'>Project</th>
+            <th className='right-td'>Contract Type</th>
             <th className='right-td'>Payment Date</th>
             <th className='right-td'>Hours Worked</th>
             <th className='right-td'>Hourly Wage</th>
@@ -50,7 +63,8 @@ export const EmployeePayments = () => {
         <tbody>
           {employeePayments.slice(0).reverse().map((row) => (
             <tr key={row.ConsecutivoPago}>
-              <td className='left-td table-left-border'>{row.TipoContrato}</td>
+              <td className='left-td table-left-border'>{row.NombreProyecto}</td>
+              <td className='right-td'>{row.TipoContrato}</td>
               <td className='right-td'>{removeTimeFromDate(row.FechaFin)}</td>
               <td className='right-td'>{row.TipoContrato === 'Por horas' ? row.SalarioBruto / row.SalarioPorHoras : '-'}</td>
               <td className='right-td'>{formatter.format(row.SalarioPorHoras)}</td>

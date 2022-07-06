@@ -3,7 +3,7 @@ export const employeesQueries = {
   getEmployeeByID: 'Select * From Empleado Where Cedula = @Cedula',
   verifyEmployeeContractProject: 'Select * from EmpleadoYContratoSeAsocianAProyecto ecp where ecp.CedulaEmpleado = @Cedula AND ecp.NombreProyecto = @Proyecto',
   addContractOfAnEmployee: `Insert into EmpleadoYContratoSeAsocianAProyecto 
-  values(@Cedula,@TipoJornada,@NombreProyecto,@NombreServicio,@SalarioPorHora,
+  values(@Cedula,@TipoJornada,@NombreProyecto,@CedulaEmpleador,@NombreServicio,@SalarioPorHora,
     @FechaInicioContrato,@FechaFinContrato,@ValorServicio)`,
   getEmployeesWithContractsOnOtherProyects: `Select E.Cedula, E.Nombre, E.Apellido1, E.Apellido2, ECP.NombreProyecto,ECP.TipoContrato from Empleado E 
   inner join EmpleadoYContratoSeAsocianAProyecto ECP on ECP.CedulaEmpleado = E.Cedula
@@ -18,7 +18,7 @@ export const employeesQueries = {
             where ECP.NombreProyecto = @Proyecto
           )`,
   createNewEmployee: 'Insert into Empleado (Cedula, Nombre, Apellido1, Apellido2, Telefono, Email) values(@Cedula, @Nombre, @Apellido1, @Apellido2, @Telefono, @Email)',
-  contractExistentEmployee: `Insert into EmpleadoYContratoSeAsocianAProyecto values (@Cedula,@TipoJornada,@NombreProyecto,
+  contractExistentEmployee: `Insert into EmpleadoYContratoSeAsocianAProyecto values (@Cedula,@TipoJornada,@NombreProyecto,@CedulaEmpleador,
     @NombreServicio,@SalarioPorHora,@FechaInicioContrato,@FechaFinContrato,@ValorServicio)`,
   deleteEmployeeFromProject: 'Delete from EmpleadoYContratoSeAsocianAProyecto where CedulaEmpleado = @Cedula and NombreProyecto = @NombreProyecto',
   insertHours: 'EXEC ingresarHoras @Email = @EmailEmpleado , @Proyecto = @ProyectoEmpleado, @Fecha = @FechaEmpleado, @CantidadHoras = @CantHorasEmpleado',
@@ -26,8 +26,7 @@ export const employeesQueries = {
   updateEmployee: 'Update Empleado set Nombre= @Nombre, Apellido1= @Apellido1 ,Apellido2= @Apellido2,Telefono= @Telefono Where Cedula= @Cedula',
   updateEmployeer: 'Update Empleador set Nombre= @Nombre, Apellido1= @Apellido1 ,Apellido2= @Apellido2,Telefono= @Telefono Where Cedula= @Cedula',
   udpateEmail: 'Update Usuarios set Email = @Email where Email = @EmailViejo',
-  getPaymentsOfEmployee: `SELECT pa.ConsecutivoPago, pa.ConsecutivoPlanilla, pa.CedulaEmpleado,
-  pa.MontoTotalBeneficios, pa.MontoTotalDeduccionesObligatoriasEmpleado,
+  getPaymentsOfEmployee: `SELECT pa.ConsecutivoPago, pa.ConsecutivoPlanilla, pa.CedulaEmpleado, pa.MontoTotalDeduccionesObligatoriasEmpleado,
   pa.MontoTotalDeduccionesVoluntarias,
   pa.SalarioBruto, pa.SalarioNeto, pl.FechaIncio, pl.FechaFin, e.SalarioPorHoras, 
   e.TipoContrato, e.ValorDeServicio
@@ -35,5 +34,16 @@ export const employeesQueries = {
     JOIN Empleado ON Empleado.Cedula = pa.CedulaEmpleado 
     JOIN EmpleadoYContratoSeAsocianAProyecto e ON e.CedulaEmpleado = Empleado.Cedula AND e.NombreProyecto = pl.NombreProyecto
   WHERE Empleado.Email = @employeeEmail
-  AND pl.NombreProyecto = @projectName`
+  AND pl.NombreProyecto = @projectName`,
+  getAllPaymentsOfEmployee: `SELECT pl.NombreProyecto, pa.ConsecutivoPago, pa.ConsecutivoPlanilla, pa.CedulaEmpleado, pa.MontoTotalDeduccionesObligatoriasEmpleado,
+  pa.MontoTotalDeduccionesVoluntarias,
+  pa.SalarioBruto, pa.SalarioNeto, pl.FechaIncio, pl.FechaFin, e.SalarioPorHoras, 
+  e.TipoContrato, e.ValorDeServicio
+  FROM [Pago] pa JOIN Planilla pl ON pl.Consectivo = pa.ConsecutivoPlanilla
+    JOIN Empleado ON Empleado.Cedula = pa.CedulaEmpleado 
+    JOIN EmpleadoYContratoSeAsocianAProyecto e ON e.CedulaEmpleado = Empleado.Cedula AND e.NombreProyecto = pl.NombreProyecto
+  WHERE Empleado.Email = @employeeEmail`
+
 };
+
+

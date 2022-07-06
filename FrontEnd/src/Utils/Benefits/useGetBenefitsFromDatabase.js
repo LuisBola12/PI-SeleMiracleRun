@@ -4,12 +4,13 @@ import { getAnEntity } from '../getAnEntity';
 
 export const useGetBenefitsFromDatabase = () => {
   const activeProject = useSelector((state) => state.activeProject.projectName);
+  const employerId = useSelector((state) => state.user.user.Cedula);
   const [projectBenefits, setProjectBenefits] = useState([{}]);
-
+  console.log(employerId);
   const [infoReceived, setInfoReceived] = useState(false);
   useEffect(() => {
     const getBenefits = async () => {
-      setProjectBenefits(await getAnEntity('benefits/', activeProject));
+      setProjectBenefits(await getAnEntity('benefits/', activeProject + '/' + employerId));
       setInfoReceived(true);
     };
     getBenefits();

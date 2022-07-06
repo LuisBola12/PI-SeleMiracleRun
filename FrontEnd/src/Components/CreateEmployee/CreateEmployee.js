@@ -11,11 +11,13 @@ export const CreateEmployee = () => {
   const [contractsReceived, setContractsReceived] = useState(false);
   const [typeOfContracts, setTypeOfContracts] = useState();
   const activeProject = useSelector((state) => state.activeProject.projectName);
+  const idEmployer =  useSelector((state)=>state.user.user.Cedula);
   const { post } = usePost(process.env.REACT_APP_BACKEND_LOCALHOST + 'employee');
   const sendToDatabase = async () => {
     let string = JSON.stringify(formValues);
     string = JSON.stringify({
       NombreProyecto: activeProject,
+      CedulaEmpleador:idEmployer,
       Email: formValues.email,
       Roles: 'emp',
       Nombre: formValues.name,

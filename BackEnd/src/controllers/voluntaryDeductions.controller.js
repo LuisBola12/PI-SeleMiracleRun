@@ -4,11 +4,12 @@ import {getConsecutivePayNumber} from './payrollController'
 import { notifyEmployeesForDeletedVoluntaryDeduction } from '../utils/notifyEmployeesForDeletedVoluntaryDeduction';
 
 export const getVoluntaryDeductions = async ( req, res ) => {
-  const { NombreProyecto } = req.params;
+  const { NombreProyecto, CedulaEmpleador } = req.params;
   try {
     const pool = await getConnection();
     const result = await pool.request()
       .input( 'NombreProyecto', NombreProyecto )
+      .input('CedulaEmpleador', CedulaEmpleador)
       .query( voluntaryDeductionsQueries.getVoluntaryDeductions );
     res.json( result.recordset );
   } catch ( e ) {
@@ -18,12 +19,13 @@ export const getVoluntaryDeductions = async ( req, res ) => {
 };
 
 export const getVoluntaryDeductionsByName = async ( req, res ) => {
-  const { NombreProyecto, Nombre } = req.params;
+  const { NombreProyecto, CedulaEmpleador, Nombre } = req.params;
   try {
     const pool = await getConnection();
     const result = await pool.request()
       .input( 'Nombre', Nombre )
       .input( 'NombreProyecto', NombreProyecto )
+      .input('CedulaEmpleador', CedulaEmpleador)
       .query( voluntaryDeductionsQueries.getVoluntaryDeductionsByName );
     res.json( result.recordset );
   } catch ( e ) {
@@ -49,7 +51,7 @@ export const getEmployeeVoluntaryDeductionsByEmail = async ( req, res ) => {
 };
 
 export const createNewVoluntaryDeduction = async ( req, res ) => {
-  const { Nombre, NombreProyecto, Costo, Descripcion } = req.body;
+  const { Nombre, NombreProyecto, CedulaEmpleador, Costo, Descripcion } = req.body;
   if ( Nombre == null || NombreProyecto == null || Costo == null ) {
     const message = 'Bad Request. Please Fill All Fields.';
     return res.status( 400 ).json( { msg: message } );
@@ -60,6 +62,7 @@ export const createNewVoluntaryDeduction = async ( req, res ) => {
       .request()
       .input( 'Nombre', sql.VarChar, Nombre )
       .input( 'NombreProyecto', sql.VarChar, NombreProyecto )
+      .input('CedulaEmpleador', sql.VarChar, CedulaEmpleador)
       .input( 'Costo', sql.Int, Costo )
       .input( 'Descripcion', sql.VarChar, Descripcion )
       .query( voluntaryDeductionsQueries.createNewVoluntaryDeduction );
@@ -73,7 +76,7 @@ export const createNewVoluntaryDeduction = async ( req, res ) => {
 
 
 export const updateVoluntaryDeduction = async ( req, res ) => {
-  const { Nombre, NombreProyecto, Costo, Descripcion } = req.body;
+  const { Nombre, NombreProyecto, CedulaEmpleador, Costo, Descripcion } = req.body;
   const { NombreAntiguo } = req.params;
   if ( Nombre == null || Costo == null || NombreProyecto == null ) {
     const message = 'Bad Request. Please Fill All Fields.';
@@ -86,6 +89,7 @@ export const updateVoluntaryDeduction = async ( req, res ) => {
       .input( 'Nombre', sql.VarChar, Nombre )
       .input( 'NombreAntiguo', sql.VarChar, NombreAntiguo )
       .input( 'NombreProyecto', sql.VarChar, NombreProyecto )
+      .input('CedulaEmpleador', sql.VarChar, CedulaEmpleador)
       .input( 'Costo', sql.Int, Costo )
       .input( 'Descripcion', sql.VarChar, Descripcion )
       .query( voluntaryDeductionsQueries.editVoluntaryDeduction );
