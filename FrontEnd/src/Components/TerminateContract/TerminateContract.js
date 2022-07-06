@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 export const TerminateContract = () => {
   const activeProject = useSelector((state) => state.activeProject.projectName);
   const [employeevalues, setEmployeeValues] = useState({});
+  const idEmployer =  useSelector((state)=>state.user.user.Cedula);
   const [reasonOfEndContract, setReasonOfEndContract] = useState("");
   const navigate = useNavigate();
   const { post } = usePost(process.env.REACT_APP_BACKEND_LOCALHOST + 'deleteEmployeeFromProject');
@@ -29,6 +30,7 @@ export const TerminateContract = () => {
           Proyecto: activeProject,
           EmailEmpleado: employeevalues.Email,
           Cedula: employeevalues.Cedula,
+          CedulaEmpleador:idEmployer,
           MotivoDeDespido: reasonOfEndContract
         });
         const resultOfQ = await post(string);

@@ -12,12 +12,14 @@ export const HireContract = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const activeProject = useSelector((state) => state.activeProject.projectName);
+  const idEmployer =  useSelector((state)=>state.user.user.Cedula);
   const { post } = usePost(process.env.REACT_APP_BACKEND_LOCALHOST + "contractExistentEmployee");
   const sendToDataBase = () => {
     let string = JSON.stringify(formValues);
     string = JSON.stringify({
       Cedula: location.state.Cedula,
       TipoContrato: formValues.contract,
+      CedulaEmpleador:idEmployer,
       Proyecto: activeProject,
       NombreServicio: formValues.serviceName,
       SalarioPorHora: formValues.hWage,
