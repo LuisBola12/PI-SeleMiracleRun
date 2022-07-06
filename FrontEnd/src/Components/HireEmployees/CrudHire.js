@@ -51,7 +51,7 @@ export const CrudHire = () => {
           ))}
         </tbody>
       </table>
-      <label className='Empty-message'>{(employeesToHire.length === 0) ? 'There is no employees to hire' : ''}</label>
+      <label className='Empty-message'>{(employeesToHire.length === 0) ? 'There are no employees to hire' : ''}</label>
     </>
   );
 };
