@@ -18,10 +18,11 @@ export const EditVoluntaryDeduction = () => {
   const activeProject = useSelector((state) => state.activeProject.projectName);
   const location = useLocation();
   const oldName = location.state.Nombre;
+  const employerId = useSelector((state) => state.user.user.Cedula);
   const navigate = useNavigate();
   const { updateVoluntaryDeduction } = usePutToVoluntaryDeductions();
   const submit = async () => {
-    const notExists = await validAnEntity('voluntaryDeductions/' + activeProject + '/', formValues.Name);
+    const notExists = await validAnEntity('voluntaryDeductions/' + activeProject + '/' + employerId + '/', formValues.Name);
     if (notExists === true || oldName === formValues.Name) {
       updateVoluntaryDeduction(formValues.Name, formValues.Cost, formValues.Description, apiVoluntaryDeductions + `/${oldName}`);
       navigate('/voluntaryDeductions');
