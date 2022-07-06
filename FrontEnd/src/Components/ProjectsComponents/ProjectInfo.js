@@ -11,6 +11,7 @@ import validateEditProject from './editProjectValidate';
 import { validAnEntity } from '../../Utils/validAnEntity';
 import { updateActiveProject } from '../../Slices/projectSlice/activeProjectSlice';
 import { useNavigate } from 'react-router-dom';
+import { useProjectManagement } from '../../Utils/ProjectManagement/useProjectManagement.jsx';
 
 export const ProjectInfo = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ export const ProjectInfo = () => {
   const { post: updateProject } = usePost( process.env.REACT_APP_BACKEND_LOCALHOST + 'updateProject', 'PUT' );
   const dispatch = useDispatch();
   const [ changeMade, setChangeMade ] = useState( false );
-
+  const { eliminateProject } = useProjectManagement();
   const submit = async () => {
     const availableName = await validAnEntity( 'projects/', formValues.projectName );
     if ( formValues.projectName === activeProject || availableName ) {
@@ -51,72 +52,6 @@ export const ProjectInfo = () => {
       } );
     }
     setIsSubmitting( false );
-  };
-
-  const eliminateProject = async ( projectName ) => {
-    try {
-      Swal.fire( {
-        title: 'Are you sure?',
-        text: 'You won\'t be able to revert this!',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: 'darkgreen',
-        cancelButtonColor: 'darkred',
-        confirmButtonText: 'Yes, delete it!'
-      } ).then( async ( result ) => {
-
-        if ( result.isConfirmed ) {
-          const activeEmployeesApiResponse = await fetch( process.env.REACT_APP_BACKEND_LOCALHOST + `getEmployeesInfo/${projectName}` );
-          const activeEmployees = await activeEmployeesApiResponse.json();
-          console.log( activeEmployees );
-          if ( activeEmployees.length > 0 ) {
-            Swal.fire( {
-              title: 'Confirmation',
-              text: 'This project has active employees, do you want to eliminate it and notify all employees',
-              icon: 'info',
-              showCancelButton: true,
-              confirmButtonColor: 'darkgreen',
-              cancelButtonColor: 'darkred'
-            } ).then( ( result ) => {
-              if ( result.isConfirmed ){
-                try {
-                  let string = '';
-                  string = JSON.stringify( { projectName: projectName, employerID: employerID } );
-                  eliminateProjectFromDatabase( string );
-
-                  Swal.fire( {
-                    title: 'Deleted!',
-                    text: `The Project ${projectName} has been deleted.`,
-                    icon: 'success',
-                    confirmButtonColor: 'darkgreen',
-                    cancelButtonColor: 'darkred'
-                  } );
-                  dispatch( updateActiveProject( '' ) );
-                  navigate( '/' );
-                } catch ( error ) {
-                  Swal.fire( {
-                    icon: 'error',
-                    title: 'Error...',
-                    text: 'There was an error connecting to database',
-                    confirmButtonColor: 'darkgreen'
-                  } );
-                  console.log( `Error: ${error}\n databaseError:${eliminateProjectFromDatabaseError} ` );
-                }
-              }
-            } );
-          } else {
-
-            let string = '';
-            string = JSON.stringify( { projectName: projectName, employerID: employerID } );
-            eliminateProjectFromDatabase( string );
-            dispatch( updateActiveProject( '' ) );
-            navigate( '/' );
-          }
-        }
-      } );
-    } catch ( error ) {
-      console.log( `Error: ${error}` );
-    }
   };
 
   const { formValues, handleInputChange, handleSubmit, errors, setFormValues, setErrors, setIsSubmitting } = useForm( submit, validateEditProject );
