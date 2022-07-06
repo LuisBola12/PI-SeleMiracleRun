@@ -15,9 +15,8 @@ export const EmployeePaymentsReports = () => {
   const [employeePayments, setEmployeePayments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [projectNameFilter, setProjectNameFilter] = useState('Any');
-  const [datesFilter, setDatesFilter] = useState([]);
+  const [datesFilter, setDatesFilter] = useState(['date', 'date']);
   const { projects } = useProjectsData();
-  console.log(projects)
 
   let formatter = new Intl.NumberFormat(undefined, {
     style: 'currency',
@@ -27,18 +26,17 @@ export const EmployeePaymentsReports = () => {
   useEffect(() => {
     setIsLoading(true);
     const getEmployeeInfo = async () => {
-
-      const infoReceived = await getAnEntity('employeePayments', `/${employeeEmail}`);
+      const apiPayments = `/${employeeEmail}/${projectNameFilter}/${datesFilter[0]}/${datesFilter[1]}`
+      const infoReceived = await getAnEntity('employeePayments', apiPayments);
       if (infoReceived === undefined) {
         setEmployeePayments([]);
       } else {
         setEmployeePayments(infoReceived);
-        console.log(infoReceived);
       }
       setIsLoading(false);
     };
     getEmployeeInfo();
-  }, [employeeEmail]);
+  }, [projectNameFilter]);
 
   return (isLoading ? <div className='loader' ></div > :
     <>
@@ -62,7 +60,7 @@ export const EmployeePaymentsReports = () => {
               setProjectNameFilter(e.target.value);
             }}
           >
-            <option value={""}> Any </option>
+            <option value={'Any'}> Any </option>
             {projects.map((element) => (
               <option key={element.Nombre} value={element.Nombre}>
                 {element.Nombre}
