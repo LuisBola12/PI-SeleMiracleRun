@@ -364,11 +364,37 @@ export const updateProject = async ( req, res ) => {
   }
 };
 
-export const deleteAllEmployees = async ( req, res ) => {
+const deleteAllEmployees = async( projectName, employerID ) =>{
+  const pool = await getConnection();
+  await pool
+    .request()
+    .input( 'projectName', projectName )
+    .input( 'employerID', employerID )
+    .execute( 'DeleteAllEmployees' );
+};
 
-  console.log( 'entra' );
+const employeesFromProjectInfo = async ( projectName, employerID ) => {
+  const pool = await getConnection();
+  const employeesInfo = await pool
+    .request()
+    .input( 'projectName', projectName )
+    .input( 'employerID', employerID )
+    .query( projectQueries.getAllEmployeesContactInfo );
+  return employeesInfo;
+};
+
+const setProjectAsInactive = async ( projectName, employerID ) => {
+  const pool = await getConnection();
+  await pool
+    .request()
+    .input( 'projectName', projectName )
+    .input( 'employerID', employerID )
+    .query( projectQueries.logicalEraseProject );
+
+};
+
+export const deleteProject = async ( req, res ) => {
   const { projectName, employerID } = req.body;
-  console.log( projectName + employerID );
 
   if ( projectName === null || employerID === null ) {
     const message = 'Bad Request Invalid Project Name';
@@ -376,20 +402,7 @@ export const deleteAllEmployees = async ( req, res ) => {
   }
 
   try {
-    const pool = await getConnection();
-    await pool
-      .request()
-      .input( 'projectName', projectName )
-      .input( 'employerID', employerID )
-      .query( projectQueries.logicalEraseProject );
-    // res.json( 'Success' );
-
-    const employeesInfo = await pool
-      .request()
-      .input( 'projectName', projectName )
-      .input( 'employerID', employerID )
-      .query( projectQueries.getAllEmployeesContactInfo );
-    // res.json( employeesInfo.recordset );
+    const employeesInfo = await employeesFromProjectInfo( projectName, employerID );
 
     let mailFormat = {
       from: process.env.EMAIL_USER,
@@ -398,19 +411,13 @@ export const deleteAllEmployees = async ( req, res ) => {
       html: ( emailTerminateContract( `Se ha eliminado el proyecto de la plataforma por lo que se procede a un despido temprano del proyecto: ${projectName}` ) ),
     };
 
-
     for ( let employeeIndex = 0; employeeIndex < employeesInfo.recordset.length; employeeIndex++ ) {
       mailFormat.to = employeesInfo.recordset[employeeIndex].Email;
       await sendEmail( mailFormat );
     }
 
-    
-    const result = await pool
-      .request()
-      .input( 'projectName', projectName )
-      .input( 'employerID', employerID )
-      .execute( 'DeleteAllEmployees' );
-    res.json( result.recordset );
+    await deleteAllEmployees( projectName, employerID );
+    await setProjectAsInactive( projectName,employerID );
 
   } catch ( error ) {
     res.status( 500 );

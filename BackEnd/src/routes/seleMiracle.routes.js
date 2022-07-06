@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { getProjectsByEmailAndName, getProjectsByEmail, createProject, createPayrroll,
-  getProjectInfoByName, updateProject, deleteAllEmployees } from '../controllers/projects.controller';
+  getProjectInfoByName, updateProject, deleteProject } from '../controllers/projects.controller';
 import {
   getEmployees, postNewEmployee, getEmployeeByID, verifyEmployeeContractOnProject,
   getEmployeesWithContractOnOtherProyects, contractAEmployee, setHoursEmployee, deleteEmployeeFromProject, getEmployeesAllInfo,
@@ -66,8 +66,7 @@ router.get( '/getEmployeesInfo/:projectName', getEmployeesAllInfo );
 router.get( '/projects/:Email/:Rol', getProjectsByEmail );
 router.post( '/projects', createProject );
 router.post( '/getProjectPeriod', createPayrroll );
-//   TODO: Cambiar ruta de logicEliminateProject 
-router.put( '/logicEliminateProject', deleteAllEmployees );
+router.put( '/logicEliminateProject', deleteProject );
 router.get( '/myProjects/:Email/:ProjectName', getProjectsByEmailAndName  );
 router.get( '/projects/:projectName', getProjectInfoByName  );
 router.put( '/updateProject', updateProject );
