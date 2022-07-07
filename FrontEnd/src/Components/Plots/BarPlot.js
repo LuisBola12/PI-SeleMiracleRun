@@ -1,7 +1,7 @@
 import React from 'react';
 import {Bar} from 'react-chartjs-2';
 
-export const BarPlot = ({labels, label, data}) => {
+export const BarPlot = ({dataLabels, PlotLabel, dataValues}) => {
 
   const state = {
     // TODO: Traer beneficios desde backend.
