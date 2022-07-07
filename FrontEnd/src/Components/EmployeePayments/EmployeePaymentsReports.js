@@ -19,7 +19,7 @@ export const EmployeePaymentsReports = () => {
   const [projectNameFilter, setProjectNameFilter] = useState('Any');
   const [range, setRange] = useState([
     {
-      startDate: new Date('2022-01-02'),
+      startDate: addDays(new Date(), -60),
       endDate: addDays(new Date(), 1),
       key: 'selection'
     }
