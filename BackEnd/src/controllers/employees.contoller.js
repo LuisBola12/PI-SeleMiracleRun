@@ -293,7 +293,6 @@ export const getEmployeePayments = async (req, res) => {
       .input('projectName', projectName)
       .input('employeeEmail', employeeEmail)
       .query(employeesQueries.getPaymentsOfEmployee);
-    console.log(result.recordset[0].MontoTotalDeduccionesVoluntarias);
     res.status(200).json(result.recordset);
   } catch (e) {
     res.status(404);
@@ -312,12 +311,9 @@ export const getAllEmployeePayments = async (req, res) => {
     const result = await pool.request()
       .input('employeeEmail', employeeEmail)
       .query(employeesQueries.getAllPaymentsOfEmployee);
-    console.log(result.recordset[0].MontoTotalDeduccionesVoluntarias);
-
     if (projectNameFilter != 'Any') {
       result.recordset = filterPaymentsByProjectName(result.recordset, projectNameFilter);
     }
-
     res.status(200).json(result.recordset);
   } catch (e) {
     res.status(404);
