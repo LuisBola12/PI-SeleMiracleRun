@@ -9,6 +9,7 @@ import { IconContext } from 'react-icons';
 import { FaFilter } from 'react-icons/fa';
 import { utils, writeFile } from 'xlsx';
 import { DateRangeSelect } from '../DateRangeSelect/DateRangeSelect';
+import { addDays } from 'date-fns';
 
 export const EmployeePaymentsReports = () => {
   const employeeEmail = useSelector((state) => state.user.user.Email);
@@ -16,7 +17,13 @@ export const EmployeePaymentsReports = () => {
   const [employeePayments, setEmployeePayments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [projectNameFilter, setProjectNameFilter] = useState('Any');
-  const [datesFilter, setDatesFilter] = useState(['date', 'date']);
+  const [range, setRange] = useState([
+    {
+      startDate: new Date('2022-01-02'),
+      endDate: addDays(new Date(), 1),
+      key: 'selection'
+    }
+  ])
   const { projects } = useProjectsData();
 
   let formatter = new Intl.NumberFormat(undefined, {
@@ -27,7 +34,7 @@ export const EmployeePaymentsReports = () => {
   useEffect(() => {
     setIsLoading(true);
     const getEmployeeInfo = async () => {
-      const apiPayments = `/${employeeEmail}/${projectNameFilter}/${datesFilter[0]}/${datesFilter[1]}`
+      const apiPayments = `/${employeeEmail}/${projectNameFilter}/${range[0].endDate}/${range[0].startDate}`
       const infoReceived = await getAnEntity('employeePayments', apiPayments);
       if (infoReceived === undefined) {
         setEmployeePayments([]);
@@ -79,7 +86,10 @@ export const EmployeePaymentsReports = () => {
 
           <br />
           <label>By Date</label>
-          <DateRangeSelect></DateRangeSelect>
+          <DateRangeSelect
+            range={range}
+            setRange={setRange}
+          />
 
 
         </div>

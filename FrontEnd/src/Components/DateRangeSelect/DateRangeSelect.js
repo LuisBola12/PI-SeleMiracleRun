@@ -1,20 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { DateRange } from 'react-date-range';
 import format from 'date-fns/format';
-import { addDays } from 'date-fns';
 import '../../App.css';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 
-export const DateRangeSelect = () => {
+export const DateRangeSelect = ({ range, setRange }) => {
 
-  const [range, setRange] = useState([
-    {
-      startDate: new Date('2022-01-02'),
-      endDate: addDays(new Date(), 1),
-      key: 'selection'
-    }
-  ])
 
   const [open, setOpen] = useState(false)
 
