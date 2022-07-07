@@ -86,8 +86,6 @@ export const EmployeePaymentsReports = () => {
 
 
         </div>
-        <button className='export-excel-button button' onClick={handleExport}> Export to Excel</button>
-        <h2>My Payments Report</h2>
         <ExportToExcelButton
           objectsArray={employeePayments}
           sheetName={'myPayments'}
