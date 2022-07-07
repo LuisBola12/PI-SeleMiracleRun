@@ -5,6 +5,7 @@ export const usePostToVoluntaryDeductions = () => {
   const apiVoluntaryDeductions = process.env.REACT_APP_BACKEND_LOCALHOST + 'voluntaryDeductions';
   const apiVoluntaryDeductionsToEmplyee = process.env.REACT_APP_BACKEND_LOCALHOST + 'myVoluntaryDeductions'
   const employeeEmail = useSelector((state) => state.user.user.Email);
+  const employerId = useSelector((state) => state.user.user.Cedula);
   const submitVoluntaryDeduction = async (name, cost, description) => {
     const newCost = cost.split(' ').join('');
     const postFetch = await fetch(apiVoluntaryDeductions, {
@@ -15,6 +16,7 @@ export const usePostToVoluntaryDeductions = () => {
       body: JSON.stringify({
         Nombre: name,
         NombreProyecto: activeProject,
+        CedulaEmpleador: employerId,
         Costo: parseInt(newCost),
         Descripcion: description,
       }),
