@@ -3,13 +3,30 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import '../../App.css';
 import { getAnEntity } from '../../Utils/getAnEntity';
-import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { removeTimeFromDate } from '../../shared/removeTimeFromDate';
+import { useProjectsData } from '../../Utils/PayrollProjects/useProjectsData';
+import { IconContext } from 'react-icons';
+import { FaFilter } from 'react-icons/fa';
+import { DateRangeSelect } from '../DateRangeSelect/DateRangeSelect';
+import { addDays } from 'date-fns';
+import { ExportToExcelButton } from '../ExportToExcelButton/ExportToExcelButton';
+
 export const EmployeePaymentsReports = () => {
   const employeeEmail = useSelector((state) => state.user.user.Email);
 
   const [employeePayments, setEmployeePayments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [projectNameFilter, setProjectNameFilter] = useState('Any');
+  const [filterSwitch, setFilterSwitch] = useState(false);
+  const [range, setRange] = useState([
+    {
+      startDate: addDays(new Date(), -60),
+      endDate: addDays(new Date(), 1),
+      key: 'selection'
+    }
+  ])
+  const { projects } = useProjectsData();
+
   let formatter = new Intl.NumberFormat(undefined, {
     style: 'currency',
     currency: 'CRC',
@@ -18,32 +35,66 @@ export const EmployeePaymentsReports = () => {
   useEffect(() => {
     setIsLoading(true);
     const getEmployeeInfo = async () => {
-
-      const infoReceived = await getAnEntity('employeePayments', `/${employeeEmail}`);
+      const apiPayments = `/${employeeEmail}/${projectNameFilter}/${range[0].startDate}/${range[0].endDate}`
+      const infoReceived = await getAnEntity('employeePayments', apiPayments);
       if (infoReceived === undefined) {
         setEmployeePayments([]);
       } else {
         setEmployeePayments(infoReceived);
-        console.log(infoReceived);
       }
       setIsLoading(false);
     };
     getEmployeeInfo();
-  }, [employeeEmail]);
+  }, [projectNameFilter, filterSwitch]);
 
   return (isLoading ? <div className='loader' ></div > :
     <>
+      <h2 className='table-button'>My Payments Report</h2>
       <div className='report-header'>
-        <h2>My Payments Report</h2>
+        <div className='filter-payments-report'>
+          <IconContext.Provider
+            value={{
+              className: 'filter-icon',
+            }}
+          >
+            <label>
+              <FaFilter />
+            </label>
+          </IconContext.Provider>
+          <label>By Project Name</label>
+          <select
+            className='project-Name-Filter'
+            value={projectNameFilter}
+            onChange={(e) => {
+              setProjectNameFilter(e.target.value);
+            }}
+          >
+            <option value={'Any'}> Any </option>
+            {projects.map((element) => (
+              <option key={element.Nombre} value={element.Nombre}>
+                {element.Nombre}
+              </option>
+            ))
+            }
+          </select>
 
-        <ReactHTMLTableToExcel
-          id='exportButtonExcel'
-          table='EmployeePaymentsTable'
-          filename='MyPaymentsReport'
-          sheet='MyPayments'
-          buttonText='Export to Excel'
-          className='export-excel-button button'
+          <br />
+          <label>By Date</label>
+          <DateRangeSelect
+            range={range}
+            setRange={setRange}
+            filterSwitch={filterSwitch}
+            setFilterSwitch={setFilterSwitch}
+          />
+
+
+        </div>
+        <ExportToExcelButton
+          objectsArray={employeePayments}
+          sheetName={'myPayments'}
+          fileName={'myPaymentsReport'}
         />
+
       </div>
 
       <table className='Table' id='EmployeePaymentsTable'>
@@ -67,7 +118,7 @@ export const EmployeePaymentsReports = () => {
               <td className='right-td'>{row.TipoContrato}</td>
               <td className='right-td'>{removeTimeFromDate(row.FechaFin)}</td>
               <td className='right-td'>{row.TipoContrato === 'Por horas' ? row.SalarioBruto / row.SalarioPorHoras : '-'}</td>
-              <td className='right-td'>{formatter.format(row.SalarioPorHoras)}</td>
+              <td className='right-td'>{row.TipoContrato === 'Por horas' ? formatter.format(row.SalarioPorHoras) : '-'}</td>
               <td className='right-td'>{formatter.format(row.SalarioBruto)}</td>
               <td className='right-td'>{row.TipoContrato === 'Servicios Profesionales' ? '-' : formatter.format(row.MontoTotalDeduccionesObligatoriasEmpleado)}</td>
               <td className='right-td'>{row.TipoContrato === 'Servicios Profesionales' ? '-' : formatter.format(row.MontoTotalDeduccionesVoluntarias)}</td>
