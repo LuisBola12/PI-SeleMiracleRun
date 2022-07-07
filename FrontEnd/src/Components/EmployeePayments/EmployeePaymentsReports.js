@@ -17,6 +17,7 @@ export const EmployeePaymentsReports = () => {
   const [employeePayments, setEmployeePayments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [projectNameFilter, setProjectNameFilter] = useState('Any');
+  const [filterSwitch, setFilterSwitch] = useState(false);
   const [range, setRange] = useState([
     {
       startDate: addDays(new Date(), -60),
@@ -34,7 +35,7 @@ export const EmployeePaymentsReports = () => {
   useEffect(() => {
     setIsLoading(true);
     const getEmployeeInfo = async () => {
-      const apiPayments = `/${employeeEmail}/${projectNameFilter}/${range[0].endDate}/${range[0].startDate}`
+      const apiPayments = `/${employeeEmail}/${projectNameFilter}/${range[0].startDate}/${range[0].endDate}`
       const infoReceived = await getAnEntity('employeePayments', apiPayments);
       if (infoReceived === undefined) {
         setEmployeePayments([]);
@@ -44,7 +45,7 @@ export const EmployeePaymentsReports = () => {
       setIsLoading(false);
     };
     getEmployeeInfo();
-  }, [projectNameFilter]);
+  }, [projectNameFilter, filterSwitch]);
 
   return (isLoading ? <div className='loader' ></div > :
     <>
@@ -82,6 +83,8 @@ export const EmployeePaymentsReports = () => {
           <DateRangeSelect
             range={range}
             setRange={setRange}
+            filterSwitch={filterSwitch}
+            setFilterSwitch={setFilterSwitch}
           />
 
 

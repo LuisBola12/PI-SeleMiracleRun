@@ -5,7 +5,7 @@ import { sendEmail } from '../services/Mailer';
 import { emailNewUserEmployee } from '../FormatEmailMessages/EmailNewUserEmployee';
 import { employerQueries } from '../database/queries/employerQueries';
 import { emailTerminateContract } from '../FormatEmailMessages/EmailTerminateContract';
-import { filterPaymentsByProjectName } from '../utils/employeePaymentsFilters';
+import { filterPaymentsByProjectName, filterPaymentsByDate } from '../utils/employeePaymentsFilters';
 
 export const getEmployeeByID = async (req, res) => {
   const { Cedula } = req.params;
@@ -314,6 +314,8 @@ export const getAllEmployeePayments = async (req, res) => {
     if (projectNameFilter != 'Any') {
       result.recordset = filterPaymentsByProjectName(result.recordset, projectNameFilter);
     }
+    result.recordset = filterPaymentsByDate(result.recordset, initialDateFilter, endDateFilter);
+
     res.status(200).json(result.recordset);
   } catch (e) {
     res.status(404);
