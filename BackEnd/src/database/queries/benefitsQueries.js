@@ -10,18 +10,19 @@ export const benefitsQueries = {
     ,BeneficioElegido.NombreProyecto as ProjectName
     ,count(BeneficioElegido.NombreBeneficio)  as employeeBenefitsQty
     , sum(Beneficios.CostoActual) as moneyAmountUsedByEmployee
-
     FROM Usuarios
     JOIN Empleado ON Usuarios.Email = Empleado.Email
     JOIN EmpleadoYContratoSeAsocianAProyecto e 
     ON Empleado.Cedula = e.CedulaEmpleado
-    JOIN BeneficioElegido ON BeneficioElegido.CedulaEmpleado = Empleado.Cedula
-    JOIN Beneficios ON Beneficios.Nombre = BeneficioElegido.NombreBeneficio
+    JOIN BeneficioElegido ON BeneficioElegido.CedulaEmpleado = Empleado.Cedula and BeneficioElegido.NombreProyecto = e.NombreProyecto
+    JOIN Beneficios ON Beneficios.Nombre = BeneficioElegido.NombreBeneficio and 
+	Beneficios.NombreProyecto = BeneficioElegido.NombreProyecto and Beneficios.CedulaEmpleador
+	= BeneficioElegido.CedulaEmpleador
 
-    WHERE Empleado.Email = @employeeEmail
+    WHERE Empleado.Email = 'javmoli045@gmail.com'
     AND BeneficioElegido.fechaFin >  GETDATE()
-    AND BeneficioElegido.NombreProyecto = @projectName
-    GROUP BY Empleado.Nombre, Empleado.Apellido1,BeneficioElegido.NombreProyecto
+    AND Beneficios.NombreProyecto = 'Taquería Milagro'
+	GROUP BY Empleado.Nombre, Empleado.Apellido1,BeneficioElegido.NombreProyecto
       `,
 
   benefitsLimits:

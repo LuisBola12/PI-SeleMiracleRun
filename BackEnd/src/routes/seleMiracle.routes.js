@@ -1,8 +1,6 @@
 import { Router } from 'express';
-import {
-  getProjectsByEmailAndName, getProjectsByEmail, createProject, createPayrroll,
-  logicEliminateProject, getProjectInfoByName, updateProject
-} from '../controllers/projects.controller';
+import { getProjectsByEmailAndName, getProjectsByEmail, createProject, createPayrroll,
+  getProjectInfoByName, updateProject, deleteProject } from '../controllers/projects.controller';
 import {
   getEmployees, postNewEmployee, getEmployeeByID, verifyEmployeeContractOnProject,
   getEmployeesWithContractOnOtherProyects, contractAEmployee, setHoursEmployee, deleteEmployeeFromProject, getEmployeesAllInfo,
@@ -68,13 +66,13 @@ router.post('/getProjectPeriod', createPayrroll);
 router.get('/getEmployeesInfo/:projectName', getEmployeesAllInfo);
 
 //Projects
-router.get('/projects/:Email/:Rol', getProjectsByEmail);
-router.post('/projects', createProject);
-router.post('/getProjectPeriod', createPayrroll);
-router.put('/logicEliminateProject', logicEliminateProject);
-router.get('/myProjects/:Email/:ProjectName', getProjectsByEmailAndName);
-router.get('/projects/:projectName', getProjectInfoByName);
-router.put('/updateProject', updateProject);
+router.get( '/projects/:Email/:Rol', getProjectsByEmail );
+router.post( '/projects', createProject );
+router.post( '/getProjectPeriod', createPayrroll );
+router.put( '/logicEliminateProject', deleteProject );
+router.get( '/myProjects/:Email/:ProjectName', getProjectsByEmailAndName  );
+router.get( '/projects/:projectName', getProjectInfoByName  );
+router.put( '/updateProject', updateProject );
 
 //Benefits
 router.get('/benefits/:Proyecto/:CedulaEmpleador', getBenefits);
@@ -89,7 +87,7 @@ router.put('/myBenefits', unlinkEmployeeToBenefit);
 router.get('/validateBenefit/:projectName/:employeeEmail/:benefitToValidate', validateBenefitSuscription);
 
 //VoluntaryDeductions
-router.get('/voluntaryDeductions/:NombreProyecto', getVoluntaryDeductions);
+router.get('/voluntaryDeductions/:NombreProyecto/:CedulaEmpleador', getVoluntaryDeductions);
 router.get('/voluntaryDeductions/:NombreProyecto/:CedulaEmpleador/:Nombre', getVoluntaryDeductionsByName);
 router.post('/voluntaryDeductions', createNewVoluntaryDeduction);
 router.put('/voluntaryDeductions/:NombreAntiguo', updateVoluntaryDeduction);

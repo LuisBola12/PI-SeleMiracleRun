@@ -4,11 +4,12 @@ import {getConsecutivePayNumber} from './payrollController'
 import { notifyEmployeesForDeletedVoluntaryDeduction } from '../utils/notifyEmployeesForDeletedVoluntaryDeduction';
 
 export const getVoluntaryDeductions = async ( req, res ) => {
-  const { NombreProyecto } = req.params;
+  const { NombreProyecto, CedulaEmpleador } = req.params;
   try {
     const pool = await getConnection();
     const result = await pool.request()
       .input( 'NombreProyecto', NombreProyecto )
+      .input('CedulaEmpleador', CedulaEmpleador)
       .query( voluntaryDeductionsQueries.getVoluntaryDeductions );
     res.json( result.recordset );
   } catch ( e ) {
