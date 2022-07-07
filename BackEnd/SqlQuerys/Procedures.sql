@@ -4,7 +4,7 @@ CREATE PROCEDURE ingresarHoras (
 				@Fecha date,
 				@CantidadHoras int
 ) 
-AS 
+AS
 BEGIN
 	DECLARE @CedulaEmpleado VARCHAR(15)
 
@@ -182,7 +182,7 @@ BEGIN
   where CedulaEmpleado = @cedulaEmpleado and NombreProyecto = @NombreProyecto
  
   INSERT INTO DeduccionVoluntariaElegida VALUES 
-  (@cedulaEmpleado, @NombreDeduccionVoluntaria, @NombreProyecto, @CedulaEmpleador, @fechaInicio, @fechaFin);
+  (@cedulaEmpleado, @NombreDeduccionVoluntaria, @CedulaEmpleador, @NombreProyecto, @fechaInicio, @fechaFin);
 
 END;
 ---------------------------------------------------------------------------------------------------------------
