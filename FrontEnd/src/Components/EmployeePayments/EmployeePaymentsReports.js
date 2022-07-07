@@ -3,11 +3,11 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import '../../App.css';
 import { getAnEntity } from '../../Utils/getAnEntity';
-import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { removeTimeFromDate } from '../../shared/removeTimeFromDate';
 import { useProjectsData } from '../../Utils/PayrollProjects/useProjectsData';
 import { IconContext } from 'react-icons';
 import { FaFilter } from 'react-icons/fa';
+import { utils, writeFile } from 'xlsx';
 
 export const EmployeePaymentsReports = () => {
   const employeeEmail = useSelector((state) => state.user.user.Email);
@@ -37,6 +37,13 @@ export const EmployeePaymentsReports = () => {
     };
     getEmployeeInfo();
   }, [projectNameFilter]);
+
+  const handleExport = () => {
+    let workBook = utils.book_new(),
+      workSheet = utils.json_to_sheet(employeePayments);
+    utils.book_append_sheet(workBook, workSheet, 'myPayments');
+    writeFile(workBook, 'myPayments.xlsx');
+  }
 
   return (isLoading ? <div className='loader' ></div > :
     <>
@@ -78,14 +85,7 @@ export const EmployeePaymentsReports = () => {
 
 
         </div>
-        <ReactHTMLTableToExcel
-          id='exportButtonExcel'
-          table='EmployeePaymentsTable'
-          filename='MyPaymentsReport'
-          sheet='MyPayments'
-          buttonText='Export to Excel'
-          className='export-excel-button button'
-        />
+        <button className='export-excel-button button' onClick={handleExport}> Export to Excel</button>
 
       </div>
 
