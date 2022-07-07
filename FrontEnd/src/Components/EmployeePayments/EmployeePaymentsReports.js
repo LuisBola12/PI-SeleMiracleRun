@@ -8,6 +8,7 @@ import { useProjectsData } from '../../Utils/PayrollProjects/useProjectsData';
 import { IconContext } from 'react-icons';
 import { FaFilter } from 'react-icons/fa';
 import { utils, writeFile } from 'xlsx';
+import { DateRangeSelect } from '../DateRangeSelect/DateRangeSelect';
 
 export const EmployeePaymentsReports = () => {
   const employeeEmail = useSelector((state) => state.user.user.Email);
@@ -78,10 +79,7 @@ export const EmployeePaymentsReports = () => {
 
           <br />
           <label>By Date</label>
-          <input
-            className='project-date-filter'
-            type={'date'}>
-          </input>
+          <DateRangeSelect></DateRangeSelect>
 
 
         </div>
