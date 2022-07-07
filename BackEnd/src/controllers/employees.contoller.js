@@ -5,6 +5,7 @@ import { sendEmail } from '../services/Mailer';
 import { emailNewUserEmployee } from '../FormatEmailMessages/EmailNewUserEmployee';
 import { employerQueries } from '../database/queries/employerQueries';
 import { emailTerminateContract } from '../FormatEmailMessages/EmailTerminateContract';
+import { filterPaymentsByProjectName } from '../utils/employeePaymentsFilters';
 
 export const getEmployeeByID = async (req, res) => {
   const { Cedula } = req.params;
@@ -154,7 +155,7 @@ export const postNewEmployee = async (req, res) => {
       .request()
       .input('Cedula', Cedula)
       .input('NombreProyecto', NombreProyecto)
-      .input('CedulaEmpleador',CedulaEmpleador)
+      .input('CedulaEmpleador', CedulaEmpleador)
       .input('TipoJornada', TipoJornada)
       .input('FechaInicioContrato', fecha)
       .input('FechaFinContrato', FechaFinContrato)
@@ -193,7 +194,7 @@ export const postNewEmployee = async (req, res) => {
 
 export const contractAEmployee = async (req, res) => {
   try {
-    const { Cedula, TipoContrato,CedulaEmpleador, Proyecto, NombreServicio, SalarioPorHora, FechaFinContrato, ValorServicio } = req.body;
+    const { Cedula, TipoContrato, CedulaEmpleador, Proyecto, NombreServicio, SalarioPorHora, FechaFinContrato, ValorServicio } = req.body;
     console.log(req.body);
     const date = new Date();
     const [month, day, year] = [
@@ -223,7 +224,7 @@ export const contractAEmployee = async (req, res) => {
 };
 export const deleteEmployeeFromProject = async (req, res) => {
 
-  const { Proyecto, EmailEmpleado, Cedula,CedulaEmpleador, MotivoDeDespido } = req.body;
+  const { Proyecto, EmailEmpleado, Cedula, CedulaEmpleador, MotivoDeDespido } = req.body;
   let mailFormat = {
     from: process.env.EMAIL_USER,
     to: EmailEmpleado,
@@ -292,7 +293,6 @@ export const getEmployeePayments = async (req, res) => {
       .input('projectName', projectName)
       .input('employeeEmail', employeeEmail)
       .query(employeesQueries.getPaymentsOfEmployee);
-    console.log(result.recordset[0].MontoTotalDeduccionesVoluntarias);
     res.status(200).json(result.recordset);
   } catch (e) {
     res.status(404);
@@ -301,7 +301,7 @@ export const getEmployeePayments = async (req, res) => {
 };
 
 export const getAllEmployeePayments = async (req, res) => {
-  const { employeeEmail } = req.params;
+  const { employeeEmail, projectNameFilter, initialDateFilter, endDateFilter } = req.params;
   if (employeeEmail == '') {
     const message = 'Bad Request. Please Fill All Fields.';
     return res.status(400).json({ msg: message });
@@ -311,7 +311,9 @@ export const getAllEmployeePayments = async (req, res) => {
     const result = await pool.request()
       .input('employeeEmail', employeeEmail)
       .query(employeesQueries.getAllPaymentsOfEmployee);
-    console.log(result.recordset[0].MontoTotalDeduccionesVoluntarias);
+    if (projectNameFilter != 'Any') {
+      result.recordset = filterPaymentsByProjectName(result.recordset, projectNameFilter);
+    }
     res.status(200).json(result.recordset);
   } catch (e) {
     res.status(404);

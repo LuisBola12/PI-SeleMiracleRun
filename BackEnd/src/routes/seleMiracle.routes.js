@@ -56,7 +56,7 @@ router.post('/contractExistentEmployee', contractAEmployee);
 router.post('/deleteEmployeeFromProject', deleteEmployeeFromProject);
 router.post('/employee/hours', setHoursEmployee);
 router.get('/employeePayments/:projectName/:employeeEmail', getEmployeePayments);
-router.get('/employeePayments/:employeeEmail', getAllEmployeePayments);
+router.get('/employeePayments/:employeeEmail/:projectNameFilter/:initialDateFilter/:endDateFilter', getAllEmployeePayments);
 
 //Projects
 router.get('/projects/:Email/:Rol', getProjectsByEmail);
