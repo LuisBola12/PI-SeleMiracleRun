@@ -2,8 +2,10 @@ import { getConnection, sql } from '../database';
 import { projectQueries } from '../database/queries/projectQueries';
 import { eliminateTimeFromDate, isInDateRange } from '../utils/dateManager';
 import { payrollQueries } from './../database/queries/payrollQueries';
-import {executeAPayrroll} from './payrollController';
+import { executeAPayrroll } from './payrollController';
 import { calculateFullTimeWorkedHours } from '../utils/dateManager';
+import { emailTerminateContract } from '../FormatEmailMessages/EmailTerminateContract';
+import { sendEmail } from '../services/Mailer';
 
 export const getProjectsByEmail = async ( req, res ) => {
   const { Email, Rol } = req.params;
@@ -223,7 +225,7 @@ export const calculateGrossSalaryForAllEmployes =  async ( projectName ) => {
   return  grossSalaries;
 }; 
 
-const getPeriodOfAPorject = async(nombreProyecto) =>{
+const getPeriodOfAPorject = async( nombreProyecto ) =>{
   try {
     const pool = await getConnection();
     const result = await pool
@@ -231,12 +233,12 @@ const getPeriodOfAPorject = async(nombreProyecto) =>{
       .input( 'Nombre', nombreProyecto )
       .query( payrollQueries.getPeriodForAEspecificProject );
     return result.recordset[0].TipoPeriodo;
-  } catch (error) {
+  } catch ( error ) {
     console.log( `Error: ${error}` );
     return error;
   }
-}
-const insertPayrrollOnDB = async (cedula,nombreProyecto,fechaInicio,fechaFin) => {
+};
+const insertPayrrollOnDB = async ( cedula,nombreProyecto,fechaInicio,fechaFin ) => {
   try {
     console.log(cedula,nombreProyecto,fechaInicio,fechaFin)
     const pool = await getConnection();
@@ -253,8 +255,8 @@ const insertPayrrollOnDB = async (cedula,nombreProyecto,fechaInicio,fechaFin) =>
     console.log(error);
     return false;
   }
-}
-const getConsecutiveNumber = async(nombreProyecto,fechaInicio) => {
+};
+const getConsecutiveNumber = async( nombreProyecto,fechaInicio ) => {
   try {
     const pool = await getConnection();
     const result = await pool
@@ -263,39 +265,39 @@ const getConsecutiveNumber = async(nombreProyecto,fechaInicio) => {
       .input( 'FechaInicio',sql.Date, fechaInicio )
       .query( payrollQueries.getPayrrollConsecutive );
     return result.recordset[0].Consectivo;
-  } catch (error) {
-    console.log(error);
+  } catch ( error ) {
+    console.log( error );
     return error;
   }
-}
+};
 
 export const createPayrroll = async ( req, res ) => {
   const { Cedula,NombreProyecto } = req.body;
   try {
-    console.log(Cedula,NombreProyecto );
-    const periodoProyecto =  await getPeriodOfAPorject(NombreProyecto);
+    console.log( Cedula,NombreProyecto );
+    const periodoProyecto =  await getPeriodOfAPorject( NombreProyecto );
     const fechaFinPago = new Date();
     let fechaInicioPago;
     switch ( periodoProyecto ) {
     case 'Semanal':
-      fechaInicioPago = sumDays(-7 );
+      fechaInicioPago = sumDays( -7 );
       break;
     case 'Quincenal':
-      fechaInicioPago = sumDays(-15 );
+      fechaInicioPago = sumDays( -15 );
       break;
     case 'Mensual':
-      fechaInicioPago = sumDays(-30 );
+      fechaInicioPago = sumDays( -30 );
       break;
     }
-    const result = await insertPayrrollOnDB(Cedula,NombreProyecto,fechaInicioPago,fechaFinPago);
-    if(result === true){
-      const consecutiveNumber = await getConsecutiveNumber(NombreProyecto,fechaInicioPago);
-      await executeAPayrroll(consecutiveNumber,NombreProyecto,Cedula);
-    }else{
-      console.log(`Error on create a new payrroll`)
+    const result = await insertPayrrollOnDB( Cedula,NombreProyecto,fechaInicioPago,fechaFinPago );
+    if ( result === true ){
+      const consecutiveNumber = await getConsecutiveNumber( NombreProyecto,fechaInicioPago );
+      await executeAPayrroll( consecutiveNumber,NombreProyecto,Cedula );
+    } else {
+      console.log( 'Error on create a new payrroll' );
       res.status( 500 ).send();
     }
-    res.status(200).send()
+    res.status( 200 ).send();
   } catch ( e ) {
     console.log( `Error: ${e}` );
     res.status( 500 ).send( e.message );
@@ -306,30 +308,10 @@ export const createPayrroll = async ( req, res ) => {
 export const sumDays = ( dias ) =>{
   let newDate = new Date();
   newDate.setDate( newDate.getDate() + dias );
-  newDate = eliminateTimeFromDate(newDate)
+  newDate = eliminateTimeFromDate( newDate );
   return newDate;
 };
 
-export const logicEliminateProject = async ( req, res ) => {
-  const { Nombre } = req.body;
-  if ( Nombre == null ) {
-    const message = 'Bad Request Invalid Project Name';
-    return res.status( 400 ).json( { msg: message } );
-  }
-
-  try {
-    const pool = await getConnection();
-    await pool
-      .request()
-      .input( 'projectName', Nombre )
-      .query( projectQueries.logicalEraseProject );
-    res.json( 'Success' );
-  }
-  catch ( error ){
-    res.status( 500 ).send( error.message ); 
-  }
-
-};
 
 export const getProjectsByEmailAndName = async ( req, res ) => {
   const { Email, ProjectName } = req.params;
@@ -347,39 +329,100 @@ export const getProjectsByEmailAndName = async ( req, res ) => {
 };
 
 export const getProjectInfoByName = async ( req, res ) => {
-  const {projectName} = req.params;
+  const { projectName } = req.params;
   try {
     const pool = await getConnection();
     const result = await pool.request().input( 'projectName', projectName ).query( projectQueries.getProjectByName );
     res.json( result.recordset );
-    console.log(result.recordset)
+    console.log( result.recordset );
   } catch ( e ) {
     console.log( e );
   }
 };
 
-export const updateProject = async (req, res) => {
+export const updateProject = async ( req, res ) => {
   const { projectName, paymentPeriod, oldProjectName, employerID } = req.body;
-  console.log(projectName, paymentPeriod, oldProjectName)
+  console.log( projectName, paymentPeriod, oldProjectName );
   
-  console.log('Estoy entrando en el backend')
-  if (projectName == null || paymentPeriod == null || oldProjectName == null || employerID == null) {
+  console.log( 'Estoy entrando en el backend' );
+  if ( projectName == null || paymentPeriod == null || oldProjectName == null || employerID == null ) {
     const message = 'Bad Request. Please Fill All Fields.';
-    return res.status(400).json({ msg: message });
+    return res.status( 400 ).json( { msg: message } );
   }
   try {
     const pool = await getConnection();
     const result = await pool
       .request()
-      .input('projectName', sql.VarChar, projectName)
-      .input('paymentPeriod', sql.VarChar, paymentPeriod)
-      .input('oldProjectName', sql.VarChar, oldProjectName)
-      .input('employerID', sql.VarChar, employerID)
-      .query(projectQueries.updateProject);
-    res.json(result);
-    console.log (result)
-  } catch (e) {
-    console.log(`Error: ${e}`);
-    res.status(500).send(e.message);
+      .input( 'projectName', sql.VarChar, projectName )
+      .input( 'paymentPeriod', sql.VarChar, paymentPeriod )
+      .input( 'oldProjectName', sql.VarChar, oldProjectName )
+      .input( 'employerID', sql.VarChar, employerID )
+      .query( projectQueries.updateProject );
+    res.json( result );
+    console.log ( result );
+  } catch ( e ) {
+    console.log( `Error: ${e}` );
+    res.status( 500 ).send( e.message );
   }
-}
+};
+
+const deleteAllEmployees = async( projectName, employerID ) =>{
+  const pool = await getConnection();
+  await pool
+    .request()
+    .input( 'projectName', projectName )
+    .input( 'employerID', employerID )
+    .execute( 'DeleteAllEmployees' );
+};
+
+const employeesFromProjectInfo = async ( projectName, employerID ) => {
+  const pool = await getConnection();
+  const employeesInfo = await pool
+    .request()
+    .input( 'projectName', projectName )
+    .input( 'employerID', employerID )
+    .query( projectQueries.getAllEmployeesContactInfo );
+  return employeesInfo;
+};
+
+const setProjectAsInactive = async ( projectName, employerID ) => {
+  const pool = await getConnection();
+  await pool
+    .request()
+    .input( 'projectName', projectName )
+    .input( 'employerID', employerID )
+    .query( projectQueries.logicalEraseProject );
+};
+
+export const deleteProject = async ( req, res ) => {
+  const { projectName, employerID } = req.body;
+
+  if ( projectName === null || employerID === null ) {
+    const message = 'Bad Request Invalid Project Name';
+    return res.status( 400 ).json( { msg: message } );
+  }
+
+  try {
+    await setProjectAsInactive( projectName,employerID );
+    const employeesInfo = await employeesFromProjectInfo( projectName, employerID );
+
+    let mailFormat = {
+      from: process.env.EMAIL_USER,
+      to:null,
+      subject: 'Terminacion de Contrato',
+      html: ( emailTerminateContract( `Se ha eliminado el proyecto de la plataforma por lo que se procede a un despido temprano del proyecto: ${projectName}` ) ),
+    };
+
+    for ( let employeeIndex = 0; employeeIndex < employeesInfo.recordset.length; employeeIndex++ ) {
+      mailFormat.to = employeesInfo.recordset[employeeIndex].Email;
+      await sendEmail( mailFormat );
+    }
+
+    await deleteAllEmployees( projectName, employerID );
+
+  } catch ( error ) {
+    res.status( 500 );
+    res.send( error.message );
+    console.log( error );
+  }
+};
