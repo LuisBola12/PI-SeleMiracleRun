@@ -13,4 +13,9 @@ export const payrollQueries = {
   and ConsecutivoPlanilla = @ConsecPlanilla and ConsecutivoPago = @ConsecPago`,
   getPaysilipOfAnEmployee: 'select ConsecutivoPago from pago where CedulaEmpleado = @Cedula and ConsecutivoPlanilla = @ConsecPLanilla',
   getPayrrollsOfAproject: 'Select Consectivo,FechaIncio,FechaFin From Planilla Where NombreProyecto = @Proyecto',
+  getPaymentsMadeByEmployeer:
+    `SELECT * 
+     FROM [SeleMiracleRun].[dbo].[Pago]
+     JOIN [Empleado] ON Empleado.Cedula = Pago.CedulaEmpleador
+     WHERE CedulaEmpleador = @employerID`
 };
