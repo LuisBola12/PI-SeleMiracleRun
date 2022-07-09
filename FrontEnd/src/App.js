@@ -30,7 +30,7 @@ import { EndContractWithEmployee } from './Pages/endContractWithEmployee';
 import { EmployeeMyPayments } from './Pages/employeeMyPayments';
 import { EditProjectPage } from './Pages/editProject';
 import { EmployeePaymentsReport } from './Pages/employeePaymentsReport';
-
+import { HistoricPaymentsPerEmployeePage } from './Pages/historicPaymentsPerEmployeePage.js';
 function App() {
 
   const userRoll = useSelector((state) => state.user.user);
@@ -67,6 +67,7 @@ function App() {
               <Route path='payroll' element={<Payroll />} />
               <Route path='payroll/details' element={<PayrollDetailsPage />} />
               <Route path='projectSettings' element={<EditProjectPage />} />
+              <Route path='paymentsReport' element={<HistoricPaymentsPerEmployeePage />} />
             </Route>
           ) : (
             <Route element={<PrivateRoute allowedRoles={['emp']} />}>
