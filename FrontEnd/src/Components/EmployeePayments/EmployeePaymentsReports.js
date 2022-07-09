@@ -12,17 +12,15 @@ import { addDays } from 'date-fns';
 import { ExportToExcelButton } from '../ExportToExcelButton/ExportToExcelButton';
 
 export const EmployeePaymentsReports = () => {
-  const paymentsPerPage = 5;
+  const lastDaysToShow = 60;
   const employeeEmail = useSelector( ( state ) => state.user.user.Email );
   const [ allEmployeePayments, setAllEmployeePayments ] = useState( [] );
   const [ isLoading, setIsLoading ] = useState( true );
-  const [ currentPagePayments, setCurrentPagePayments ] = useState( [] );
-  const [ currentPageNumber, setCurrentPageNumber ] = useState( 0 );
   const [ projectNameFilter, setProjectNameFilter ] = useState( 'Any' );
   const [ filterSwitch, setFilterSwitch ] = useState( false );
   const [ range, setRange ] = useState( [
     {
-      startDate: addDays( new Date(), -60 ),
+      startDate: addDays( new Date(), -lastDaysToShow ),
       endDate: addDays( new Date(), 1 ),
       key: 'selection'
     }
@@ -43,26 +41,12 @@ export const EmployeePaymentsReports = () => {
         setEmployeePayments( [] );
       } else {
         setAllEmployeePayments( infoReceived );
-        setCurrentPagePayments( infoReceived.slice( 0, paymentsPerPage ) );
       }
       setIsLoading( false );
     };
     getEmployeeInfo();
   }, [ projectNameFilter, filterSwitch ] );
-  const handleNextPage = () => {
-    const totalPayments = allEmployeePayments.length;
-    const nextPage = currentPageNumber + 1;
-    const firstIndex = nextPage * paymentsPerPage;
 
-    if ( firstIndex >= totalPayments ) return;
-    setCurrentPagePayments( [ ...allEmployeePayments ].slice( firstIndex,paymentsPerPage ) );
-    console.log( firstIndex, currentPagePayments );
-    setCurrentPageNumber( nextPage );
-  };
-
-  const handlePrevPage = () => {
-    console.log( 'prev' );
-  }; 
 
   return ( isLoading ? <div className='loader' ></div > :
     <>
@@ -129,7 +113,7 @@ export const EmployeePaymentsReports = () => {
           </tr>
         </thead>
         <tbody>
-          {currentPagePayments.slice( 0 ).reverse().map( ( row ) => (
+          {allEmployeePayments.slice( 0 ).reverse().map( ( row ) => (
             <tr key={row.ConsecutivoPago}>
               <td className='left-td table-left-border'>{row.NombreProyecto}</td>
               <td className='right-td'>{row.TipoContrato}</td>
@@ -145,11 +129,6 @@ export const EmployeePaymentsReports = () => {
         </tbody>
       </table>
       <label className='Empty-message'>{( allEmployeePayments.length === 0 ) ? 'No Payments made to me yet' : ''}</label>
-      <div>
-        <button onClick={handlePrevPage}> Previous Page </button>
-        <label> Page {currentPageNumber} </label>
-        <button onClick={handleNextPage}> Next Page </button>
-      </div>
     </>
   );
 };
