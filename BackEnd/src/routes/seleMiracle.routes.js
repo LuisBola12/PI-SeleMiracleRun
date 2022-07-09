@@ -21,7 +21,7 @@ import {
   getOfferedBenefits, linkEmployeeToBenefit, unlinkEmployeeToBenefit, deactivateBenefit,
   validateBenefitSuscription
 } from '../controllers/benefits.controller';
-import { getAllPayslipsOfAProject, getPayrrollsOfAProject } from '../controllers/payrollController';
+import { getAllPayslipsOfAProject, getPayrrollsOfAProject, getPaymentsMadeByEmployer } from '../controllers/payrollController';
 
 const router = Router();
 
@@ -59,13 +59,8 @@ router.get('/employeePayments/:projectName/:employeeEmail', getEmployeePayments)
 router.get('/employeePayments/:employeeEmail/:projectNameFilter/:initialDateFilter/:endDateFilter', getAllEmployeePayments);
 
 //Projects
-router.get('/projects/:Email/:Rol', getProjectsByEmail);
-router.post('/projects', createProject);
 router.post('/createPayrroll', createPayrroll);
-router.post('/getProjectPeriod', createPayrroll);
 router.get('/getEmployeesInfo/:projectName', getEmployeesAllInfo);
-
-//Projects
 router.get( '/projects/:Email/:Rol', getProjectsByEmail );
 router.post( '/projects', createProject );
 router.post( '/getProjectPeriod', createPayrroll );
@@ -100,5 +95,6 @@ router.put('/voluntaryDeductions', deactivateVoluntaryDeduction);
 //Payrrolls
 router.get('/payrrolls/:Proyecto', getPayrrollsOfAProject)
 router.post('/payslipsOfaProject', getAllPayslipsOfAProject);
+router.get( '/payments/', getPaymentsMadeByEmployer );
 
 export default router;

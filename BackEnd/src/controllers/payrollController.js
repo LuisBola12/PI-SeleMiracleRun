@@ -280,3 +280,17 @@ export const executeAPayrroll = async(consecutivePlanilla,nombreProyecto,cedulaE
   });
   return true;
 };
+
+export const getPaymentsMadeByEmployer = async ( req, res ) => {
+  try {
+    const { employerID } = req.params;
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input( 'employerID', employerID )
+      .query( payrollQueries.getPaymentsMadeByEmployeer );
+    res.json( result.recordset );
+    console.log( result.recordset );
+  } catch ( error ) {
+    console.log( `Error al traer los pagos: ${error}` );
+  }
+};
