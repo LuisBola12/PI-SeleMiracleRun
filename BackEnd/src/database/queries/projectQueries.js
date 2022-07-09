@@ -8,7 +8,7 @@ export const projectQueries = {
   getProjectsByEmailAndName:
     `SELECT Proyecto.[Nombre] FROM Empleador 
     JOIN Proyecto ON Proyecto.CedulaEmpleador = Empleador.Cedula 
-    WHERE Empleador.Email =@email AND Proyecto.Nombre = @projectName`,
+    WHERE Empleador.Email =@email AND Proyecto.Nombre = @projectName and Proyecto.Activo = 1`,
 
   createProject:
     `DECLARE @cedulaObtenida VARCHAR(9);
@@ -33,12 +33,11 @@ export const projectQueries = {
     JOIN [Proyecto] p ON p.Nombre = empyc.NombreProyecto 
     WHERE [NombreProyecto] = @projectName`,
 
-  getHourlyEmployeeWorkedHours: 
+  getHourlyEmployeeWorkedHours:
     `SELECT [CedulaEmpleado]
     ,[NombreProyecto]
     ,[Cantidad]
-    ,[Fecha]
-    FROM [SeleMiracleRun].[dbo].[HorasRegistradas]
+    ,[Fecha] FROM [SeleMiracleRun].[dbo].[HorasRegistradas]
     WHERE NombreProyecto = @projectName AND CedulaEmpleado = @employeeId` ,
 
 
@@ -46,13 +45,17 @@ export const projectQueries = {
     JOIN Proyecto p ON p.Nombre =ep.NombreProyecto 
     JOIN Empleado e on e.Cedula = ep.CedulaEmpleado
     JOIN Usuarios u on e.Email = u.Email 
-    WHERE e.Email = @Email`,
+    WHERE e.Email = @Email and p.Activo = 1`,
 
   getAllContracts: 'Select TipoJornada from Contrato',
   createNewPayroll: 'Insert into Planilla values(@CedulaEmpleador,@FechaInicio,@FechaFin,@NombreProyecto,@CedulaEmpleador)',
   logicalEraseProject: `UPDATE Proyecto 
   SET Activo = 0
-  WHERE Nombre = @projectName`,
+  WHERE Nombre = @projectName AND CedulaEmpleador =@employerID`,
   getProjectByName: 'Select * FROM Proyecto WHERE Proyecto.Nombre = @projectName',
-  updateProject:'Update Proyecto set Nombre= @projectName, TipoPeriodo= @paymentPeriod WHERE Nombre =@oldProjectName AND CedulaEmpleador = @employerID',
+  updateProject: 'Update Proyecto set Nombre= @projectName, TipoPeriodo= @paymentPeriod WHERE Nombre =@oldProjectName AND CedulaEmpleador = @employerID',
+  getAllEmployeesContactInfo:
+    `Select e.Nombre, e.Apellido1, e.Apellido2, e.Cedula,e.Email, ecp.TipoContrato from  Empleado e 
+    inner join EmpleadoYContratoSeAsocianAProyecto ecp on e.Cedula = ecp.CedulaEmpleado 
+    where ecp.FechaFin > GETDATE() AND ecp.NombreProyecto = @projectName AND ecp.CedulaEmpleador = @employerID;`,
 };

@@ -10,18 +10,19 @@ export const benefitsQueries = {
     ,BeneficioElegido.NombreProyecto as ProjectName
     ,count(BeneficioElegido.NombreBeneficio)  as employeeBenefitsQty
     , sum(Beneficios.CostoActual) as moneyAmountUsedByEmployee
-
     FROM Usuarios
     JOIN Empleado ON Usuarios.Email = Empleado.Email
     JOIN EmpleadoYContratoSeAsocianAProyecto e 
     ON Empleado.Cedula = e.CedulaEmpleado
-    JOIN BeneficioElegido ON BeneficioElegido.CedulaEmpleado = Empleado.Cedula
-    JOIN Beneficios ON Beneficios.Nombre = BeneficioElegido.NombreBeneficio
+    JOIN BeneficioElegido ON BeneficioElegido.CedulaEmpleado = Empleado.Cedula and BeneficioElegido.NombreProyecto = e.NombreProyecto
+    JOIN Beneficios ON Beneficios.Nombre = BeneficioElegido.NombreBeneficio and 
+	Beneficios.NombreProyecto = BeneficioElegido.NombreProyecto and Beneficios.CedulaEmpleador
+	= BeneficioElegido.CedulaEmpleador
 
-    WHERE Empleado.Email = @employeeEmail
+    WHERE Empleado.Email = 'javmoli045@gmail.com'
     AND BeneficioElegido.fechaFin >  GETDATE()
-    AND BeneficioElegido.NombreProyecto = @projectName
-    GROUP BY Empleado.Nombre, Empleado.Apellido1,BeneficioElegido.NombreProyecto
+    AND Beneficios.NombreProyecto = 'Taquería Milagro'
+	GROUP BY Empleado.Nombre, Empleado.Apellido1,BeneficioElegido.NombreProyecto
       `,
 
   benefitsLimits:
@@ -31,5 +32,15 @@ export const benefitsQueries = {
     , MontoMaximoBeneficiosEmpleado as maxMoneyAmountAllowed 
     FROM Proyecto
     WHERE Proyecto.Nombre = @ProjectName 
+  `,
+  getBenefitsStatistics:
+    `SELECT Nombre, COUNT(be.CedulaEmpleado) as empleados from Beneficios b 
+  JOIN BeneficioElegido be ON be.NombreBeneficio = b.Nombre
+  AND be.NombreProyecto = b.NombreProyecto AND 
+  b.CedulaEmpleador = be.CedulaEmpleador
+  WHERE b.NombreProyecto = '@NombreProyecto'
+  AND b.CedulaEmpleador = '@CedulaEmpleador' and b.Activo = 1
+  AND be.fechaFin > GETDATE()
+  GROUP BY b.Nombre
   `
 };
