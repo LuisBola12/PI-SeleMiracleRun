@@ -1,6 +1,9 @@
+/* eslint-disable space-in-parens */
 import { Router } from 'express';
-import { getProjectsByEmailAndName, getProjectsByEmail, createProject, createPayrroll,
-  getProjectInfoByName, updateProject, deleteProject } from '../controllers/projects.controller';
+import {
+  getProjectsByEmailAndName, getProjectsByEmail, createProject, createPayrroll,
+  getProjectInfoByName, updateProject, deleteProject
+} from '../controllers/projects.controller';
 import {
   getEmployees, postNewEmployee, getEmployeeByID, verifyEmployeeContractOnProject,
   getEmployeesWithContractOnOtherProyects, contractAEmployee, setHoursEmployee, deleteEmployeeFromProject, getEmployeesAllInfo,
@@ -61,13 +64,13 @@ router.get('/employeePayments/:employeeEmail/:projectNameFilter/:initialDateFilt
 //Projects
 router.post('/createPayrroll', createPayrroll);
 router.get('/getEmployeesInfo/:projectName', getEmployeesAllInfo);
-router.get( '/projects/:Email/:Rol', getProjectsByEmail );
-router.post( '/projects', createProject );
-router.post( '/getProjectPeriod', createPayrroll );
-router.put( '/logicEliminateProject', deleteProject );
-router.get( '/myProjects/:Email/:ProjectName', getProjectsByEmailAndName  );
-router.get( '/projects/:projectName', getProjectInfoByName  );
-router.put( '/updateProject', updateProject );
+router.get('/projects/:Email/:Rol', getProjectsByEmail);
+router.post('/projects', createProject);
+router.post('/getProjectPeriod', createPayrroll);
+router.put('/logicEliminateProject', deleteProject);
+router.get('/myProjects/:Email/:ProjectName', getProjectsByEmailAndName);
+router.get('/projects/:projectName', getProjectInfoByName);
+router.put('/updateProject', updateProject);
 
 //Benefits
 router.get('/benefits/:Proyecto/:CedulaEmpleador', getBenefits);
@@ -93,8 +96,8 @@ router.put('/myVoluntaryDeductions', unlinkEmployeeToVoluntaryDeduction);
 router.put('/voluntaryDeductions', deactivateVoluntaryDeduction);
 
 //Payrrolls
-router.get('/payrrolls/:Proyecto', getPayrrollsOfAProject)
+router.get('/payrrolls/:Proyecto', getPayrrollsOfAProject);
 router.post('/payslipsOfaProject', getAllPayslipsOfAProject);
-router.get( '/payments/', getPaymentsMadeByEmployer );
+router.get('/payments/:employerID', getPaymentsMadeByEmployer);
 
 export default router;

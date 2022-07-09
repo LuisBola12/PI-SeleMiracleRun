@@ -17,5 +17,6 @@ export const payrollQueries = {
     `SELECT * 
      FROM [SeleMiracleRun].[dbo].[Pago]
      JOIN [Empleado] ON Empleado.Cedula = Pago.CedulaEmpleado
-     WHERE CedulaEmpleador = @employerID`
+     JOIN [Planilla] ON Pago.ConsecutivoPlanilla = Planilla.Consectivo
+     WHERE Pago.CedulaEmpleador = @employerID`
 };
