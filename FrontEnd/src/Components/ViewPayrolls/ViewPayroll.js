@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, React, useState } from 'react';
 import { getAnEntity } from '../../Utils/getAnEntity';
 import { useSelector } from 'react-redux';
+import { IconContext } from 'react-icons';
+import { MdOutlinePictureAsPdf } from "react-icons/md";
 
 export const ViewPayroll = () => {
   const [infoReceived, setInfoReceived] = useState(false);
@@ -56,7 +58,8 @@ export const ViewPayroll = () => {
             <th className=''>Start Date</th>
             <th className=''>End Date</th>
             <th className=''>Status</th>
-            <th className='table-right-border'>Employees Payslips</th>
+            <th className=''>Employees Payslips</th>
+            <th className='table-right-border'>Generate Report</th>
           </tr>
         </thead>
         <tbody>
@@ -71,6 +74,19 @@ export const ViewPayroll = () => {
                 <button className='details-button' onClick={() => {
                   goToDetails(element);
                 }}>Details</button>
+              </td>
+              <td className="table-right-border">
+                <IconContext.Provider
+                  value={{
+                    color: "black",
+                    className:"no-background-button",
+                    size: "2.6rem",
+                  }}
+                >
+                  <button className="generate-payslip-button-employer">
+                    <MdOutlinePictureAsPdf />
+                  </button>
+                </IconContext.Provider>
               </td>
             </tr>
           ))}

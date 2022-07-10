@@ -75,9 +75,9 @@ export const obligatoryDeductionsPayRoll = async(cedEmpleado,cedEmpleador,proyNa
   let montoEmpleado = 0.0;
   let montoEmpleador = 0.0;
   let nombreDeduccionObligatoria = '';
-  
+  console.log(obligatoryDeductions)
   for(let index = 0; index < obligatoryDeductions.length; index++ ){
-    if ( obligatoryDeductions[index].Nombre === 'ImpuestoSobreLaRenta' ){
+    if ( obligatoryDeductions[index].Nombre === 'Impuesto sobre la renta' ){
       montoEmpleado = calculateAmountRentTaxes( grossSalary, contractType );
       montoEmpleador = 0;
     } else {
