@@ -737,7 +737,6 @@ tr:nth-child(even) {
   display: flex;
   justify-content: space-between;
   gap: 20px;
-  margin-top: 50px;
 }
 .generate-payslip-button-employer{
   padding: 10px;
