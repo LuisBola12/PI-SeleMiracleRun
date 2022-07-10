@@ -101,7 +101,7 @@ export const EmployeePaymentsReports = () => {
         />
 
       </div>
-
+      
       <table className='Table' id='EmployeePaymentsTable'>
         <thead>
           <tr className='table-header'>
@@ -133,6 +133,7 @@ export const EmployeePaymentsReports = () => {
         </tbody>
       </table>
       <label className='Empty-message'>{( allEmployeePayments.length === 0 ) ? 'No Payments made to me yet' : ''}</label>
+      
       <Pagination 
         page={pageNumber}
         setPage={setPageNumber}
