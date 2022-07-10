@@ -1,0 +1,33 @@
+.pagination-comp{
+  display:flex;
+  gap:8px;
+  align-items: center;
+}
+
+.page-input {
+  border-radius: 8px;
+  width: 50px;
+  height: 40px;
+  text-align: center;
+  border: 1px solid darkgray;
+}
+
+button[disabled] {
+  cursor: no-drop;
+  background-color: rgb(233, 233, 233);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.pagination-button {
+  height: 40px;
+  width: 25px;
+  border-radius: 6px;
+  border-style: none;
+  color:white;
+  background-color:  #133c54bf;
+}
