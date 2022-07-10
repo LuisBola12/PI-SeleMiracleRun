@@ -10,9 +10,12 @@ import { FaFilter } from 'react-icons/fa';
 import { DateRangeSelect } from '../DateRangeSelect/DateRangeSelect';
 import { addDays } from 'date-fns';
 import { ExportToExcelButton } from '../ExportToExcelButton/ExportToExcelButton';
+import { Pagination } from '../Pagination/Pagination';
 
 export const EmployeePaymentsReports = () => {
   const lastDaysToShow = 60;
+  const [ pageNumber, setPageNumber ] = useState( 1 );
+  const [ perPage, setPerPage ] = useState( 10 );
   const employeeEmail = useSelector( ( state ) => state.user.user.Email );
   const [ allEmployeePayments, setAllEmployeePayments ] = useState( [] );
   const [ isLoading, setIsLoading ] = useState( true );
@@ -47,6 +50,7 @@ export const EmployeePaymentsReports = () => {
     getEmployeeInfo();
   }, [ projectNameFilter, filterSwitch ] );
 
+  const maxPage = Math.ceil( allEmployeePayments.length / perPage );
 
   return ( isLoading ? <div className='loader' ></div > :
     <>
@@ -113,7 +117,7 @@ export const EmployeePaymentsReports = () => {
           </tr>
         </thead>
         <tbody>
-          {allEmployeePayments.slice( 0 ).reverse().map( ( row ) => (
+          {allEmployeePayments.slice( ( pageNumber - 1 ) * perPage, ( pageNumber - 1 ) * perPage + perPage  ).reverse().map( ( row ) => (
             <tr key={row.ConsecutivoPago}>
               <td className='left-td table-left-border'>{row.NombreProyecto}</td>
               <td className='right-td'>{row.TipoContrato}</td>
@@ -129,6 +133,11 @@ export const EmployeePaymentsReports = () => {
         </tbody>
       </table>
       <label className='Empty-message'>{( allEmployeePayments.length === 0 ) ? 'No Payments made to me yet' : ''}</label>
+      <Pagination 
+        page={pageNumber}
+        setPage={setPageNumber}
+        maxPage = {maxPage}
+      />
     </>
   );
 };

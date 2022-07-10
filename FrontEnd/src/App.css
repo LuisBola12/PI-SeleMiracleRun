@@ -395,7 +395,6 @@ footer {
 table {
   text-align: center;
   height: 10%;
-  margin-bottom: 100px;
   width: 90%;
 }
 
@@ -767,4 +766,12 @@ tr:nth-child(even) {
   display: flex;
   gap: 20px;
   align-items: center;
+}
+
+input:focus {
+  outline:solid 0.1px gray;
+}
+
+select:focus {
+  outline:solid 0.1px gray;
 }
