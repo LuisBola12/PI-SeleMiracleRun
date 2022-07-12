@@ -47,11 +47,13 @@ export const CreateBenefit = () => {
         title: 'That benefit existed before',
         text: 'you want to reactivate it?',
         icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: 'darkgreen',
-        cancelButtonColor: 'darkred',
-        confirmButtonText: 'Yes, reactivate!',
-        cancelButtonText: 'no, create a new one instead'
+        showCloseButton: true,
+        showDenyButton: true,
+        confirmButtonColor: '#133c54',
+        denyButtonColor: 'gray',
+        confirmButtonText: 'Reactivate',
+        denyButtonText: 'Create a new one instead',
+        cancelButtonText: 'X'
       } ).then( ( result ) => {
         if ( result.isConfirmed ) {
           // función de reactivar beneficio
@@ -65,7 +67,7 @@ export const CreateBenefit = () => {
             icon: 'success',
             confirmButtonColor: 'darkgreen',
           } );
-        } else {
+        } else if ( result.isDenied ){
           createNewBenefit( notExists );
         }
       } );
