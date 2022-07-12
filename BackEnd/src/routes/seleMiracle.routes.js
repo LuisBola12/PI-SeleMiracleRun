@@ -19,7 +19,7 @@ import { getTypeOfContracts } from '../controllers/contracts.controller';
 import {
   getBenefits, createBenefit, getBenefitsByName, updateBenefit, getEmployeeBenefitsByEmail,
   getOfferedBenefits, linkEmployeeToBenefit, unlinkEmployeeToBenefit, deactivateBenefit,
-  validateBenefitSuscription
+  validateBenefitSuscription, reactivateBenefit
 } from '../controllers/benefits.controller';
 import { getAllPayslipsOfAProject, getPayrrollsOfAProject } from '../controllers/payrollController';
 
@@ -82,6 +82,7 @@ router.get( '/offeredBenefits/:Proyecto/:Email', getOfferedBenefits );
 router.post( '/benefits', createBenefit );
 router.put( '/benefits/:NombreAntiguo', updateBenefit );
 router.put( '/benefits', deactivateBenefit );
+router.put( '/benefit/:NombreAntiguo', reactivateBenefit );
 router.post( '/myBenefits', linkEmployeeToBenefit );
 router.put( '/myBenefits', unlinkEmployeeToBenefit );
 router.get( '/validateBenefit/:projectName/:employeeEmail/:benefitToValidate', validateBenefitSuscription );

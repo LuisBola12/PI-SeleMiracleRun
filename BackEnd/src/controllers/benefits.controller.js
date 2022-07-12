@@ -187,6 +187,25 @@ export const deactivateBenefit = async ( req, res ) => {
   }
 };
 
+export const reactivateBenefit = async ( req, res ) => {
+  console.log( 'entro a la funcion del controller' );
+  const { Nombre, NombreProyecto, CedulaEmpleador } = req.body;
+  const { NombreAntiguo } = req.params;
+  try {
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input( 'Nombre', sql.VarChar, Nombre )
+      .input( 'NombreAntiguo',sql.VarChar, NombreAntiguo )
+      .input( 'NombreProyecto', sql.VarChar, NombreProyecto )
+      .input( 'CedulaEmpleador', sql.VarChar, CedulaEmpleador )
+      .query( benefitsQueries.reactivateBenefit );
+  } catch ( e ) {
+    console.log( `Error: ${e}` );
+    res.status( 500 ).send( e.message );
+  }
+};
+
 export const CostTotalBenefits = async ( infoBenefits ) => {
   const { Email, Proyecto, ConsecutivoPlanilla, ConsecutivoPago } = infoBenefits.body;
   try {
