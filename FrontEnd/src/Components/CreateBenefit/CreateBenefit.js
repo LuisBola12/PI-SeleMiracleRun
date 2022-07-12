@@ -2,6 +2,7 @@ import '../../App.css';
 import './CreateBenefit.scss';
 import React from 'react';
 import { usePostToBenefits } from '../../Utils/Benefits/usePostToBenefits.js';
+import { usePutToBenefits } from '../../Utils/Benefits/usePutToBenefits';
 import { useNavigate } from 'react-router-dom';
 import { maskCurrency } from '../../shared/moneyFormatTransform';
 import validateBenefitForm from '../../Utils/Benefits/validateBenefitForm';
@@ -12,6 +13,7 @@ import Swal from 'sweetalert2';
 
 export const CreateBenefit = () => {
   const { submitBenefit } = usePostToBenefits();
+  const { reactivateBenefit } = usePutToBenefits();
   const activeProject = useSelector( ( state ) => state.activeProject.projectName );
   const employerId = useSelector( ( state ) => state.user.user.Cedula );
   const navigate = useNavigate();
@@ -53,6 +55,9 @@ export const CreateBenefit = () => {
       } ).then( ( result ) => {
         if ( result.isConfirmed ) {
           // función de reactivar beneficio
+          const reactivateApi = process.env.REACT_APP_BACKEND_LOCALHOST + `benefit/${formValues.Name + '*'}`;
+          console.log( reactivateApi );
+          reactivateBenefit( formValues.Name, reactivateApi );
           navigate( '/benefits' );
           Swal.fire( {
             title: 'Reactivated!',

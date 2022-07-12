@@ -54,7 +54,22 @@ export const usePutToBenefits = () => {
     console.log( postFetch );
   };
 
+  const reactivateBenefit = async ( name, reactivateBenefitApi ) => {
+    const postFetch = await fetch( reactivateBenefitApi, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify( {
+        Nombre: name,
+        NombreProyecto: activeProject,
+        CedulaEmpleador: employerId
+      } ),
+    } );
+    console.log( postFetch );
+  };
+
   return {
-    updateBenefit, unlinkEmployeeToBenefit, deactivateBenefit
+    updateBenefit, unlinkEmployeeToBenefit, deactivateBenefit, reactivateBenefit
   };
 };
