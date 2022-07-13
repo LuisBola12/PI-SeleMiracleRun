@@ -19,7 +19,8 @@ export const Pagination = ( { page,setPage,maxPage } ) => {
 
   const onInputEnter = ( e ) => {
     if ( e.keyCode == 13 ) {
-      if ( e.target.value >= 1 && e.target.value <= maxPage ){
+      if ( e.target.value >= 1 && e.target.value <= maxPage && !e.target.value.includes( ',' ) 
+        && !e.target.value.includes( '.' ) ){
         setPage( e.target.value );
       }
     }
