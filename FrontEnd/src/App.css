@@ -395,7 +395,6 @@ footer {
 table {
   text-align: center;
   height: 10%;
-  margin-bottom: 100px;
   width: 90%;
 }
 
@@ -739,6 +738,14 @@ tr:nth-child(even) {
   justify-content: space-between;
   gap: 20px;
 }
+.generate-payslip-button-employer{
+  padding: 10px;
+  border-radius: 8px;
+  color: white;
+  background-color: transparent;
+  border: none;
+  width: 100px;
+}
 
 .project-Name-Filter {
   width: fit-content;
@@ -769,16 +776,10 @@ tr:nth-child(even) {
   align-items: center;
 }
 
-.calendarWrap {
-  display: inline-block;
-  position: relative;
+input:focus {
+  outline:solid 0.1px gray;
 }
 
-.calendarElement {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  top: 40px;
-  border: 1px solid #ccc;
-  z-index: 999;
+select:focus {
+  outline:solid 0.1px gray;
 }
