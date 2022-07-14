@@ -4,16 +4,22 @@ import { useSelector } from 'react-redux';
 import '../../App.css';
 import { getAnEntity } from '../../Utils/getAnEntity';
 import { removeTimeFromDate } from '../../shared/removeTimeFromDate';
+import { useNavigate } from 'react-router-dom';
+
 export const EmployeePayments = () => {
   const activeProject = useSelector( ( state ) => state.activeProject.projectName );
   const employeeEmail = useSelector( ( state ) => state.user.user.Email );
-
+  const navigate = useNavigate();
   const [ employeePayments, setEmployeePayments ] = useState( [] );
   const [ isLoading, setIsLoading ] = useState( true );
+  
   let formatter = new Intl.NumberFormat( undefined, {
     style: 'currency',
     currency: 'CRC',
   } );
+  const handleGenerateReport = (element)=>{
+    navigate('reports/payslipReport', { state: element });
+  }
 
   useEffect( () => {
     setIsLoading( true );
@@ -61,7 +67,9 @@ export const EmployeePayments = () => {
               <td className='right-td'>{row.TipoContrato === 'Servicios Profesionales' ? '-' : formatter.format( row.MontoTotalDeduccionesObligatoriasEmpleado )}</td>
               <td className='right-td'>{row.TipoContrato === 'Servicios Profesionales' ? '-' : formatter.format( row.MontoTotalDeduccionesVoluntarias )}</td>
               <td className='right-td'>{formatter.format( row.SalarioNeto )}</td>
-              <td className='right-td'>Generate Report</td>
+              <td className='right-td'>
+                <button className='button' onClick={() => handleGenerateReport(row)}> Report</button>
+              </td>
             </tr>
           ) )}
         </tbody>
