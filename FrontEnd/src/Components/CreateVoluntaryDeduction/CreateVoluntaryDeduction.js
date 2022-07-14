@@ -2,6 +2,7 @@ import React from 'react';
 import '../../App.css';
 import './CreateVoluntaryDeduction.scss';
 import { usePostToVoluntaryDeductions } from '../../Utils/VoluntaryDeductions/usePostToVoluntaryDeductions';
+import { usePutToVoluntaryDeductions } from '../../Utils/VoluntaryDeductions/usePutToVoluntaryDeductions';
 import validateVoluntaryDeductionForm from '../../Utils/VoluntaryDeductions/validateVoluntaryDeductionForm';
 import useForm from '../../shared/hooks/useForm';
 import { useNavigate } from 'react-router-dom';
@@ -12,6 +13,7 @@ import Swal from 'sweetalert2';
 
 export const CreateVoluntaryDeduction = () => {
   const { submitVoluntaryDeduction } = usePostToVoluntaryDeductions();
+  const { reactivateBenefit } = usePutToBenefits();
   const activeProject = useSelector((state) => state.activeProject.projectName);
 
   const navigate = useNavigate();
