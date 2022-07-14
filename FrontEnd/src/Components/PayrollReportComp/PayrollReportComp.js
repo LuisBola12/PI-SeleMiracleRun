@@ -2,8 +2,9 @@ import { React, useState, useEffect } from "react";
 import "./PayrollReportStyle.scss";
 import { jsPDF } from "jspdf";
 import axios from "axios";
+import Swal from 'sweetalert2';
 import { useSelector } from "react-redux";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { IconContext } from "react-icons";
 import { FaArrowLeft } from "react-icons/fa";
 import {
@@ -56,8 +57,22 @@ export const PayrollReportComp = () => {
           payRollConsecutive: location.state.Consectivo,
         })
         .then((res) => {
-          if (res.status === 200) console.log("Yeah!");
-          else console.log(":(");
+          if (res.status === 200){
+            Swal.fire( {
+              title: 'Done!',
+              text: `Email sent successfully.`,
+              icon: 'success',
+              confirmButtonColor: 'darkgreen',
+            } );
+          }
+          else{
+            Swal.fire( {
+              title: 'Done!',
+              text: `We couldnt sent the email`,
+              icon: 'error',
+              confirmButtonColor: 'darkred',
+            } );
+          }
         });
     }
   };
