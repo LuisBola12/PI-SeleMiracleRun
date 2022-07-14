@@ -1,5 +1,5 @@
-import React from 'react'
-import { CalendarComp } from '../Components/CalendarComp/Calendar'
+import React from 'react';
+import { CalendarComp } from '../Components/CalendarComp/Calendar';
 import { Navbar } from '../Components/Navbar/Navbar';
 
 export const RegisterHours = () => {
@@ -13,5 +13,5 @@ export const RegisterHours = () => {
       </div>
       <footer>&copy; Sele Miracle Run - UCR</footer>
     </>
-  )
-}
+  );
+};

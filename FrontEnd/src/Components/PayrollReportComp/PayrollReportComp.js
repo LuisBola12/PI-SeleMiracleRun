@@ -1,0 +1,197 @@
+import {React, useState, useEffect} from "react";
+import "./PayrollReportStyle.scss";
+import { jsPDF } from "jspdf";
+import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { useLocation } from "react-router-dom";
+import { getTotalSalaryCost, getPeriodOfAPorject, getTotalObligatoryDeductionsCost, getTotalBenefitsCost } from "../../Utils/PayRollReport/getPayRollData";
+import { removeTimeFromDate } from "../../shared/removeTimeFromDate";
+
+export const PayrollReportComp = () => {
+  const location = useLocation();
+  const user = useSelector( ( state ) => state.user.user );
+  const activeProject = useSelector( ( state ) => state.activeProject.projectName );
+  const [ totalSalaryCost, setTotalSalaryCost ] = useState([]);
+  const [ totalSalary, setTotalSalary ] = useState(0);
+  const [ category , setCategory ] = useState('');
+  const [ benefits , setBenefits ] = useState([]);
+  const [ obligatoryDeductions , setObligatoryDeductions ] = useState([]);
+  const [ totalBenefitsCost , setTotalBenefitsCost ] = useState([]);
+  const [ totalObligatoryDeductionsCost , setTotalObligatoryDeductionsCost ] = useState([]);
+  
+  let formatter = new Intl.NumberFormat(undefined, {
+    style: "currency",
+    currency: "CRC",
+  });
+
+  const handleReport = async () => {
+    let doc = new jsPDF("p", "mm", "a4");
+    let file;
+    await doc.html(
+      document.getElementById("payrollReport"),
+      {
+        margin: [0, 0, 0 , 23],
+        callback: function (doc) {
+          file = doc.output('datauristring');
+        },
+        html2canvas: { scale: 0.23 },
+      },
+    );
+    return file;
+  };
+
+  const sendEmail = async () =>{
+    const file = await handleReport();
+    if (file){
+      await axios.post(`${process.env.REACT_APP_BACKEND_LOCALHOST}sendFileEmail`, {file:file, email:'javmoli045@gmail.com'}).then(
+        (res) => {
+        if(res.status === 200) console.log("Yeah!");
+        else console.log(":(");
+    }
+    )
+  }
+  }
+
+  useEffect(() => {
+    const getDataTotalSalary = async () => {
+      const data = await getTotalSalaryCost(location.state.Consectivo, activeProject);
+      if(data){
+        setTotalSalaryCost(data)
+        let total = 0
+        data.forEach(element => {
+          total += element.salario;
+        });
+        setTotalSalary(total);
+      }
+    };
+    const getCategory = async() =>{
+      const data = await getPeriodOfAPorject(activeProject);
+      if(data){setCategory(data[0].TipoPeriodo)};
+    }
+    const getTotalBenefits = async() =>{
+      const data = await getTotalBenefitsCost(location.state.Consectivo);
+      if(data){
+        setBenefits(data)
+        let total = 0
+        data.forEach(element => {
+          total += element.Monto;
+        });
+        setTotalBenefitsCost(total);
+      };
+    }
+    const getTotalObligatoryDeductions = async() =>{
+      const data = await getTotalObligatoryDeductionsCost(location.state.Consectivo);
+      if(data){
+        setObligatoryDeductions(data)
+        let total = 0
+        data.forEach(element => {
+          total += element.Monto;
+        });
+        setTotalObligatoryDeductionsCost(total);
+      };
+    }
+    getDataTotalSalary();
+    getCategory();
+    getTotalBenefits();
+    getTotalObligatoryDeductions();
+  }, []);
+
+  return (
+    <>
+    <div className="payrollReport-button">
+      <label className="payrollReport-header__title">Report</label>
+      <button className='create-button' onClick={() => {sendEmail()}}>Enviar</button>
+    </div>
+      <div className="payrollReport-page">
+        <div id="payrollReport">
+          <div className="payrollReport-header">
+            <div className="payrollReport-header__title">{activeProject}</div>
+            <div className="payrollReport-div">
+              <label className="payrollReport__text">
+                <b>Empleador: </b>{`${user.Nombre} ${user.Apellido1} ${user.Apellido2} - ${user.Cedula}`}
+              </label>
+            </div>
+            <div className="payrollReport-div">
+            <label className="payrollReport__text">
+                <b>Consectivo De Planilla: </b>{location.state.Consectivo}
+              </label>
+            </div>
+            <div className="payrollReport-div">
+              <label className="payrollReport__text">
+                <b>Periodo: </b>{category}
+              </label>
+            </div>
+            <div className="payrollReport-div">
+              <label className="payrollReport__text">
+                <b>Fecha De Pago: </b>{removeTimeFromDate(location.state.FechaFin)}
+              </label>
+            </div>
+          </div>
+          <div className="payrollReport-salaries">
+            <div className="payrollReport-div">
+              <label className="payrollReport__title">Salarios</label>
+            </div>
+            {totalSalaryCost.map((element) => (
+              <div key={element.salario} className="payrollReport-div">
+              <label className="payrollReport__text">
+                {`Salarios Empleados ${element.TipoContrato}`}
+              </label>
+              <label className="payrollReport__total">{formatter.format(element.salario)}</label>
+            </div>
+              ))}
+            <div className="payrollReport-div">
+              <label className="payrollReport__TotalText">Total: </label>
+              <label className="payrollReport__totalTotal">{formatter.format(totalSalary)}</label>
+            </div>
+            <hr></hr>
+          </div>
+          <div className="payrollReport-lawDeductions">
+            <div className="payrollReport-div">
+              <label className="payrollReport__title">
+                Deducciones por ley
+              </label>
+            </div>
+            {obligatoryDeductions.map((element, index) => (
+              <div key={index} className="payrollReport-div">
+              <label className="payrollReport__text">
+                {`${element.NombreDeduccionObligatoria}`}
+              </label>
+              <label className="payrollReport__total">{formatter.format(element.Monto)}</label>
+            </div>
+              ))}
+            <div className="payrollReport-div">
+              <label className="payrollReport__TotalText">Total: </label>
+              <label className="payrollReport__totalTotal">{formatter.format(totalObligatoryDeductionsCost)}</label>
+            </div>
+            <hr></hr>
+          </div>
+
+          <div className="payrollReport-benefits">
+            <div className="payrollReport-div">
+              <label className="payrollReport__title">Beneficios</label>
+            </div>
+            {benefits.map((element, index) => (
+              <div key={index} className="payrollReport-div">
+              <label className="payrollReport__text">
+                {`${element.NombreBeneficio}`}
+              </label>
+              <label className="payrollReport__total">{formatter.format(element.Monto)}</label>
+            </div>
+              ))}
+              <div className="payrollReport-div">
+              <label className="payrollReport__TotalText">Total: </label>
+              <label className="payrollReport__totalTotal">{formatter.format(totalBenefitsCost)}</label>
+            </div>
+            <hr></hr>
+            <div className="payrollReport-div">
+              <label className="payrollReport__totalCostText">
+                Costo Total Empleador:{" "}
+              </label>
+              <label className="payrollReport__totalCost">{formatter.format(totalSalary + totalObligatoryDeductionsCost + totalBenefitsCost) }</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
