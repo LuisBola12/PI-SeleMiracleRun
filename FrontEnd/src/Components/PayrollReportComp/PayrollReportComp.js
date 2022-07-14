@@ -3,7 +3,9 @@ import "./PayrollReportStyle.scss";
 import { jsPDF } from "jspdf";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { IconContext } from "react-icons";
+import { FaArrowLeft } from "react-icons/fa";
 import {
   getTotalSalaryCost,
   getPeriodOfAPorject,
@@ -15,6 +17,7 @@ import { removeTimeFromDate } from "../../shared/removeTimeFromDate";
 export const PayrollReportComp = () => {
   const location = useLocation();
   const user = useSelector((state) => state.user.user);
+  const navigate = useNavigate();
   const activeProject = useSelector((state) => state.activeProject.projectName);
   const [totalSalaryCost, setTotalSalaryCost] = useState([]);
   const [totalSalary, setTotalSalary] = useState(0);
@@ -57,6 +60,10 @@ export const PayrollReportComp = () => {
           else console.log(":(");
         });
     }
+  };
+
+  const back = () => {
+    navigate(-1);
   };
 
   useEffect(() => {
@@ -112,15 +119,31 @@ export const PayrollReportComp = () => {
 
   return (
     <>
-      <div className="payrollReport-button">
-        <label className="payrollReport-header__title">Report</label>
+      <div className="payrollReport-title">
+      <IconContext.Provider
+          value={{
+            color: "black",
+            className: "global-class-name",
+            size: "2.6rem",
+          }}
+        >
+          <button
+            className="payrollReport-title__back-arrow"
+            onClick={() => {
+              back();
+            }}
+          >
+            <FaArrowLeft />
+          </button>
+        </IconContext.Provider>
+        <label className="payrollReport-title__title">Total Costs Report</label>
         <button
           className="create-button"
           onClick={() => {
             sendEmail();
           }}
         >
-          Enviar
+          Send Report To Email
         </button>
       </div>
       <div className="payrollReport-page">
