@@ -3,7 +3,7 @@ import "./PayrollReportStyle.scss";
 import { jsPDF } from "jspdf";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { IconContext } from "react-icons";
 import { FaArrowLeft } from "react-icons/fa";
 import {

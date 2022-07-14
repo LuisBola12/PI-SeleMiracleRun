@@ -3,21 +3,21 @@ import "./EmployeePayslip.scss";
 import { jsPDF } from "jspdf";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import {useLocation, useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
 import { removeTimeFromDate } from "../../shared/removeTimeFromDate";
 import {
   getOblDeductionsOfAPayslip,
   getVolDeductionsOfAPayslip,
 } from "../../Utils/PaySlipReport/getDeductionsData";
+import { IconContext } from "react-icons";
+import { FaArrowLeft } from "react-icons/fa";
 
 export const PayslipReportComp = () => {
   const location = useLocation();
   const user = useSelector((state) => state.user.user);
   const activeProject = useSelector((state) => state.activeProject.projectName);
-  const [totalSalaryCost, setTotalSalaryCost] = useState([]);
-  const [totalSalary, setTotalSalary] = useState(0);
-  const [category, setCategory] = useState("");
-  const [benefits, setBenefits] = useState([]);
+  const navigate = useNavigate();
   const [obligatoryDeductions, setObligatoryDeductions] = useState([]);
   const [totalObligatoryDeductionsCost, setTotalObligatoryDeductionsCost] =
     useState(0);
@@ -49,13 +49,29 @@ export const PayslipReportComp = () => {
       await axios
         .post(`${process.env.REACT_APP_BACKEND_LOCALHOST}sendFileEmail`, {
           file: file,
-          email: "javmoli045@gmail.com",
+          email: user.Email,
+          payRollConsecutive: location.state.ConsecutivoPago,
         })
         .then((res) => {
-          if (res.status === 200) console.log("Yeah!");
-          else console.log(":(");
+          if (res.status === 200){
+            Swal.fire( {
+              title: 'Report Sent!',
+              text: `Report ${location.state.ConsecutivoPago} has been sent!`,
+              icon: 'success',
+              confirmButtonColor: 'darkgreen',
+            } )
+          }else{
+            Swal.fire( {
+              title: 'Error Occured',
+              icon: 'warning',
+              confirmButtonColor: 'darkgreen',
+            })
+          }
         });
     }
+  };
+  const back = () => {
+    navigate(-1);
   };
 
   useEffect(() => {
@@ -90,17 +106,34 @@ export const PayslipReportComp = () => {
     getTotalVoluntaryDeductions();
   }, []);
 
+
   return (
     <>
-      <div className="payrollReport-button">
-        <label className="payrollReport-header__title">Report</label>
+      <div className="payrollReport-title">
+      <IconContext.Provider
+          value={{
+            color: "black",
+            className: "global-class-name",
+            size: "2.6rem",
+          }}
+        >
+          <button
+            className="payrollReport-title__back-arrow"
+            onClick={() => {
+              back();
+            }}
+          >
+            <FaArrowLeft />
+          </button>
+        </IconContext.Provider>
+        <label className="payrollReport-title__title">Payslip Report</label>
         <button
           className="create-button"
           onClick={() => {
             sendEmail();
           }}
         >
-          Enviar
+          Send Report To Email
         </button>
       </div>
       <div className="payrollReport-page">
@@ -109,19 +142,19 @@ export const PayslipReportComp = () => {
             <div className="payrollReport-header__title">{activeProject}</div>
             <div className="payrollReport-div">
               <label className="payrollReport__text">
-                <b>Empleado </b>
-                {`${user.Nombre} ${user.Apellido1} ${user.Apellido2} - ${user.Cedula} ${location.state.TipoContrato}`}
+                <b>Employee: </b>
+                {`${user.Nombre} ${user.Apellido1} ${user.Apellido2} - ${user.Cedula} - ${location.state.TipoContrato}`}
               </label>
             </div>
             <div className="payrollReport-div">
               <label className="payrollReport__text">
-                <b>Consectivo De Pago: </b>
+                <b>Payslip Id: </b>
                 {location.state.ConsecutivoPago}
               </label>
             </div>
             <div className="payrollReport-div">
               <label className="payrollReport__text">
-                <b>Fecha De Pago: </b>
+                <b>Pay Date: </b>
                 {removeTimeFromDate(location.state.FechaFin)}
               </label>
             </div>
@@ -129,7 +162,7 @@ export const PayslipReportComp = () => {
           <div className="payrollReport-salaries">
             <div className="payrollReport-div">
               <label className="payrollReport__TotalText">
-                Salario Bruto:{" "}
+                Gross Salary:{" "}
               </label>
               <label className="payrollReport__totalTotal">
                 {formatter.format(location.state.SalarioBruto)}
@@ -140,7 +173,7 @@ export const PayslipReportComp = () => {
           <div className="payrollReport-lawDeductions">
             <div className="payrollReport-div">
               <label className="payrollReport__title">
-                Deducciones por ley
+                Obligatory Deductions
               </label>
             </div>
             {obligatoryDeductions.map((element, index) => (
@@ -164,7 +197,7 @@ export const PayslipReportComp = () => {
           <div className="payrollReport-lawDeductions">
             <div className="payrollReport-div">
               <label className="payrollReport__title">
-                Deducciones Voluntarias
+                Voluntary Deductions
               </label>
             </div>
             {voluntaryDeductions.map((element, index) => (
@@ -187,7 +220,7 @@ export const PayslipReportComp = () => {
           </div>
           <div className="payrollReport-div">
             <label className="payrollReport__totalCostText">
-              Salario Neto:{" "}
+              Net Salary:{" "}
             </label>
             <label className="payrollReport__totalCost">
               {formatter.format(
