@@ -463,25 +463,26 @@ Go;
 CREATE PROCEDURE eliminarDeduccionVoluntaria (
 		@NombreDeduccionVoluntaria VARCHAR(50),
 		@Proyecto VARCHAR(50)
+		@cedulaEmpleador VARCHAR(15);
 ) 
 AS
 BEGIN
-  DECLARE @cedulaEmpleador VARCHAR(15);
 
-  SELECT @cedulaEmpleador = CedulaEmpleador FROM Proyecto
-  WHERE Nombre = @Proyecto;
-
-  UPDATE DeduccionesVoluntarias SET Activo = 'false' WHERE Nombre = @NombreDeduccionVoluntaria AND NombreProyecto = @Proyecto;
+  UPDATE DeduccionesVoluntarias SET Activo = 'false' WHERE Nombre = @NombreDeduccionVoluntaria AND NombreProyecto = @Proyecto 
+  AND CedulaEmpleador = @CedulaEmpleador;
 	
   UPDATE DeduccionVoluntariaElegida SET fechaFin = GETDATE() WHERE NombreDeduccionVoluntaria = @NombreDeduccionVoluntaria 
-  AND NombreProyecto = @Proyecto AND fechaFin > GETDATE();
+  AND NombreProyecto = @Proyecto AND fechaFin > GETDATE() AND CedulaEmpleador = @CedulaEmpleador;
+
+  update DeduccionesVoluntarias set Nombre = CONCAT(Nombre, '*') where Nombre like '%' + @NombreDeduccionVoluntaria + '%' 
+  AND NombreProyecto = @Proyecto AND CedulaEmpleador = @CedulaEmpleador;
   
   SELECT e.Nombre NombreEmpleado, e.Apellido1 Apellido1Empleado, e.Apellido2 Apellido2Empleado, e.Email EmailEmpleado,
   ep.Nombre NombreEmpleador, ep.Apellido1 Apellido1Empleador, ep.Apellido2 Apellido2Empleador
   FROM Empleado e JOIN EmpleadoYContratoSeAsocianAProyecto ecp 
   on e.Cedula = ecp.CedulaEmpleado JOIN Proyecto p on p.Nombre = ecp.NombreProyecto
   JOIN Empleador ep on ep.Cedula = p.CedulaEmpleador 
-  WHERE ecp.NombreProyecto = @Proyecto AND ep.Cedula = @cedulaEmpleador
+  WHERE ecp.NombreProyecto = @Proyecto AND ep.Cedula = @CedulaEmpleador
 END;
 ---------------------------------------------------------------------------------------------------------------
 CREATE PROCEDURE insertarDeduccionesObligatoriasPago (
