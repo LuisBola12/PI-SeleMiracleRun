@@ -170,6 +170,7 @@ export const unlinkEmployeeToVoluntaryDeduction = async (req, res) => {
 
 export const deactivateVoluntaryDeduction = async (req, res) => {
   const { Nombre, NombreProyecto, CedulaEmpleador } = req.body;
+  console.log(Nombre, NombreProyecto, CedulaEmpleador);
   try {
     const pool = await getConnection();
     const result = await pool
@@ -182,5 +183,24 @@ export const deactivateVoluntaryDeduction = async (req, res) => {
   } catch (e) {
     console.log(`Error: ${e}`);
     res.status(500).send(e.message);
+  }
+};
+
+export const reactivateVoluntaryDeduction = async ( req, res ) => {
+  console.log( 'entro a la funcion del controller' );
+  const { Nombre, NombreProyecto, CedulaEmpleador } = req.body;
+  const { NombreAntiguo } = req.params;
+  try {
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input( 'Nombre', sql.VarChar, Nombre )
+      .input( 'NombreAntiguo',sql.VarChar, NombreAntiguo )
+      .input( 'NombreProyecto', sql.VarChar, NombreProyecto )
+      .input( 'CedulaEmpleador', sql.VarChar, CedulaEmpleador )
+      .query( voluntaryDeductionsQueries.reactivateVoluntaryDeduction );
+  } catch ( e ) {
+    console.log( `Error: ${e}` );
+    res.status( 500 ).send( e.message );
   }
 };
