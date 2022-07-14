@@ -74,7 +74,6 @@ export const createNewVoluntaryDeduction = async ( req, res ) => {
   }
 };
 
-
 export const updateVoluntaryDeduction = async ( req, res ) => {
   const { Nombre, NombreProyecto, CedulaEmpleador, Costo, Descripcion } = req.body;
   const { NombreAntiguo } = req.params;
