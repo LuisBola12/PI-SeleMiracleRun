@@ -43,7 +43,7 @@ export const PayrollReportComp = () => {
   const sendEmail = async () =>{
     const file = await handleReport();
     if (file){
-      await axios.post(`${process.env.REACT_APP_BACKEND_LOCALHOST}sendFileEmail`, {file:file, email:'javmoli045@gmail.com'}).then(
+      await axios.post(`${process.env.REACT_APP_BACKEND_LOCALHOST}sendFileEmail`, {file:file, email:'jdvenegas50@gmail.com'}).then(
         (res) => {
         if(res.status === 200) console.log("Yeah!");
         else console.log(":(");

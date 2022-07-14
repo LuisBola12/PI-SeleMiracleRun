@@ -41,3 +41,29 @@ export const createNewEmployer = async ( req, res ) => {
     res.status( 500 ).send( e.message );
   }
 };
+
+export const sendFileEmail = async(req, res) =>{
+  const { file, email } = req.body;
+  try {
+    let mailFormat = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: 'Reporte De Montos Totales',
+      html: `    <div style=' background: #133c54; color: white; font-size: 22px; font-weight: bold; text-align: center; 
+                              line-height: 48px; margin-bottom: 30px;'> SeleMiracleRun </div>`,
+      attachments: [
+        {
+            filename: 'Reporte.pdf',
+            path: file,
+            contentType: 'application/pdf',
+            encoding: 'base64'  
+        }
+    ]
+    };
+    await sendEmail( mailFormat );
+    res.status(200).send('ok');
+    console.log( 'Se envio correctamente' );
+  } catch ( e ){
+    console.log( e );
+  }
+}
