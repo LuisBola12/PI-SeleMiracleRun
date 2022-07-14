@@ -49,6 +49,7 @@ export const usePutToVoluntaryDeductions = () => {
       body: JSON.stringify({
         Nombre: name,
         NombreProyecto: activeProject,
+        CedulaEmpleador: employerId
       }),
     });
     console.log(postFetch);

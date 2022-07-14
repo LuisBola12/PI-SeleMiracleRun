@@ -13,7 +13,7 @@ import {
 import {
   getVoluntaryDeductions, createNewVoluntaryDeduction, getVoluntaryDeductionsByName, updateVoluntaryDeduction,
   getEmployeeVoluntaryDeductionsByEmail, getOfferedVoluntaryDeductions, linkEmployeeToVoluntaryDeduction, unlinkEmployeeToVoluntaryDeduction,
-  deactivateVoluntaryDeduction
+  deactivateVoluntaryDeduction, reactivateVoluntaryDeduction
 } from '../controllers/voluntaryDeductions.controller';
 import { getTypeOfContracts } from '../controllers/contracts.controller';
 import {
@@ -97,6 +97,7 @@ router.get( '/offeredVoluntaryDeductions/:Proyecto/:Email', getOfferedVoluntaryD
 router.post( '/myVoluntaryDeductions', linkEmployeeToVoluntaryDeduction );
 router.put( '/myVoluntaryDeductions', unlinkEmployeeToVoluntaryDeduction );
 router.put( '/voluntaryDeductions', deactivateVoluntaryDeduction );
+router.put( '/voluntaryDeduction/:NombreAntiguo', reactivateVoluntaryDeduction );
 
 //Payrrolls
 router.get( '/payrrolls/:Proyecto', getPayrrollsOfAProject );

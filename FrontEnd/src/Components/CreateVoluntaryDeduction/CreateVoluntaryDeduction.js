@@ -15,7 +15,7 @@ export const CreateVoluntaryDeduction = () => {
   const { submitVoluntaryDeduction } = usePostToVoluntaryDeductions();
   const { reactivateVoluntaryDeduction } = usePutToVoluntaryDeductions();
   const activeProject = useSelector((state) => state.activeProject.projectName);
-
+  const employerId = useSelector( ( state ) => state.user.user.Cedula );
   const navigate = useNavigate();
 
   const createNewVoluntaryDeduction = async (notExists) => {
@@ -60,7 +60,7 @@ export const CreateVoluntaryDeduction = () => {
           const reactivateApi = process.env.REACT_APP_BACKEND_LOCALHOST + `voluntaryDeduction/${formValues.Name + '*'}`;
           console.log( reactivateApi );
           reactivateVoluntaryDeduction( formValues.Name, reactivateApi );
-          navigate( '/voluntary deduction' );
+          navigate( '/voluntaryDeductions' );
           Swal.fire( {
             title: 'Reactivated!',
             text: `The voluntary deduction ${formValues.Name} has been reactivated.`,
