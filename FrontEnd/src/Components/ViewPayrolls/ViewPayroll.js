@@ -81,17 +81,10 @@ export const ViewPayroll = () => {
                 }}>Details</button>
               </td>
               <td className="table-right-border">
-                <IconContext.Provider
-                  value={{
-                    color: 'black',
-                    className:'no-background-button',
-                    size: '2.6rem',
-                  }}
-                >
-                  <button className="generate-payslip-button-employer" onClick={() => {handleReport( element );}}>
-                    <MdOutlinePictureAsPdf />
+                  <button className="details-button" onClick={() => {handleReport( element );}}>
+                    Report
                   </button>
-                </IconContext.Provider>
+                
               </td>
             </tr>
           ) )}
