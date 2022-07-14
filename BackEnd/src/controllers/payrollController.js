@@ -280,3 +280,52 @@ export const executeAPayrroll = async(consecutivePlanilla,nombreProyecto,cedulaE
   });
   return true;
 };
+
+export const getTotalSalaryCost = async(req, res) =>{
+  const {consecutivoPlanilla, NombreProyecto} = req.params;
+
+  try{
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input( 'ConsecutivoPlanilla', consecutivoPlanilla )
+      .input( 'NombreProyecto', NombreProyecto )
+      .query(payrollQueries.getTotalSalaryCost);
+      console.log(result.recordset);
+      res.status(200).json(result.recordset);
+  }catch(error){
+    console.log(error);
+    res.status(500).send(error.message)
+  }
+}
+
+export const getTotalCostObligatoryDeductionsEmployer = async(req, res) =>{
+  const {consecutivoPlanilla} = req.params;
+
+  try{
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input( 'ConsecutivoPlanilla', consecutivoPlanilla )
+      .query(payrollQueries.getTotalCostObligatoryDeductionsEmployer);
+      console.log(result.recordset);
+      res.status(200).json(result.recordset);
+  }catch(error){
+    console.log(error);
+    res.status(500).send(error.message)
+  }
+}
+
+export const getTotalCostBenefitsEmployer = async(req, res) =>{
+  const {consecutivoPlanilla} = req.params;
+
+  try{
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input( 'ConsecutivoPlanilla', consecutivoPlanilla )
+      .query(payrollQueries.getTotalCostBenefitsEmployer);
+      console.log(result.recordset);
+      res.status(200).json(result.recordset);
+  }catch(error){
+    console.log(error);
+    res.status(500).send(error.message)
+  }
+}

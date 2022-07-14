@@ -1,5 +1,6 @@
 import { getConnection, sql } from '../database';
 import { employerQueries } from '../database/queries/employerQueries';
+import { sendEmail } from '../services/Mailer';
 
 export const getEmployer = async ( req, res ) => {
   try {
