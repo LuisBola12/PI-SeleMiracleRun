@@ -40,3 +40,26 @@ export const createNewEmployer = async ( req, res ) => {
     res.status( 500 ).send( e.message );
   }
 };
+
+export const getAllEmployerPayments = async (req, res) => {
+  const { employerEmail, projectNameFilter, initialDateFilter, endDateFilter } = req.params;
+  if (employerEmail == '') {
+    const message = 'Bad Request. Please Fill All Fields.';
+    return res.status(400).json({ msg: message });
+  }
+  try {
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input('employerEmail', employerEmail)
+      .query(employerQueries.getAllPaymentsOfEmployer);
+    if (projectNameFilter != 'Any') {
+      result.recordset = filterPaymentsByProjectName(result.recordset, projectNameFilter);
+    }
+    result.recordset = filterPaymentsByDate(result.recordset, initialDateFilter, endDateFilter);
+
+    res.status(200).json(result.recordset);
+  } catch (e) {
+    res.status(404);
+    res.send(e.message);
+  }
+};
