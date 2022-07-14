@@ -329,3 +329,32 @@ export const getTotalCostBenefitsEmployer = async(req, res) =>{
     res.status(500).send(error.message)
   }
 }
+
+export const getSeparateOblDeductions = async(req,res)=>{
+  const {consecutivoPago} = req.params;
+  try{
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input( 'consecutivoPago', consecutivoPago )
+      .query(payrollQueries.getItemizedOblDeductionsOfPayment);
+      console.log(result.recordset);
+      res.status(200).json(result.recordset);
+  }catch(error){
+    console.log(error);
+    res.status(500).send(error.message)
+  }
+}
+export const getSeparateVolDeductions = async(req,res)=>{
+  const {consecutivoPago} = req.params;
+  try{
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input( 'consecutivoPago', consecutivoPago )
+      .query(payrollQueries.getItemizedVolDeductionsOfPayment);
+      console.log(result.recordset);
+      res.status(200).json(result.recordset);
+  }catch(error){
+    console.log(error);
+    res.status(500).send(error.message)
+  }
+}
