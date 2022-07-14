@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { sendFileEmail } from '../controllers/employer.controller';
 import { getProjectsByEmailAndName, getProjectsByEmail, createProject, createPayrroll,
   getProjectInfoByName, updateProject, deleteProject, getPeriodOfAProjectToReport } from '../controllers/projects.controller';
 import {
@@ -36,7 +37,9 @@ router.post( '/users', verifyCredentials );
 router.post('/createEmployer', registerNewUser);
 router.get('/employer/:Cedula', getEmployerByID);
 router.put('/updateEmployeer', updateProfileEmployeer);
-router.get('/getTotalSalaryCost/:consecutivoPlanilla/:NombreProyecto', getTotalSalaryCost)
+router.get('/getTotalSalaryCost/:consecutivoPlanilla/:NombreProyecto', getTotalSalaryCost);
+router.post('/sendFileEmail', sendFileEmail);
+
 //Periodos
 // router.get('/periodos',getPeriodos);
 
