@@ -1,6 +1,7 @@
 import { getConnection, sql } from '../database';
 import { employerQueries } from '../database/queries/employerQueries';
 import { sendEmail } from '../services/Mailer';
+import { emailPDFTotalsReport } from '../FormatEmailMessages/EmailPDFTotalsReport';
 
 export const getEmployer = async ( req, res ) => {
   try {
@@ -43,14 +44,13 @@ export const createNewEmployer = async ( req, res ) => {
 };
 
 export const sendFileEmail = async(req, res) =>{
-  const { file, email } = req.body;
+  const { file, email, payRollConsecutive } = req.body;
   try {
     let mailFormat = {
       from: process.env.EMAIL_USER,
       to: email,
       subject: 'Reporte De Montos Totales',
-      html: `    <div style=' background: #133c54; color: white; font-size: 22px; font-weight: bold; text-align: center; 
-                              line-height: 48px; margin-bottom: 30px;'> SeleMiracleRun </div>`,
+      html: emailPDFTotalsReport(payRollConsecutive),
       attachments: [
         {
             filename: 'Reporte.pdf',
