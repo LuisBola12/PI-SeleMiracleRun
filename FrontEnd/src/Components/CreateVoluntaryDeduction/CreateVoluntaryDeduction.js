@@ -2,6 +2,7 @@ import React from 'react';
 import '../../App.css';
 import './CreateVoluntaryDeduction.scss';
 import { usePostToVoluntaryDeductions } from '../../Utils/VoluntaryDeductions/usePostToVoluntaryDeductions';
+import { usePutToVoluntaryDeductions } from '../../Utils/VoluntaryDeductions/usePutToVoluntaryDeductions';
 import validateVoluntaryDeductionForm from '../../Utils/VoluntaryDeductions/validateVoluntaryDeductionForm';
 import useForm from '../../shared/hooks/useForm';
 import { useNavigate } from 'react-router-dom';
@@ -12,28 +13,66 @@ import Swal from 'sweetalert2';
 
 export const CreateVoluntaryDeduction = () => {
   const { submitVoluntaryDeduction } = usePostToVoluntaryDeductions();
+  const { reactivateVoluntaryDeduction } = usePutToVoluntaryDeductions();
   const activeProject = useSelector((state) => state.activeProject.projectName);
-
+  const employerId = useSelector( ( state ) => state.user.user.Cedula );
   const navigate = useNavigate();
-  const submit = async () => {
-    const notExists = await validAnEntity('voluntaryDeductions/' + activeProject + '/', formValues.Name);
-    if (notExists === true) {
-      submitVoluntaryDeduction(formValues.Name, formValues.Cost, formValues.Description);
-      navigate('/voluntaryDeductions');
-      Swal.fire({
+
+  const createNewVoluntaryDeduction = async (notExists) => {
+    if ( notExists === true ) {
+      submitVoluntaryDeduction( formValues.Name, formValues.Cost, formValues.Description );
+      navigate( '/voluntaryDeductions' );
+      Swal.fire( {
         title: 'Done!',
         text: `${formValues.Name} has been created successfully.`,
         icon: 'success',
         confirmButtonColor: 'darkgreen',
-      })
+      } );
     } else {
-      setIsSubmitting(false);
-      Swal.fire({
+      setIsSubmitting( false );
+      Swal.fire( {
         icon: 'error',
         title: 'error...',
         text: 'That voluntary deduction already exists',
         confirmButtonColor: 'darkgreen',
-      });
+      } );
+    }
+  };
+
+  const submit = async () => {
+    const notPreviouslyExists = await validAnEntity( 'voluntaryDeductions/' + activeProject + '/' + employerId + '/', formValues.Name + '*' );
+    const notExists = await validAnEntity('voluntaryDeductions/' + activeProject + '/', formValues.Name);
+    if (notPreviouslyExists === false && notExists === true) {
+      Swal.fire( {
+        title: 'That voluntary deduction existed before',
+        text: 'you want to reactivate it?',
+        icon: 'question',
+        showCloseButton: true,
+        showDenyButton: true,
+        confirmButtonColor: '#133c54',
+        denyButtonColor: 'gray',
+        confirmButtonText: 'Reactivate',
+        denyButtonText: 'Create a new one instead',
+        cancelButtonText: 'X'
+      } ).then( ( result ) => {
+        if ( result.isConfirmed ) {
+          // función de reactivar deduccion voluntaria
+          const reactivateApi = process.env.REACT_APP_BACKEND_LOCALHOST + `voluntaryDeduction/${formValues.Name + '*'}`;
+          console.log( reactivateApi );
+          reactivateVoluntaryDeduction( formValues.Name, reactivateApi );
+          navigate( '/voluntaryDeductions' );
+          Swal.fire( {
+            title: 'Reactivated!',
+            text: `The voluntary deduction ${formValues.Name} has been reactivated.`,
+            icon: 'success',
+            confirmButtonColor: 'darkgreen',
+          } );
+        } else if ( result.isDenied ){
+          createNewVoluntaryDeduction( notExists );
+        }
+      } );
+    } else {
+      createNewVoluntaryDeduction( notExists );
     }
   };
 
