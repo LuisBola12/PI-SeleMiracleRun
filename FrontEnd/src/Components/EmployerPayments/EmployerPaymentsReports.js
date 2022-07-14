@@ -37,9 +37,9 @@ export const EmployerPaymentsReports = () => {
 
   useEffect( () => {
     setIsLoading( true );
-    const getEmployeeInfo = async () => {
+    const getEmployerInfo = async () => {
       const apiPayments = `/${employerEmail}/${projectNameFilter}/${range[0].startDate}/${range[0].endDate}`;
-      const infoReceived = await getAnEntity( 'employeePayments', apiPayments );
+      const infoReceived = await getAnEntity( 'employerPayments', apiPayments );
       if ( infoReceived === undefined ) {
         setEmployerPayments( [] );
       } else {
@@ -120,6 +120,7 @@ export const EmployerPaymentsReports = () => {
           {allEmployerPayments.slice( ( pageNumber - 1 ) * perPage, ( pageNumber - 1 ) * perPage + perPage  ).reverse().map( ( row ) => (
             <tr key={row.ConsecutivoPago}>
               <td className='left-td table-left-border'>{row.NombreProyecto}</td>
+              <td className='right-td'>{row.TipoContrato}</td>
               <td className='right-td'>{row.TipoContrato}</td>
               <td className='right-td'>{removeTimeFromDate( row.FechaFin )}</td>
               <td className='right-td'>{row.TipoContrato === 'Por horas' ? row.SalarioBruto / row.SalarioPorHoras : '-'}</td>
