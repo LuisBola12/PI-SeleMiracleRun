@@ -53,7 +53,7 @@ export const PayrollReportComp = () => {
       await axios
         .post(`${process.env.REACT_APP_BACKEND_LOCALHOST}sendFileEmail`, {
           file: file,
-          email: "jdvenegas50@gmail.com",
+          email: user.email,
           payRollConsecutive: location.state.Consectivo,
         })
         .then((res) => {
