@@ -4,55 +4,22 @@ import { calculateGrossSalaryForAllEmployes } from './projects.controller';
 import { payrollQueries } from './../database/queries/payrollQueries';
 import {insertCostTotalBenefits} from './benefits.controller'
 import {insertCostTotalVoluntaryDeductions} from './voluntaryDeductions.controller';
-
-const calculateAmount = ( Salary, Percentage ) => {
-  const salaryI = parseFloat( Salary );
-  const percentageI = parseFloat( Percentage );
-  if ( salaryI === null || percentageI === null ||
-    salaryI === undefined || percentageI === undefined ||
-    salaryI <= 0 || percentageI <= 0 ){
-    return 0;
-  } else {
-    return ( salaryI * ( percentageI / 100 ) );
-  }
-}; 
-const clasifyCalculateSalary = ( TotalSalary, TipoJornada ) => {
-  if ( TotalSalary <= ( 863000 / TipoJornada ) ){
-    return 0;
-  } else {
-    if ( TotalSalary > ( 863000 / TipoJornada ) && TotalSalary < ( 1267000 / TipoJornada ) ){
-      return ( TotalSalary * 0.10 ); 
-    } else {
-      if ( TotalSalary >= ( 1267000 / TipoJornada ) && TotalSalary < ( 2223000 / TipoJornada ) ){
-        return ( TotalSalary * 0.15 ); 
-      } else {
-        if ( TotalSalary >= ( 2223000 / TipoJornada ) && TotalSalary < ( 4445000 / TipoJornada ) ){
-          return ( TotalSalary * 0.20 ); 
-        } else {
-          if ( TotalSalary >= ( 4445000 / TipoJornada ) ){
-            return ( TotalSalary * 0.25 ); 
-          }
-        }
-      }
-    }
-  }
-};
-
+import { calculateNetSalary,calculateAmount,estimateIncomeTax} from '../utils/estimateCalculator';
 const calculateAmountRentTaxes = ( Salary, TipoJornada ) => {
   const salaryI = parseFloat( Salary );
   if ( salaryI === null || salaryI === undefined || salaryI <= 0 ){
     return 0;
   } else {
     if ( TipoJornada === 'Mensual' ){
-      const salary = clasifyCalculateSalary( salaryI, 1 );
+      const salary = estimateIncomeTax( salaryI, 1 );
       return salary;
     } else {
       if ( TipoJornada === 'Quincenal' ){
-        const salary = clasifyCalculateSalary( salaryI, 2 );
+        const salary = estimateIncomeTax( salaryI, 2 );
         return salary;
       } else {
         if ( TipoJornada === 'Semanal' ){
-          const salary = clasifyCalculateSalary( salaryI, 4 );
+          const salary = estimateIncomeTax( salaryI, 4 );
           return salary;
         }
       }
@@ -108,9 +75,9 @@ export const obligatoryDeductionsPayRoll = async(cedEmpleado,cedEmpleador,proyNa
   let montoEmpleado = 0.0;
   let montoEmpleador = 0.0;
   let nombreDeduccionObligatoria = '';
-  
+  console.log(obligatoryDeductions)
   for(let index = 0; index < obligatoryDeductions.length; index++ ){
-    if ( obligatoryDeductions[index].Nombre === 'ImpuestoSobreLaRenta' ){
+    if ( obligatoryDeductions[index].Nombre === 'Impuesto sobre la renta' ){
       montoEmpleado = calculateAmountRentTaxes( grossSalary, contractType );
       montoEmpleador = 0;
     } else {
@@ -181,6 +148,35 @@ const getTotalCostBenefits = async(consecutivePayroll,cedEmpleado) =>{
   } catch ( error ) {
     console.log( `Error al conseguir el costo de beneficios: ${error}` );
     return undefined;
+  }
+}
+export const getPayrrollsOfAProject = async(req,res) =>{
+  try {
+    const { Proyecto } = req.params;
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input( 'Proyecto', Proyecto )
+      .query( payrollQueries.getPayrrollsOfAproject );
+    res.json( result.recordset );
+  } catch ( e ) {
+    res.status( 500 );
+    res.send( e.message );
+  }
+}
+export const getAllPayslipsOfAProject = async(req,res) =>{
+  try {
+    const { Proyecto,ConsecutivoPlanilla } = req.body;
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input( 'NombreProyecto', Proyecto )
+      .input( 'NumeroPagoPlanilla', ConsecutivoPlanilla )
+      .execute( 'conseguirNominaEmpleados' );
+    res.json( result.recordset );
+  } catch ( e ) {
+    res.status( 500 );
+    res.send( e.message );
   }
 }
 const getTotalCostVolDeductions = async(consecutivePayroll,cedEmpleado) =>{
@@ -259,8 +255,8 @@ const aplicateDeductionsAndBenefitsToSalary = async(cedEmpleado,consecutivePayrr
   const totalCostBenefits = await getTotalCostBenefits(consecutivePayrroll,cedEmpleado);
   const totalCostVolDeductions = await getTotalCostVolDeductions(consecutivePayrroll,cedEmpleado);
   const totalCostOblDeductions = await getTotalOblDeductions(consecutivePayrroll,cedEmpleado);
-  if(totalCostBenefits && totalCostVolDeductions && totalCostOblDeductions){
-    const netSalary = ((grossSalary - totalCostVolDeductions) - totalCostOblDeductions)+ totalCostBenefits;
+  if(totalCostBenefits !== undefined && totalCostVolDeductions !== undefined && totalCostOblDeductions!== undefined){
+    const netSalary = calculateNetSalary(grossSalary,totalCostVolDeductions,totalCostOblDeductions);
     insertNetSalary(consecutivePayrroll,cedEmpleado,netSalary);
   } 
 }
@@ -282,4 +278,83 @@ export const executeAPayrroll = async(consecutivePlanilla,nombreProyecto,cedulaE
   payslips.forEach(element=>{
     individualPayslipInsert(element,nombreProyecto,consecutivePlanilla,cedulaEmpleador)
   });
+  return true;
 };
+
+export const getTotalSalaryCost = async(req, res) =>{
+  const {consecutivoPlanilla, NombreProyecto} = req.params;
+
+  try{
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input( 'ConsecutivoPlanilla', consecutivoPlanilla )
+      .input( 'NombreProyecto', NombreProyecto )
+      .query(payrollQueries.getTotalSalaryCost);
+      console.log(result.recordset);
+      res.status(200).json(result.recordset);
+  }catch(error){
+    console.log(error);
+    res.status(500).send(error.message)
+  }
+}
+
+export const getTotalCostObligatoryDeductionsEmployer = async(req, res) =>{
+  const {consecutivoPlanilla} = req.params;
+
+  try{
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input( 'ConsecutivoPlanilla', consecutivoPlanilla )
+      .query(payrollQueries.getTotalCostObligatoryDeductionsEmployer);
+      console.log(result.recordset);
+      res.status(200).json(result.recordset);
+  }catch(error){
+    console.log(error);
+    res.status(500).send(error.message)
+  }
+}
+
+export const getTotalCostBenefitsEmployer = async(req, res) =>{
+  const {consecutivoPlanilla} = req.params;
+
+  try{
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input( 'ConsecutivoPlanilla', consecutivoPlanilla )
+      .query(payrollQueries.getTotalCostBenefitsEmployer);
+      console.log(result.recordset);
+      res.status(200).json(result.recordset);
+  }catch(error){
+    console.log(error);
+    res.status(500).send(error.message)
+  }
+}
+
+export const getSeparateOblDeductions = async(req,res)=>{
+  const {consecutivoPago} = req.params;
+  try{
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input( 'consecutivoPago', consecutivoPago )
+      .query(payrollQueries.getItemizedOblDeductionsOfPayment);
+      console.log(result.recordset);
+      res.status(200).json(result.recordset);
+  }catch(error){
+    console.log(error);
+    res.status(500).send(error.message)
+  }
+}
+export const getSeparateVolDeductions = async(req,res)=>{
+  const {consecutivoPago} = req.params;
+  try{
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input( 'consecutivoPago', consecutivoPago )
+      .query(payrollQueries.getItemizedVolDeductionsOfPayment);
+      console.log(result.recordset);
+      res.status(200).json(result.recordset);
+  }catch(error){
+    console.log(error);
+    res.status(500).send(error.message)
+  }
+}

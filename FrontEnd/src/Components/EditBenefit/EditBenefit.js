@@ -14,25 +14,26 @@ import { usePutToBenefits } from '../../Utils/Benefits/usePutToBenefits';
 import Swal from 'sweetalert2';
 
 export const EditBenefit = () => {
-  const apiBenefits = 'http://localhost:4000/benefits';
-  const activeProject = useSelector((state) => state.activeProject.projectName);
+  const apiBenefits = process.env.REACT_APP_BACKEND_LOCALHOST + 'benefits';
+  const activeProject = useSelector( ( state ) => state.activeProject.projectName );
   const location = useLocation();
   const oldName = location.state.Nombre;
+  const employerId = useSelector( ( state ) => state.user.user.Cedula );
   const navigate = useNavigate();
   const { updateBenefit } = usePutToBenefits();
   const submit = async () => {
-    const notExists = await validAnEntity('benefits/' + activeProject + '/', formValues.Name);
-    if (notExists === true || oldName === formValues.Name) {
-      updateBenefit(formValues.Name, formValues.Cost, formValues.Description, apiBenefits + `/${oldName}`);
-      navigate('/benefits');
+    const notExists = await validAnEntity( 'benefits/' + activeProject + '/' + employerId + '/', formValues.Name );
+    if ( notExists === true || oldName === formValues.Name ) {
+      updateBenefit( formValues.Name, formValues.Cost, formValues.Description, apiBenefits + `/${oldName}` );
+      navigate( '/benefits' );
     } else {
-      setIsSubmitting(false);
-      Swal.fire({
+      setIsSubmitting( false );
+      Swal.fire( {
         icon: 'error',
         title: 'error...',
         text: 'That benefit already exists',
         confirmButtonColor: 'darkgreen',
-      });
+      } );
     }
   };
   const {
@@ -42,14 +43,14 @@ export const EditBenefit = () => {
     errors,
     setIsSubmitting,
     setFormValues
-  } = useForm(submit, validateBenefitForm);
-  useEffect(() => {
-    setFormValues({
+  } = useForm( submit, validateBenefitForm );
+  useEffect( () => {
+    setFormValues( {
       Name: location.state.Nombre,
-      Cost: transformCost(location.state.CostoActual),
+      Cost: transformCost( location.state.CostoActual ),
       Description: location.state.Descripción
-    });
-  }, []);
+    } );
+  }, [] );
 
   return (
     <>
@@ -85,7 +86,7 @@ export const EditBenefit = () => {
                 placeholder=' '
                 maxLength={50}
                 value={formValues.Cost || ''}
-                onChange={(e) => { handleInputChange(maskCurrency(e)); }}
+                onChange={( e ) => { handleInputChange( maskCurrency( e ) ); }}
               ></input>
               <label htmlFor='Cost' className='animated-input__label'>Cost ₡<span className='req'>*</span></label>
             </div>
@@ -115,7 +116,7 @@ export const EditBenefit = () => {
           <button
             className='cancel-benefit-btn'
             onClick={() => {
-              navigate('/benefits');
+              navigate( '/benefits' );
             }}>
             Cancel
           </button>

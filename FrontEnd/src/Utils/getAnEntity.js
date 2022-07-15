@@ -1,10 +1,10 @@
-export const getAnEntity = async (url, project) => {
-  const seleUrl = `http://localhost:4000/${url}${project}`;
+export const getAnEntity = async ( url, project ) => {
+  const seleUrl = process.env.REACT_APP_BACKEND_LOCALHOST + `${url}${project}`;
   try {
-    const response = await fetch(seleUrl);
+    const response = await fetch( seleUrl );
     const newData = await response.json();
     return newData;
-  } catch (error) {
-    console.log(error);
+  } catch ( error ) {
+    console.log( error );
   }
 };

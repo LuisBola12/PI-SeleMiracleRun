@@ -1,5 +1,7 @@
 import { getConnection, sql } from '../database';
 import { employerQueries } from '../database/queries/employerQueries';
+import { sendEmail } from '../services/Mailer';
+import { emailPDFTotalsReport } from '../FormatEmailMessages/EmailPDFTotalsReport';
 
 export const getEmployer = async ( req, res ) => {
   try {
@@ -40,3 +42,28 @@ export const createNewEmployer = async ( req, res ) => {
     res.status( 500 ).send( e.message );
   }
 };
+
+export const sendFileEmail = async(req, res) =>{
+  const { file, email, payRollConsecutive } = req.body;
+  try {
+    let mailFormat = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: 'Reporte De Montos Totales',
+      html: emailPDFTotalsReport(payRollConsecutive),
+      attachments: [
+        {
+            filename: 'Reporte.pdf',
+            path: file,
+            contentType: 'application/pdf',
+            encoding: 'base64'  
+        }
+    ]
+    };
+    await sendEmail( mailFormat );
+    res.status(200).send('ok');
+    console.log( 'Se envio correctamente' );
+  } catch ( e ){
+    console.log( e );
+  }
+}

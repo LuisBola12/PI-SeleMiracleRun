@@ -13,6 +13,7 @@ const usePost = ( url, methodReq = 'POST' ) => {
         body: JSONBody
       } );
       console.log( postFetch );
+      return true;
     } catch ( error ) {
       setPostError( error );
     }

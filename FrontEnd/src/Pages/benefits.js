@@ -2,7 +2,6 @@ import React from 'react';
 import '../App.css';
 import { CrudBenefits } from '../Components/CrudBenefits/CrudBenefits';
 import { Navbar } from '../Components/Navbar/Navbar';
-import '../App.css';
 
 export const Benefits = () => {
   return (

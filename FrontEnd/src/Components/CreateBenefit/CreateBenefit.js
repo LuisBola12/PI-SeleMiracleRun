@@ -2,6 +2,7 @@ import '../../App.css';
 import './CreateBenefit.scss';
 import React from 'react';
 import { usePostToBenefits } from '../../Utils/Benefits/usePostToBenefits.js';
+import { usePutToBenefits } from '../../Utils/Benefits/usePutToBenefits';
 import { useNavigate } from 'react-router-dom';
 import { maskCurrency } from '../../shared/moneyFormatTransform';
 import validateBenefitForm from '../../Utils/Benefits/validateBenefitForm';
@@ -12,25 +13,70 @@ import Swal from 'sweetalert2';
 
 export const CreateBenefit = () => {
   const { submitBenefit } = usePostToBenefits();
-  const activeProject = useSelector((state) => state.activeProject.projectName);
-
+  const { reactivateBenefit } = usePutToBenefits();
+  const activeProject = useSelector( ( state ) => state.activeProject.projectName );
+  const employerId = useSelector( ( state ) => state.user.user.Cedula );
   const navigate = useNavigate();
-  const submit = async () => {
-    const notExists = await validAnEntity('benefits/' + activeProject + '/', formValues.Name);
-    if (notExists === true) {
-      submitBenefit(formValues.Name, formValues.Cost, formValues.Description);
-      navigate('/benefits');
+
+  const createNewBenefit = async ( notExists ) => {
+    if ( notExists === true ) {
+      submitBenefit( formValues.Name, formValues.Cost, formValues.Description );
+      navigate( '/benefits' );
+      Swal.fire( {
+        title: 'Done!',
+        text: `${formValues.Name} has been created successfully.`,
+        icon: 'success',
+        confirmButtonColor: 'darkgreen',
+      } );
     } else {
-      setIsSubmitting(false);
-      Swal.fire({
+      setIsSubmitting( false );
+      Swal.fire( {
         icon: 'error',
         title: 'error...',
         text: 'That benefit already exists',
         confirmButtonColor: 'darkgreen',
-      });
+      } );
     }
   };
-  const { formValues, handleInputChange, handleSubmit, errors, setIsSubmitting } = useForm(submit, validateBenefitForm);
+
+  const submit = async () => {
+    const notPreviouslyExists = await validAnEntity( 'benefits/' + activeProject + '/' + employerId + '/', formValues.Name + '*' );
+    const notExists = await validAnEntity( 'benefits/' + activeProject + '/' + employerId + '/', formValues.Name );
+    if ( notPreviouslyExists === false && notExists === true ) {
+      Swal.fire( {
+        title: 'That benefit existed before',
+        text: 'you want to reactivate it?',
+        icon: 'question',
+        showCloseButton: true,
+        showDenyButton: true,
+        confirmButtonColor: '#133c54',
+        denyButtonColor: 'gray',
+        confirmButtonText: 'Reactivate',
+        denyButtonText: 'Create a new one instead',
+        cancelButtonText: 'X'
+      } ).then( ( result ) => {
+        if ( result.isConfirmed ) {
+          // función de reactivar beneficio
+          const reactivateApi = process.env.REACT_APP_BACKEND_LOCALHOST + `benefit/${formValues.Name + '*'}`;
+          console.log( reactivateApi );
+          reactivateBenefit( formValues.Name, reactivateApi );
+          navigate( '/benefits' );
+          Swal.fire( {
+            title: 'Reactivated!',
+            text: `The benefit ${formValues.Name} has been reactivated.`,
+            icon: 'success',
+            confirmButtonColor: 'darkgreen',
+          } );
+        } else if ( result.isDenied ){
+          createNewBenefit( notExists );
+        }
+      } );
+      
+    } else {
+      createNewBenefit( notExists );
+    }
+  };
+  const { formValues, handleInputChange, handleSubmit, errors, setIsSubmitting } = useForm( submit, validateBenefitForm );
   return (
     <>
       <div className='benefits-form'>
@@ -65,7 +111,7 @@ export const CreateBenefit = () => {
                 placeholder=' '
                 maxLength={50}
                 value={formValues.Cost || ''}
-                onChange={(e) => { handleInputChange(maskCurrency(e)); }}
+                onChange={( e ) => { handleInputChange( maskCurrency( e ) ); }}
               ></input>
               <label htmlFor='Cost' className='animated-input__label'>Cost ₡<span className='req'>*</span></label>
             </div>
@@ -90,14 +136,14 @@ export const CreateBenefit = () => {
           <button
             className='create-benefit-btn'
             onClick={handleSubmit}>
-            create
+            Create
           </button>
           <button
             className='cancel-benefit-btn'
             onClick={() => {
-              navigate('/benefits');
+              navigate( '/benefits' );
             }}>
-            cancel
+            Cancel
           </button>
         </div>
       </div>

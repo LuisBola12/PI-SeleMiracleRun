@@ -1,17 +1,17 @@
 import './DropDownMenu.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import React, { useState, useEffect, useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
-import {useNavigate} from 'react-router-dom';
-import {logout} from '../../Slices/user/userSlice';
-import {resetProject} from '../../Slices/projectSlice/activeProjectSlice';
+import { useNavigate } from 'react-router-dom';
+import { logout } from '../../Slices/user/userSlice';
+import { resetProject } from '../../Slices/projectSlice/activeProjectSlice';
 
-export const Menu = (props) => {
-  const [open, setOpen] = useState(false);
-
+export const Menu = ( props ) => {
+  const [ open, setOpen ] = useState( false );
   return (
+
     <li className='sidebar-component'>
-      <a className='sidebar-dropdown-icon' onClick={() => setOpen(!open)}>
+      <a className='sidebar-dropdown-icon' onClick={() => setOpen( !open )}>
         {props.icon}
       </a>
       {open && props.children}
@@ -22,34 +22,33 @@ export const Menu = (props) => {
 export const DropdownMenu = () => {
   const navigate = useNavigate();
   const activeMenu = 'main';
-  const [menuHeight, setMenuHeight] = useState(null);
-  const dropdownRef = useRef(null);
+  const [ menuHeight, setMenuHeight ] = useState( null );
+  const dropdownRef = useRef( null );
+  const rolFromUser = useSelector( ( state ) => state.user.user.Roles );
   const dispatch = useDispatch();
   const redirectToProjectSelecion = () => {
-    navigate('/');
+    navigate( '/' );
   };
 
-  useEffect(() => {
-    setMenuHeight(dropdownRef.current?.firstChild.offsetHeight);
-  }, []);
+  useEffect( () => {
+    setMenuHeight( dropdownRef.current?.firstChild.offsetHeight );
+  }, [] );
 
-  function calcHeight(el) {
+  function calcHeight( el ) {
     const height = el.offsetHeight;
 
-    setMenuHeight(height);
+    setMenuHeight( height );
   }
   const redirectToProfile = () => {
-    navigate('/userProfile');
+    navigate( '/userProfile' );
   };
   const redirectToLogIn = () => {
-    dispatch(logout());
-    dispatch(resetProject());
-    navigate('/');
+    dispatch( logout() );
+    dispatch( resetProject() );
+    navigate( '/' );
   };
 
-  const redirectToSettings = () => {
-    navigate('/navigateSettings');
-  };
+
   return (
     <div className='sidebar-dropdown' style={{ height: menuHeight }} ref={dropdownRef}>
       <CSSTransition
@@ -58,14 +57,30 @@ export const DropdownMenu = () => {
         unmountOnExit
         onEnter={calcHeight}>
         <div className='sidebar-menu'>
-          <button onClick={redirectToProjectSelecion} className='sidebar-button' >
-              Projects
-          </button>
           <button onClick={redirectToProfile} className='sidebar-button' >
-              Profile
+            Profile
           </button>
+          {
+            rolFromUser === 'emp' ? (
+              <button onClick={() => { navigate( '/PaymentsReport' ); }} className='sidebar-button' >
+                My Payments Reports
+              </button>
+            ) :
+              null
+          }
+          <button onClick={redirectToProjectSelecion} className='sidebar-button' >
+            Select Project
+          </button>
+          {
+            rolFromUser === 'admin' ? (
+              <button onClick={() => { navigate( '/projectSettings' ); }} className='sidebar-button' >
+                Project Configuration
+              </button>
+            ) :
+              null
+          }
           <button onClick={redirectToLogIn} className='sidebar-button' >
-              Sign Out
+            Sign Out
           </button>
         </div>
       </CSSTransition >

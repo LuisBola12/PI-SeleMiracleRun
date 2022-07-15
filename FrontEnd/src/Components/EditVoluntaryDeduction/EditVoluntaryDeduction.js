@@ -14,14 +14,15 @@ import { usePutToVoluntaryDeductions } from '../../Utils/VoluntaryDeductions/use
 import Swal from 'sweetalert2';
 
 export const EditVoluntaryDeduction = () => {
-  const apiVoluntaryDeductions = 'http://localhost:4000/voluntaryDeductions';
+  const apiVoluntaryDeductions = process.env.REACT_APP_BACKEND_LOCALHOST + 'voluntaryDeductions';
   const activeProject = useSelector((state) => state.activeProject.projectName);
   const location = useLocation();
   const oldName = location.state.Nombre;
+  const employerId = useSelector((state) => state.user.user.Cedula);
   const navigate = useNavigate();
   const { updateVoluntaryDeduction } = usePutToVoluntaryDeductions();
   const submit = async () => {
-    const notExists = await validAnEntity('voluntaryDeductions/' + activeProject + '/', formValues.Name);
+    const notExists = await validAnEntity('voluntaryDeductions/' + activeProject + '/' + employerId + '/', formValues.Name);
     if (notExists === true || oldName === formValues.Name) {
       updateVoluntaryDeduction(formValues.Name, formValues.Cost, formValues.Description, apiVoluntaryDeductions + `/${oldName}`);
       navigate('/voluntaryDeductions');

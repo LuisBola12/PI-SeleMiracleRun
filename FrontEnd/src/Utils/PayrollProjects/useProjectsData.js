@@ -10,13 +10,13 @@ export const useProjectsData = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [ loading, setLoading ] = useState( false );
-  const [ needToRefresh ,setNeedToRefresh  ] = useState( false );
+  const [ needToRefresh, setNeedToRefresh ] = useState( false );
 
   useEffect( () => {
     const getData = async () => {
       try {
         setLoading( true );
-        const response = await fetch( `http://localhost:4000/projects/${emailFromUser}/${rolFromUser}` );
+        const response = await fetch( process.env.REACT_APP_BACKEND_LOCALHOST + `projects/${emailFromUser}/${rolFromUser}` );
         if ( !response.ok ) {
           setLoading( false );
           throw new Error(
@@ -27,18 +27,18 @@ export const useProjectsData = () => {
         setProjects( actualData );
       } catch ( err ) {
         setProjects( null );
-      } 
+      }
       setLoading( false );
     };
     getData();
     setNeedToRefresh( false );
   }, [ needToRefresh ] );
-  
+
   const handleProjectSelection = ( projectName ) => {
     dispatch( updateActiveProject( projectName ) );
     rolFromUser === 'admin' ?
-      ( navigate( '/employees' ) ) :
-      ( navigate( '/home' ) );
+      ( navigate( '/payroll' ) ) :
+      ( navigate( '/myPayments' ) );
   };
 
   return {

@@ -1,6 +1,17 @@
 export const voluntaryDeductionsQueries = {
-  getVoluntaryDeductions: 'Select * From DeduccionesVoluntarias Where NombreProyecto = @NombreProyecto',
-  createNewVoluntaryDeduction: 'Insert into DeduccionesVoluntarias (Nombre, NombreProyecto, Costo, Descripcion) values (@Nombre, @NombreProyecto, @Costo, @Descripcion)',
-  getVoluntaryDeductionsByName: 'Select Nombre from DeduccionesVoluntarias where Nombre = @Nombre and NombreProyecto = @NombreProyecto',
-  editVoluntaryDeduction: 'Update DeduccionesVoluntarias set Nombre=@Nombre, Costo=@Costo, Descripcion=@Descripcion where NombreProyecto=@NombreProyecto and Nombre=@NombreAntiguo',
+  getVoluntaryDeductions: 'Select * From DeduccionesVoluntarias dv Where NombreProyecto = @NombreProyecto and CedulaEmpleador = @CedulaEmpleador and dv.Activo = \'true\'',
+  createNewVoluntaryDeduction: 'Insert into DeduccionesVoluntarias (Nombre, NombreProyecto, CedulaEmpleador, Costo, Descripcion, Activo) values (@Nombre, @NombreProyecto, @CedulaEmpleador, @Costo, @Descripcion, \'true\')',
+  getVoluntaryDeductionsByName: 'Select Nombre from DeduccionesVoluntarias where Nombre = @Nombre and NombreProyecto = @NombreProyecto and CedulaEmpleador = @CedulaEmpleador',
+  editVoluntaryDeduction: 'Update DeduccionesVoluntarias set Nombre=@Nombre, Costo=@Costo, Descripcion=@Descripcion where NombreProyecto=@NombreProyecto and CedulaEmpleador = @CedulaEmpleador and Nombre=@NombreAntiguo and Activo = \'true\'',
+  getVoluntaryDeductionsStatistics:
+  `SELECT Nombre, COUNT(dve.CedulaEmpleado) as empleados from DeduccionesVoluntarias dv 
+  JOIN DeduccionVoluntariaElegida dve ON dve.NombreDeduccionVoluntaria = dv.Nombre
+  AND dve.NombreProyecto = dv.NombreProyecto AND 
+  dv.CedulaEmpleador = dve.CedulaEmpleador
+  WHERE dv.NombreProyecto = '@NombreProyecto'
+  AND dv.CedulaEmpleador = '@CedulaEmpleador' and dv.Activo = 1
+  AND dve.fechaFin > GETDATE()
+  GROUP BY dv.Nombre
+  `,
+  reactivateVoluntaryDeduction: 'Update DeduccionesVoluntarias set Nombre = @Nombre, Activo = 1 where NombreProyecto=@NombreProyecto and CedulaEmpleador = @CedulaEmpleador and Nombre=@NombreAntiguo',
 };

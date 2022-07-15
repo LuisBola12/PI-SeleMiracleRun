@@ -3,7 +3,7 @@
 @apiUpdateEmployeer = http://localhost:4000/updateEmployeer
 @apiProfileEmployee = http://localhost:4000/profileEmployee
 @apiProfileEmployeer = http://localhost:4000/profileEmployeer
-@apiEmployees = http://localhost:4000/employees
+@apiEmployees = http://localhost:4000/employee
 @apiEmployee = http://localhost:4000/employee
 @apiEmployeeContract = http://localhost:4000/employee/contract
 @apiProjects = http://localhost:4000/projects
@@ -30,6 +30,7 @@
 
 @apigetProjectsEmailAndName = http://localhost:4000/myProjects
 @apiValidateBenefit = http://localhost:4000/validateBenefit
+<<<<<<< HEAD
 @apiLastDate = http://localhost:4000/lastDateForCalendar
 @apifirstDate = http://localhost:4000/firstContractDate
 
@@ -38,12 +39,32 @@ GET {{apifirstDate}}/208010869/Taquería Milagro
 GET {{apiLastDate}}/208010869/Taquería Milagro/2022-03-1
 
 ### 
+=======
+@apiPayrroll = http://localhost:4000/payrrolls
+@apiGetPayslips =  http://localhost:4000/payslipsOfaProject
+@apiEmployeePayments = http://localhost:4000/employeePayments
+@apiTotalSalaryCost = http://localhost:4000/getTotalSalaryCost
+
+GET {{apiTotalSalaryCost}}/26/Cine Milagro
+###
+GET {{apiPayrroll}}/Taquería Milagro
+###
+>>>>>>> 79f4583105648eb5658a35e3c728f4bdaae00e9b
 DELETE {{apiDeleteEmployeeFromProject}}
 Content-Type: application/json
 
 {
   "Cedula":"118706423",
   "NombreProyecto":"Taquería Milagro"
+}
+
+###
+POST {{apiGetPayslips}}
+Content-Type: application/json
+
+{
+  "Proyecto":"Taquería Milagro",
+  "ConsecutivoPlanilla":"90" 
 }
 
 ###
@@ -57,12 +78,13 @@ Content-Type: application/json
 
 
 ###
-DELETE {{apiDeleteEmployeeFromProject}}
+POST {{apiDeleteEmployeeFromProject}}
 Content-Type: application/json
 
 {
-  "Cedula":"608110776",
-  "NombreProyecto":"Taquería Milagro"
+  "Proyecto":"Taquería Milagro",
+  "EmailEmpleado":"luibv12@hotmail.com",
+  "MotivoDeDespido":"AAAAAAAAAAAAAA"
 }
 
 
@@ -170,7 +192,7 @@ GET {{apiUsers}}
 GET {{apiUsers}}/josefR@example.com
 
 ###
-GET {{apiEmployees}}/Super La Esquina
+GET {{apiEmployees}}/Cine Milagro
 
 ###
 GET {{apiProjects}}/norman.os.l@gmail.com/admin
@@ -301,3 +323,7 @@ Content-Type: application/json
 GET {{apigetProjectsEmailAndName}}/Norman.Os.L@gmail.com/Taquería Milagro
 ###
 GET {{apiValidateBenefit}}/Taquería Milagro/crhisCo@hotmail.com/Comida
+
+
+###
+GET {{apiEmployeePayments}}/Taquería Milagro/crhisCo@hotmail.com

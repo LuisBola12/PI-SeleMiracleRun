@@ -50,13 +50,13 @@
 .register-form {
   justify-content: center;
   display: flex;
-  gap: 0.6rem;
+  gap: 1rem;
 }
 
 .register-animated-input-name {
   position: relative;
-  width: 12rem;
-  height: 2.6rem;
+  width: 20rem;
+  height: 3rem;
 
   &__input {
     position: absolute;
@@ -94,12 +94,11 @@
 
   &__label {
     position: absolute;
-    left: 0.8rem;
+    left: 1rem;
     top: 0.8rem;
     padding: 0 0.5rem;
     color: black;
     cursor: text;
-    font-size: 0.8rem;
     transition: top 200ms ease-in, left 200ms ease-in, font-size 200ms ease-in;
     background-color: white;
   }
@@ -115,7 +114,7 @@
 .register-animated-input-name__input:focus~.register-animated-input-name__label,
 .register-animated-input-name__input:not(:placeholder-shown).register-animated-input-name__input:not(:focus)~.register-animated-input-name__label {
   top: -0.5rem;
-  font-size: 0.6rem;
+  font-size: 0.8rem;
   left: 0.8rem;
 
   .req {
@@ -127,8 +126,8 @@
 
 .register-row {
   position: relative;
-  width: 18.3rem;
-  height: 2.6rem;
+  width: 30.5rem;
+  height: 3rem;
 
   &__input {
     position: absolute;
@@ -167,12 +166,11 @@
 
   &__label {
     position: absolute;
-    left: 0.8rem;
+    left: 1rem;
     top: 0.8rem;
     padding: 0 0.5rem;
     color: black;
     cursor: text;
-    font-size: 0.8rem;
     transition: top 200ms ease-in, left 200ms ease-in, font-size 200ms ease-in;
     background-color: white;
   }
@@ -188,7 +186,7 @@
 .register-row__input:focus~.register-row__label,
 .register-row__input:not(:placeholder-shown).register-row__input:not(:focus)~.register-row__label {
   top: -0.5rem;
-  font-size: 0.6rem;
+  font-size: 0.8rem;
   left: 0.8rem;
 
   .req {
@@ -208,18 +206,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
+  gap: 1.4rem;
 }
 
 .register-btn {
-  padding: 2px;
+  padding: 10px;
   border-radius: 8px;
   color: white;
   font-weight: bold;
   border-color: white;
   border-style: none;
-  width: 15rem;
-  font-size: 1.6rem;
+  width: 16rem;
+  font-size: 1.3rem;
 }
 
 .r-sumbit {
