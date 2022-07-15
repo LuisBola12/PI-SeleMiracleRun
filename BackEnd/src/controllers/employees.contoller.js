@@ -281,7 +281,6 @@ export const getEmployeesAllInfo = async (req, res) => {
   }
 };
 
-<<<<<<< HEAD
 export const getLastDateForCalendar = async ( req, res ) => {
   const { CedEmpleado, Proyecto, FechaActual } = req.params;
   try {
@@ -314,7 +313,6 @@ export const getFirstContractDate = async ( req, res ) => {
     res.send( error );
   }
 };
-=======
 export const getEmployeePayments = async (req, res) => {
   const { projectName, employeeEmail } = req.params;
   if (projectName == null || employeeEmail == '') {
@@ -356,4 +354,16 @@ export const getAllEmployeePayments = async (req, res) => {
     res.send(e.message);
   }
 };
->>>>>>> 79f4583105648eb5658a35e3c728f4bdaae00e9b
+
+export const getHours = async(req, res) =>{
+  try {
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .query( employeesQueries.getHours );
+      res.json( result.recordset );
+      console.log(result.recordset)
+  } catch ( e ){
+    console.log( e );
+  }
+}

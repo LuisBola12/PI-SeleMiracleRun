@@ -11,12 +11,9 @@
     "autoprefixer": "10.4.5",
     "axios": "^0.27.2",
     "bootstrap": "^5.1.3",
-<<<<<<< HEAD
     "moment": "^2.29.3",
-=======
     "dotenv": "^16.0.1",
     "jspdf": "^2.5.1",
->>>>>>> 79f4583105648eb5658a35e3c728f4bdaae00e9b
     "multiselect-react-dropdown": "^2.0.22",
     "react": "^18.1.0",
     "react-bootstrap": "^2.3.1",

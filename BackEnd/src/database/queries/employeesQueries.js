@@ -22,11 +22,6 @@ export const employeesQueries = {
     @NombreServicio,@SalarioPorHora,@FechaInicioContrato,@FechaFinContrato,@ValorServicio)`,
   deleteEmployeeFromProject: 'Delete from EmpleadoYContratoSeAsocianAProyecto where CedulaEmpleado = @Cedula and NombreProyecto = @NombreProyecto',
   insertHours: 'EXEC ingresarHoras @Email = @EmailEmpleado , @Proyecto = @ProyectoEmpleado, @Fecha = @FechaEmpleado, @CantidadHoras = @CantHorasEmpleado',
-<<<<<<< HEAD
-  getActiveEmployeesInfo:'SELECT * FROM [SeleMiracleRun].[dbo].[EmpleadoYContratoSeAsocianAProyecto] WHERE FechaFin > GETDATE() AND NombreProyecto = @projectName',
-  getLastDateForCalendar: 'select Fecha FROM HorasRegistradas WHERE CedulaEmpleado = @CedEmpleado AND NombreProyecto = @Proyecto AND Fecha > @FechaActual',
-  getFirstContractDate: 'select ECAP.FechaInicio FROM EmpleadoYContratoSeAsocianAProyecto ECAP WHERE ECAP.CedulaEmpleado =  @CedEmpleado AND ECAP.NombreProyecto = @Proyecto'
-=======
   getActiveEmployeesInfo: 'SELECT * FROM [SeleMiracleRun].[dbo].[EmpleadoYContratoSeAsocianAProyecto] WHERE FechaFin > GETDATE() AND NombreProyecto = @projectName',
   updateEmployee: 'Update Empleado set Nombre= @Nombre, Apellido1= @Apellido1 ,Apellido2= @Apellido2,Telefono= @Telefono Where Cedula= @Cedula',
   updateEmployeer: 'Update Empleador set Nombre= @Nombre, Apellido1= @Apellido1 ,Apellido2= @Apellido2,Telefono= @Telefono Where Cedula= @Cedula',
@@ -47,9 +42,8 @@ export const employeesQueries = {
   FROM [Pago] pa JOIN Planilla pl ON pl.Consectivo = pa.ConsecutivoPlanilla
     JOIN Empleado ON Empleado.Cedula = pa.CedulaEmpleado 
     JOIN EmpleadoYContratoSeAsocianAProyecto e ON e.CedulaEmpleado = Empleado.Cedula AND e.NombreProyecto = pl.NombreProyecto
-  WHERE Empleado.Email = @employeeEmail`
-
->>>>>>> 79f4583105648eb5658a35e3c728f4bdaae00e9b
+  WHERE Empleado.Email = @employeeEmail`,
+  getHours: `select * from HorasRegistradas`,
 };
 
 

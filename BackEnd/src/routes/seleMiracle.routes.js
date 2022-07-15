@@ -4,12 +4,8 @@ import { getProjectsByEmailAndName, getProjectsByEmail, createProject, createPay
   getProjectInfoByName, updateProject, deleteProject, getPeriodOfAProjectToReport } from '../controllers/projects.controller';
 import {
   getEmployees, postNewEmployee, getEmployeeByID, verifyEmployeeContractOnProject,
-<<<<<<< HEAD
-  getEmployeesWithContractOnOtherProyects, contractAEmployee, setHoursEmployee, deleteEmployeeFromProject, getEmployeesAllInfo, getLastDateForCalendar, getFirstContractDate
-=======
   getEmployeesWithContractOnOtherProyects, contractAEmployee, setHoursEmployee, deleteEmployeeFromProject, getEmployeesAllInfo,
-  getEmployeePayments, getAllEmployeePayments
->>>>>>> 79f4583105648eb5658a35e3c728f4bdaae00e9b
+  getEmployeePayments, getAllEmployeePayments, getHours
 } from '../controllers/employees.contoller';
 import {
   getEmployerByID, getUserByEmail, verifyCredentials, registerNewUser,
@@ -62,13 +58,9 @@ router.post( '/employeesWithContractsOnOtherProyects', getEmployeesWithContractO
 router.post( '/contractExistentEmployee', contractAEmployee );
 router.post( '/deleteEmployeeFromProject', deleteEmployeeFromProject );
 router.post( '/employee/hours', setHoursEmployee );
-<<<<<<< HEAD
-router.get( '/lastDateForCalendar/:CedEmpleado/:Proyecto/:FechaActual', getLastDateForCalendar );
-router.get( '/firstContractDate/:CedEmpleado/:Proyecto', getFirstContractDate );
-=======
 router.get( '/employeePayments/:projectName/:employeeEmail', getEmployeePayments );
 router.get( '/employeePayments/:employeeEmail/:projectNameFilter/:initialDateFilter/:endDateFilter', getAllEmployeePayments );
->>>>>>> 79f4583105648eb5658a35e3c728f4bdaae00e9b
+router.get( '/getHours', getHours );
 
 //Projects
 router.get('/projects/:Email/:Rol', getProjectsByEmail);
