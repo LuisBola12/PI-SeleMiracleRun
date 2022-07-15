@@ -29,7 +29,7 @@ export const BarPlot = ({plotLabel ,dataLabels, dataValues}) => {
         display: false,
       },
       title: {
-        display: true,
+        display: false,
         text: plotLabel,
       },
     },
