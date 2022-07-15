@@ -204,7 +204,7 @@ export const calculateGrossSalaryForAllEmployes =  async ( projectName ) => {
         }
           break;
         
-        case 'Por horas': {
+        case 'Por Horas': {
           hoursWorked =   await calculateHourlyEmployeeWorkedHours( paymentPeriod, employeeID, projectName ); 
           grossSalary = salaryPerHour * hoursWorked;
           break;

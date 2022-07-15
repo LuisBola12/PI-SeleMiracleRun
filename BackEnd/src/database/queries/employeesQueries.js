@@ -42,8 +42,8 @@ export const employeesQueries = {
   FROM [Pago] pa JOIN Planilla pl ON pl.Consectivo = pa.ConsecutivoPlanilla
     JOIN Empleado ON Empleado.Cedula = pa.CedulaEmpleado 
     JOIN EmpleadoYContratoSeAsocianAProyecto e ON e.CedulaEmpleado = Empleado.Cedula AND e.NombreProyecto = pl.NombreProyecto
-  WHERE Empleado.Email = @employeeEmail`
-
+  WHERE Empleado.Email = @employeeEmail`,
+  getHours: `select * from HorasRegistradas`,
 };
 
 

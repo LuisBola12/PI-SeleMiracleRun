@@ -5,7 +5,7 @@ import { getProjectsByEmailAndName, getProjectsByEmail, createProject, createPay
 import {
   getEmployees, postNewEmployee, getEmployeeByID, verifyEmployeeContractOnProject,
   getEmployeesWithContractOnOtherProyects, contractAEmployee, setHoursEmployee, deleteEmployeeFromProject, getEmployeesAllInfo,
-  getEmployeePayments, getAllEmployeePayments
+  getEmployeePayments, getAllEmployeePayments, getHours
 } from '../controllers/employees.contoller';
 import {
   getEmployerByID, getUserByEmail, verifyCredentials, registerNewUser,
@@ -14,13 +14,13 @@ import {
 import {
   getVoluntaryDeductions, createNewVoluntaryDeduction, getVoluntaryDeductionsByName, updateVoluntaryDeduction,
   getEmployeeVoluntaryDeductionsByEmail, getOfferedVoluntaryDeductions, linkEmployeeToVoluntaryDeduction, unlinkEmployeeToVoluntaryDeduction,
-  deactivateVoluntaryDeduction, reactivateVoluntaryDeduction
+  deactivateVoluntaryDeduction, reactivateVoluntaryDeduction, getVoluntaryDeductionsStatistics
 } from '../controllers/voluntaryDeductions.controller';
 import { getTypeOfContracts } from '../controllers/contracts.controller';
 import {
   getBenefits, createBenefit, getBenefitsByName, updateBenefit, getEmployeeBenefitsByEmail,
   getOfferedBenefits, linkEmployeeToBenefit, unlinkEmployeeToBenefit, deactivateBenefit,
-  validateBenefitSuscription, reactivateBenefit
+  validateBenefitSuscription, reactivateBenefit, getBenefitsStatistics
 } from '../controllers/benefits.controller';
 import { getAllPayslipsOfAProject, getPayrrollsOfAProject, getTotalSalaryCost, getTotalCostBenefitsEmployer, getTotalCostObligatoryDeductionsEmployer, getSeparateOblDeductions, getSeparateVolDeductions } from '../controllers/payrollController';
 
@@ -60,6 +60,7 @@ router.post( '/deleteEmployeeFromProject', deleteEmployeeFromProject );
 router.post( '/employee/hours', setHoursEmployee );
 router.get( '/employeePayments/:projectName/:employeeEmail', getEmployeePayments );
 router.get( '/employeePayments/:employeeEmail/:projectNameFilter/:initialDateFilter/:endDateFilter', getAllEmployeePayments );
+router.get( '/getHours', getHours );
 
 //Projects
 router.get('/projects/:Email/:Rol', getProjectsByEmail);
@@ -90,6 +91,7 @@ router.put( '/benefit/:NombreAntiguo', reactivateBenefit );
 router.post( '/myBenefits', linkEmployeeToBenefit );
 router.put( '/myBenefits', unlinkEmployeeToBenefit );
 router.get( '/validateBenefit/:projectName/:employeeEmail/:benefitToValidate', validateBenefitSuscription );
+router.get( '/benefitsStatistics/:CedulaEmpleador', getBenefitsStatistics);
 
 //VoluntaryDeductions
 router.get( '/voluntaryDeductions/:NombreProyecto/:CedulaEmpleador', getVoluntaryDeductions );
@@ -102,6 +104,7 @@ router.post( '/myVoluntaryDeductions', linkEmployeeToVoluntaryDeduction );
 router.put( '/myVoluntaryDeductions', unlinkEmployeeToVoluntaryDeduction );
 router.put( '/voluntaryDeductions', deactivateVoluntaryDeduction );
 router.put( '/voluntaryDeduction/:NombreAntiguo', reactivateVoluntaryDeduction );
+router.get( '/voluntaryDeductionsStatistics/:CedulaEmpleador', getVoluntaryDeductionsStatistics);
 
 //Payrrolls
 router.get('/payrrolls/:Proyecto', getPayrrollsOfAProject);
