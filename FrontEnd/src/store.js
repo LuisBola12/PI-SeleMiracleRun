@@ -10,29 +10,29 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
-} from 'redux-persist'
+} from 'redux-persist';
 
-const reducers = combineReducers({
+const reducers = combineReducers( {
   user: userSlice,
   activeProject: activeProjectSlice,
-});
+} );
 
 const rootPersistConfig = {
   key: 'root',
   storage: storageSession,
 };
 
-const persistedReducer = persistReducer(rootPersistConfig, reducers);
+const persistedReducer = persistReducer( rootPersistConfig, reducers );
 
 
-const store = configureStore({
+const store = configureStore( {
   reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
+  middleware: ( getDefaultMiddleware ) =>
+    getDefaultMiddleware( {
       serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        ignoredActions: [ FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER ],
       },
-    }),
-});
+    } ),
+} );
 
 export default store;

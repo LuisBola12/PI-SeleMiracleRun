@@ -1,24 +1,24 @@
 import { validateName } from '../../Validate';
-const validate = (values) => {
+const validate = ( values ) => {
   let errors = {};
-  if (!values.Name) {
+  if ( !values.Name ) {
     errors.Name = 'You must enter a name';
-    document.getElementById('Name').style.borderColor = 'red';
+    document.getElementById( 'Name' ).style.borderColor = 'red';
 
   } else {
-    document.getElementById('Name').style.borderColor = 'gray';
-    if (!validateName(values.Name)) {
+    document.getElementById( 'Name' ).style.borderColor = 'gray';
+    if ( !validateName( values.Name ) ) {
       errors.Name = 'You must enter a valid name';
-      document.getElementById('Name').style.borderColor = 'red';
-    } else if (values.Name) {
-      document.getElementById('Name').style.borderColor = 'gray';
+      document.getElementById( 'Name' ).style.borderColor = 'red';
+    } else if ( values.Name ) {
+      document.getElementById( 'Name' ).style.borderColor = 'gray';
     }
   }
-  if (!values.Cost) {
+  if ( !values.Cost ) {
     errors.Cost = 'The cost can\'t be 0';
-    document.getElementById('Cost').style.borderColor = 'red';
+    document.getElementById( 'Cost' ).style.borderColor = 'red';
   } else {
-    document.getElementById('Cost').style.borderColor = 'gray';
+    document.getElementById( 'Cost' ).style.borderColor = 'gray';
   }
   return errors;
 };

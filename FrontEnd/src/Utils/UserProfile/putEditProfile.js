@@ -1,10 +1,10 @@
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 export const usePutEditUser = () => {
-  const user = useSelector((state) => state.user.user);
-  const updateEmployee = async (formValues) => {
+  const user = useSelector( ( state ) => state.user.user );
+  const updateEmployee = async ( formValues ) => {
     const apiEmployee = process.env.REACT_APP_BACKEND_LOCALHOST + 'updateEmployee';
-    let string = JSON.stringify(formValues);
-    string = JSON.stringify({
+    let string = JSON.stringify( formValues );
+    string = JSON.stringify( {
       Email: formValues.email,
       Nombre: formValues.name,
       Apellido1: formValues.lastname,
@@ -12,21 +12,21 @@ export const usePutEditUser = () => {
       Cedula: formValues.id,
       Telefono: formValues.phoneNumber,
       EmailViejo: user.Email,
-    });
-    const result = await fetch(apiEmployee, {
+    } );
+    const result = await fetch( apiEmployee, {
       method: 'PUT',
       headers: {
         'Content-type': 'application/json',
       },
       body: string
-    });
-    console.log(result);
+    } );
+    console.log( result );
     return true;
-  }
-  const updateEmployeer = async (formValues) => {
+  };
+  const updateEmployeer = async ( formValues ) => {
     const apiEmployeer = process.env.REACT_APP_BACKEND_LOCALHOST + 'updateEmployeer';
-    let string = JSON.stringify(formValues);
-    string = JSON.stringify({
+    let string = JSON.stringify( formValues );
+    string = JSON.stringify( {
       Email: formValues.email,
       Nombre: formValues.name,
       Apellido1: formValues.lastname,
@@ -34,17 +34,17 @@ export const usePutEditUser = () => {
       Cedula: formValues.id,
       Telefono: formValues.phoneNumber,
       EmailViejo: user.Email,
-    });
-    const result = await fetch(apiEmployeer, {
+    } );
+    const result = await fetch( apiEmployeer, {
       method: 'PUT',
       headers: {
         'Content-type': 'application/json',
       },
       body: string
-    });
-    console.log(result);
+    } );
+    console.log( result );
     return true;
-  }
+  };
   return {
     updateEmployee, updateEmployeer
   };
