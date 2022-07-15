@@ -1,6 +1,6 @@
 import React from 'react';
 import './DashBoardCompStyle.scss'
-import { BenefitsGraphic } from '../BenefitsGraphic/BenefitsGraphic';
+import { BenefitsGraphic } from '../DasboardGraphics/BenefitsGraphic';
 import { VoluntaryDeductionsGraphic } from '../DasboardGraphics/VoluntaryDeductionsGraphic';
 
 export const DashBoardComp = () => {
