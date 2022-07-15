@@ -284,3 +284,20 @@ export const validateBenefitSuscription = async ( req, res ) => {
     console.log( error );
   }
 };
+
+export const getBenefitsStatistics = async ( req, res ) => {
+  const { CedulaEmpleador } = req.params;
+  console.log(req.params);
+  try {
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input( 'CedulaEmpleador', sql.VarChar, CedulaEmpleador )
+      .query( benefitsQueries.getBenefitsStatistics );
+      console.log(result.recordset);
+      res.status(200).json(result.recordset);
+  } catch ( e ) {
+    console.log( `Error: ${e}` );
+    res.status( 500 ).send( e.message );
+  }
+};
