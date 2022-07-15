@@ -72,12 +72,16 @@ export const DropdownMenu = () => {
             Select Project
           </button>
           {
-            rolFromUser === 'admin' ? (
-              <button onClick={() => { navigate( '/projectSettings' ); }} className='sidebar-button' >
-                Project Configuration
-              </button>
-            ) :
-              null
+            rolFromUser === 'admin' && (
+              <>
+                <button onClick={() => { navigate( '/projectSettings' ); }} className='sidebar-button' >
+                  Project Configuration
+                </button>
+                <button onClick={() => { navigate( '/dashBoard' ); }} className='sidebar-button' >
+                  DashBoard
+                </button>
+            </>
+            )
           }
           <button onClick={redirectToLogIn} className='sidebar-button' >
             Sign Out

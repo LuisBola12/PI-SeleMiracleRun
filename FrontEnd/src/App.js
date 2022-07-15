@@ -31,7 +31,7 @@ import { EmployeeMyPayments } from './Pages/employeeMyPayments';
 import { EditProjectPage } from './Pages/editProject';
 import { EmployeePaymentsReport } from './Pages/employeePaymentsReport';
 import { PayrollReport } from './Pages/payrollReport';
-import { PayslipReport } from './Pages/payslipReport';
+import { DashBoard } from './Pages/dashBoard';
 
 function App() {
 
@@ -70,6 +70,7 @@ function App() {
               <Route path='payroll/details' element={<PayrollDetailsPage />} />
               <Route path='projectSettings' element={<EditProjectPage />} />
               <Route path='payroll/report' element={<PayrollReport />} />
+              <Route path='dashBoard' element={<DashBoard />} />
             </Route>
           ) : (
             <Route element={<PrivateRoute allowedRoles={[ 'emp' ]} />}>
@@ -81,7 +82,6 @@ function App() {
               <Route path='myVoluntaryDeductions' element={<EmployeesVoluntaryDeductions />} />
               <Route path='myPayments' element={<EmployeeMyPayments />} />
               <Route path='PaymentsReport' element={<EmployeePaymentsReport />} />
-              <Route path='/myPayments/reports/payslipReport' element={<PayslipReport />} />
             </Route>
           )}
       </Routes>
