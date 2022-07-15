@@ -41,7 +41,7 @@ export const Navbar = () => {
                 <NavLink to="/myVoluntaryDeductions" activestyle='true'>
                   My Voluntary Deductions
                 </NavLink>
-                { user.TipoContrato === 'Por horas' && 
+                { user.TipoContrato === 'Por Horas' && 
                   <NavLink to="/registerHours" activestyle='true'>
                   Hours
                  </NavLink>

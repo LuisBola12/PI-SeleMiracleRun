@@ -95,12 +95,12 @@ export const PayrollDetails = () => {
               <td className="left-td">{element.NombreCompleto}</td>
               <td className="left-td">{element.TipoContrato}</td>
               <td className="right-td">
-                {element.TipoContrato === "Por horas"
+                {element.TipoContrato === "Por Horas"
                   ? element.HorasTrabajadas
                   : "-"}
               </td>
               <td className="right-td">
-                {element.TipoContrato === "Por horas"
+                {element.TipoContrato === "Por Horas"
                   ? formatter.format(element.SalarioPorHora)
                   : "-"}
               </td>
