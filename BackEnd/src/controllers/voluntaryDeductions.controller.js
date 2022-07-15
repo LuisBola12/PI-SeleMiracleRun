@@ -142,7 +142,6 @@ export const linkEmployeeToVoluntaryDeduction = async (req, res) => {
       .input('NombreProyecto', sql.VarChar, NombreProyecto)
       .input('NombreDeduccionVoluntaria', sql.VarChar, NombreDeduccionVoluntaria)
       .execute('vincularDeduccionVoluntariaEmpleado');
-    console.log(result);
     res.json({ NombreProyecto, NombreDeduccionVoluntaria });
   } catch (e) {
     console.log(`Error: ${e}`);
@@ -169,7 +168,6 @@ export const unlinkEmployeeToVoluntaryDeduction = async (req, res) => {
 
 export const deactivateVoluntaryDeduction = async (req, res) => {
   const { Nombre, NombreProyecto, CedulaEmpleador } = req.body;
-  console.log(Nombre, NombreProyecto, CedulaEmpleador);
   try {
     const pool = await getConnection();
     const result = await pool
@@ -212,7 +210,6 @@ export const getVoluntaryDeductionsStatistics = async ( req, res ) => {
       .request()
       .input( 'CedulaEmpleador', sql.VarChar, CedulaEmpleador )
       .query( voluntaryDeductionsQueries.getVoluntaryDeductionsStatistics );
-      console.log(result.recordset);
       res.status(200).json(result.recordset);
   } catch ( e ) {
     console.log( `Error: ${e}` );

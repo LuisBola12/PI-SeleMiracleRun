@@ -19,9 +19,7 @@ ChartJS.register(
   Legend
 );
 
-export const BarPlot = ({plotLabel ,dataLabels, dataValues}) => {
-  
-  console.log(plotLabel ,dataLabels, dataValues)
+export const BarPlot = ({dataLabels, dataValues}) => {
   const options = {
     responsive: true,
     plugins: {
@@ -30,7 +28,6 @@ export const BarPlot = ({plotLabel ,dataLabels, dataValues}) => {
       },
       title: {
         display: false,
-        text: plotLabel,
       },
     },
   };

@@ -6,13 +6,12 @@ import { getVoluntaryDeductionsStatistics } from '../../Utils/VoluntaryDeduction
 export const VoluntaryDeductionsGraphic = () => {
 
   const user = useSelector((state) => state.user.user);
+  const [infoReceived, setInfoReceived] = useState(false);
   const [voluntaryDeductionsLables, setVoluntaryDeductionsLabels] = useState([]);
   const [voluntaryDeductionsData, setVoluntaryDeductionsData] = useState([]);
   useEffect(() => {
-    console.log('useEffect');
     const getStatistics = async () => {
       const data = await getVoluntaryDeductionsStatistics(user.Cedula);
-      console.log(data);
       if (data) {
         let labels = [];
         let dataValues = [];
@@ -22,23 +21,18 @@ export const VoluntaryDeductionsGraphic = () => {
         });
         setVoluntaryDeductionsLabels(labels);
         setVoluntaryDeductionsData(dataValues);
-        console.log(labels);
-        console.log(dataValues);
+        setInfoReceived(true);
       }
     };
     getStatistics();
   }, []);
-  //const voluntaryDeductionsLables = ['Gym', 'Almuerzo', 'Transporte'];
-  //const voluntaryDeductionsData = [4, 3, 7];
 
-
-  return (
+  return !infoReceived ? <div className='loader' ></div > : (
     <div className='voluntaryDeductions-graphic-container'>
       <h3> Voluntary deductions selected by employees</h3>
       <BarPlot
         dataLabels={voluntaryDeductionsLables}
         dataValues={voluntaryDeductionsData}
-        plotLabel={'Voluntary Deductions'}
       />
     </div>
 
