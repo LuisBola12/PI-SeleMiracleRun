@@ -184,13 +184,13 @@ export const EmployerPaymentsReports = () => {
           {allEmployerPayments.slice( ( pageNumber - 1 ) * perPage, ( pageNumber - 1 ) * perPage + perPage  ).reverse().map( ( row ) => (
             <tr key={row.ConsecutivoPago}>
               <td className='left-td table-left-border'>{row.NombreProyecto}</td>
-              <td className='right-td'>{row.TipoContrato}</td>
-              <td className='right-td'>{row.TipoContrato}</td>
-              <td className='right-td'>{removeTimeFromDate( row.FechaFin )}</td>
+              <td className='right-td'>{category}</td>
+              <td className='right-td'>{removeTimeFromDate(location.state.FechaFin)}</td>
+              <td className='right-td'>{formatter.format(totalBenefitsCost)}</td>
               <td className='right-td'>{row.TipoContrato === 'Por horas' ? row.SalarioBruto / row.SalarioPorHoras : '-'}</td>
               <td className='right-td'>{row.TipoContrato === 'Por horas' ? formatter.format( row.SalarioPorHoras ) : '-'}</td>
               <td className='right-td'>{formatter.format( row.SalarioBruto )}</td>
-              <td className='right-td'>{row.TipoContrato === 'Servicios Profesionales' ? '-' : formatter.format( row.MontoTotalDeduccionesObligatoriasEmpleado )}</td>
+              <td className='right-td'>{row.TipoContrato === 'Servicios Profesionales' ? '-' : formatter.format( totalObligatoryDeductionsCost )}</td>
               <td className='right-td'>{row.TipoContrato === 'Servicios Profesionales' ? '-' : formatter.format( row.MontoTotalDeduccionesVoluntarias )}</td>
               <td className='right-td'>{formatter.format( row.SalarioNeto )}</td>
             </tr>
