@@ -281,6 +281,38 @@ export const getEmployeesAllInfo = async (req, res) => {
   }
 };
 
+export const getLastDateForCalendar = async ( req, res ) => {
+  const { CedEmpleado, Proyecto, FechaActual } = req.params;
+  try {
+    const pool = await getConnection(); 
+    const result = await pool
+      .request()
+      .input( 'CedEmpleado', CedEmpleado )
+      .input( 'Proyecto', Proyecto )
+      .input( 'FechaActual', FechaActual )
+      .query( employeesQueries.getLastDateForCalendar );
+    res.json( result.recordset );
+  } catch ( error ) {
+    res.status( 500 );
+    res.send( error );
+  }
+};
+
+export const getFirstContractDate = async ( req, res ) => {
+  const { CedEmpleado, Proyecto } = req.params;
+  try {
+    const pool = await getConnection(); 
+    const result = await pool
+      .request()
+      .input( 'CedEmpleado', CedEmpleado )
+      .input( 'Proyecto', Proyecto )
+      .query( employeesQueries.getFirstContractDate );
+    res.json( result.recordset );
+  } catch ( error ) {
+    res.status( 500 );
+    res.send( error );
+  }
+};
 export const getEmployeePayments = async (req, res) => {
   const { projectName, employeeEmail } = req.params;
   if (projectName == null || employeeEmail == '') {
@@ -322,3 +354,16 @@ export const getAllEmployeePayments = async (req, res) => {
     res.send(e.message);
   }
 };
+
+export const getHours = async(req, res) =>{
+  try {
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .query( employeesQueries.getHours );
+      res.json( result.recordset );
+      console.log(result.recordset)
+  } catch ( e ){
+    console.log( e );
+  }
+}

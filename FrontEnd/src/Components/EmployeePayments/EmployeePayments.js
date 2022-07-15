@@ -61,8 +61,8 @@ export const EmployeePayments = () => {
               <td className='left-td table-left-border'>{row.ConsecutivoPago}</td>
               <td className='right-td'>{row.TipoContrato}</td>
               <td className='right-td'>{removeTimeFromDate( row.FechaFin )}</td>
-              <td className='right-td'>{row.TipoContrato === 'Por horas' ? row.SalarioBruto / row.SalarioPorHoras : '-'}</td>
-              <td className='right-td'>{row.TipoContrato === 'Por horas' ? formatter.format( row.SalarioPorHoras ) : '-'}</td>
+              <td className='right-td'>{row.TipoContrato === 'Por Horas' ? row.SalarioBruto / row.SalarioPorHoras : '-'}</td>
+              <td className='right-td'>{row.TipoContrato === 'Por Horas' ? formatter.format( row.SalarioPorHoras ) : '-'}</td>
               <td className='right-td'>{formatter.format( row.SalarioBruto )}</td>
               <td className='right-td'>{row.TipoContrato === 'Servicios Profesionales' ? '-' : formatter.format( row.MontoTotalDeduccionesObligatoriasEmpleado )}</td>
               <td className='right-td'>{row.TipoContrato === 'Servicios Profesionales' ? '-' : formatter.format( row.MontoTotalDeduccionesVoluntarias )}</td>
