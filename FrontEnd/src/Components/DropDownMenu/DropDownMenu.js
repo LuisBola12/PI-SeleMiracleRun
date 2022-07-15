@@ -77,9 +77,6 @@ export const DropdownMenu = () => {
                 <button onClick={() => { navigate( '/projectSettings' ); }} className='sidebar-button' >
                   Project Configuration
                 </button>
-                <button onClick={() => { navigate( '/dashBoard' ); }} className='sidebar-button' >
-                  DashBoard
-                </button>
             </>
             )
           }

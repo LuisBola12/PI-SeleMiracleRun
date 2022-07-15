@@ -24,8 +24,3 @@ export const PrivateRoute = ({
 
   return children || <Outlet />;
 }
-
-// if (_.intersection(userState.user.Roles, allowedRoles).length === 0) {
-//     return <Navigate to={'/no-autorizado'} replace />;
-// }
-//     return children || <Outlet />;

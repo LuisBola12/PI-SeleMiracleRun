@@ -37,7 +37,7 @@ export const useProjectsData = () => {
   const handleProjectSelection = ( projectName ) => {
     dispatch( updateActiveProject( projectName ) );
     rolFromUser === 'admin' ?
-      ( navigate( '/payroll' ) ) :
+      ( navigate( '/dashBoard' ) ) :
       ( navigate( '/myPayments' ) );
   };
 

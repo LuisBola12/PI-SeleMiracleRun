@@ -9,7 +9,7 @@ export const DashBoard = () => {
       <div className='sticky-navbar'>
         <Navbar />
       </div>
-      <div className='page-content' style={{'box-shadow':'none'}}>
+      <div className='page-content' style={{'boxShadow':'none'}}>
         <DashBoardComp/>
       </div>
       <footer>&copy; Sele Miracle Run - UCR</footer>

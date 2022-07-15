@@ -2,11 +2,11 @@ import React from 'react';
 import './DashBoardCompStyle.scss'
 export const DashBoardComp = () => {
   return (
-    <div class='parent'>
-      <div class='div1'> </div>
-      <div class='div2'> </div>
-      <div class='div3'> </div>
-      <div class='div4'> </div>
+    <div className='parent'>
+      <div className='div1'> </div>
+      <div className='div2'> </div>
+      <div className='div3'> </div>
+      <div className='div4'> </div>
     </div>
   );
 };

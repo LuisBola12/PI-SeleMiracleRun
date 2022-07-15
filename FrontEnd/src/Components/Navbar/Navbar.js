@@ -16,6 +16,9 @@ export const Navbar = () => {
           <NavMenu>
             {user.Roles === 'admin' &&
               <>
+                <NavLink to="/dashBoard" activestyle='true'>
+                  DashBoard
+                </NavLink>
                 <NavLink to='/payroll' activestyle='true'>
                   Payroll
                 </NavLink>
