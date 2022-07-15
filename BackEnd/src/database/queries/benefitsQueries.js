@@ -3,6 +3,7 @@ export const benefitsQueries = {
   getBenefitsByName: 'select Nombre from Beneficios where Nombre = @Nombre and NombreProyecto = @Proyecto and CedulaEmpleador = @CedulaEmpleador',
   createBenefit: 'Insert into Beneficios (Nombre, NombreProyecto, CedulaEmpleador, CostoActual, Descripción, Activo) values (@Nombre, @NombreProyecto,@CedulaEmpleador,@CostoActual, @Descripción, \'true\')',
   editBenefit: 'Update Beneficios set Nombre = @Nombre, CostoActual = @CostoActual, Descripción = @Descripción where NombreProyecto=@NombreProyecto and CedulaEmpleador = @CedulaEmpleador and Nombre=@NombreAntiguo and Activo = \'true\'',
+  reactivateBenefit: 'Update Beneficios set Nombre = @Nombre, Activo = 1 where NombreProyecto=@NombreProyecto and CedulaEmpleador = @CedulaEmpleador and Nombre=@NombreAntiguo',
   getBenefitInfo: 'SELECT * FROM Beneficios  WHERE NombreProyecto = @projectName AND  Nombre = @benefitName',
   benefitUsedInfo:
     `
@@ -30,7 +31,7 @@ export const benefitsQueries = {
     SELECT Proyecto.Nombre as ProjectName
     ,CantidadMaximaBeneficiosEmpleado as maxBenefitsQtyAllowed
     , MontoMaximoBeneficiosEmpleado as maxMoneyAmountAllowed 
-    FROM Proyecto
+    FROM Proyecto 
     WHERE Proyecto.Nombre = @ProjectName 
   `,
   getBenefitsStatistics:
@@ -38,9 +39,8 @@ export const benefitsQueries = {
   JOIN BeneficioElegido be ON be.NombreBeneficio = b.Nombre
   AND be.NombreProyecto = b.NombreProyecto AND 
   b.CedulaEmpleador = be.CedulaEmpleador
-  WHERE b.NombreProyecto = '@NombreProyecto'
-  AND b.CedulaEmpleador = '@CedulaEmpleador' and b.Activo = 1
+  WHERE b.NombreProyecto = @NombreProyecto
+  AND b.CedulaEmpleador = @CedulaEmpleador and b.Activo = 1
   AND be.fechaFin > GETDATE()
-  GROUP BY b.Nombre
-  `
+  GROUP BY b.Nombre`
 };

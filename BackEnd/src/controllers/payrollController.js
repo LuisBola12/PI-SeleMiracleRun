@@ -75,9 +75,9 @@ export const obligatoryDeductionsPayRoll = async(cedEmpleado,cedEmpleador,proyNa
   let montoEmpleado = 0.0;
   let montoEmpleador = 0.0;
   let nombreDeduccionObligatoria = '';
-  
+  console.log(obligatoryDeductions)
   for(let index = 0; index < obligatoryDeductions.length; index++ ){
-    if ( obligatoryDeductions[index].Nombre === 'ImpuestoSobreLaRenta' ){
+    if ( obligatoryDeductions[index].Nombre === 'Impuesto sobre la renta' ){
       montoEmpleado = calculateAmountRentTaxes( grossSalary, contractType );
       montoEmpleador = 0;
     } else {
@@ -294,3 +294,80 @@ export const getPaymentsMadeByEmployer = async ( req, res ) => {
     console.log( `Error al traer los pagos: ${error}` );
   }
 };
+export const getTotalSalaryCost = async(req, res) =>{
+  const {consecutivoPlanilla, NombreProyecto} = req.params;
+
+  try{
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input( 'ConsecutivoPlanilla', consecutivoPlanilla )
+      .input( 'NombreProyecto', NombreProyecto )
+      .query(payrollQueries.getTotalSalaryCost);
+      console.log(result.recordset);
+      res.status(200).json(result.recordset);
+  }catch(error){
+    console.log(error);
+    res.status(500).send(error.message)
+  }
+}
+
+export const getTotalCostObligatoryDeductionsEmployer = async(req, res) =>{
+  const {consecutivoPlanilla} = req.params;
+
+  try{
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input( 'ConsecutivoPlanilla', consecutivoPlanilla )
+      .query(payrollQueries.getTotalCostObligatoryDeductionsEmployer);
+      console.log(result.recordset);
+      res.status(200).json(result.recordset);
+  }catch(error){
+    console.log(error);
+    res.status(500).send(error.message)
+  }
+}
+
+export const getTotalCostBenefitsEmployer = async(req, res) =>{
+  const {consecutivoPlanilla} = req.params;
+
+  try{
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input( 'ConsecutivoPlanilla', consecutivoPlanilla )
+      .query(payrollQueries.getTotalCostBenefitsEmployer);
+      console.log(result.recordset);
+      res.status(200).json(result.recordset);
+  }catch(error){
+    console.log(error);
+    res.status(500).send(error.message)
+  }
+}
+
+export const getSeparateOblDeductions = async(req,res)=>{
+  const {consecutivoPago} = req.params;
+  try{
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input( 'consecutivoPago', consecutivoPago )
+      .query(payrollQueries.getItemizedOblDeductionsOfPayment);
+      console.log(result.recordset);
+      res.status(200).json(result.recordset);
+  }catch(error){
+    console.log(error);
+    res.status(500).send(error.message)
+  }
+}
+export const getSeparateVolDeductions = async(req,res)=>{
+  const {consecutivoPago} = req.params;
+  try{
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input( 'consecutivoPago', consecutivoPago )
+      .query(payrollQueries.getItemizedVolDeductionsOfPayment);
+      console.log(result.recordset);
+      res.status(200).json(result.recordset);
+  }catch(error){
+    console.log(error);
+    res.status(500).send(error.message)
+  }
+}

@@ -204,7 +204,7 @@ export const calculateGrossSalaryForAllEmployes =  async ( projectName ) => {
         }
           break;
         
-        case 'Por horas': {
+        case 'Por Horas': {
           hoursWorked =   await calculateHourlyEmployeeWorkedHours( paymentPeriod, employeeID, projectName ); 
           grossSalary = salaryPerHour * hoursWorked;
           break;
@@ -224,6 +224,20 @@ export const calculateGrossSalaryForAllEmployes =  async ( projectName ) => {
   }
   return  grossSalaries;
 }; 
+
+export const getPeriodOfAProjectToReport = async( req, res ) =>{
+  const { nombreProyecto } = req.params
+  try {
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input( 'Nombre', nombreProyecto )
+      .query( payrollQueries.getPeriodForAEspecificProject );
+      res.status(200).json(result.recordset)
+  } catch ( error ) {
+    console.log( `Error: ${error}` );
+    res.status(500).send(error.message)
+  }
+};
 
 const getPeriodOfAPorject = async( nombreProyecto ) =>{
   try {

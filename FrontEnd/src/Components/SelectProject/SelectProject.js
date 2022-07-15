@@ -97,7 +97,7 @@ export const SelectProjectComp = () => {
             navigate('/');
           } else {
             rolFromUser === 'admin' ?
-              (navigate('/payroll')) :
+              (navigate('/dashBoard')) :
               (navigate('/myPayments'));
           }
         }}

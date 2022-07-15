@@ -30,15 +30,26 @@
 
 @apigetProjectsEmailAndName = http://localhost:4000/myProjects
 @apiValidateBenefit = http://localhost:4000/validateBenefit
+<<<<<<< HEAD
+@apiLastDate = http://localhost:4000/lastDateForCalendar
+@apifirstDate = http://localhost:4000/firstContractDate
+
+GET {{apifirstDate}}/208010869/Taquería Milagro
+###
+GET {{apiLastDate}}/208010869/Taquería Milagro/2022-03-1
+
+### 
+=======
 @apiPayrroll = http://localhost:4000/payrrolls
 @apiGetPayslips =  http://localhost:4000/payslipsOfaProject
 @apiEmployeePayments = http://localhost:4000/employeePayments
+@apiTotalSalaryCost = http://localhost:4000/getTotalSalaryCost
 
-
-
-
+GET {{apiTotalSalaryCost}}/26/Cine Milagro
+###
 GET {{apiPayrroll}}/Taquería Milagro
 ###
+>>>>>>> 79f4583105648eb5658a35e3c728f4bdaae00e9b
 DELETE {{apiDeleteEmployeeFromProject}}
 Content-Type: application/json
 

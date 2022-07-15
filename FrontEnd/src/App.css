@@ -395,7 +395,6 @@ footer {
 table {
   text-align: center;
   height: 10%;
-  margin-bottom: 100px;
   width: 90%;
 }
 
@@ -597,14 +596,14 @@ tr:nth-child(even) {
 
 .loader {
   border: 16px solid #f3f3f3;
-  /* Light grey */
   border-top: 16px solid #3498db;
-  /* Blue */
   border-radius: 50%;
   width: 120px;
   height: 120px;
   animation: spin 2s linear infinite;
   margin-top: 10%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .forms-create-employee-hwage {
@@ -645,6 +644,7 @@ tr:nth-child(even) {
 .sticky-navbar {
   position: sticky;
   top: 0;
+  z-index: 100;
 }
 
 .benefit-name {
@@ -739,6 +739,14 @@ tr:nth-child(even) {
   justify-content: space-between;
   gap: 20px;
 }
+.generate-payslip-button-employer{
+  padding: 10px;
+  border-radius: 8px;
+  color: white;
+  background-color: transparent;
+  border: none;
+  width: 100px;
+}
 
 .project-Name-Filter {
   width: fit-content;
@@ -767,4 +775,12 @@ tr:nth-child(even) {
   display: flex;
   gap: 20px;
   align-items: center;
+}
+
+input:focus {
+  outline:solid 0.1px gray;
+}
+
+select:focus {
+  outline:solid 0.1px gray;
 }
