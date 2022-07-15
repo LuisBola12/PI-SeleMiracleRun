@@ -11,6 +11,10 @@ import { DateRangeSelect } from '../DateRangeSelect/DateRangeSelect';
 import { addDays } from 'date-fns';
 import { ExportToExcelButton } from '../ExportToExcelButton/ExportToExcelButton';
 import { Pagination } from '../Pagination/Pagination';
+import {
+  getTotalSalaryCost, getPeriodOfAPorject, 
+  getTotalObligatoryDeductionsCost, getTotalBenefitsCost,
+} from "../../Utils/PayRollReport/getPayRollData";
 
 export const EmployerPaymentsReports = () => {
   const lastDaysToShow = 60;
@@ -21,6 +25,16 @@ export const EmployerPaymentsReports = () => {
   const [ isLoading, setIsLoading ] = useState( true );
   const [ projectNameFilter, setProjectNameFilter ] = useState( 'Any' );
   const [ filterSwitch, setFilterSwitch ] = useState( false );
+
+  const [totalSalaryCost, setTotalSalaryCost] = useState([]);
+  const [totalSalary, setTotalSalary] = useState(0);
+  const [category, setCategory] = useState("");
+  const [benefits, setBenefits] = useState([]);
+  const [obligatoryDeductions, setObligatoryDeductions] = useState([]);
+  const [totalBenefitsCost, setTotalBenefitsCost] = useState([]);
+  const [totalObligatoryDeductionsCost, setTotalObligatoryDeductionsCost] =
+    useState([]);
+
   const [ range, setRange ] = useState( [
     {
       startDate: addDays( new Date(), -lastDaysToShow ),
@@ -36,6 +50,56 @@ export const EmployerPaymentsReports = () => {
   } );
 
   useEffect( () => {
+    //---------------------------------------------------------------
+    const getDataTotalSalary = async () => {
+      const data = await getTotalSalaryCost(
+        location.state.Consectivo,
+        activeProject
+      );
+      if (data) {
+        setTotalSalaryCost(data);
+        let total = 0;
+        data.forEach((element) => {
+          total += element.salario;
+        });
+        setTotalSalary(total);
+      }
+    };
+    const getCategory = async () => {
+      const data = await getPeriodOfAPorject(activeProject);
+      if (data) {
+        setCategory(data[0].TipoPeriodo);
+      }
+    };
+    const getTotalBenefits = async () => {
+      const data = await getTotalBenefitsCost(location.state.Consectivo);
+      if (data) {
+        setBenefits(data);
+        let total = 0;
+        data.forEach((element) => {
+          total += element.Monto;
+        });
+        setTotalBenefitsCost(total);
+      }
+    };
+    const getTotalObligatoryDeductions = async () => {
+      const data = await getTotalObligatoryDeductionsCost(
+        location.state.Consectivo
+      );
+      if (data) {
+        setObligatoryDeductions(data);
+        let total = 0;
+        data.forEach((element) => {
+          total += element.Monto;
+        });
+        setTotalObligatoryDeductionsCost(total);
+      }
+    };
+    getDataTotalSalary();
+    getCategory();
+    getTotalBenefits();
+    getTotalObligatoryDeductions();
+    //---------------------------------------------------------------
     setIsLoading( true );
     const getEmployerInfo = async () => {
       const apiPayments = `/${employerEmail}/${projectNameFilter}/${range[0].startDate}/${range[0].endDate}`;
