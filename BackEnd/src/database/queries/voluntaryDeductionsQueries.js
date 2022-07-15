@@ -8,8 +8,7 @@ export const voluntaryDeductionsQueries = {
   JOIN DeduccionVoluntariaElegida dve ON dve.NombreDeduccionVoluntaria = dv.Nombre
   AND dve.NombreProyecto = dv.NombreProyecto AND 
   dv.CedulaEmpleador = dve.CedulaEmpleador
-  WHERE dv.NombreProyecto = '@NombreProyecto'
-  AND dv.CedulaEmpleador = '@CedulaEmpleador' and dv.Activo = 1
+  WHERE dv.CedulaEmpleador = @CedulaEmpleador and dv.Activo = 1
   AND dve.fechaFin > GETDATE()
   GROUP BY dv.Nombre
   `,

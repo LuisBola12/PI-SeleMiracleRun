@@ -203,3 +203,19 @@ export const reactivateVoluntaryDeduction = async ( req, res ) => {
     res.status( 500 ).send( e.message );
   }
 };
+
+export const getVoluntaryDeductionsStatistics = async ( req, res ) => {
+  const { CedulaEmpleador } = req.params;
+  try {
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input( 'CedulaEmpleador', sql.VarChar, CedulaEmpleador )
+      .query( voluntaryDeductionsQueries.getVoluntaryDeductionsStatistics );
+      console.log(result.recordset);
+      res.status(200).json(result.recordset);
+  } catch ( e ) {
+    console.log( `Error: ${e}` );
+    res.status( 500 ).send( e.message );
+  }
+};
