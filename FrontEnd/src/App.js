@@ -30,10 +30,12 @@ import { EndContractWithEmployee } from './Pages/endContractWithEmployee';
 import { EmployeeMyPayments } from './Pages/employeeMyPayments';
 import { EditProjectPage } from './Pages/editProject';
 import { EmployeePaymentsReport } from './Pages/employeePaymentsReport';
+import { PayrollReport } from './Pages/payrollReport';
+import { PayslipReport } from './Pages/payslipReport';
 
 function App() {
 
-  const userRoll = useSelector((state) => state.user.user);
+  const userRoll = useSelector( ( state ) => state.user.user );
 
   return (
 
@@ -46,7 +48,7 @@ function App() {
         {/* Routes for the employer */}
         {userRoll && userRoll.Roles === 'admin' ?
           (
-            <Route element={<PrivateRoute allowedRoles={['admin']} />}>
+            <Route element={<PrivateRoute allowedRoles={[ 'admin' ]} />}>
               {/* <Route path='/' element={<SelectProject />} /> */}
               <Route path='benefits' element={<Benefits />} />
               <Route path='employees' element={<Employees />} />
@@ -67,9 +69,10 @@ function App() {
               <Route path='payroll' element={<Payroll />} />
               <Route path='payroll/details' element={<PayrollDetailsPage />} />
               <Route path='projectSettings' element={<EditProjectPage />} />
+              <Route path='payroll/report' element={<PayrollReport />} />
             </Route>
           ) : (
-            <Route element={<PrivateRoute allowedRoles={['emp']} />}>
+            <Route element={<PrivateRoute allowedRoles={[ 'emp' ]} />}>
               <Route path='projectAdmin' element={<SelectProject />} />
               <Route path='registerHours' element={<RegisterHours />} />
               <Route path='projects' element={<SelectProject />} />
@@ -78,6 +81,7 @@ function App() {
               <Route path='myVoluntaryDeductions' element={<EmployeesVoluntaryDeductions />} />
               <Route path='myPayments' element={<EmployeeMyPayments />} />
               <Route path='PaymentsReport' element={<EmployeePaymentsReport />} />
+              <Route path='/myPayments/reports/payslipReport' element={<PayslipReport />} />
             </Route>
           )}
       </Routes>

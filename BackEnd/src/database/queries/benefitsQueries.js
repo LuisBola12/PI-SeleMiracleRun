@@ -31,7 +31,7 @@ export const benefitsQueries = {
     SELECT Proyecto.Nombre as ProjectName
     ,CantidadMaximaBeneficiosEmpleado as maxBenefitsQtyAllowed
     , MontoMaximoBeneficiosEmpleado as maxMoneyAmountAllowed 
-    FROM Proyecto
+    FROM Proyecto 
     WHERE Proyecto.Nombre = @ProjectName 
   `,
   getBenefitsStatistics:
@@ -39,9 +39,8 @@ export const benefitsQueries = {
   JOIN BeneficioElegido be ON be.NombreBeneficio = b.Nombre
   AND be.NombreProyecto = b.NombreProyecto AND 
   b.CedulaEmpleador = be.CedulaEmpleador
-  WHERE b.NombreProyecto = '@NombreProyecto'
-  AND b.CedulaEmpleador = '@CedulaEmpleador' and b.Activo = 1
+  WHERE b.NombreProyecto = @NombreProyecto
+  AND b.CedulaEmpleador = @CedulaEmpleador and b.Activo = 1
   AND be.fechaFin > GETDATE()
-  GROUP BY b.Nombre
-  `
+  GROUP BY b.Nombre`
 };

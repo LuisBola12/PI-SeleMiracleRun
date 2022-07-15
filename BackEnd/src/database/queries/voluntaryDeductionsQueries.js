@@ -12,5 +12,6 @@ export const voluntaryDeductionsQueries = {
   AND dv.CedulaEmpleador = '@CedulaEmpleador' and dv.Activo = 1
   AND dve.fechaFin > GETDATE()
   GROUP BY dv.Nombre
-  `
+  `,
+  reactivateVoluntaryDeduction: 'Update DeduccionesVoluntarias set Nombre = @Nombre, Activo = 1 where NombreProyecto=@NombreProyecto and CedulaEmpleador = @CedulaEmpleador and Nombre=@NombreAntiguo',
 };

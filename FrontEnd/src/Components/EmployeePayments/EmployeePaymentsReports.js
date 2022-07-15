@@ -41,7 +41,7 @@ export const EmployeePaymentsReports = () => {
       const apiPayments = `/${employeeEmail}/${projectNameFilter}/${range[0].startDate}/${range[0].endDate}`;
       const infoReceived = await getAnEntity( 'employeePayments', apiPayments );
       if ( infoReceived === undefined ) {
-        setEmployeePayments( [] );
+        setAllEmployeePayments( [] );
       } else {
         setAllEmployeePayments( infoReceived );
       }
