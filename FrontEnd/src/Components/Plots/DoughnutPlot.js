@@ -4,7 +4,7 @@ import { Doughnut } from 'react-chartjs-2';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export const  DoughnutPlot = ({dataLabels, dataTitle, dataValues}) => {
+export const  DoughnutPlot = ({dataLabels, dataValues}) => {
   const options = {
     responsive: true,
     plugins: {
