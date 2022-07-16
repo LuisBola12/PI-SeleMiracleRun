@@ -115,6 +115,6 @@ router.get('/totalBenefitsReport/:consecutivoPlanilla', getTotalCostBenefitsEmpl
 router.get('/totalObligatoryDeductionsReport/:consecutivoPlanilla', getTotalCostObligatoryDeductionsEmployer);
 router.get('/payslipOblDeductions/:consecutivoPago', getSeparateOblDeductions);
 router.get('/payslipVolDeductions/:consecutivoPago', getSeparateVolDeductions);
-router.get( '/payrollTotalCosts/:employerEmail/:projectNameFilter/:initialDateFilter/:endDateFilter', getPayrollTotalCosts );
+router.get( '/payrollTotalCosts/:employerID/:projectNameFilter/:initialDateFilter/:endDateFilter', getPayrollTotalCosts );
 
 export default router;
