@@ -1,40 +1,21 @@
 import React from 'react';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-import { Bar } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Doughnut } from 'react-chartjs-2';
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
+ChartJS.register(ArcElement, Tooltip, Legend);
 
-export const BarPlot = ({dataLabels, dataValues}) => {
+export const  DoughnutPlot = ({dataLabels, dataValues}) => {
   const options = {
     responsive: true,
     plugins: {
       legend: {
-        display: false,
-      },
-      title: {
-        display: false,
+        display: true,
       },
     },
   };
   
-  const labels = dataLabels;
   const data = {
-    labels,
+    labels: dataLabels,
     datasets: [
       {
         data: dataValues,
@@ -58,5 +39,6 @@ export const BarPlot = ({dataLabels, dataValues}) => {
       },
     ],
   };
-  return <Bar options={options} data={data} />;
+
+  return <Doughnut data={data} options={options}/>;
 }

@@ -8,9 +8,8 @@ export const voluntaryDeductionsQueries = {
   JOIN DeduccionVoluntariaElegida dve ON dve.NombreDeduccionVoluntaria = dv.Nombre
   AND dve.NombreProyecto = dv.NombreProyecto AND 
   dv.CedulaEmpleador = dve.CedulaEmpleador
-  WHERE dv.NombreProyecto = '@NombreProyecto'
-  AND dv.CedulaEmpleador = '@CedulaEmpleador' and dv.Activo = 1
-  AND dve.fechaFin > GETDATE()
+  WHERE dv.CedulaEmpleador = @CedulaEmpleador and dv.Activo = 1
+  AND dve.fechaFin > GETDATE() AND dv.NombreProyecto = @NombreProyecto
   GROUP BY dv.Nombre
   `,
   reactivateVoluntaryDeduction: 'Update DeduccionesVoluntarias set Nombre = @Nombre, Activo = 1 where NombreProyecto=@NombreProyecto and CedulaEmpleador = @CedulaEmpleador and Nombre=@NombreAntiguo',
