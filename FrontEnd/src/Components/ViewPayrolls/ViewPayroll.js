@@ -53,6 +53,7 @@ export const ViewPayroll = () => {
   }, [ infoReceived ] );
   return !infoReceived ? <div className='loader' ></div > : (
     <>
+      <h2 className='navigate-title'>{activeProject} Payrolls</h2>
       <div className='table-button'>
         <button className='create-button' onClick={handlePayment}>Pay Payroll</button>
       </div>

@@ -25,6 +25,7 @@ export const CrudEmployee = () => {
 
   return !infoReceived ? <div className='loader'></div> : (
     <>
+      <h2 className='navigate-title'>{activeProject} Employees</h2>
       <div className='table-button'>
         <button className='create-button' onClick=
           {() => {

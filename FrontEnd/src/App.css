@@ -49,7 +49,6 @@
 }
 
 .table-button {
-  margin-top: 50px;
   width: 90%;
   display: flex;
   gap: 50px;
@@ -806,4 +805,12 @@ tr:nth-child(even) {
   flex-direction: column;
   align-items: center;
   text-align: center;
+}
+
+.navigate-title {
+  margin-top: 20px;
+  width: 90%;
+  display: flex;
+  gap: 50px;
+  /* border: solid black; */
 }
