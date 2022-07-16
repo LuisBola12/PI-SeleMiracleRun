@@ -6,10 +6,12 @@ import { useNavigate } from 'react-router-dom';
 import { transformCost } from '../../shared/moneyFormatTransform';
 import { usePutToBenefits } from '../../Utils/Benefits/usePutToBenefits';
 import Swal from 'sweetalert2';
+import { useSelector } from 'react-redux';
 
 export const CrudBenefits = () => {
   const navigate = useNavigate();
   const { deactivateBenefit } = usePutToBenefits();
+  const activeProject = useSelector((state) => state.activeProject.projectName);
   const handleCreateClick = () => {
     navigate( '/benefits/CreateBenefit' );
   };
@@ -41,6 +43,7 @@ export const CrudBenefits = () => {
   const { projectBenefits, infoReceived, setInfoReceived } = useGetBenefitsFromDatabase();
   return !infoReceived ? <div className='loader' ></div > : (
     <>
+      <h2 className='navigate-title'>{activeProject} Benefits</h2>
       <div className='table-button'>
         <button className='create-button'
           onClick={handleCreateClick}

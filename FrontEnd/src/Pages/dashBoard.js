@@ -1,7 +1,7 @@
 import React from 'react';
 import '../App.css';
 import { Navbar } from '../Components/Navbar/Navbar';
-import { DashBoardComp } from '../Components/DashBoardComp.js/DashBoardComp';
+import { DashBoardComp } from '../Components/DashBoardComp/DashBoardComp';
 
 export const DashBoard = () => {
   return (
