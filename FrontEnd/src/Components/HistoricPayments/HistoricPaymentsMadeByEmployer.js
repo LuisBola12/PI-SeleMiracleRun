@@ -14,11 +14,16 @@ import { Pagination } from '../Pagination/Pagination';
 export const HistoricPaymentsMadeByEmployer = () => {
   const seleUrl = process.env.REACT_APP_BACKEND_LOCALHOST;
 
-  const [ employeePayments, setEmployeePayments ] = useState( [] );
+  const [ employerPayments, setEmployerPayments ] = useState( [] );
   const [ isLoading, setIsLoading ] = useState( true );
   const [ projectNameFilter, setProjectNameFilter ] = useState( 'Any' );
+  const [ contractTypeFilter, setContractTypeFilter ] = useState( 'Any' );
+  const [ idFilter, setIdFilter ] = useState( 'Any' );
   const [ filterSwitch, setFilterSwitch ] = useState( false );
   const [ pageNumber, setPageNumber ] = useState( 1 );
+  const [ contractTypes, setContractTypes ] = useState( [] );
+  const [ employeesIDs, setEmployeesIDs ] = useState( [] );
+  const [ firstRender, setFirstRender ] = useState( true );
   const perPage = 10;
   const employerID = useSelector( ( state ) => state.user.user.Cedula );
 
@@ -39,12 +44,31 @@ export const HistoricPaymentsMadeByEmployer = () => {
   useEffect( () => {
     setIsLoading( true );
     const getEmployeeInfo = async () => {
-      const infoReceived = await fetch( `${seleUrl}payments/${employerID}/${projectNameFilter}/${range[0].startDate}/${range[0].endDate}` );
+      const infoReceived = await fetch(
+        `${seleUrl}payments/${employerID}/${projectNameFilter}/${range[0].startDate}/${range[0].endDate}` );
       const payments = await infoReceived.json();
       if ( payments === undefined ) {
-        setEmployeePayments( [] );
+        setEmployerPayments( [] );
       } else {
-        setEmployeePayments( payments );
+        if ( firstRender ) {
+          const contractTypesReceived = [];
+          const idsReceived = [];
+          for ( let paymentIndex = 0; paymentIndex < payments.length; paymentIndex++ ) {
+            if ( !idsReceived.includes( payments[paymentIndex].CedulaEmpleado ) ) {
+              idsReceived.push( payments[paymentIndex].CedulaEmpleado );
+            }
+            if ( !contractTypesReceived.includes( payments[paymentIndex].TipoContrato ) ) {
+              contractTypesReceived.push( payments[paymentIndex].TipoContrato );
+            }
+            setContractTypes( contractTypesReceived );
+            setEmployeesIDs( idsReceived );
+
+          }
+          setFirstRender( false );
+        }
+
+
+        setEmployerPayments( payments );
         console.log( payments );
       }
       setIsLoading( false );
@@ -53,7 +77,7 @@ export const HistoricPaymentsMadeByEmployer = () => {
   }, [ projectNameFilter, filterSwitch ] );
 
 
-  const maxPage = Math.ceil( employeePayments.length / perPage );
+  const maxPage = Math.ceil( employerPayments.length / perPage );
 
   return ( isLoading ? <div className='loader' ></div > :
     <>
@@ -87,6 +111,42 @@ export const HistoricPaymentsMadeByEmployer = () => {
           </select>
 
           <br />
+          <label>By Contract Type</label>
+          <select
+            className='project-Name-Filter'
+            value={contractTypeFilter}
+            onChange={( e ) => {
+              setContractTypeFilter( e.target.value );
+            }}
+          >
+            <option value={'Any'}> Any </option>
+            {contractTypes.map( ( element ) => (
+              <option key={element} value={element}>
+                {element}
+              </option>
+            ) )
+            }
+          </select>
+
+          <br />
+          <label>By Employee ID</label>
+          <select
+            className='project-Name-Filter'
+            value={idFilter}
+            onChange={( e ) => {
+              setIdFilter( e.target.value );
+            }}
+          >
+            <option value={'Any'}> Any </option>
+            {employeesIDs.map( ( element ) => (
+              <option key={element} value={element}>
+                {element}
+              </option>
+            ) )
+            }
+          </select>
+          <br />
+
           <label>By Date</label>
           <DateRangeSelect
             range={range}
@@ -98,7 +158,7 @@ export const HistoricPaymentsMadeByEmployer = () => {
 
         </div>
         <ExportToExcelButton
-          objectsArray={employeePayments}
+          objectsArray={employerPayments}
           sheetName={'myPayments'}
           fileName={'myPaymentsReport'}
         />
@@ -121,7 +181,7 @@ export const HistoricPaymentsMadeByEmployer = () => {
           </tr>
         </thead>
         <tbody>
-          {employeePayments.slice( ( pageNumber - 1 ) * perPage, ( pageNumber - 1 ) * perPage + perPage ).reverse().map( ( row ) => (
+          {employerPayments.slice( ( pageNumber - 1 ) * perPage, ( pageNumber - 1 ) * perPage + perPage ).reverse().map( ( row ) => (
             <tr key={row.ConsecutivoPago}>
               <td className='left-td table-left-border'>{row.Nombre + ' ' + row.Apellido1 + ' ' + row.Apellido2}</td>
               <td className='right-td'>{row.NombreProyecto}</td>
@@ -142,7 +202,7 @@ export const HistoricPaymentsMadeByEmployer = () => {
           ) )}
         </tbody>
       </table>
-      <label className='Empty-message'>{( employeePayments.length === 0 ) ? 'No Payments made to me yet' : ''}</label>
+      <label className='Empty-message'>{( employerPayments.length === 0 ) ? 'No Payments made to me yet' : ''}</label>
 
       <Pagination
         page={pageNumber}
