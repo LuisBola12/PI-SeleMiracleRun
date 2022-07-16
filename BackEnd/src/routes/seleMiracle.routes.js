@@ -22,7 +22,9 @@ import {
   getOfferedBenefits, linkEmployeeToBenefit, unlinkEmployeeToBenefit, deactivateBenefit,
   validateBenefitSuscription, reactivateBenefit, getBenefitsStatistics
 } from '../controllers/benefits.controller';
-import { getAllPayslipsOfAProject, getPayrrollsOfAProject, getTotalSalaryCost, getTotalCostBenefitsEmployer, getTotalCostObligatoryDeductionsEmployer, getSeparateOblDeductions, getSeparateVolDeductions } from '../controllers/payrollController';
+import { getAllPayslipsOfAProject, getPayrrollsOfAProject, getTotalSalaryCost, getTotalCostBenefitsEmployer, 
+  getTotalCostObligatoryDeductionsEmployer, getSeparateOblDeductions, getSeparateVolDeductions,
+  getPayrollTotalCosts} from '../controllers/payrollController';
 
 const router = Router();
 
@@ -113,5 +115,6 @@ router.get('/totalBenefitsReport/:consecutivoPlanilla', getTotalCostBenefitsEmpl
 router.get('/totalObligatoryDeductionsReport/:consecutivoPlanilla', getTotalCostObligatoryDeductionsEmployer);
 router.get('/payslipOblDeductions/:consecutivoPago', getSeparateOblDeductions);
 router.get('/payslipVolDeductions/:consecutivoPago', getSeparateVolDeductions);
+router.get( '/payrollTotalCosts/:employerEmail/:projectNameFilter/:initialDateFilter/:endDateFilter', getPayrollTotalCosts );
 
 export default router;
