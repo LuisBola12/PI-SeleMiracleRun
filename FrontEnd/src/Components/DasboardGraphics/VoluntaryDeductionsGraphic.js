@@ -9,9 +9,10 @@ export const VoluntaryDeductionsGraphic = () => {
   const [infoReceived, setInfoReceived] = useState(false);
   const [voluntaryDeductionsLables, setVoluntaryDeductionsLabels] = useState([]);
   const [voluntaryDeductionsData, setVoluntaryDeductionsData] = useState([]);
+  const activeProject = useSelector((state) => state.activeProject.projectName);
   useEffect(() => {
     const getStatistics = async () => {
-      const data = await getVoluntaryDeductionsStatistics(user.Cedula);
+      const data = await getVoluntaryDeductionsStatistics(user.Cedula, activeProject);
       if (data) {
         let labels = [];
         let dataValues = [];
@@ -30,10 +31,16 @@ export const VoluntaryDeductionsGraphic = () => {
   return !infoReceived ? <div className='loader' ></div > : (
     <div className='voluntaryDeductions-graphic-container'>
       <h3> Voluntary deductions selected by employees</h3>
-      <BarPlot
+      {voluntaryDeductionsLables.length > 0 && voluntaryDeductionsData.length >0 ?
+        <BarPlot
         dataLabels={voluntaryDeductionsLables}
         dataValues={voluntaryDeductionsData}
-      />
+        />
+      :
+      <>
+        <label className='Empty-message' style={{marginTop: 'auto'}}> No voluntary deduction selected by employees yet </label>
+      </>
+      }
     </div>
 
   )

@@ -1,5 +1,5 @@
-export const getVoluntaryDeductionsStatistics = async( EmployerID ) => {
-  const url = process.env.REACT_APP_BACKEND_LOCALHOST + 'voluntaryDeductionsStatistics/' + EmployerID;
+export const getVoluntaryDeductionsStatistics = async( EmployerID, activeProject ) => {
+  const url = process.env.REACT_APP_BACKEND_LOCALHOST + 'voluntaryDeductionsStatistics/' + EmployerID + `/${activeProject}`;
   try{
     const result = await fetch(url);
     const newData = await result.json();

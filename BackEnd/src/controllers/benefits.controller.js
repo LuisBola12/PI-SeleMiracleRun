@@ -287,7 +287,6 @@ export const validateBenefitSuscription = async ( req, res ) => {
 
 export const getBenefitsStatistics = async ( req, res ) => {
   const { CedulaEmpleador, NombreProyecto } = req.params;
-  console.log(req.params);
   try {
     const pool = await getConnection();
     const result = await pool
@@ -295,7 +294,6 @@ export const getBenefitsStatistics = async ( req, res ) => {
       .input( 'CedulaEmpleador', sql.VarChar, CedulaEmpleador )
       .input( 'NombreProyecto', sql.VarChar, NombreProyecto )
       .query( benefitsQueries.getBenefitsStatistics );
-      console.log(result.recordset);
       res.status(200).json(result.recordset);
   } catch ( e ) {
     console.log( `Error: ${e}` );

@@ -104,7 +104,7 @@ router.post( '/myVoluntaryDeductions', linkEmployeeToVoluntaryDeduction );
 router.put( '/myVoluntaryDeductions', unlinkEmployeeToVoluntaryDeduction );
 router.put( '/voluntaryDeductions', deactivateVoluntaryDeduction );
 router.put( '/voluntaryDeduction/:NombreAntiguo', reactivateVoluntaryDeduction );
-router.get( '/voluntaryDeductionsStatistics/:CedulaEmpleador', getVoluntaryDeductionsStatistics);
+router.get( '/voluntaryDeductionsStatistics/:CedulaEmpleador/:NombreProyecto', getVoluntaryDeductionsStatistics);
 
 //Payrrolls
 router.get('/payrrolls/:Proyecto', getPayrrollsOfAProject);
