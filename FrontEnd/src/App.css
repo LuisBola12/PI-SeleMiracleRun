@@ -756,6 +756,11 @@ tr:nth-child(even) {
   border: 1px solid darkgray;
 }
 
+.project-Name-Filter:focus, 
+.project-date-filter:focus  {
+  outline:solid 0.1px gray;
+} 
+
 .project-date-filter {
   border-radius: 8px;
   width: 235px;
@@ -775,14 +780,6 @@ tr:nth-child(even) {
   display: flex;
   gap: 20px;
   align-items: center;
-}
-
-input:focus {
-  outline:solid 0.1px gray;
-}
-
-select:focus {
-  outline:solid 0.1px gray;
 }
 
 .benefit-graphic-container {
