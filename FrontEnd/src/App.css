@@ -637,7 +637,7 @@ tr:nth-child(even) {
 
 .Empty-message {
   font-size: 2rem;
-  opacity: 75%;
+  opacity: 60%;
   text-align: center;
 }
 

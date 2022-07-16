@@ -91,7 +91,7 @@ router.put( '/benefit/:NombreAntiguo', reactivateBenefit );
 router.post( '/myBenefits', linkEmployeeToBenefit );
 router.put( '/myBenefits', unlinkEmployeeToBenefit );
 router.get( '/validateBenefit/:projectName/:employeeEmail/:benefitToValidate', validateBenefitSuscription );
-router.get( '/benefitsStatistics/:CedulaEmpleador', getBenefitsStatistics);
+router.get( '/benefitsStatistics/:CedulaEmpleador/:NombreProyecto', getBenefitsStatistics);
 
 //VoluntaryDeductions
 router.get( '/voluntaryDeductions/:NombreProyecto/:CedulaEmpleador', getVoluntaryDeductions );
