@@ -5,6 +5,8 @@ import { payrollQueries } from './../database/queries/payrollQueries';
 import {insertCostTotalBenefits} from './benefits.controller'
 import {insertCostTotalVoluntaryDeductions} from './voluntaryDeductions.controller';
 import { calculateNetSalary,calculateAmount,estimateIncomeTax} from '../utils/estimateCalculator';
+import { filterPaymentsByProjectName, filterPaymentsByDate } from '../utils/employeePaymentsFilters';
+
 const calculateAmountRentTaxes = ( Salary, TipoJornada ) => {
   const salaryI = parseFloat( Salary );
   if ( salaryI === null || salaryI === undefined || salaryI <= 0 ){
@@ -283,12 +285,17 @@ export const executeAPayrroll = async(consecutivePlanilla,nombreProyecto,cedulaE
 
 export const getPaymentsMadeByEmployer = async ( req, res ) => {
   try {
-    const { employerID } = req.params;
+    const { employerID, projectNameFilter, initialDateFilter, endDateFilter } = req.params;
     const pool = await getConnection();
     const result = await pool.request()
       .input( 'employerID', employerID )
-      .query( payrollQueries.getPaymentsMadeByEmployeer );
-    res.json( result.recordset );
+      .query( payrollQueries.getPaymentsMadeByEmployer );
+    if ( projectNameFilter != 'Any' ) {
+      result.recordset = filterPaymentsByProjectName( result.recordset, projectNameFilter );
+    }
+    result.recordset = filterPaymentsByDate( result.recordset, initialDateFilter, endDateFilter );
+
+    res.status( 200 ).json( result.recordset );
     console.log( result.recordset );
   } catch ( error ) {
     console.log( `Error al traer los pagos: ${error}` );

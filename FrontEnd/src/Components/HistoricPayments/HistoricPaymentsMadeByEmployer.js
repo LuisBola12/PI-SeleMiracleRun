@@ -39,8 +39,7 @@ export const HistoricPaymentsMadeByEmployer = () => {
   useEffect( () => {
     setIsLoading( true );
     const getEmployeeInfo = async () => {
-      // const apiPayments = `/${employeeEmail}/${projectNameFilter}/${range[0].startDate}/${range[0].endDate}`;
-      const infoReceived = await fetch( `${seleUrl}payments/${employerID}` );
+      const infoReceived = await fetch( `${seleUrl}payments/${employerID}/${projectNameFilter}/${range[0].startDate}/${range[0].endDate}` );
       const payments = await infoReceived.json();
       if ( payments === undefined ) {
         setEmployeePayments( [] );

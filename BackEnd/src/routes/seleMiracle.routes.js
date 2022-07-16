@@ -117,7 +117,7 @@ router.get( '/voluntaryDeductionsStatistics/:CedulaEmpleador/:NombreProyecto', g
 //Payrrolls
 router.get('/payrrolls/:Proyecto', getPayrrollsOfAProject);
 router.post('/payslipsOfaProject', getAllPayslipsOfAProject);
-router.get('/payments/:employerID', getPaymentsMadeByEmployer);
+router.get('/payments/:employerID/:projectNameFilter/:initialDateFilter/:endDateFilter', getPaymentsMadeByEmployer);
 router.get('/totalBenefitsReport/:consecutivoPlanilla', getTotalCostBenefitsEmployer);
 router.get('/totalObligatoryDeductionsReport/:consecutivoPlanilla', getTotalCostObligatoryDeductionsEmployer);
 router.get('/payslipOblDeductions/:consecutivoPago', getSeparateOblDeductions);
