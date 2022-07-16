@@ -2,13 +2,11 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import '../../App.css';
-import { removeTimeFromDate } from '../../shared/removeTimeFromDate';
 import { useProjectsData } from '../../Utils/PayrollProjects/useProjectsData';
 import { IconContext } from 'react-icons';
 import { FaFilter } from 'react-icons/fa';
 import { DateRangeSelect } from '../DateRangeSelect/DateRangeSelect';
 import { addDays } from 'date-fns';
-import { ExportToExcelButton } from '../ExportToExcelButton/ExportToExcelButton';
 import { Pagination } from '../Pagination/Pagination';
 
 export const HistoricPaymentsMadeByEmployer = () => {
@@ -45,7 +43,7 @@ export const HistoricPaymentsMadeByEmployer = () => {
     setIsLoading( true );
     const getEmployeeInfo = async () => {
       const infoReceived = await fetch(
-        `${seleUrl}payments/${employerID}/${projectNameFilter}/${range[0].startDate}/${range[0].endDate}` );
+        `${seleUrl}payments/${employerID}/${projectNameFilter}/${range[0].startDate}/${range[0].endDate}/${idFilter}/${contractTypeFilter}` );
       const payments = await infoReceived.json();
       if ( payments === undefined ) {
         setEmployerPayments( [] );
@@ -74,7 +72,7 @@ export const HistoricPaymentsMadeByEmployer = () => {
       setIsLoading( false );
     };
     getEmployeeInfo();
-  }, [ projectNameFilter, filterSwitch ] );
+  }, [ projectNameFilter, filterSwitch, idFilter, contractTypeFilter ] );
 
 
   const maxPage = Math.ceil( employerPayments.length / perPage );
@@ -157,11 +155,6 @@ export const HistoricPaymentsMadeByEmployer = () => {
 
 
         </div>
-        <ExportToExcelButton
-          objectsArray={employerPayments}
-          sheetName={'myPayments'}
-          fileName={'myPaymentsReport'}
-        />
 
       </div>
 
