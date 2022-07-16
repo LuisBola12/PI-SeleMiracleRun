@@ -16,7 +16,7 @@ export const EmployerPaymentsReports = () => {
   const lastDaysToShow = 60;
   const [ pageNumber, setPageNumber ] = useState( 1 );
   const [ perPage, setPerPage ] = useState( 10 );
-  const employerEmail = useSelector( ( state ) => state.user.user.Email );
+  const employerID = useSelector( ( state ) => state.user.user.Cedula );
   const [ allEmployerPayments, setAllEmployerPayments ] = useState( [] );
   const [ isLoading, setIsLoading ] = useState( true );
   const [ projectNameFilter, setProjectNameFilter ] = useState( 'Any' );
@@ -38,8 +38,8 @@ export const EmployerPaymentsReports = () => {
   useEffect( () => {
     setIsLoading( true );
     const getEmployerInfo = async () => {
-      const apiPayments = `/${employerEmail}/${projectNameFilter}/${range[0].startDate}/${range[0].endDate}`;
-      const infoReceived = await getAnEntity( 'employerPayments', apiPayments );
+      const apiPayments = `/${employerID}/${projectNameFilter}/${range[0].startDate}/${range[0].endDate}`;
+      const infoReceived = await getAnEntity( 'payrollTotalCosts', apiPayments );
       if ( infoReceived === undefined ) {
         setAllEmployerPayments( [] );
       } else {
@@ -48,6 +48,7 @@ export const EmployerPaymentsReports = () => {
       setIsLoading( false );
     };
     getEmployerInfo();
+    console.log(allEmployerPayments);
   }, [ projectNameFilter, filterSwitch ] );
 
   const maxPage = Math.ceil( allEmployerPayments.length / perPage );
@@ -120,11 +121,10 @@ export const EmployerPaymentsReports = () => {
           {allEmployerPayments.slice( ( pageNumber - 1 ) * perPage, ( pageNumber - 1 ) * perPage + perPage  ).reverse().map( ( row ) => (
             <tr key={row.ConsecutivoPago}>
               <td className='left-td table-left-border'>{row.NombreProyecto}</td>
-              <td className='right-td'>{category}</td>
-              <td className='right-td'>{removeTimeFromDate(location.state.FechaFin)}</td>
-              <td className='right-td'>{formatter.format(totalBenefitsCost)}</td>
-              <td className='right-td'>{formatter.format( row.SalarioBruto )}</td>
-              <td className='right-td'>{formatter.format( row.SalarioNeto )}</td>
+              <td className='right-td'>{'asd'}</td>
+              <td className='right-td'>{removeTimeFromDate(row.FechaFin)}</td>
+              <td className='right-td'>{formatter.format(row.Beneficios)}</td>
+              <td className='right-td'>{formatter.format( row.SalariosBrutos )}</td>
             </tr>
           ) )}
         </tbody>
