@@ -43,7 +43,7 @@ export const EmployeeBenefits = () => {
     <>
       {!EmployeeInfo ? (<div className='loader' ></div >) : (
         <>
-          <h2 className='table-button'>My Benefits</h2>
+          <h2 className='navigate-title'>My Benefits</h2>
           <table className='Table'>
             <thead>
               <tr className='table-header'>

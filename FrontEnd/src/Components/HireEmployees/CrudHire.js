@@ -17,8 +17,7 @@ export const CrudHire = () => {
   const { employeesToHire, infoReceived } = useGetEmployeesToHire();
   return !infoReceived ? <div className='loader' ></div > : (
     <>
-      {console.log(employeesToHire)}
-      <div className='table-button'>
+      <div className='navigate-title'>
         <IconContext.Provider value={{ color: 'gray', className: 'global-class-name', size: '2.6rem' }}>
           <button className='back-arrow-button' onClick={() => { back(); }}>
             <FaArrowLeft />

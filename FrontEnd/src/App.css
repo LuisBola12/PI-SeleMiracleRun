@@ -808,7 +808,7 @@ tr:nth-child(even) {
 }
 
 .navigate-title {
-  margin-top: 20px;
+  margin-top: 35px;
   width: 90%;
   display: flex;
   gap: 50px;

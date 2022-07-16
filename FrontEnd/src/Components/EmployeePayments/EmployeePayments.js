@@ -39,7 +39,7 @@ export const EmployeePayments = () => {
 
   return ( isLoading ? <div className='loader' ></div > :
     <>
-      <h2 className='table-button'>My {activeProject} Payments</h2>
+      <h2 className='navigate-title'>My {activeProject} Payments</h2>
       <table className='Table'>
         <thead>
           <tr className='table-header'>
