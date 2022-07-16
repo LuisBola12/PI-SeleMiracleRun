@@ -13,7 +13,7 @@ import { ExportToExcelButton } from '../ExportToExcelButton/ExportToExcelButton'
 import { Pagination } from '../Pagination/Pagination';
 
 export const EmployeePaymentsReports = () => {
-  const lastDaysToShow = 60;
+  const lastDaysToShow = 180;
   const [ pageNumber, setPageNumber ] = useState( 1 );
   const [ perPage, setPerPage ] = useState( 10 );
   const employeeEmail = useSelector( ( state ) => state.user.user.Email );
