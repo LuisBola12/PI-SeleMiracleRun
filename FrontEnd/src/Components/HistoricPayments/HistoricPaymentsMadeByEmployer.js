@@ -9,6 +9,7 @@ import { FaFilter } from 'react-icons/fa';
 import { DateRangeSelect } from '../DateRangeSelect/DateRangeSelect';
 import { addDays } from 'date-fns';
 import { ExportToExcelButton } from '../ExportToExcelButton/ExportToExcelButton';
+import { Pagination } from '../Pagination/Pagination';
 
 export const HistoricPaymentsMadeByEmployer = () => {
   const seleUrl = process.env.REACT_APP_BACKEND_LOCALHOST;
@@ -17,6 +18,8 @@ export const HistoricPaymentsMadeByEmployer = () => {
   const [ isLoading, setIsLoading ] = useState( true );
   const [ projectNameFilter, setProjectNameFilter ] = useState( 'Any' );
   const [ filterSwitch, setFilterSwitch ] = useState( false );
+  const [ pageNumber, setPageNumber ] = useState( 1 );
+  const perPage = 10;
   const employerID = useSelector( ( state ) => state.user.user.Cedula );
 
   const [ range, setRange ] = useState( [
@@ -49,6 +52,9 @@ export const HistoricPaymentsMadeByEmployer = () => {
     };
     getEmployeeInfo();
   }, [ projectNameFilter, filterSwitch ] );
+
+
+  const maxPage = Math.ceil( employeePayments.length / perPage );
 
   return ( isLoading ? <div className='loader' ></div > :
     <>
@@ -116,7 +122,7 @@ export const HistoricPaymentsMadeByEmployer = () => {
           </tr>
         </thead>
         <tbody>
-          {employeePayments.slice( 0 ).reverse().map( ( row ) => (
+          {employeePayments.slice( ( pageNumber - 1 ) * perPage, ( pageNumber - 1 ) * perPage + perPage ).reverse().map( ( row ) => (
             <tr key={row.ConsecutivoPago}>
               <td className='left-td table-left-border'>{row.Nombre + ' ' + row.Apellido1 + ' ' + row.Apellido2}</td>
               <td className='right-td'>{row.NombreProyecto}</td>
@@ -138,6 +144,13 @@ export const HistoricPaymentsMadeByEmployer = () => {
         </tbody>
       </table>
       <label className='Empty-message'>{( employeePayments.length === 0 ) ? 'No Payments made to me yet' : ''}</label>
+
+      <Pagination
+        page={pageNumber}
+        setPage={setPageNumber}
+        maxPage={maxPage}
+      />
+
     </>
   );
 };
