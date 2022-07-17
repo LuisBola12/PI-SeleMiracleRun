@@ -20,9 +20,6 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-
-
-
 export const LineChart = ({dataLabels, dataValues}) =>{
     const options = {
         responsive: true,
@@ -35,9 +32,7 @@ export const LineChart = ({dataLabels, dataValues}) =>{
           },
         },
       };
-      
     const labels = dataLabels;
-      
     const data = {
         labels,
         datasets: [
