@@ -369,3 +369,18 @@ export const getHours = async(req, res) =>{
     console.log( e );
   }
 }
+
+export const getContractEmployee = async(req, res) =>{
+  const { CedulaEmpleado, NombreProyecto } = req.params;
+  try {
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input('CedulaEmpleado', CedulaEmpleado)
+      .input('NombreProyecto', NombreProyecto)
+      .query( employeesQueries.getTypeOfContract );
+      res.json( result.recordset );
+      console.log(result.recordset)
+  } catch ( e ){
+    console.log( e );
+  }
+}

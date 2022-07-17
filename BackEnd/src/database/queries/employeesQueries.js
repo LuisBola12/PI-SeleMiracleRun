@@ -48,6 +48,9 @@ export const employeesQueries = {
   from HorasRegistradas
   where CedulaEmpleado = @CedulaEmpleado and NombreProyecto = @NombreProyecto
   order by Fecha desc`,
+  getTypeOfContract: `select *
+  from EmpleadoYContratoSeAsocianAProyecto
+  where CedulaEmpleado = @CedulaEmpleado and NombreProyecto = @NombreProyecto`
 };
 
 

@@ -5,7 +5,7 @@ import { getProjectsByEmailAndName, getProjectsByEmail, createProject, createPay
 import {
   getEmployees, postNewEmployee, getEmployeeByID, verifyEmployeeContractOnProject,
   getEmployeesWithContractOnOtherProyects, contractAEmployee, setHoursEmployee, deleteEmployeeFromProject, getEmployeesAllInfo,
-  getEmployeePayments, getAllEmployeePayments, getHours
+  getEmployeePayments, getAllEmployeePayments, getHours, getContractEmployee
 } from '../controllers/employees.contoller';
 import {
   getEmployerByID, getUserByEmail, verifyCredentials, registerNewUser,
@@ -61,6 +61,7 @@ router.post( '/employee/hours', setHoursEmployee );
 router.get( '/employeePayments/:projectName/:employeeEmail', getEmployeePayments );
 router.get( '/employeePayments/:employeeEmail/:projectNameFilter/:initialDateFilter/:endDateFilter', getAllEmployeePayments );
 router.get( '/getHours/:CedulaEmpleado/:NombreProyecto', getHours );
+router.get( '/getContractEmployee/:CedulaEmpleado/:NombreProyecto', getContractEmployee );
 
 //Projects
 router.get('/projects/:Email/:Rol', getProjectsByEmail);
