@@ -826,9 +826,10 @@ tr:nth-child(even) {
 }
 
 .navigate-title {
-  margin-top: 35px;
   width: 90%;
   display: flex;
+  margin-top:15px;
   gap: 50px;
+  align-items: center;
   /* border: solid black; */
 }
