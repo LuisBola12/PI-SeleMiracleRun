@@ -44,7 +44,10 @@ export const employeesQueries = {
     JOIN EmpleadoYContratoSeAsocianAProyecto e ON e.CedulaEmpleado = Empleado.Cedula AND e.NombreProyecto = pl.NombreProyecto
   WHERE Empleado.Email = @employeeEmail
   order by pl.FechaFin`,
-  getHours: `select * from HorasRegistradas`,
+  getHours: `select * 
+  from HorasRegistradas
+  where CedulaEmpleado = @CedulaEmpleado and NombreProyecto = @NombreProyecto
+  order by Fecha desc`,
 };
 
 
