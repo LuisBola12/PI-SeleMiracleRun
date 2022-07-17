@@ -71,7 +71,7 @@ export const ViewPayroll = () => {
         <tbody>
           {data.slice( 0 ).reverse().map( ( element ) => (
             <tr key={element.Consectivo}>
-              <td className=''>{element.Consectivo}</td>
+              <td className='table-left-border'>{element.Consectivo}</td>
               <td className=''>{removeTimeFromDate( element.FechaIncio )}</td>
               <td className=''>{removeTimeFromDate( element.FechaFin )}</td>
               <td className=''>
