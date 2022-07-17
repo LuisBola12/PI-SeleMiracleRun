@@ -52,7 +52,7 @@ export const EmployeePayments = () => {
             <th className='right-td'>Mandatory Deductions</th>
             <th className='right-td'>Voluntary Deductions</th>
             <th className='right-td'>Net Salary</th>
-            <th className='table-right-border right-td'>Report</th>
+            <th className='table-right-border '>Report</th>
           </tr>
         </thead>
         <tbody>
@@ -67,8 +67,8 @@ export const EmployeePayments = () => {
               <td className='right-td'>{row.TipoContrato === 'Servicios Profesionales' ? '-' : formatter.format( row.MontoTotalDeduccionesObligatoriasEmpleado )}</td>
               <td className='right-td'>{row.TipoContrato === 'Servicios Profesionales' ? '-' : formatter.format( row.MontoTotalDeduccionesVoluntarias )}</td>
               <td className='right-td'>{formatter.format( row.SalarioNeto )}</td>
-              <td className='right-td'>
-                <button className='button' onClick={() => handleGenerateReport(row)}> Report</button>
+              <td className=''>
+                <button className='emp-pay-button' onClick={() => handleGenerateReport(row)}> View</button>
               </td>
             </tr>
           ) )}

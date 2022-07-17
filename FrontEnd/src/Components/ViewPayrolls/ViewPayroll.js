@@ -82,8 +82,8 @@ export const ViewPayroll = () => {
                 }}>Details</button>
               </td>
               <td className="table-right-border">
-                  <button className="details-button" onClick={() => {handleReport( element );}}>
-                    Report
+                  <button className="report-button" onClick={() => {handleReport( element );}}>
+                    View
                   </button>
                 
               </td>

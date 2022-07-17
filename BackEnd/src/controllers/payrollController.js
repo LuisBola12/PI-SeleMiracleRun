@@ -358,3 +358,20 @@ export const getSeparateVolDeductions = async(req,res)=>{
     res.status(500).send(error.message)
   }
 }
+
+
+export const getPayrrollStatistics = async(req,res) =>{
+  const { CedulaEmpleador, NombreProyecto } = req.params;
+  try {
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input( 'Cedula', sql.VarChar, CedulaEmpleador )
+      .input( 'NombreProyecto', sql.VarChar, NombreProyecto )
+      .query( payrollQueries.getPayrollStatistics );
+      res.status(200).json(result.recordset);
+  } catch ( e ) {
+    console.log( `Error: ${e}` );
+    res.status( 500 ).send( e.message );
+  }
+}
