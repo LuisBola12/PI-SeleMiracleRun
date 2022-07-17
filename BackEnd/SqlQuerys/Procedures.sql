@@ -53,8 +53,8 @@ CREATE PROCEDURE obtenerDatosUsuario (
 ) 
 AS
 BEGIN
-	DECLARE @Resultados table(Cedula VARCHAR(15),Email VARCHAR(50), Roles VARCHAR(20), TipoContrato VARCHAR(30))
-	DECLARE @Cedula VARCHAR(15), @EmailEmp VARCHAR(50), @Roles VARCHAR(20), @TipoContrato VARCHAR(30)
+	DECLARE @Resultados table(Cedula VARCHAR(15), Nombre VARCHAR(15), Apellido1 VARCHAR(15), Apellido2 VARCHAR(15),Email VARCHAR(50), Roles VARCHAR(20))
+	DECLARE @Cedula VARCHAR(15), @Nombre VARCHAR(15), @Apellido1 VARCHAR(15), @Apellido2 VARCHAR(15), @EmailEmp VARCHAR(50), @Roles VARCHAR(20)
 
 	SELECT @Roles = U.Roles 
 	FROM Usuarios U
@@ -62,26 +62,24 @@ BEGIN
 
 	IF (@Roles = 'admin')
 		BEGIN
-			SELECT @Cedula = E.Cedula, @EmailEmp = E.Email
+			SELECT @Cedula = E.Cedula, @Nombre = E.Nombre, @Apellido1 = E.Apellido1, @Apellido2 = E.Apellido2, @EmailEmp = E.Email
 			FROM Empleador E
 			WHERE E.Email = @Email
-			SET @TipoContrato = ''
 		END;
 	ELSE
 		BEGIN
 			IF (@Roles = 'emp')
 		
 			BEGIN
-			SELECT  @Cedula = E.Cedula,  @EmailEmp = E.Email ,@TipoContrato = EAP.TipoContrato
+			SELECT  @Cedula = E.Cedula, @Nombre = E.Nombre, @Apellido1 = E.Apellido1, @Apellido2 = E.Apellido2, @EmailEmp = E.Email
 			FROM Empleado E 
-			JOIN EmpleadoYContratoSeAsocianAProyecto EAP ON E.Cedula = EAP.CedulaEmpleado
 			WHERE E.Email = @Email
 		END;
 		
 	END;
 
-	INSERT INTO @Resultados(Cedula,Email, Roles , TipoContrato )
-	VALUES(@Cedula, @EmailEmp, @Roles, @TipoContrato)
+	INSERT INTO @Resultados(Cedula, Nombre, Apellido1, Apellido2, Email, Roles)
+	VALUES(@Cedula, @Nombre, @Apellido1, @Apellido2, @EmailEmp, @Roles)
 
 	SELECT * FROM @Resultados WHERE Cedula IS NOT NULL;
 END;
