@@ -38,12 +38,14 @@ export const payrollQueries = {
   JOIN PagoAplicaDeduccionesObligatorias PCDO on p.ConsecutivoPago = PCDO.ConsecutivoPago 
   where PCDO.ConsecutivoPlanilla = @ConsecutivoPlanilla AND PCDO.NombreDeduccionObligatoria != 'Impuesto sobre la renta'
   group by PCDO.NombreDeduccionObligatoria`,
-  getPayrollTotalCosts: `select pl.NombreProyecto, pl.FechaFin, pa.ConsecutivoPlanilla, SUM(SalarioBruto) as SalariosBrutos,
+  getPayrollTotalCosts: `select pl.NombreProyecto, pl.FechaFin, pr.TipoPeriodo, pa.ConsecutivoPlanilla, SUM(SalarioBruto) as SalariosBrutos,
   SUM(MontoTotalDeduccionesObligatoriasEmpleado) AS DeduccionesObligatoriasEmpleados,
   SUM(MontoTotalDeduccionesObligatoriasEmpleador) AS DeduccionesObligatoriasEmpleador,
   SUM(MontoTotalBeneficios) as Beneficios,
   SUM(MontoTotalDeduccionesVoluntarias) as DeduccionesVoluntarias
   from Pago pa Join Planilla pl on pa.ConsecutivoPlanilla = pl.Consectivo
+  join Proyecto pr on pr.CedulaEmpleador=pl.CedulaEmpleador and pr.Nombre = pl.NombreProyecto
   where pl.CedulaEmpleador = @employerID
-  group by pa.ConsecutivoPlanilla, pl.NombreProyecto, pl.FechaFin`
+  group by pa.ConsecutivoPlanilla, pl.NombreProyecto, pl.FechaFin, pr.TipoPeriodo
+  `
 };

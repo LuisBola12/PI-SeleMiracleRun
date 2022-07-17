@@ -9,7 +9,6 @@ import { IconContext } from 'react-icons';
 import { FaFilter } from 'react-icons/fa';
 import { DateRangeSelect } from '../DateRangeSelect/DateRangeSelect';
 import { addDays } from 'date-fns';
-import { ExportToExcelButton } from '../ExportToExcelButton/ExportToExcelButton';
 import { Pagination } from '../Pagination/Pagination';
 
 export const EmployerPaymentsReports = () => {
@@ -95,11 +94,7 @@ export const EmployerPaymentsReports = () => {
 
 
         </div>
-        <ExportToExcelButton
-          objectsArray={allEmployerPayments}
-          sheetName={'myPayments'}
-          fileName={'myPaymentsReport'}
-        />
+
 
       </div>
       
@@ -111,7 +106,7 @@ export const EmployerPaymentsReports = () => {
             <th className='right-td'>Payment Date</th>
             <th className='right-td'>Gross Salaries</th>
             <th className='right-td'>Benefits</th>
-            <th className='right-td'>Employer Social</th>
+            <th className='right-td'>My Obligatory Deductions</th>
             <th className='right-td'>Employee Obligatory Deductions</th>
             <th className='right-td'>Voluntary Deductions</th>
             <th className='table-right-border right-td'>Employer Cost</th>
@@ -121,10 +116,14 @@ export const EmployerPaymentsReports = () => {
           {allEmployerPayments.slice( ( pageNumber - 1 ) * perPage, ( pageNumber - 1 ) * perPage + perPage  ).reverse().map( ( row ) => (
             <tr key={row.ConsecutivoPago}>
               <td className='left-td table-left-border'>{row.NombreProyecto}</td>
-              <td className='right-td'>{'asd'}</td>
+              <td className='right-td'>{row.TipoPeriodo}</td>
               <td className='right-td'>{removeTimeFromDate(row.FechaFin)}</td>
-              <td className='right-td'>{formatter.format(row.Beneficios)}</td>
               <td className='right-td'>{formatter.format( row.SalariosBrutos )}</td>
+              <td className='right-td'>{formatter.format(row.Beneficios)}</td>
+              <td className='right-td'>{formatter.format(row.DeduccionesObligatoriasEmpleador)}</td>
+              <td className='right-td'>{formatter.format(row.DeduccionesObligatoriasEmpleados)}</td>
+              <td className='right-td'>{formatter.format(row.DeduccionesVoluntarias)}</td>
+              <td className='right-td'>{formatter.format(row.SalariosBrutos + row.Beneficios + row.DeduccionesObligatoriasEmpleador)}</td>
             </tr>
           ) )}
         </tbody>
