@@ -1,13 +1,33 @@
-import React from 'react';
+import { React } from "react";
 import { useSelector } from 'react-redux';
 import { Nav, NavLink, NavMenu } from './NavbarElements';
 import { DropdownMenu, Menu } from '../DropDownMenu/DropDownMenu';
 import { ReactComponent as ListIcon } from '../DropDownMenu/icons/list.svg';
 import './Navbar.css';
+// import { getContractEmployee } from "../../Utils/Calendar/getCalendarInfo";
 
 export const Navbar = () => {
   const activeProject = useSelector((state) => state.activeProject.projectName);
+  const contractType = useSelector((state) => state.activeProject.contractType);
   const user = useSelector((state) => state.user.user);
+  // const [contractType, setContractType] = useState('');
+  // const [ dataReceived , setDataReceived ] = useState(0);
+
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     const data = await getContractEmployee(user.Cedula, activeProject);
+  //     console.log('contactType')
+  //     console.log(contractType)
+  //     if (data) {
+  //       setContractType(data[0].TipoContrato);
+  //       setDataReceived(dataReceived+1)
+  //       console.log('contactType')
+  //       console.log(contractType)
+  //     }
+  //   };
+  //     getData();
+  // }, []);
+
   return (
     <>
       <div>
@@ -44,7 +64,7 @@ export const Navbar = () => {
                 <NavLink to="/myVoluntaryDeductions" activestyle='true'>
                   My Voluntary Deductions
                 </NavLink>
-                { user.TipoContrato === 'Por Horas' && 
+                { contractType === 'Por Horas' && 
                   <NavLink to="/registerHours" activestyle='true'>
                   Hours
                  </NavLink>

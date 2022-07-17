@@ -14,7 +14,7 @@ import { removeTimeFromDate } from "../../shared/removeTimeFromDate";
 
 export const CalendarComp = () => {
   const user = useSelector((state) => state.user.user);
-  const proyecto = useSelector((state) => state.activeProject.projectName);
+  const project = useSelector((state) => state.activeProject.projectName);
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
   const [hours, setHours] = useState("");
@@ -47,7 +47,7 @@ export const CalendarComp = () => {
       let string = "";
       string = JSON.stringify({
         Email: user.Email,
-        Proyecto: proyecto,
+        Proyecto: project,
         Fecha: actualDate,
         CantidadHoras: hours,
       });
@@ -65,7 +65,7 @@ export const CalendarComp = () => {
 
   useEffect(() => {
     const getHours = async () => {
-      const data = await getHoursEmployer(user.Cedula, proyecto);
+      const data = await getHoursEmployer(user.Cedula, project);
       if (data) {
         setHoursRegister(data);
         setInfoRecieved(true);

@@ -7,14 +7,14 @@ import { useProjectsData } from '../../Utils/PayrollProjects/useProjectsData';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../Slices/user/userSlice';
 import usePost from '../../shared/hooks/usePost';
-
-
+import { getContractEmployee } from '../../Utils/Calendar/getCalendarInfo';
+import { updateContract } from '../../Slices/projectSlice/activeProjectSlice';
 
 export const SelectProjectComp = () => {
   const navigate = useNavigate();
   const { projects, handleProjectSelection, loading, setNeedToRefresh } = useProjectsData();
   const activeProject = useSelector((state) => state.activeProject.projectName);
-  const rolFromUser = useSelector((state) => state.user.user.Roles);
+  const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
   const [isDeletingProject, setIsDeletingProject] = useState(false);
 
@@ -57,7 +57,7 @@ export const SelectProjectComp = () => {
     try {
       const activeEmployeesApiResponse = await fetch(process.env.REACT_APP_BACKEND_LOCALHOST + `getEmployeesInfo/${projectName}`);
       const activeEmployees = await activeEmployeesApiResponse.json();
-      if (activeEmployees.length == 0) {
+      if (activeEmployees.length === 0) {
         proceedToEliminate(projectName);
       } else {
         Swal.fire({
@@ -77,12 +77,20 @@ export const SelectProjectComp = () => {
 
   };
 
-  const handleProjectClick = (projectName) => {
+  const handleProjectClick = async (projectName) => {
     if (isDeletingProject) {
       eliminateProject(projectName);
     }
     else {
-      handleProjectSelection(projectName);
+      if(user.Roles === 'admin'){
+        handleProjectSelection(projectName);
+      }else{
+        const contractType = await getContractEmployee(user.Cedula, projectName);
+        if(contractType){
+          dispatch(updateContract(contractType[0].TipoContrato))
+          handleProjectSelection(projectName);
+        }
+      }
     }
   };
 
@@ -96,7 +104,7 @@ export const SelectProjectComp = () => {
             dispatch(logout());
             navigate('/');
           } else {
-            rolFromUser === 'admin' ?
+            user.Roles === 'admin' ?
               (navigate('/dashBoard')) :
               (navigate('/myPayments'));
           }
@@ -125,14 +133,14 @@ export const SelectProjectComp = () => {
           : null
         }
 
-        {rolFromUser === 'admin' ? (
+        {user.Roles === 'admin' ? (
           <div>
             <button centered='true' className='project-buttonCreate' onClick={() => navigate('/newProjectForm')}>+</button >
             <p className='project-AddNewProjectText'>Add new Project</p>
           </div>
         ) : (<></>)}
       </div>
-      {isDeletingProject && rolFromUser === 'admin' ? <button onClick={() => setIsDeletingProject(false)}  >cancel</button> : <></>}
+      {isDeletingProject && user.Roles === 'admin' ? <button onClick={() => setIsDeletingProject(false)}  >cancel</button> : <></>}
       <div>
         <footer className='project-footerCopyRights'> &copy; SeleMiracleRun </footer>
       </div>
