@@ -5,6 +5,7 @@ import { payrollQueries } from './../database/queries/payrollQueries';
 import {insertCostTotalBenefits} from './benefits.controller'
 import {insertCostTotalVoluntaryDeductions} from './voluntaryDeductions.controller';
 import { calculateNetSalary,calculateAmount,estimateIncomeTax} from '../utils/estimateCalculator';
+import { filterPaymentsByProjectName, filterPaymentsByDate } from '../utils/employeePaymentsFilters';
 const calculateAmountRentTaxes = ( Salary, TipoJornada ) => {
   const salaryI = parseFloat( Salary );
   if ( salaryI === null || salaryI === undefined || salaryI <= 0 ){
@@ -359,6 +360,29 @@ export const getSeparateVolDeductions = async(req,res)=>{
   }
 }
 
+export const getPayrollTotalCosts = async (req, res) => {
+  const { employerID, projectNameFilter, initialDateFilter, endDateFilter } = req.params;
+  if (employerID == '') {
+    const message = 'Bad Request. Please Fill All Fields.';
+    return res.status(400).json({ msg: message });
+  }
+  try {
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input('employerID', employerID)
+      .query(payrollQueries.getPayrollTotalCosts);
+      
+    if (projectNameFilter != 'Any') {
+      result.recordset = filterPaymentsByProjectName(result.recordset, projectNameFilter);
+    }
+    result.recordset = filterPaymentsByDate(result.recordset, initialDateFilter, endDateFilter);
+    
+    res.status(200).json(result.recordset);
+  } catch (e) {
+    res.status(404);
+    res.send(e.message);
+  }
+};
 
 export const getPayrrollStatistics = async(req,res) =>{
   const { CedulaEmpleador, NombreProyecto } = req.params;
