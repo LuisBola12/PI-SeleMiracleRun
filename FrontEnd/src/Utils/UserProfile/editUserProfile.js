@@ -40,7 +40,6 @@ export const applyNoEdit = () => {
 export const validateEditUserForm = ( data ) =>{
   let error = {};
   const { email,name,lastname,secondlastname } = data;
-  console.log( data );
   if ( email ){
     if ( !validateEmail( email ) ){
       error.email = 'You must enter a valid format for an email.';

@@ -26,7 +26,6 @@ export const useProjectManagement = () => {
         if ( result.isConfirmed ) {
           const activeEmployeesApiResponse = await fetch( process.env.REACT_APP_BACKEND_LOCALHOST + `getEmployeesInfo/${projectName}` );
           const activeEmployees = await activeEmployeesApiResponse.json();
-          console.log( activeEmployees );
           if ( activeEmployees.length > 0 ) {
             Swal.fire( {
               title: 'Confirmation',

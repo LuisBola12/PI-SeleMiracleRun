@@ -23,7 +23,6 @@ export const ViewPayroll = () => {
   };
   const handlePayment = async () => {
     const seleUrl = process.env.REACT_APP_BACKEND_LOCALHOST + 'createPayrroll';
-    console.log( user.Cedula, activeProject );
     const postFetch = await fetch( seleUrl, {
       method: 'POST',
       headers: {

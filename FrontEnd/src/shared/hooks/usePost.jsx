@@ -2,7 +2,6 @@ import { useState } from 'react';
 
 const usePost = ( url, methodReq = 'POST' ) => {
   const [ postError, setPostError ] = useState( null );
-  // console.log( url, methodReq );
   const post = async ( JSONBody ) => {
     try {
       const postFetch = await fetch( url, {

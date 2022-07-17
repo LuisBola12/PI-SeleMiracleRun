@@ -30,7 +30,6 @@ export const EmployeePayments = () => {
         setEmployeePayments( [] );
       } else {
         setEmployeePayments( infoReceived );
-        console.log( infoReceived );
       }
       setIsLoading( false );
     };

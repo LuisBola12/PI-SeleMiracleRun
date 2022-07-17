@@ -17,7 +17,6 @@ export const EmployeeBenefits = () => {
 
   const handleAddButton = async (element) => {
     const allowedToSubsribe = await canSuscribe(element.Nombre);
-    console.log(allowedToSubsribe);
 
     if (allowedToSubsribe) {
       await submitBenefitToEmployee(element.Nombre);

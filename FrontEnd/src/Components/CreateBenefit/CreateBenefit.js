@@ -58,7 +58,6 @@ export const CreateBenefit = () => {
         if ( result.isConfirmed ) {
           // función de reactivar beneficio
           const reactivateApi = process.env.REACT_APP_BACKEND_LOCALHOST + `benefit/${formValues.Name + '*'}`;
-          console.log( reactivateApi );
           reactivateBenefit( formValues.Name, reactivateApi );
           navigate( '/benefits' );
           Swal.fire( {

@@ -66,11 +66,8 @@ export const SelectProjectComp = () => {
           text: 'This project have active Employees',
           confirmButtonColor: 'darkgreen',
         });
-
-
         console.log('NO se puede eliminar: El proyecto Tiene empleados');
-      } console.log('entra');
-
+      }
     } catch (error) {
       console.log(`Error en la solicitud de base de datos: ${error}`);
     }

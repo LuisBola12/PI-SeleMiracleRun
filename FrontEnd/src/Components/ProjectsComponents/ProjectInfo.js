@@ -29,7 +29,6 @@ export const ProjectInfo = () => {
   const submit = async () => {
     const availableName = await validAnEntity( 'projects/', formValues.projectName );
     if ( formValues.projectName === activeProject || availableName ) {
-      console.log( 'entra a submit' );
       let string = JSON.stringify( formValues );
       string = JSON.stringify( {
         projectName: formValues.projectName,
@@ -59,7 +58,6 @@ export const ProjectInfo = () => {
     setIsLoading( true );
     const loadProjectData = async () => {
       const result = await getAnEntity( 'projects/', activeProject );
-      console.log( result );
       setProjectData( result[0] );
       setFormValues( { ...formValues, projectName: projectData.Nombre } );
       setIsLoading( false );

@@ -58,7 +58,6 @@ export const CreateVoluntaryDeduction = () => {
         if ( result.isConfirmed ) {
           // función de reactivar deduccion voluntaria
           const reactivateApi = process.env.REACT_APP_BACKEND_LOCALHOST + `voluntaryDeduction/${formValues.Name + '*'}`;
-          console.log( reactivateApi );
           reactivateVoluntaryDeduction( formValues.Name, reactivateApi );
           navigate( '/voluntaryDeductions' );
           Swal.fire( {
