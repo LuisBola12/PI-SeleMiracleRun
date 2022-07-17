@@ -60,7 +60,7 @@ router.post( '/deleteEmployeeFromProject', deleteEmployeeFromProject );
 router.post( '/employee/hours', setHoursEmployee );
 router.get( '/employeePayments/:projectName/:employeeEmail', getEmployeePayments );
 router.get( '/employeePayments/:employeeEmail/:projectNameFilter/:initialDateFilter/:endDateFilter', getAllEmployeePayments );
-router.get( '/getHours', getHours );
+router.get( '/getHours/:CedulaEmpleado/:NombreProyecto', getHours );
 
 //Projects
 router.get('/projects/:Email/:Rol', getProjectsByEmail);
