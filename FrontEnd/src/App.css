@@ -809,6 +809,7 @@ tr:nth-child(even) {
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
 }
 
 .voluntaryDeductions-graphic-container {
