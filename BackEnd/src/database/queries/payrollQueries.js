@@ -48,7 +48,7 @@ export const payrollQueries = {
   where pl.CedulaEmpleador = @employerID
   group by pa.ConsecutivoPlanilla, pl.NombreProyecto, pl.FechaFin, pr.TipoPeriodo
   `,
-  getPayrollStatistics: `select pl.Consectivo, sum(pa.SalarioNeto) as Salarios, sum(pa.MontoTotalBeneficios) as Beneficios, 
+  getPayrollStatistics: `select pl.Consectivo, sum(pa.SalarioBruto) as Salarios, sum(pa.MontoTotalBeneficios) as Beneficios, 
   sum(pa.MontoTotalDeduccionesObligatoriasEmpleador) as Pagos from Planilla pl
   join Pago pa on pa.ConsecutivoPlanilla = pl.Consectivo
   where NombreProyecto = @NombreProyecto and pl.CedulaEmpleador = @Cedula
