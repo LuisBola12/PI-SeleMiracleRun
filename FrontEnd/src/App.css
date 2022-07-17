@@ -317,17 +317,35 @@
   height: 100px;
 }
 
+.emp-pay-button {
+  padding: 10px;
+  border-radius: 8px;
+  color: white;
+  border-color: white;
+  background-color: #147cb7;
+  border-style: none;
+  width: 100px;
+}
+
 .details-button {
   padding: 10px;
   border-radius: 8px;
   color: white;
   border-color: white;
-  background-color: gray;
-  /* background-color: #178cd1; */
+  /* background-color: #133c54; */
+  background-color: #147cb7;
   border-style: none;
   width: 100px;
 }
-
+.report-button {
+  padding: 10px;
+  border-radius: 8px;
+  color: white;
+  border-color: white;
+  background-color: #00788C;
+  border-style: none;
+  width: 100px;
+}
 .back-arrow-button {
   padding: 10px;
   text-align: left;
