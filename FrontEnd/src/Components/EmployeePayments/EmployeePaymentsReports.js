@@ -13,7 +13,7 @@ import { ExportToExcelButton } from '../ExportToExcelButton/ExportToExcelButton'
 import { Pagination } from '../Pagination/Pagination';
 
 export const EmployeePaymentsReports = () => {
-  const lastDaysToShow = 60;
+  const lastDaysToShow = 180;
   const [ pageNumber, setPageNumber ] = useState( 1 );
   const [ perPage, setPerPage ] = useState( 10 );
   const employeeEmail = useSelector( ( state ) => state.user.user.Email );
@@ -54,7 +54,7 @@ export const EmployeePaymentsReports = () => {
 
   return ( isLoading ? <div className='loader' ></div > :
     <>
-      <h2 className='table-button'>My Payments Report</h2>
+      <h2 className='navigate-title'>My Payments Report</h2>
       <div className='report-header'>
         <div className='filter-payments-report'>
           <IconContext.Provider

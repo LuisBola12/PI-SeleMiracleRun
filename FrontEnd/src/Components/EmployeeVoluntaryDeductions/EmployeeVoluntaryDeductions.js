@@ -38,7 +38,7 @@ export const EmployeeVoluntaryDeductions = () => {
     <>
       {!EmployeeInfo ? <div className='loader' ></div > : (
         <>
-          <h2 className='table-button'>My Voluntary Deductions</h2>
+          <h2 className='navigate-title'>My Voluntary Deductions</h2>
           <table className='Table'>
             <thead>
               <tr className='table-header'>

@@ -6,8 +6,10 @@ import { useNavigate } from 'react-router-dom';
 import { transformCost } from '../../shared/moneyFormatTransform';
 import { usePutToVoluntaryDeductions } from '../../Utils/VoluntaryDeductions/usePutToVoluntaryDeductions';
 import Swal from 'sweetalert2';
+import { useSelector } from 'react-redux';
 
 export const CrudVoluntaryDeductions = () => {
+  const activeProject = useSelector((state) => state.activeProject.projectName);
   const navigate = useNavigate();
   const { deactivateVoluntaryDeduction } = usePutToVoluntaryDeductions();
   const handleCreateClick = () => {
@@ -41,6 +43,7 @@ export const CrudVoluntaryDeductions = () => {
   const { projectVoluntaryDeductions, infoReceived, setInfoReceived } = useGetVoluntaryDeductionsFromDatabase();
   return !infoReceived ? <div className='loader' ></div > : (
     <>
+    <h2 className='navigate-title'>{activeProject} Voluntary Deductions</h2>
       <div className='table-button'>
         <button className='create-button'
           onClick={handleCreateClick}

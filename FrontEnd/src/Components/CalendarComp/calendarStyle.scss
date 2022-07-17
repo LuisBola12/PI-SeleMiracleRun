@@ -6,7 +6,7 @@
   color: #133c54;
   border-radius: 8px;
   border: none;
-  box-shadow: 0 5px 24px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
   font-family: Roboto;
   line-height: 1.125em;
  }
@@ -34,8 +34,8 @@
  }
 
  .react-calendar__tile{
-   width: 50px;
-   height: 50px;
+   width: 75px;
+   height: 75px;
  }
 
  .react-calendar__tile[disabled]{
@@ -87,7 +87,7 @@
  .calendar-page{
   margin-top: 20px;
   display: flex;
-  gap: 18px;
+  gap: 30px;
   text-align: center;
   justify-content: center;
  }
@@ -115,6 +115,8 @@
 
 .calendar-table-div{
   width: 100%;
+  // box-shadow: 0 5px 24px rgba(0, 0, 0, 0.2);
+  // border-radius: 5px;
 }
 
 .calendar-table{

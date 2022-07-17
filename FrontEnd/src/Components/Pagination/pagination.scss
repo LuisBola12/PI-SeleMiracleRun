@@ -19,10 +19,15 @@ button[disabled] {
   background-color: rgb(233, 233, 233);
 }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
+.page-input::-webkit-outer-spin-button,
+.page-input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+
+.page-input:focus {
+  outline:solid 0.1px gray;
 }
 
 .pagination-button {

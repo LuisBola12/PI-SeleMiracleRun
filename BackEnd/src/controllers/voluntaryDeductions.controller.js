@@ -203,11 +203,12 @@ export const reactivateVoluntaryDeduction = async ( req, res ) => {
 };
 
 export const getVoluntaryDeductionsStatistics = async ( req, res ) => {
-  const { CedulaEmpleador } = req.params;
+  const { CedulaEmpleador, NombreProyecto } = req.params;
   try {
     const pool = await getConnection();
     const result = await pool
       .request()
+      .input( 'NombreProyecto', sql.VarChar, NombreProyecto )
       .input( 'CedulaEmpleador', sql.VarChar, CedulaEmpleador )
       .query( voluntaryDeductionsQueries.getVoluntaryDeductionsStatistics );
       res.status(200).json(result.recordset);

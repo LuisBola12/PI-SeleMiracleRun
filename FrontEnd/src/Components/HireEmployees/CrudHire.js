@@ -17,12 +17,12 @@ export const CrudHire = () => {
   const { employeesToHire, infoReceived } = useGetEmployeesToHire();
   return !infoReceived ? <div className='loader' ></div > : (
     <>
-      {console.log(employeesToHire)}
-      <div className='table-button'>
+      <div className='navigate-title'>
         <IconContext.Provider value={{ color: 'gray', className: 'global-class-name', size: '2.6rem' }}>
           <button className='back-arrow-button' onClick={() => { back(); }}>
             <FaArrowLeft />
           </button>
+          <h2 className='navigate-title'>Employees To hire</h2>
         </IconContext.Provider>
       </div>
       <table className='Table'>
@@ -31,19 +31,18 @@ export const CrudHire = () => {
             <th className='table-left-border left-td'>Id</th>
             <th className='left-td'>Name</th>
             <th className='left-td'>First lastname</th>
-            <th className='left-td'>Project Name</th>
-            <th className='left-td'>Type Of Contract</th>
+            <th className='left-td'>Second lastname</th>
             <th className='table-right-border center-td'></th>
+            
           </tr>
         </thead>
         <tbody>
-          {employeesToHire.map((element) => (
+          {employeesToHire.filter((v,i,a)=>a.findIndex(v2=>(v2.Cedula===v.Cedula))===i).map((element) => (
             <tr key={element.Cedula}>
               <td className='left-td table-left-border'>{element.Cedula}</td>
               <td className='left-td'>{element.Nombre}</td>
               <td className='left-td'>{element.Apellido1}</td>
-              <td className='left-td'>{element.NombreProyecto}</td>
-              <td className='left-td'>{element.TipoContrato}</td>
+              <td className='left-td'>{element.Apellido2}</td>
               <td className='center-button'>
                 <button className='button' onClick={() => handleHireEmployee(element)}> Hire </button>
               </td>

@@ -49,7 +49,6 @@
 }
 
 .table-button {
-  margin-top: 50px;
   width: 90%;
   display: flex;
   gap: 50px;
@@ -318,17 +317,35 @@
   height: 100px;
 }
 
+.emp-pay-button {
+  padding: 10px;
+  border-radius: 8px;
+  color: white;
+  border-color: white;
+  background-color: #147cb7;
+  border-style: none;
+  width: 100px;
+}
+
 .details-button {
   padding: 10px;
   border-radius: 8px;
   color: white;
   border-color: white;
-  background-color: gray;
-  /* background-color: #178cd1; */
+  /* background-color: #133c54; */
+  background-color: #147cb7;
   border-style: none;
   width: 100px;
 }
-
+.report-button {
+  padding: 10px;
+  border-radius: 8px;
+  color: white;
+  border-color: white;
+  background-color: #00788C;
+  border-style: none;
+  width: 100px;
+}
 .back-arrow-button {
   padding: 10px;
   text-align: left;
@@ -637,7 +654,7 @@ tr:nth-child(even) {
 
 .Empty-message {
   font-size: 2rem;
-  opacity: 75%;
+  opacity: 60%;
   text-align: center;
 }
 
@@ -756,6 +773,11 @@ tr:nth-child(even) {
   border: 1px solid darkgray;
 }
 
+.project-Name-Filter:focus, 
+.project-date-filter:focus  {
+  outline:solid 0.1px gray;
+} 
+
 .project-date-filter {
   border-radius: 8px;
   width: 235px;
@@ -775,14 +797,6 @@ tr:nth-child(even) {
   display: flex;
   gap: 20px;
   align-items: center;
-}
-
-input:focus {
-  outline:solid 0.1px gray;
-}
-
-select:focus {
-  outline:solid 0.1px gray;
 }
 
 .benefit-graphic-container {
@@ -809,4 +823,13 @@ select:focus {
   flex-direction: column;
   align-items: center;
   text-align: center;
+}
+
+.navigate-title {
+  width: 90%;
+  display: flex;
+  margin-top:15px;
+  gap: 50px;
+  align-items: center;
+  /* border: solid black; */
 }

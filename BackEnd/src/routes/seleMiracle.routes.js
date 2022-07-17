@@ -24,7 +24,7 @@ import {
 } from '../controllers/benefits.controller';
 import { getAllPayslipsOfAProject, getPayrrollsOfAProject, getTotalSalaryCost, getTotalCostBenefitsEmployer, 
   getTotalCostObligatoryDeductionsEmployer, getSeparateOblDeductions, getSeparateVolDeductions,
-  getPayrollTotalCosts} from '../controllers/payrollController';
+  getPayrollTotalCosts, getPayrrollStatistics} from '../controllers/payrollController';
 
 const router = Router();
 
@@ -62,7 +62,7 @@ router.post( '/deleteEmployeeFromProject', deleteEmployeeFromProject );
 router.post( '/employee/hours', setHoursEmployee );
 router.get( '/employeePayments/:projectName/:employeeEmail', getEmployeePayments );
 router.get( '/employeePayments/:employeeEmail/:projectNameFilter/:initialDateFilter/:endDateFilter', getAllEmployeePayments );
-router.get( '/getHours', getHours );
+router.get( '/getHours/:CedulaEmpleado/:NombreProyecto', getHours );
 
 //Projects
 router.get('/projects/:Email/:Rol', getProjectsByEmail);
@@ -93,7 +93,7 @@ router.put( '/benefit/:NombreAntiguo', reactivateBenefit );
 router.post( '/myBenefits', linkEmployeeToBenefit );
 router.put( '/myBenefits', unlinkEmployeeToBenefit );
 router.get( '/validateBenefit/:projectName/:employeeEmail/:benefitToValidate', validateBenefitSuscription );
-router.get( '/benefitsStatistics/:CedulaEmpleador', getBenefitsStatistics);
+router.get( '/benefitsStatistics/:CedulaEmpleador/:NombreProyecto', getBenefitsStatistics);
 
 //VoluntaryDeductions
 router.get( '/voluntaryDeductions/:NombreProyecto/:CedulaEmpleador', getVoluntaryDeductions );
@@ -106,7 +106,7 @@ router.post( '/myVoluntaryDeductions', linkEmployeeToVoluntaryDeduction );
 router.put( '/myVoluntaryDeductions', unlinkEmployeeToVoluntaryDeduction );
 router.put( '/voluntaryDeductions', deactivateVoluntaryDeduction );
 router.put( '/voluntaryDeduction/:NombreAntiguo', reactivateVoluntaryDeduction );
-router.get( '/voluntaryDeductionsStatistics/:CedulaEmpleador', getVoluntaryDeductionsStatistics);
+router.get( '/voluntaryDeductionsStatistics/:CedulaEmpleador/:NombreProyecto', getVoluntaryDeductionsStatistics);
 
 //Payrrolls
 router.get('/payrrolls/:Proyecto', getPayrrollsOfAProject);
@@ -116,5 +116,6 @@ router.get('/totalObligatoryDeductionsReport/:consecutivoPlanilla', getTotalCost
 router.get('/payslipOblDeductions/:consecutivoPago', getSeparateOblDeductions);
 router.get('/payslipVolDeductions/:consecutivoPago', getSeparateVolDeductions);
 router.get( '/payrollTotalCosts/:employerID/:projectNameFilter/:initialDateFilter/:endDateFilter', getPayrollTotalCosts );
+router.get( '/payrrollStatistics/:CedulaEmpleador/:NombreProyecto', getPayrrollStatistics);
 
 export default router;
