@@ -10,6 +10,7 @@ import { FaFilter } from 'react-icons/fa';
 import { DateRangeSelect } from '../DateRangeSelect/DateRangeSelect';
 import { addDays } from 'date-fns';
 import { Pagination } from '../Pagination/Pagination';
+import { ExportToExcelButton } from '../ExportToExcelButton/ExportToExcelButton';
 
 export const EmployerPaymentsReports = () => {
   const lastDaysToShow = 60;
@@ -94,7 +95,11 @@ export const EmployerPaymentsReports = () => {
 
 
         </div>
-
+        <ExportToExcelButton
+          objectsArray={allEmployerPayments}
+          sheetName={'myPayments'}
+          fileName={'myPaymentsReport'}
+        />
 
       </div>
       
