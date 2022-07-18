@@ -13,6 +13,8 @@ import validate from "../../Utils/Calendar/calendarValidations";
 import { removeTimeFromDate } from "../../shared/removeTimeFromDate";
 
 export const CalendarComp = () => {
+  const user = useSelector((state) => state.user.user);
+  const proyecto = useSelector((state) => state.activeProject.projectName);
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
   const [hours, setHours] = useState("");
@@ -28,8 +30,7 @@ export const CalendarComp = () => {
   const dateToString = () => {
     return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
   };
-  const userEmail = useSelector((state) => state.user.user.Email);
-  const proyecto = useSelector((state) => state.activeProject.projectName);
+
 
   const handleClose = () => {
     setShow(false);
@@ -45,7 +46,7 @@ export const CalendarComp = () => {
     if (validate(hours) === false) {
       let string = "";
       string = JSON.stringify({
-        Email: userEmail,
+        Email: user.Email,
         Proyecto: proyecto,
         Fecha: actualDate,
         CantidadHoras: hours,
@@ -64,7 +65,7 @@ export const CalendarComp = () => {
 
   useEffect(() => {
     const getHours = async () => {
-      const data = await getHoursEmployer();
+      const data = await getHoursEmployer(user.Cedula, proyecto);
       if (data) {
         setHoursRegister(data);
         setInfoRecieved(true);
@@ -73,7 +74,7 @@ export const CalendarComp = () => {
     getHours();
   }, [infoSend]);
 
-  const maxPage = Math.ceil(hoursRegister.length / 5);
+  const maxPage = Math.ceil(hoursRegister.length / 7);
 
   return !infoRecieved ? (
     <div className="loader"></div>
@@ -100,18 +101,17 @@ export const CalendarComp = () => {
                 <table className="calendar-table">
                   <thead>
                     <tr>
-                      <th>Date</th>
-                      <th>Register Hours</th>
+                      <th className="table-left-border">Date</th>
+                      <th className="table-right-border">Register Hours</th>
                     </tr>
                   </thead>
                   <tbody>
                     {hoursRegister
-                      .slice((pageNumber - 1) * 5, (pageNumber - 1) * 5 + 5)
-                      .reverse()
+                      .slice((pageNumber - 1) * 7, (pageNumber) * 7 )
                       .map((element, index) => (
                         <tr key={index}>
-                          <td>{removeTimeFromDate(element.Fecha)}</td>
-                          <td>{element.Cantidad}</td>
+                          <td className="table-left-border">{removeTimeFromDate(element.Fecha)}</td>
+                          <td className="table-right-border">{element.Cantidad}</td>
                         </tr>
                       ))}
                   </tbody>

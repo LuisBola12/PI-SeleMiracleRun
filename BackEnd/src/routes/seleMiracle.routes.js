@@ -22,7 +22,9 @@ import {
   getOfferedBenefits, linkEmployeeToBenefit, unlinkEmployeeToBenefit, deactivateBenefit,
   validateBenefitSuscription, reactivateBenefit, getBenefitsStatistics
 } from '../controllers/benefits.controller';
-import { getAllPayslipsOfAProject, getPayrrollsOfAProject, getTotalSalaryCost, getTotalCostBenefitsEmployer, getTotalCostObligatoryDeductionsEmployer, getSeparateOblDeductions, getSeparateVolDeductions } from '../controllers/payrollController';
+import { getAllPayslipsOfAProject, getPayrrollsOfAProject, getTotalSalaryCost, getTotalCostBenefitsEmployer, 
+  getTotalCostObligatoryDeductionsEmployer, getSeparateOblDeductions, getSeparateVolDeductions,
+  getPayrollTotalCosts, getPayrrollStatistics} from '../controllers/payrollController';
 
 const router = Router();
 
@@ -60,7 +62,7 @@ router.post( '/deleteEmployeeFromProject', deleteEmployeeFromProject );
 router.post( '/employee/hours', setHoursEmployee );
 router.get( '/employeePayments/:projectName/:employeeEmail', getEmployeePayments );
 router.get( '/employeePayments/:employeeEmail/:projectNameFilter/:initialDateFilter/:endDateFilter', getAllEmployeePayments );
-router.get( '/getHours', getHours );
+router.get( '/getHours/:CedulaEmpleado/:NombreProyecto', getHours );
 
 //Projects
 router.get('/projects/:Email/:Rol', getProjectsByEmail);
@@ -113,5 +115,7 @@ router.get('/totalBenefitsReport/:consecutivoPlanilla', getTotalCostBenefitsEmpl
 router.get('/totalObligatoryDeductionsReport/:consecutivoPlanilla', getTotalCostObligatoryDeductionsEmployer);
 router.get('/payslipOblDeductions/:consecutivoPago', getSeparateOblDeductions);
 router.get('/payslipVolDeductions/:consecutivoPago', getSeparateVolDeductions);
+router.get( '/payrollTotalCosts/:employerID/:projectNameFilter/:initialDateFilter/:endDateFilter', getPayrollTotalCosts );
+router.get( '/payrrollStatistics/:CedulaEmpleador/:NombreProyecto', getPayrrollStatistics);
 
 export default router;

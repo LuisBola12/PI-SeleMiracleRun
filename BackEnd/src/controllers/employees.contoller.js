@@ -364,10 +364,12 @@ export const getAllEmployeePayments = async (req, res) => {
 };
 
 export const getHours = async(req, res) =>{
+  const { CedulaEmpleado, NombreProyecto } = req.params;
   try {
     const pool = await getConnection();
-    const result = await pool
-      .request()
+    const result = await pool.request()
+      .input('CedulaEmpleado', CedulaEmpleado)
+      .input('NombreProyecto', NombreProyecto)
       .query( employeesQueries.getHours );
       res.json( result.recordset );
       console.log(result.recordset)

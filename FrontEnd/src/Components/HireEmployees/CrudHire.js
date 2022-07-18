@@ -22,6 +22,7 @@ export const CrudHire = () => {
           <button className='back-arrow-button' onClick={() => { back(); }}>
             <FaArrowLeft />
           </button>
+          <h2 className='navigate-title'>Employees To hire</h2>
         </IconContext.Provider>
       </div>
       <table className='Table'>

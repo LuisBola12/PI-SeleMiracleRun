@@ -15,7 +15,7 @@ export const employeesQueries = {
             from EmpleadoYContratoSeAsocianAProyecto ECP
             join Empleado E on ECP.CedulaEmpleado = E.Cedula
             join Proyecto P on ECP.NombreProyecto = P.Nombre
-            where ECP.NombreProyecto = @Proyecto
+            where ECP.NombreProyecto = @Proyecto AND ECP.FechaFin > GETDATE()
           )`,
   createNewEmployee: 'Insert into Empleado (Cedula, Nombre, Apellido1, Apellido2, Telefono, Email) values(@Cedula, @Nombre, @Apellido1, @Apellido2, @Telefono, @Email)',
   contractExistentEmployee: `Insert into EmpleadoYContratoSeAsocianAProyecto values (@Cedula,@TipoJornada,@NombreProyecto,@CedulaEmpleador,
@@ -44,7 +44,10 @@ export const employeesQueries = {
     JOIN EmpleadoYContratoSeAsocianAProyecto e ON e.CedulaEmpleado = Empleado.Cedula AND e.NombreProyecto = pl.NombreProyecto
   WHERE Empleado.Email = @employeeEmail
   order by pl.FechaFin`,
-  getHours: `select * from HorasRegistradas`,
+  getHours: `select * 
+  from HorasRegistradas
+  where CedulaEmpleado = @CedulaEmpleado and NombreProyecto = @NombreProyecto
+  order by Fecha desc`,
 };
 
 
