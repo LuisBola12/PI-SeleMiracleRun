@@ -9,7 +9,7 @@ import {
 } from '../controllers/employees.contoller';
 import {
   getEmployerByID, getUserByEmail, verifyCredentials, registerNewUser,
-  getProfileEmployeer, getProfileEmployee, updateProfileEmployeer, updateProfileEmployee
+  getProfileEmployeer, getProfileEmployee, updateProfileEmployeer, updateProfileEmployee, updateVerification
 } from '../controllers/users.controller';
 import {
   getVoluntaryDeductions, createNewVoluntaryDeduction, getVoluntaryDeductionsByName, updateVoluntaryDeduction,
@@ -31,7 +31,7 @@ router.get( '/users/:Email', getUserByEmail );
 router.get( '/profileEmployee/:Email', getProfileEmployee );
 router.get( '/profileEmployeer/:Email', getProfileEmployeer );
 router.post( '/users', verifyCredentials );
-
+router.put( '/verificationEmail', updateVerification );
 
 //Employer
 router.post('/createEmployer', registerNewUser);
