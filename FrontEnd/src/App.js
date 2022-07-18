@@ -32,6 +32,7 @@ import { EditProjectPage } from './Pages/editProject';
 import { EmployeePaymentsReport } from './Pages/employeePaymentsReport';
 import { PayrollReport } from './Pages/payrollReport';
 import { DashBoard } from './Pages/dashBoard';
+import { VerificationPage } from './Pages/verification';
 
 function App() {
 
@@ -44,6 +45,7 @@ function App() {
         <Route path='/' element={<Login />} />
         <Route path='no-autorizado' element={<Unauthoraized />} />
         <Route path='register' element={<Register />} />
+        <Route path='verification' element={<VerificationPage />} />
 
         {/* Routes for the employer */}
         {userRoll && userRoll.Roles === 'admin' ?
