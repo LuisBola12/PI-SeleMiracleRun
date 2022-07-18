@@ -2,8 +2,6 @@ import { NavLink as Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Nav = styled.nav`
-  position: sticky;
-  top:0;
   background: #133c54;
   height:80px;
   display: flex;
@@ -16,8 +14,6 @@ export const Nav = styled.nav`
 `;
 
 export const NavLink = styled(Link)`
-  position: sticky;
-  top:0;
   color: white;
   display: flex;
   align-items: center;
@@ -25,20 +21,29 @@ export const NavLink = styled(Link)`
   padding: 0 1rem;
   height: 100%;
   cursor: pointer;
-  margin-left: 20px;
-  margin-right: 20px;
+  margin-left: 18px;
+  margin-right: 18px;
+  font-weight: 200;
   &.active {
-    color: #52d6d3;
+    margin-top: auto;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    height: 70%;
+    color: #133c54;
+    font-weight: bolder;
+    background: #fff;
+    font-size: 18px;
+    text-decoration: underline;
   }
   &:hover {
     color: #52d6d3;
-    opacity: 80%
+    font-weight: 600;
+    text-decoration: underline;
   }
+  // border: solid red;
 `;
 
 export const NavMenu = styled.div`
-  position: sticky;
-  top:0;
   display: flex;
   align-items: center;
   margin-left: 180px;
