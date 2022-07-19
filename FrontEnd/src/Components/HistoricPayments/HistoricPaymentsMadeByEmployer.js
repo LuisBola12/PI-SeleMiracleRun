@@ -8,6 +8,7 @@ import { FaFilter } from 'react-icons/fa';
 import { DateRangeSelect } from '../DateRangeSelect/DateRangeSelect';
 import { addDays } from 'date-fns';
 import { Pagination } from '../Pagination/Pagination';
+import { ExportToExcelButton } from '../ExportToExcelButton/ExportToExcelButton';
 
 export const HistoricPaymentsMadeByEmployer = () => {
   const seleUrl = process.env.REACT_APP_BACKEND_LOCALHOST;
@@ -156,21 +157,26 @@ export const HistoricPaymentsMadeByEmployer = () => {
 
         </div>
 
+        <ExportToExcelButton
+          objectsArray={employerPayments}
+          sheetName={'myPayments'}
+          fileName={'myPaymentsReport'}
+        />
       </div>
 
       <table className='Table' id='EmployeePaymentsTable'>
         <thead>
           <tr className='table-header'>
-            <th className='left-td table-left-border'>Nombre</th>
-            <th className='right-td'>Proyecto</th>
-            <th className='right-td'>Cedula</th>
-            <th className='right-td'>Tipo de Empleado</th>
-            <th className='right-td'>Salario Bruto</th>
-            <th className='right-td'>Beneficios</th>
-            <th className='right-td'>Cargas Sociales Empleador</th>
-            <th className='right-td'>Deducciones Obligatorias Empleado</th>
-            <th className='right-td'>Deducciones Voluntarias</th>
-            <th className='table-right-border right-td'>Costo Empleador</th>
+            <th className='left-td table-left-border'>Name</th>
+            <th className='right-td'>Proyect</th>
+            <th className='right-td'>ID</th>
+            <th className='right-td'>Contract Type</th>
+            <th className='right-td'>Gross Salary</th>
+            <th className='right-td'>Benefits</th>
+            <th className='right-td'>Employer Obligatory Deductions</th>
+            <th className='right-td'>Employee Obligatory Deductions</th>
+            <th className='right-td'>VoluntaryDeductions</th>
+            <th className='table-right-border right-td'>Employer Cost</th>
           </tr>
         </thead>
         <tbody>
@@ -180,16 +186,11 @@ export const HistoricPaymentsMadeByEmployer = () => {
               <td className='right-td'>{row.NombreProyecto}</td>
               <td className='right-td'>{row.CedulaEmpleado}</td>
               <td className='right-td'>{row.TipoContrato}</td>
-              {/* <td className='right-td'>{removeTimeFromDate( row.FechaFin )}</td> */}
               <td className='right-td'>{formatter.format( row.SalarioBruto )}</td>
               <td className='right-td'>{formatter.format( row.MontoTotalBeneficios )}</td>
               <td className='right-td'>{formatter.format( row.MontoTotalDeduccionesObligatoriasEmpleador )}</td>
               <td className='right-td'>{formatter.format( row.MontoTotalDeduccionesObligatoriasEmpleado )}</td>
               <td className='right-td'>{formatter.format( row.MontoTotalDeduccionesVoluntarias )}</td>
-              {/* <td className='right-td'>{row.TipoContrato === 'Por horas' ? formatter.format( row.SalarioPorHoras ) : '-'}</td> */}
-              {/* <td className='right-td'>{formatter.format( row.SalarioBruto )}</td> */}
-              {/* <td className='right-td'>{row.TipoContrato === 'Servicios Profesionales' ? '-' : formatter.format( row.MontoTotalDeduccionesObligatoriasEmpleado )}</td> */}
-              {/* <td className='right-td'>{row.TipoContrato === 'Servicios Profesionales' ? '-' : formatter.format( row.MontoTotalDeduccionesVoluntarias )}</td> */}
               <td className='right-td'>{formatter.format( row.SalarioBruto + row.MontoTotalDeduccionesObligatoriasEmpleador )}</td>
             </tr>
           ) )}
