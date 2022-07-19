@@ -10,7 +10,6 @@ export const putVerificationUser = async( Email ) => {
         Email: Email,
       } ),
     } );
-    // const newData = await result.json();
     return result;
   }catch(error){
     console.log(error);

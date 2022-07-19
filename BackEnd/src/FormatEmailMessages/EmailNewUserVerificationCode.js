@@ -1,6 +1,4 @@
 export const emailNewUserVerification = ( email ) => {
-  // const end =  email.indexOf('@');
-  // const user = email.slice(0,end);
   const emailFormat = `
   <div style='
   background: #133c54; 

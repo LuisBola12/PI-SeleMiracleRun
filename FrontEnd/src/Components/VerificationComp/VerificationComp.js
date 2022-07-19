@@ -114,36 +114,3 @@ export const VerificationComp = () => {
     </>
   );
 };
-
-{/* <h2>
-<b>Almost done, jdvenegas50!</b>
-</h2>
-<div
-style={{
-  border: "solid gray 1px",
-  width: "500px",
-  "padding-top": "20px",
-}}
->
-<div style={{ "margin-bottom": "50px" }}>
-  To secure your SeleMiracleRun account, you just need to verify your
-  email address.
-</div>
-<div>
-  <a
-    style={{
-      border: "solid gray 1px",
-      'text-decoration': 'none',
-      color: 'white',
-      padding: '8px 30px',
-      background: 'darkgreen',
-     'border-radius': '8px',
-     'margin-bottom': '100px'
-    }}
-    href="http://localhost:3000/verification?emial=jdvenegas50@gmail.com"
-  >
-    {" "}
-    Verify Email{" "}
-  </a>{" "}
-</div>
-</div> */}
