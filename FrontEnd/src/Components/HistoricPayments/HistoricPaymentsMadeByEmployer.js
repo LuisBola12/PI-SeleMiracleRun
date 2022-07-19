@@ -79,7 +79,7 @@ export const HistoricPaymentsMadeByEmployer = () => {
 
   return ( isLoading ? <div className='loader' ></div > :
     <>
-      <h2 className='table-button'>My Payments Report</h2>
+      <h2 className='navigate-title'>Payments Per Employee</h2>
       <div className='report-header'>
         <div className='filter-payments-report'>
           <IconContext.Provider
