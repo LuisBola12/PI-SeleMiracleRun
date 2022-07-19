@@ -14,16 +14,14 @@ export const Nav = styled.nav`
 `;
 
 export const NavLink = styled(Link)`
+  width: 225px;
+  justify-content: center;
   color: white;
   display: flex;
   align-items: center;
   text-decoration: none;
-  padding: 0 1rem;
   height: 100%;
   cursor: pointer;
-  margin-left: 18px;
-  margin-right: 18px;
-  font-weight: 200;
   &.active {
     margin-top: auto;
     border-top-left-radius: 15px;
@@ -33,21 +31,22 @@ export const NavLink = styled(Link)`
     font-weight: bolder;
     background: #fff;
     font-size: 18px;
-    text-decoration: underline;
+    &:hover {
+      color: #133c54;
+      font-size: 18px;
+    }
   }
   &:hover {
-    color: #52d6d3;
-    font-weight: 600;
-    text-decoration: underline;
+    color: #fff;
+    font-size: 20px;
   }
   // border: solid red;
 `;
 
 export const NavMenu = styled.div`
   display: flex;
+  // border: solid red;
   align-items: center;
-  margin-left: 180px;
-  margin-left: 12.2%;
   @media screen and (max-width: 768px) {
     flex-direction:column;
   }
