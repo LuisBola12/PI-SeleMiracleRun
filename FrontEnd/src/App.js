@@ -71,7 +71,7 @@ function App() {
               <Route path='payroll' element={<Payroll />} />
               <Route path='payroll/details' element={<PayrollDetailsPage />} />
               <Route path='projectSettings' element={<EditProjectPage />} />
-              <Route path='paymentsReport' element={<HistoricPaymentsPerEmployeePage />} />
+              <Route path='paymentsPerEmployee' element={<HistoricPaymentsPerEmployeePage />} />
               <Route path='PaymentsReport' element={<EmployerPaymentsReport />} />
               <Route path='payroll/report' element={<PayrollReport />} />
               <Route path='dashBoard' element={<DashBoard />} />
