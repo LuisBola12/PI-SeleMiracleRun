@@ -30,6 +30,7 @@ import { EndContractWithEmployee } from './Pages/endContractWithEmployee';
 import { EmployeeMyPayments } from './Pages/employeeMyPayments';
 import { EditProjectPage } from './Pages/editProject';
 import { EmployeePaymentsReport } from './Pages/employeePaymentsReport';
+import { HistoricPaymentsPerEmployeePage } from './Pages/historicPaymentsPerEmployeePage.js';
 import { EmployerPaymentsReport } from './Pages/employerPaymentsReport';
 import { PayrollReport } from './Pages/payrollReport';
 import { DashBoard } from './Pages/dashBoard';
@@ -72,6 +73,7 @@ function App() {
               <Route path='payroll' element={<Payroll />} />
               <Route path='payroll/details' element={<PayrollDetailsPage />} />
               <Route path='projectSettings' element={<EditProjectPage />} />
+              <Route path='paymentsPerEmployee' element={<HistoricPaymentsPerEmployeePage />} />
               <Route path='PaymentsReport' element={<EmployerPaymentsReport />} />
               <Route path='payroll/report' element={<PayrollReport />} />
               <Route path='dashBoard' element={<DashBoard />} />
