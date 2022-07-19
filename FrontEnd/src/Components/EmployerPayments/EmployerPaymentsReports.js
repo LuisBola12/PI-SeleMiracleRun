@@ -9,15 +9,15 @@ import { IconContext } from 'react-icons';
 import { FaFilter } from 'react-icons/fa';
 import { DateRangeSelect } from '../DateRangeSelect/DateRangeSelect';
 import { addDays } from 'date-fns';
-import { ExportToExcelButton } from '../ExportToExcelButton/ExportToExcelButton';
 import { Pagination } from '../Pagination/Pagination';
+import { ExportToExcelButton } from '../ExportToExcelButton/ExportToExcelButton';
 
-export const EmployeePaymentsReports = () => {
-  const lastDaysToShow = 180;
+export const EmployerPaymentsReports = () => {
+  const lastDaysToShow = 60;
   const [ pageNumber, setPageNumber ] = useState( 1 );
   const [ perPage, setPerPage ] = useState( 10 );
-  const employeeEmail = useSelector( ( state ) => state.user.user.Email );
-  const [ allEmployeePayments, setAllEmployeePayments ] = useState( [] );
+  const employerID = useSelector( ( state ) => state.user.user.Cedula );
+  const [ allEmployerPayments, setAllEmployerPayments ] = useState( [] );
   const [ isLoading, setIsLoading ] = useState( true );
   const [ projectNameFilter, setProjectNameFilter ] = useState( 'Any' );
   const [ filterSwitch, setFilterSwitch ] = useState( false );
@@ -37,24 +37,25 @@ export const EmployeePaymentsReports = () => {
 
   useEffect( () => {
     setIsLoading( true );
-    const getEmployeeInfo = async () => {
-      const apiPayments = `/${employeeEmail}/${projectNameFilter}/${range[0].startDate}/${range[0].endDate}`;
-      const infoReceived = await getAnEntity( 'employeePayments', apiPayments );
+    const getEmployerInfo = async () => {
+      const apiPayments = `/${employerID}/${projectNameFilter}/${range[0].startDate}/${range[0].endDate}`;
+      const infoReceived = await getAnEntity( 'payrollTotalCosts', apiPayments );
       if ( infoReceived === undefined ) {
-        setAllEmployeePayments( [] );
+        setAllEmployerPayments( [] );
       } else {
-        setAllEmployeePayments( infoReceived );
+        setAllEmployerPayments( infoReceived );
       }
       setIsLoading( false );
     };
-    getEmployeeInfo();
+    getEmployerInfo();
+    console.log(allEmployerPayments);
   }, [ projectNameFilter, filterSwitch ] );
 
-  const maxPage = Math.ceil( allEmployeePayments.length / perPage );
+  const maxPage = Math.ceil( allEmployerPayments.length / perPage );
 
   return ( isLoading ? <div className='loader' ></div > :
     <>
-      <h2 className='navigate-title'>My Payments Report</h2>
+      <h2 className='table-button'>My Payments Report</h2>
       <div className='report-header'>
         <div className='filter-payments-report'>
           <IconContext.Provider
@@ -95,44 +96,44 @@ export const EmployeePaymentsReports = () => {
 
         </div>
         <ExportToExcelButton
-          objectsArray={allEmployeePayments}
+          objectsArray={allEmployerPayments}
           sheetName={'myPayments'}
           fileName={'myPaymentsReport'}
         />
 
       </div>
       
-      <table className='Table' id='EmployeePaymentsTable'>
+      <table className='Table' id='EmployerPaymentsTable'>
         <thead>
           <tr className='table-header'>
             <th className='left-td table-left-border'>Project</th>
-            <th className='right-td'>Contract Type</th>
+            <th className='right-td'>Payment Frequency</th>
             <th className='right-td'>Payment Date</th>
-            <th className='right-td'>Hours Worked</th>
-            <th className='right-td'>Hourly Wage</th>
-            <th className='right-td'>Gross Salary</th>
-            <th className='right-td'>Mandatory Deductions</th>
+            <th className='right-td'>Gross Salaries</th>
+            <th className='right-td'>Benefits</th>
+            <th className='right-td'>My Obligatory Deductions</th>
+            <th className='right-td'>Employee Obligatory Deductions</th>
             <th className='right-td'>Voluntary Deductions</th>
-            <th className='table-right-border right-td'>Net Salary</th>
+            <th className='table-right-border right-td'>Employer Cost</th>
           </tr>
         </thead>
         <tbody>
-          {allEmployeePayments.slice( ( pageNumber - 1 ) * perPage, ( pageNumber - 1 ) * perPage + perPage  ).reverse().map( ( row ) => (
+          {allEmployerPayments.slice( ( pageNumber - 1 ) * perPage, ( pageNumber - 1 ) * perPage + perPage  ).reverse().map( ( row ) => (
             <tr key={row.ConsecutivoPago}>
               <td className='left-td table-left-border'>{row.NombreProyecto}</td>
-              <td className='right-td'>{row.TipoContrato}</td>
-              <td className='right-td'>{removeTimeFromDate( row.FechaFin )}</td>
-              <td className='right-td'>{row.TipoContrato === 'Por Horas' ? row.SalarioBruto / row.SalarioPorHoras : '-'}</td>
-              <td className='right-td'>{row.TipoContrato === 'Por Horas' ? formatter.format( row.SalarioPorHoras ) : '-'}</td>
-              <td className='right-td'>{formatter.format( row.SalarioBruto )}</td>
-              <td className='right-td'>{row.TipoContrato === 'Servicios Profesionales' ? '-' : formatter.format( row.MontoTotalDeduccionesObligatoriasEmpleado )}</td>
-              <td className='right-td'>{row.TipoContrato === 'Servicios Profesionales' ? '-' : formatter.format( row.MontoTotalDeduccionesVoluntarias )}</td>
-              <td className='right-td'>{formatter.format( row.SalarioNeto )}</td>
+              <td className='right-td'>{row.TipoPeriodo}</td>
+              <td className='right-td'>{removeTimeFromDate(row.FechaFin)}</td>
+              <td className='right-td'>{formatter.format( row.SalariosBrutos )}</td>
+              <td className='right-td'>{formatter.format(row.Beneficios)}</td>
+              <td className='right-td'>{formatter.format(row.DeduccionesObligatoriasEmpleador)}</td>
+              <td className='right-td'>{formatter.format(row.DeduccionesObligatoriasEmpleados)}</td>
+              <td className='right-td'>{formatter.format(row.DeduccionesVoluntarias)}</td>
+              <td className='right-td'>{formatter.format(row.SalariosBrutos + row.Beneficios + row.DeduccionesObligatoriasEmpleador)}</td>
             </tr>
           ) )}
         </tbody>
       </table>
-      <label className='Empty-message'>{( allEmployeePayments.length === 0 ) ? 'No Payments made to me yet' : ''}</label>
+      <label className='Empty-message'>{( allEmployerPayments.length === 0 ) ? 'No Payments made yet' : ''}</label>
       
       <Pagination 
         page={pageNumber}

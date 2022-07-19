@@ -83,6 +83,10 @@ export const DropdownMenu = () => {
                 </button>
 
               </>
+                <button onClick={() => { navigate( '/paymentsReport' ); }} className='sidebar-button' >
+                  My Payments Reports
+                </button>
+            </>
             )
           }
           <button onClick={redirectToLogIn} className='sidebar-button' >
