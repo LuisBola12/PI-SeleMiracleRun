@@ -23,3 +23,23 @@ export const filterPaymentsByDate = ( payments, initialDateFilter, endDateFilter
   }
   return filteredPayments;
 };
+
+export const filterPaymentByEmployeeID = ( payments, employeeID ) => {
+  let filteredPayments = [];
+  for ( let i = 0; i < payments.length; i++ ) {
+    if ( payments[i].CedulaEmpleado === employeeID ) {
+      filteredPayments.push( payments[i] );
+    }
+  }
+  return filteredPayments;
+};
+
+export const filterPaymentsByContractType = ( payments, contractType ) => {
+  let filteredPayments = [];
+  for ( let i = 0; i < payments.length; i++ ) {
+    if ( payments[i].TipoContrato === contractType ) {
+      filteredPayments.push( payments[i] );
+    }
+  }
+  return filteredPayments;
+};

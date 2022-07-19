@@ -77,6 +77,11 @@ export const DropdownMenu = () => {
                 <button onClick={() => { navigate( '/projectSettings' ); }} className='sidebar-button' >
                   Project Configuration
                 </button>
+
+                <button onClick={() => { navigate( '/paymentsPerEmployee' ); }} className='sidebar-button' >
+                  Payments Per Employee
+                </button>
+
                 <button onClick={() => { navigate( '/paymentsReport' ); }} className='sidebar-button' >
                   Payments Reports
                 </button>
