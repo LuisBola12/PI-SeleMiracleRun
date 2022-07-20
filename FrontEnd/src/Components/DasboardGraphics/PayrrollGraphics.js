@@ -18,7 +18,7 @@ export const PayrrollGraphic = () => {
         let dataValues = [];
         data.slice(0,5).forEach((element) => {
           labels.push(element.Consectivo);
-          dataValues.push(sumTotalSalaries(element.Salarios,element.Pagos,element.Beneficios));
+          dataValues.push(element.Salarios,element.Pagos,element.Beneficios);
         });
         setPayrrollLabels(labels);
         setPayrrollData(dataValues);
