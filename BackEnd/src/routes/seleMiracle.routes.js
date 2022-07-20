@@ -3,7 +3,7 @@ import { Router } from 'express';
 import { sendFileEmail } from '../controllers/employer.controller';
 import {
   getProjectsByEmailAndName, getProjectsByEmail, createProject, createPayrroll,
-  getProjectInfoByName, updateProject, deleteProject, getPeriodOfAProjectToReport
+  getProjectInfoByName, updateProject, deleteProject, getPeriodOfAProjectToReport, getCountEmployeesContractType
 } from '../controllers/projects.controller';
 import {
   getEmployees, postNewEmployee, getEmployeeByID, verifyEmployeeContractOnProject,
@@ -87,6 +87,7 @@ router.put('/logicEliminateProject', deleteProject);
 router.get('/myProjects/:Email/:ProjectName', getProjectsByEmailAndName);
 router.get('/projects/:projectName', getProjectInfoByName);
 router.put('/updateProject', updateProject);
+router.get('/countEmployeeTypes/:employerID/:projectName', getCountEmployeesContractType);
 
 //Benefits
 router.get( '/benefits/:Proyecto/:CedulaEmpleador', getBenefits );

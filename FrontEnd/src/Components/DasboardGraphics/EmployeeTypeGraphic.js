@@ -1,7 +1,6 @@
 import { React, useState, useEffect } from 'react';
 import { PieChart } from '../Plots/PieChart.js';
 import { useSelector } from 'react-redux';
-import { getBenefitsStatistics } from '../../Utils/Benefits/getBenefitsStatistics';
 
 export const EmployeeTypeGraphic = () => {
   const user = useSelector( ( state ) => state.user.user );
@@ -9,23 +8,32 @@ export const EmployeeTypeGraphic = () => {
   const [ infoReceived, setInfoReceived ] = useState( false );
   const [ benefitsLables, setBenefitsLables ] = useState( [] );
   const [ benefitsData, setBenefitsData ] = useState( [] );
+  const url = process.env.REACT_APP_BACKEND_LOCALHOST + 'countEmployeeTypes/' + user.Cedula + '/' + activeProject;
 
   useEffect( () => {
-    const getStatistics = async () => {
-      const data = await getBenefitsStatistics( user.Cedula, activeProject );
-      if ( data ) {
-        let labels = [];
-        let dataValues = [];
-        data.forEach( ( element ) => {
-          labels.push( element.Nombre );
-          dataValues.push( element.empleados );
-        } );
-        setBenefitsLables( labels );
-        setBenefitsData( dataValues );
-        setInfoReceived( true );
-      }
-    };
-    getStatistics();
+    try {
+      const getStatistics = async () => {
+        console.log( url );
+        const infoReceived = await fetch( url );
+        console.log(  infoReceived );
+        const data = await infoReceived.json();
+        if ( data ) {
+          let labels = [];
+          let dataValues = [];
+          data.forEach( ( element ) => {
+            labels.push( element.ContractType );
+            dataValues.push( element.EmployeeCount );
+          } );
+          setBenefitsLables( labels );
+          setBenefitsData( dataValues );
+          setInfoReceived( true );
+        }
+      };
+      getStatistics();
+    }
+    catch ( e ){
+      console.log( e );
+    }
   }, [] );
 
   return !infoReceived ? <div className='loader' ></div > : (
@@ -37,7 +45,7 @@ export const EmployeeTypeGraphic = () => {
           dataValues= {benefitsData}
         />
         : <>
-          <label className='Empty-message' style={{ marginTop: 'auto' }}> No benefits selected by employees yet </label>
+          <label className='Empty-message' style={{ marginTop: 'auto' }}>No Employees Added</label>
         </>
       
       }
