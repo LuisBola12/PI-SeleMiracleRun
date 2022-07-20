@@ -49,14 +49,14 @@ export const EmployerPaymentsReports = () => {
       setIsLoading( false );
     };
     getEmployerInfo();
-    console.log(allEmployerPayments);
+    console.log( allEmployerPayments );
   }, [ projectNameFilter, filterSwitch ] );
 
   const maxPage = Math.ceil( allEmployerPayments.length / perPage );
 
   return ( isLoading ? <div className='loader' ></div > :
     <>
-      <h2 className='table-button'>My Payments Report</h2>
+      <h2 className='navigate-title'>Payments Report</h2>
       <div className='report-header'>
         <div className='filter-payments-report'>
           <IconContext.Provider
@@ -123,13 +123,13 @@ export const EmployerPaymentsReports = () => {
             <tr key={row.ConsecutivoPago}>
               <td className='left-td table-left-border'>{row.NombreProyecto}</td>
               <td className='right-td'>{row.TipoPeriodo}</td>
-              <td className='right-td'>{removeTimeFromDate(row.FechaFin)}</td>
+              <td className='right-td'>{removeTimeFromDate( row.FechaFin )}</td>
               <td className='right-td'>{formatter.format( row.SalariosBrutos )}</td>
-              <td className='right-td'>{formatter.format(row.Beneficios)}</td>
-              <td className='right-td'>{formatter.format(row.DeduccionesObligatoriasEmpleador)}</td>
-              <td className='right-td'>{formatter.format(row.DeduccionesObligatoriasEmpleados)}</td>
-              <td className='right-td'>{formatter.format(row.DeduccionesVoluntarias)}</td>
-              <td className='right-td'>{formatter.format(estimateTotalEmployerCost(row.SalariosBrutos,row.DeduccionesObligatoriasEmpleador,row.Beneficios))}</td>
+              <td className='right-td'>{formatter.format( row.Beneficios )}</td>
+              <td className='right-td'>{formatter.format( row.DeduccionesObligatoriasEmpleador )}</td>
+              <td className='right-td'>{formatter.format( row.DeduccionesObligatoriasEmpleados )}</td>
+              <td className='right-td'>{formatter.format( row.DeduccionesVoluntarias )}</td>
+              <td className='right-td'>{formatter.format( estimateTotalEmployerCost( row.SalariosBrutos,row.DeduccionesObligatoriasEmpleador,row.Beneficios ) )}</td>
             </tr>
           ) )}
         </tbody>
