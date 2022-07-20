@@ -29,7 +29,7 @@ export const BenefitsGraphic = () => {
 
   return !infoReceived ? <div className='loader' ></div > : (
     <div className='benefit-graphic-container'>
-      <h3> Benefits selected by employees</h3>
+      <h3> Benefits Selected By Employees</h3>
       {benefitsLables.length > 0 && benefitsData.length >0 ? 
        <DoughnutPlot
         dataLabels={benefitsLables}

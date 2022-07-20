@@ -38,7 +38,7 @@ export const EmployeeTypeGraphic = () => {
 
   return !infoReceived ? <div className='loader' ></div > : (
     <div className='benefit-graphic-container'>
-      <h3>Emloyee Quantity Per Contract Type</h3>
+      <h3>Contract Type Variety on Project</h3>
       {benefitsLables.length > 0 && benefitsData.length > 0 ? 
         <PieChart
           dataLabels={benefitsLables}

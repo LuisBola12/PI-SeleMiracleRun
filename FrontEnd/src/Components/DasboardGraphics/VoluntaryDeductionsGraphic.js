@@ -30,7 +30,7 @@ export const VoluntaryDeductionsGraphic = () => {
 
   return !infoReceived ? <div className='loader' ></div > : (
     <div className='voluntaryDeductions-graphic-container'>
-      <h3> Voluntary deductions selected by employees</h3>
+      <h3> Voluntary Deductions Selected by Employees</h3>
       {voluntaryDeductionsLables.length > 0 && voluntaryDeductionsData.length >0 ?
         <BarPlot
         dataLabels={voluntaryDeductionsLables}

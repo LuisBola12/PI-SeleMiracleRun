@@ -14,7 +14,7 @@ export const Nav = styled.nav`
 `;
 
 export const NavLink = styled(Link)`
-  width: 225px;
+  width: 240px;
   justify-content: center;
   color: white;
   display: flex;
@@ -38,7 +38,7 @@ export const NavLink = styled(Link)`
   }
   &:hover {
     color: #fff;
-    font-size: 20px;
+    font-size: 18px;
   }
   // border: solid red;
 `;

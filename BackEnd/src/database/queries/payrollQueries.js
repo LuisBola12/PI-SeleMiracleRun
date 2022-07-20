@@ -61,5 +61,5 @@ export const payrollQueries = {
   sum(pa.MontoTotalDeduccionesObligatoriasEmpleador) as Pagos from Planilla pl
   join Pago pa on pa.ConsecutivoPlanilla = pl.Consectivo
   where NombreProyecto = @NombreProyecto and pl.CedulaEmpleador = @Cedula
-  group by pl.Consectivo`
+  group by pl.Consectivo order by pl.Consectivo desc `
 };
