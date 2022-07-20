@@ -14,6 +14,8 @@ import {
   getTotalBenefitsCost,
 } from "../../Utils/PayRollReport/getPayRollData";
 import { removeTimeFromDate } from "../../shared/removeTimeFromDate";
+import { sumTotalSalaries } from "../../Utils/PayRollReport/sumTotalSalarys";
+import { sumTotalBenefits } from './../../Utils/PayRollReport/sumTotalBenefits';
 
 export const PayrollReportComp = () => {
   const location = useLocation();
@@ -89,10 +91,7 @@ export const PayrollReportComp = () => {
       );
       if (data) {
         setTotalSalaryCost(data);
-        let total = 0;
-        data.forEach((element) => {
-          total += element.salario;
-        });
+        const total = sumTotalSalaries(data)
         setTotalSalary(total);
       }
     };
@@ -106,10 +105,7 @@ export const PayrollReportComp = () => {
       const data = await getTotalBenefitsCost(location.state.Consectivo);
       if (data) {
         setBenefits(data);
-        let total = 0;
-        data.forEach((element) => {
-          total += element.Monto;
-        });
+        const total = sumTotalBenefits(data);
         setTotalBenefitsCost(total);
       }
     };

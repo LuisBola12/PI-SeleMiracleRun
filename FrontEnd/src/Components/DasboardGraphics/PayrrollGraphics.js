@@ -1,6 +1,7 @@
 import { React, useState, useEffect } from "react"
 import { useSelector } from "react-redux";
 import { getPayrrollStatistics } from "../../Utils/PayrollProjects/getPayrrollStatistics";
+import { sumTotalSalaries } from "../../Utils/PayRollReport/sumTotalSalarys";
 import { LineChart } from './../Plots/LineChartPlot';
 
 export const PayrrollGraphic = () => {
@@ -17,7 +18,7 @@ export const PayrrollGraphic = () => {
         let dataValues = [];
         data.slice(0,5).forEach((element) => {
           labels.push(element.Consectivo);
-          dataValues.push((element.Salarios + element.Beneficios + element.Pagos));
+          dataValues.push(sumTotalSalaries(element.Salarios,element.Pagos,element.Beneficios));
         });
         setPayrrollLabels(labels);
         setPayrrollData(dataValues);
