@@ -11,6 +11,7 @@ import { DateRangeSelect } from '../DateRangeSelect/DateRangeSelect';
 import { addDays } from 'date-fns';
 import { Pagination } from '../Pagination/Pagination';
 import { ExportToExcelButton } from '../ExportToExcelButton/ExportToExcelButton';
+import { estimateTotalEmployerCost } from '../../Utils/PayRollReport/sumTotalEmployerCost';
 
 export const EmployerPaymentsReports = () => {
   const lastDaysToShow = 60;
@@ -128,7 +129,7 @@ export const EmployerPaymentsReports = () => {
               <td className='right-td'>{formatter.format(row.DeduccionesObligatoriasEmpleador)}</td>
               <td className='right-td'>{formatter.format(row.DeduccionesObligatoriasEmpleados)}</td>
               <td className='right-td'>{formatter.format(row.DeduccionesVoluntarias)}</td>
-              <td className='right-td'>{formatter.format(row.SalariosBrutos + row.Beneficios + row.DeduccionesObligatoriasEmpleador)}</td>
+              <td className='right-td'>{formatter.format(estimateTotalEmployerCost(row.SalariosBrutos,row.DeduccionesObligatoriasEmpleador,row.Beneficios))}</td>
             </tr>
           ) )}
         </tbody>
