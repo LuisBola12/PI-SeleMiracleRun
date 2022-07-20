@@ -43,7 +43,8 @@ export const EmployeePaymentsReports = () => {
       if ( infoReceived === undefined ) {
         setAllEmployeePayments( [] );
       } else {
-        setAllEmployeePayments( infoReceived );
+        setAllEmployeePayments( [] );
+        setAllEmployeePayments( infoReceived.reverse() );
       }
       setIsLoading( false );
     };
@@ -117,7 +118,7 @@ export const EmployeePaymentsReports = () => {
           </tr>
         </thead>
         <tbody>
-          {allEmployeePayments.slice( ( pageNumber - 1 ) * perPage, ( pageNumber - 1 ) * perPage + perPage  ).reverse().map( ( row ) => (
+          {allEmployeePayments.slice( ( pageNumber - 1 ) * perPage, ( pageNumber  ) * perPage  ).map( ( row ) => (
             <tr key={row.ConsecutivoPago}>
               <td className='left-td table-left-border'>{row.NombreProyecto}</td>
               <td className='right-td'>{row.TipoContrato}</td>
