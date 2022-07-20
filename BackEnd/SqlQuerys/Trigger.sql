@@ -37,22 +37,21 @@ AS
     END;
 Go;
 
-CREATE TRIGGER AgregarEmpleadoYaDespedido
-ON EmpleadoYContratoSeAsocianAProyecto INSTEAD OF INSERT
+CREATE TRIGGER [dbo].[AgregarEmpleadoYaDespedido]
+ON [dbo].[EmpleadoYContratoSeAsocianAProyecto] INSTEAD OF INSERT
 AS
     DECLARE @Cedula varchar(15), @TipoContrato varchar(30), @NombreProyecto varchar(50), @CedulaEmpleador varchar(15), @NombreServicio varchar(50), @SalarioPorHoras float,
 	@FechaInicio date, @FechaFin date, @ValorDeServicio real
-    SELECT @Cedula = I.CedulaEmpleado, @TipoContrato = I.TipoContrato, @NombreProyecto = I.NombreProyecto, @NombreServicio = I.NombreServicio, @SalarioPorHoras = I.SalarioPorHoras,
+    SELECT @Cedula = I.CedulaEmpleado, @TipoContrato = I.TipoContrato, @NombreProyecto = I.NombreProyecto, @CedulaEmpleador = I.CedulaEmpleador, @NombreServicio = I.NombreServicio, @SalarioPorHoras = I.SalarioPorHoras,
 	@FechaInicio = I.FechaInicio, @FechaFin = I.FechaFin, @ValorDeServicio = I.ValorDeServicio
     FROM inserted I;
 
-    IF EXISTS (SELECT * FROM EmpleadoYContratoSeAsocianAProyecto WHERE CedulaEmpleado = @Cedula and NombreProyecto = @NombreProyecto)
+    IF EXISTS (SELECT * FROM EmpleadoYContratoSeAsocianAProyecto WHERE CedulaEmpleado = @Cedula and NombreProyecto = @NombreProyecto and CedulaEmpleador = @CedulaEmpleador)
     BEGIN
         update EmpleadoYContratoSeAsocianAProyecto set TipoContrato = @TipoContrato, FechaInicio = @FechaInicio, FechaFin = @FechaFin, SalarioPorHoras = @SalarioPorHoras,
-		NombreServicio = @NombreServicio, ValorDeServicio = @ValorDeServicio WHERE CedulaEmpleado = @Cedula AND NombreProyecto = @NombreProyecto
+		NombreServicio = @NombreServicio, ValorDeServicio = @ValorDeServicio, CedulaEmpleador = @CedulaEmpleador WHERE CedulaEmpleado = @Cedula AND NombreProyecto = @NombreProyecto AND CedulaEmpleador = @CedulaEmpleador
     END;
     ELSE
     BEGIN
         insert into EmpleadoYContratoSeAsocianAProyecto values ( @Cedula , @TipoContrato, @NombreProyecto, @CedulaEmpleador, @NombreServicio, @SalarioPorHoras,@FechaInicio,@FechaFin,@ValorDeServicio);
     END;
-Go;
