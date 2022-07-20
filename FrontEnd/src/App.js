@@ -34,6 +34,7 @@ import { HistoricPaymentsPerEmployeePage } from './Pages/historicPaymentsPerEmpl
 import { EmployerPaymentsReport } from './Pages/employerPaymentsReport';
 import { PayrollReport } from './Pages/payrollReport';
 import { DashBoard } from './Pages/dashBoard';
+import { VerificationPage } from './Pages/verification';
 
 function App() {
 
@@ -46,6 +47,7 @@ function App() {
         <Route path='/' element={<Login />} />
         <Route path='no-autorizado' element={<Unauthoraized />} />
         <Route path='register' element={<Register />} />
+        <Route path='verification' element={<VerificationPage />} />
 
         {/* Routes for the employer */}
         {userRoll && userRoll.Roles === 'admin' ?

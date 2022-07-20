@@ -4,6 +4,7 @@ import { userQueries } from '../database/queries/userQueries';
 import { sendEmail } from '../services/Mailer';
 import { emailNewUserEmployer } from '../FormatEmailMessages/EmailNewUserEmployer';
 import { employerQueries } from '../database/queries/employerQueries';
+import { emailNewUserVerification } from '../FormatEmailMessages/EmailNewUserVerificationCode';
 
 export const getUsers = async ( req, res ) => {
   try {
@@ -68,7 +69,11 @@ export const verifyCredentials = async ( req, res ) => {
     if ( result.recordset.length == 0 ) {
       res.status( 400 ).send( { errorMsg: message } );
     } else {
-      res.status( 200 ).json( result.recordset[0] );
+      if(result.recordset[0].Verificado === true ){
+        res.status( 200 ).json( result.recordset[0] );
+      }else{
+        res.status( 400 ).send( { errorMsg: 'Account not verified' } );
+      }
     }
   } catch ( e ) {
     console.log( `Error: ${e}` );
@@ -169,10 +174,17 @@ export const registerNewUser = async ( req, res ) => {
     let mailFormat = {
       from: process.env.EMAIL_USER,
       to: Email,
-      subject: 'Nueva Cuenta SeleMiracleRun',
+      subject: 'New SeleMiracleRun Account',
       html: emailNewUserEmployer( dataInfoUser ),
     };
+    let mailFormatVerify = {
+      from: process.env.EMAIL_USER,
+      to: Email,
+      subject: 'Verify new SeleMiracleRun Account',
+      html: emailNewUserVerification( Email ),
+    };
     await sendEmail( mailFormat );
+    await sendEmail( mailFormatVerify );
     console.log( 'Se envio correctamente' );
   } catch ( e ){
     console.log( e );
@@ -279,5 +291,20 @@ export const updateProfileEmployeer = async ( req, res ) => {
   } catch ( e ) {
     console.log( `Error: ${e}` );
     res.status( 500 ).send( e.message );
+  }
+};
+
+export const updateVerification = async ( req, res ) => {
+  console.log(req.body)
+  const { Email } = req.body;
+  try {
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input( 'Email', Email )
+      .query( userQueries.updateVerification );
+    console.log(result.recordset)
+    res.status( 200 ).json( { msg: 'Se verifico corectamente'} );
+  } catch ( e ) {
+    res.status( 500 ).json({msg: 'No se pudo verificar'})
   }
 };

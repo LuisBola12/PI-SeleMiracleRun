@@ -1,13 +1,13 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { postLogin } from '../../Slices/user/requests/postLogin';
 import { resetErrorMsg } from '../../Slices/user/userSlice';
 import { validAnEntity } from '../../Utils/validAnEntity';
 import usePost from '../../shared/hooks/usePost';
 import validate from '../../Utils/CreateUser/createUserValidations';
 import useForm from '../../shared/hooks/useForm';
 import './CreateUserStyle.scss';
+import Swal from 'sweetalert2';
 
 export const CreateUser = () => {
   const dispatch = useDispatch();
@@ -31,11 +31,14 @@ export const CreateUser = () => {
         Roles: 'admin'
       });
       await post(string);
-      dispatch(postLogin({
-        email: formValues.email_register,
-        password: formValues.password_register
-      }));
-      navigate('/projects');
+      Swal.fire( {
+        title: 'Account Created',
+        text: `A verification email has been send.`,
+        icon: 'success',
+        confirmButtonColor: 'darkgreen',
+      } )
+      dispatch(resetErrorMsg());
+      navigate('/');
     } else {
       setIsSubmitting(false);
       alert('These user alredy exists.');

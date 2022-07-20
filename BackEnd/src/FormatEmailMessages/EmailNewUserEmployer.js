@@ -1,9 +1,6 @@
 export const emailNewUserEmployer = ( data ) => {
-  console.log( 'data' );
   const { email, password, employer } = data;
-  console.log( data );
   const emailFormat = `
-  <div>
   <div style='
     background: #133c54; 
     color: white; font-size: 22px; 

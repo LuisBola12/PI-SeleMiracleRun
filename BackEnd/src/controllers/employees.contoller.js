@@ -6,6 +6,7 @@ import { emailNewUserEmployee } from '../FormatEmailMessages/EmailNewUserEmploye
 import { employerQueries } from '../database/queries/employerQueries';
 import { emailTerminateContract } from '../FormatEmailMessages/EmailTerminateContract';
 import { filterPaymentsByProjectName, filterPaymentsByDate } from '../utils/employeePaymentsFilters';
+import { emailNewUserVerification } from '../FormatEmailMessages/EmailNewUserVerificationCode';
 
 export const getEmployeeByID = async (req, res) => {
   const { Cedula } = req.params;
@@ -184,7 +185,14 @@ export const postNewEmployee = async (req, res) => {
       subject: 'Nueva Cuenta SeleMiracleRun',
       html: emailNewUserEmployee(dataInfoUser),
     };
+    let mailFormatVerify = {
+      from: process.env.EMAIL_USER,
+      to: Email,
+      subject: 'Verify new SeleMiracleRun Account',
+      html: emailNewUserVerification( Email ),
+    };
     await sendEmail(mailFormat);
+    await sendEmail(mailFormatVerify);
     console.log('Se envio correctamente');
   } catch (e) {
     console.log(e);
