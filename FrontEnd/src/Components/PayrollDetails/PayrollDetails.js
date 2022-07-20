@@ -15,7 +15,7 @@ export const PayrollDetails = () => {
   const [data, setData] = useState([]);
   const [infoReceived, setInfoReceived] = useState(false);
   const location = useLocation();
-  let formatter = new Intl.NumberFormat(undefined, {
+  let formatter = new Intl.NumberFormat('en-US', {
     style: "currency",
     currency: "CRC",
   });

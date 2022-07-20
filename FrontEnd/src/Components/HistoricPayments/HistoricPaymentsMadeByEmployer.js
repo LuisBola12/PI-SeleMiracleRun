@@ -35,7 +35,7 @@ export const HistoricPaymentsMadeByEmployer = () => {
   ] );
   const { projects } = useProjectsData();
 
-  let formatter = new Intl.NumberFormat( undefined, {
+  let formatter = new Intl.NumberFormat( 'en-US', {
     style: 'currency',
     currency: 'CRC',
   } );

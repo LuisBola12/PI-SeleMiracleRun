@@ -25,7 +25,7 @@ export const PayslipReportComp = () => {
   const [voluntaryDeductionsCost, setTotalVoluntaryDeductionsCost] =
     useState(0);
 
-  let formatter = new Intl.NumberFormat(undefined, {
+  let formatter = new Intl.NumberFormat('en-US', {
     style: "currency",
     currency: "CRC",
   });

@@ -13,7 +13,7 @@ export const EmployeePayments = () => {
   const [ employeePayments, setEmployeePayments ] = useState( [] );
   const [ isLoading, setIsLoading ] = useState( true );
   
-  let formatter = new Intl.NumberFormat( undefined, {
+  let formatter = new Intl.NumberFormat( 'en-US', {
     style: 'currency',
     currency: 'CRC',
   } );
