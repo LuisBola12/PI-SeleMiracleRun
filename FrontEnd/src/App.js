@@ -35,6 +35,7 @@ import { EmployerPaymentsReport } from './Pages/employerPaymentsReport';
 import { PayrollReport } from './Pages/payrollReport';
 import { DashBoard } from './Pages/dashBoard';
 import { VerificationPage } from './Pages/verification';
+import { PayslipReport } from './Pages/payslipReport';
 
 function App() {
 
@@ -88,6 +89,7 @@ function App() {
               <Route path='myVoluntaryDeductions' element={<EmployeesVoluntaryDeductions />} />
               <Route path='myPayments' element={<EmployeeMyPayments />} />
               <Route path='PaymentsReport' element={<EmployeePaymentsReport />} />
+              <Route path='/myPayments/reports/payslipReport' element={<PayslipReport/>} />
             </Route>
           )}
       </Routes>
