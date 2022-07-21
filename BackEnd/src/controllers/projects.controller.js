@@ -43,7 +43,6 @@ export const createProject = async ( req, res ) => {
     console.log( result );
     res.json( `Project: ${projectName} created successfully`  );
   } catch ( e ) {
-    res.error( e );
     console.log( `Error: ${e}` );
     res.status( 500 ).send( e.message );
   }
@@ -204,7 +203,7 @@ export const calculateGrossSalaryForAllEmployes =  async ( projectName ) => {
         }
           break;
         
-        case 'Por horas': {
+        case 'Por Horas': {
           hoursWorked =   await calculateHourlyEmployeeWorkedHours( paymentPeriod, employeeID, projectName ); 
           grossSalary = salaryPerHour * hoursWorked;
           break;
@@ -225,6 +224,20 @@ export const calculateGrossSalaryForAllEmployes =  async ( projectName ) => {
   return  grossSalaries;
 }; 
 
+export const getPeriodOfAProjectToReport = async( req, res ) =>{
+  const { nombreProyecto } = req.params;
+  try {
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input( 'Nombre', nombreProyecto )
+      .query( payrollQueries.getPeriodForAEspecificProject );
+    res.status( 200 ).json( result.recordset );
+  } catch ( error ) {
+    console.log( `Error: ${error}` );
+    res.status( 500 ).send( error.message );
+  }
+};
+
 const getPeriodOfAPorject = async( nombreProyecto ) =>{
   try {
     const pool = await getConnection();
@@ -240,7 +253,7 @@ const getPeriodOfAPorject = async( nombreProyecto ) =>{
 };
 const insertPayrrollOnDB = async ( cedula,nombreProyecto,fechaInicio,fechaFin ) => {
   try {
-    console.log(cedula,nombreProyecto,fechaInicio,fechaFin)
+    console.log( cedula,nombreProyecto,fechaInicio,fechaFin );
     const pool = await getConnection();
     const result = await pool
       .request()
@@ -250,9 +263,9 @@ const insertPayrrollOnDB = async ( cedula,nombreProyecto,fechaInicio,fechaFin ) 
       .input( 'NombreProyecto', nombreProyecto )
       .query( projectQueries.createNewPayroll );
     return true;
-  } catch (error) {
-    console.log("ESACA")
-    console.log(error);
+  } catch ( error ) {
+    console.log( 'ESACA' );
+    console.log( error );
     return false;
   }
 };
@@ -425,4 +438,21 @@ export const deleteProject = async ( req, res ) => {
     res.send( error.message );
     console.log( error );
   }
+};
+
+export const getCountEmployeesContractType = async( req,res ) => {
+  const {  employerID, projectName } = req.params;
+  console.log(  employerID, projectName );
+  try {
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input( 'employerID', employerID )
+      .input( 'projectName', projectName )
+      .query( projectQueries.getCountEmployeesByType );
+    res.json( result.recordset );
+    console.log( result.recordset );
+  } catch ( e ) {
+    console.log( e );
+  }
+
 };

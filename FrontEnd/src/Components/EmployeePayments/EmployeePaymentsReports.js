@@ -13,7 +13,7 @@ import { ExportToExcelButton } from '../ExportToExcelButton/ExportToExcelButton'
 import { Pagination } from '../Pagination/Pagination';
 
 export const EmployeePaymentsReports = () => {
-  const lastDaysToShow = 60;
+  const lastDaysToShow = 180;
   const [ pageNumber, setPageNumber ] = useState( 1 );
   const [ perPage, setPerPage ] = useState( 10 );
   const employeeEmail = useSelector( ( state ) => state.user.user.Email );
@@ -30,7 +30,7 @@ export const EmployeePaymentsReports = () => {
   ] );
   const { projects } = useProjectsData();
 
-  let formatter = new Intl.NumberFormat( undefined, {
+  let formatter = new Intl.NumberFormat( 'en-US', {
     style: 'currency',
     currency: 'CRC',
   } );
@@ -41,9 +41,10 @@ export const EmployeePaymentsReports = () => {
       const apiPayments = `/${employeeEmail}/${projectNameFilter}/${range[0].startDate}/${range[0].endDate}`;
       const infoReceived = await getAnEntity( 'employeePayments', apiPayments );
       if ( infoReceived === undefined ) {
-        setEmployeePayments( [] );
+        setAllEmployeePayments( [] );
       } else {
-        setAllEmployeePayments( infoReceived );
+        setAllEmployeePayments( [] );
+        setAllEmployeePayments( infoReceived.reverse() );
       }
       setIsLoading( false );
     };
@@ -54,7 +55,7 @@ export const EmployeePaymentsReports = () => {
 
   return ( isLoading ? <div className='loader' ></div > :
     <>
-      <h2 className='table-button'>My Payments Report</h2>
+      <h2 className='navigate-title'>My Payments Report</h2>
       <div className='report-header'>
         <div className='filter-payments-report'>
           <IconContext.Provider
@@ -117,13 +118,13 @@ export const EmployeePaymentsReports = () => {
           </tr>
         </thead>
         <tbody>
-          {allEmployeePayments.slice( ( pageNumber - 1 ) * perPage, ( pageNumber - 1 ) * perPage + perPage  ).reverse().map( ( row ) => (
+          {allEmployeePayments.slice( ( pageNumber - 1 ) * perPage, ( pageNumber  ) * perPage  ).map( ( row ) => (
             <tr key={row.ConsecutivoPago}>
               <td className='left-td table-left-border'>{row.NombreProyecto}</td>
               <td className='right-td'>{row.TipoContrato}</td>
               <td className='right-td'>{removeTimeFromDate( row.FechaFin )}</td>
-              <td className='right-td'>{row.TipoContrato === 'Por horas' ? row.SalarioBruto / row.SalarioPorHoras : '-'}</td>
-              <td className='right-td'>{row.TipoContrato === 'Por horas' ? formatter.format( row.SalarioPorHoras ) : '-'}</td>
+              <td className='right-td'>{row.TipoContrato === 'Por Horas' ? row.SalarioBruto / row.SalarioPorHoras : '-'}</td>
+              <td className='right-td'>{row.TipoContrato === 'Por Horas' ? formatter.format( row.SalarioPorHoras ) : '-'}</td>
               <td className='right-td'>{formatter.format( row.SalarioBruto )}</td>
               <td className='right-td'>{row.TipoContrato === 'Servicios Profesionales' ? '-' : formatter.format( row.MontoTotalDeduccionesObligatoriasEmpleado )}</td>
               <td className='right-td'>{row.TipoContrato === 'Servicios Profesionales' ? '-' : formatter.format( row.MontoTotalDeduccionesVoluntarias )}</td>

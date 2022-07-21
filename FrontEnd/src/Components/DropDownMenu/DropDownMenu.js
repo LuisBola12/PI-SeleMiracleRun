@@ -6,12 +6,12 @@ import { useNavigate } from 'react-router-dom';
 import { logout } from '../../Slices/user/userSlice';
 import { resetProject } from '../../Slices/projectSlice/activeProjectSlice';
 
-export const Menu = (props) => {
-  const [open, setOpen] = useState(false);
+export const Menu = ( props ) => {
+  const [ open, setOpen ] = useState( false );
   return (
 
     <li className='sidebar-component'>
-      <a className='sidebar-dropdown-icon' onClick={() => setOpen(!open)}>
+      <a className='sidebar-dropdown-icon' onClick={() => setOpen( !open )}>
         {props.icon}
       </a>
       {open && props.children}
@@ -22,30 +22,30 @@ export const Menu = (props) => {
 export const DropdownMenu = () => {
   const navigate = useNavigate();
   const activeMenu = 'main';
-  const [menuHeight, setMenuHeight] = useState(null);
-  const dropdownRef = useRef(null);
-  const rolFromUser = useSelector((state) => state.user.user.Roles);
+  const [ menuHeight, setMenuHeight ] = useState( null );
+  const dropdownRef = useRef( null );
+  const rolFromUser = useSelector( ( state ) => state.user.user.Roles );
   const dispatch = useDispatch();
   const redirectToProjectSelecion = () => {
-    navigate('/');
+    navigate( '/' );
   };
 
-  useEffect(() => {
-    setMenuHeight(dropdownRef.current?.firstChild.offsetHeight);
-  }, []);
+  useEffect( () => {
+    setMenuHeight( dropdownRef.current?.firstChild.offsetHeight );
+  }, [] );
 
-  function calcHeight(el) {
+  function calcHeight( el ) {
     const height = el.offsetHeight;
 
-    setMenuHeight(height);
+    setMenuHeight( height );
   }
   const redirectToProfile = () => {
-    navigate('/userProfile');
+    navigate( '/userProfile' );
   };
   const redirectToLogIn = () => {
-    dispatch(logout());
-    dispatch(resetProject());
-    navigate('/');
+    dispatch( logout() );
+    dispatch( resetProject() );
+    navigate( '/' );
   };
 
 
@@ -62,7 +62,7 @@ export const DropdownMenu = () => {
           </button>
           {
             rolFromUser === 'emp' ? (
-              <button onClick={() => { navigate('/PaymentsReport'); }} className='sidebar-button' >
+              <button onClick={() => { navigate( '/PaymentsReport' ); }} className='sidebar-button' >
                 My Payments Reports
               </button>
             ) :
@@ -72,12 +72,21 @@ export const DropdownMenu = () => {
             Select Project
           </button>
           {
-            rolFromUser === 'admin' ? (
-              <button onClick={() => { navigate('/projectSettings'); }} className='sidebar-button' >
-                Project Configuration
-              </button>
-            ) :
-              null
+            rolFromUser === 'admin' && (
+              <>
+                <button onClick={() => { navigate( '/projectSettings' ); }} className='sidebar-button' >
+                  Project Configuration
+                </button>
+
+                <button onClick={() => { navigate( '/paymentsPerEmployee' ); }} className='sidebar-button' >
+                  Payments Per Employee
+                </button>
+
+                <button onClick={() => { navigate( '/paymentsReport' ); }} className='sidebar-button' >
+                  Payments Reports
+                </button>
+              </>
+            )
           }
           <button onClick={redirectToLogIn} className='sidebar-button' >
             Sign Out

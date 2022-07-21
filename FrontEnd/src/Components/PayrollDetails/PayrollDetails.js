@@ -15,7 +15,7 @@ export const PayrollDetails = () => {
   const [data, setData] = useState([]);
   const [infoReceived, setInfoReceived] = useState(false);
   const location = useLocation();
-  let formatter = new Intl.NumberFormat(undefined, {
+  let formatter = new Intl.NumberFormat('en-US', {
     style: "currency",
     currency: "CRC",
   });
@@ -84,7 +84,8 @@ export const PayrollDetails = () => {
             <th className="right-td">Employee Mandatory Deductions</th>
             <th className="right-td">Voluntary Deductions</th>
             <th className="right-td">Benefits</th>
-            <th className=" right-td">Net Salary</th>
+            <th className="right-td">Net Salary</th>
+            <th className="table-right-border right-td">Paid by Employer</th>
             {/* <th className='table-right-border'>Employees Payslips</th> */}
           </tr>
         </thead>
@@ -95,12 +96,12 @@ export const PayrollDetails = () => {
               <td className="left-td">{element.NombreCompleto}</td>
               <td className="left-td">{element.TipoContrato}</td>
               <td className="right-td">
-                {element.TipoContrato === "Por horas"
+                {element.TipoContrato === "Por Horas"
                   ? element.HorasTrabajadas
                   : "-"}
               </td>
               <td className="right-td">
-                {element.TipoContrato === "Por horas"
+                {element.TipoContrato === "Por Horas"
                   ? formatter.format(element.SalarioPorHora)
                   : "-"}
               </td>
@@ -129,6 +130,9 @@ export const PayrollDetails = () => {
               </td>
               <td className="right-td">
                 {formatter.format(element.SalarioNeto)}
+              </td>
+              <td className=" table-right-border right-td">
+                {formatter.format((element.SalarioBruto + element.Beneficios + element.DeduccionesObligatoriasEmpleador))}
               </td>
             </tr>
           ))}

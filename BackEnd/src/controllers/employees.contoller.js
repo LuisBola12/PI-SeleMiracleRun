@@ -6,6 +6,7 @@ import { emailNewUserEmployee } from '../FormatEmailMessages/EmailNewUserEmploye
 import { employerQueries } from '../database/queries/employerQueries';
 import { emailTerminateContract } from '../FormatEmailMessages/EmailTerminateContract';
 import { filterPaymentsByProjectName, filterPaymentsByDate } from '../utils/employeePaymentsFilters';
+import { emailNewUserVerification } from '../FormatEmailMessages/EmailNewUserVerificationCode';
 
 export const getEmployeeByID = async (req, res) => {
   const { Cedula } = req.params;
@@ -184,7 +185,14 @@ export const postNewEmployee = async (req, res) => {
       subject: 'Nueva Cuenta SeleMiracleRun',
       html: emailNewUserEmployee(dataInfoUser),
     };
+    let mailFormatVerify = {
+      from: process.env.EMAIL_USER,
+      to: Email,
+      subject: 'Verify new SeleMiracleRun Account',
+      html: emailNewUserVerification( Email ),
+    };
     await sendEmail(mailFormat);
+    await sendEmail(mailFormatVerify);
     console.log('Se envio correctamente');
   } catch (e) {
     console.log(e);
@@ -281,6 +289,38 @@ export const getEmployeesAllInfo = async (req, res) => {
   }
 };
 
+export const getLastDateForCalendar = async ( req, res ) => {
+  const { CedEmpleado, Proyecto, FechaActual } = req.params;
+  try {
+    const pool = await getConnection(); 
+    const result = await pool
+      .request()
+      .input( 'CedEmpleado', CedEmpleado )
+      .input( 'Proyecto', Proyecto )
+      .input( 'FechaActual', FechaActual )
+      .query( employeesQueries.getLastDateForCalendar );
+    res.json( result.recordset );
+  } catch ( error ) {
+    res.status( 500 );
+    res.send( error );
+  }
+};
+
+export const getFirstContractDate = async ( req, res ) => {
+  const { CedEmpleado, Proyecto } = req.params;
+  try {
+    const pool = await getConnection(); 
+    const result = await pool
+      .request()
+      .input( 'CedEmpleado', CedEmpleado )
+      .input( 'Proyecto', Proyecto )
+      .query( employeesQueries.getFirstContractDate );
+    res.json( result.recordset );
+  } catch ( error ) {
+    res.status( 500 );
+    res.send( error );
+  }
+};
 export const getEmployeePayments = async (req, res) => {
   const { projectName, employeeEmail } = req.params;
   if (projectName == null || employeeEmail == '') {
@@ -322,3 +362,18 @@ export const getAllEmployeePayments = async (req, res) => {
     res.send(e.message);
   }
 };
+
+export const getHours = async(req, res) =>{
+  const { CedulaEmpleado, NombreProyecto } = req.params;
+  try {
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input('CedulaEmpleado', CedulaEmpleado)
+      .input('NombreProyecto', NombreProyecto)
+      .query( employeesQueries.getHours );
+      res.json( result.recordset );
+      console.log(result.recordset)
+  } catch ( e ){
+    console.log( e );
+  }
+}

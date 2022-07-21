@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { postLogin } from '../../Slices/user/requests/postLogin';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { React, useState } from 'react';
-import { ButtonComp } from '../Button/ButtonComp';
 import './LoginStyle.scss';
 
 export const LoginComp = () => {
@@ -18,6 +17,9 @@ export const LoginComp = () => {
   const handleClick = () => {
     navigate('/register');
   };
+  const handleAboutUs = () => {
+    navigate('/aboutUs');
+  };
 
   const logBtn = async () => {
     dispatch(postLogin({ email, password }));
@@ -29,7 +31,7 @@ export const LoginComp = () => {
     <div className='logIn-page'>
       <div className='logIn-logo-box'>
         <div className='logIn-logo-AppName'>
-          <div className='logIn-logo'></div>
+          <div className='logIn-logo' onClick={handleAboutUs}></div>
           <div className='logIn-AppName'>Payroll System</div>
         </div>
         <p className='logIn-text'>  {`Our payroll system seeks to help manage your payments

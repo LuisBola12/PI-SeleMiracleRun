@@ -13,5 +13,5 @@ export const HireEmployee = () => {
       </div>
       <footer>&copy; Sele Miracle Run - UCR</footer>
     </>
-  )
-}
+  );
+};

@@ -1,15 +1,12 @@
 .react-calendar { 
-  margin-left: auto;
-  margin-right: auto;
   padding: 30px;
-  width: 60%;
-  max-width: 100%;
+  width: 100%;
   background-color: #fff;
   font-size: 30px;
   color: #133c54;
   border-radius: 8px;
   border: none;
-  box-shadow: 0 5px 24px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
   font-family: Roboto;
   line-height: 1.125em;
  }
@@ -37,8 +34,8 @@
  }
 
  .react-calendar__tile{
-   width: 50px;
-   height: 50px;
+   width: 75px;
+   height: 75px;
  }
 
  .react-calendar__tile[disabled]{
@@ -87,49 +84,52 @@
   color: white;
  }
 
- 
-//  .react-calendar--selectRange .react-calendar__tile--hover {
-//   background-color: #f8f8fa;
-//  }
-//  .react-calendar__tile--range {
-//   background: #133c54e8;
-//   color: white;
-//   border-radius: 0;
-//  }
-//  .react-calendar__tile--rangeStart {
-//   border-top-right-radius: 0;
-//   border-bottom-right-radius: 0;
-//   border-top-left-radius: 6px;
-//   border-bottom-left-radius: 6px;
-//   background: #133c54;
-//   color: white;
-//  }
-//  .react-calendar__tile--rangeEnd {
-//   border-top-left-radius: 0;
-//   border-bottom-left-radius: 0;
-//   border-top-right-radius: 6px;
-//   border-bottom-right-radius: 6px;
-//   background: #133c54;
-//   color: white;
-//  }
-
- .calendar-btn-box{
-  width: 100%;
-  text-align: center;
- }
- .calendar-sumbit-btn{
-  border: none;
-  width: 10rem;
-  height: 2.5rem;
-  border: solid black;
- }
-
  .calendar-page{
   margin-top: 20px;
+  display: flex;
+  gap: 30px;
+  text-align: center;
+  justify-content: center;
  }
 
  .calendar-error{
   color: #D8000C;
   text-align: center;
   font-size: 0.7rem;
+}
+
+.calendar-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 46%;
+}
+
+.calendar-table-container{
+  width: 46%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.calendar-table-div{
+  width: 100%;
+  // box-shadow: 0 5px 24px rgba(0, 0, 0, 0.2);
+  // border-radius: 5px;
+}
+
+.calendar-table{
+  width: 100%;
+}
+
+.text-center{
+  margin-top: 20px;
+}
+
+.calendar-table-empty{
+  margin-top: 40px;
+  font-size: 1.5rem;
+  opacity: 75%;
+  text-align: center;
 }

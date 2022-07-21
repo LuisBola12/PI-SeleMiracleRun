@@ -58,4 +58,11 @@ export const projectQueries = {
     `Select e.Nombre, e.Apellido1, e.Apellido2, e.Cedula,e.Email, ecp.TipoContrato from  Empleado e 
     inner join EmpleadoYContratoSeAsocianAProyecto ecp on e.Cedula = ecp.CedulaEmpleado 
     where ecp.FechaFin > GETDATE() AND ecp.NombreProyecto = @projectName AND ecp.CedulaEmpleador = @employerID;`,
-};
+
+  getSumOfGrossSalariesByProject: `Select sum(SalarioBruto) From Pago Where ConsecutivoPlanilla = '19'`,
+  getCountEmployeesByType: `SELECT count(CedulaEmpleado) as EmployeeCount
+      ,[TipoContrato] as ContractType
+  FROM [SeleMiracleRun].[dbo].[EmpleadoYContratoSeAsocianAProyecto]
+  WHERE CedulaEmpleador  = @employerID and NombreProyecto = @projectName
+  GROUP BY TipoContrato`
+  };

@@ -49,12 +49,28 @@ export const usePutToVoluntaryDeductions = () => {
       body: JSON.stringify({
         Nombre: name,
         NombreProyecto: activeProject,
+        CedulaEmpleador: employerId
       }),
     });
     console.log(postFetch);
   };
 
+  const reactivateVoluntaryDeduction = async ( name, reactivateVoluntaryDeductionApi ) => {
+    const postFetch = await fetch( reactivateVoluntaryDeductionApi, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify( {
+        Nombre: name,
+        NombreProyecto: activeProject,
+        CedulaEmpleador: employerId
+      } ),
+    } );
+    console.log( postFetch );
+  };
+
   return {
-    updateVoluntaryDeduction, unlinkEmployeeToVoluntaryDeduction, deactivateVoluntaryDeduction
+    updateVoluntaryDeduction, unlinkEmployeeToVoluntaryDeduction, deactivateVoluntaryDeduction, reactivateVoluntaryDeduction
   };
 };
