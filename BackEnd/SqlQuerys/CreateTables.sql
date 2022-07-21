@@ -4,7 +4,7 @@ Create Table Usuarios(
 	Email varchar(50) check(Email Like '%@%'),
 	Contrasenia varchar(20) not null,
 	Roles varchar(20),
-	Verificado bit null,
+	Verificado bit,
 	primary key(Email),
 );
 
