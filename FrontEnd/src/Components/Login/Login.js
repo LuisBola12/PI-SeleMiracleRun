@@ -17,6 +17,9 @@ export const LoginComp = () => {
   const handleClick = () => {
     navigate('/register');
   };
+  const handleAboutUs = () => {
+    navigate('/aboutUs');
+  };
 
   const logBtn = async () => {
     dispatch(postLogin({ email, password }));
@@ -28,7 +31,7 @@ export const LoginComp = () => {
     <div className='logIn-page'>
       <div className='logIn-logo-box'>
         <div className='logIn-logo-AppName'>
-          <div className='logIn-logo'></div>
+          <div className='logIn-logo' onClick={handleAboutUs}></div>
           <div className='logIn-AppName'>Payroll System</div>
         </div>
         <p className='logIn-text'>  {`Our payroll system seeks to help manage your payments

@@ -833,3 +833,21 @@ tr:nth-child(even) {
   align-items: center;
   /* border: solid black; */
 }
+.div-foto{
+  margin: auto;
+  display: flex;
+  align-items: center;
+}
+.foto-grupal{
+  width: 70%;
+  height: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+}
+.letras-chicas{
+  text-align: right;
+}
+.titulo-about-us{
+  margin-top: 20px;
+}

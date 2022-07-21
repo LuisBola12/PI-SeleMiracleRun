@@ -36,6 +36,7 @@ import { PayrollReport } from './Pages/payrollReport';
 import { DashBoard } from './Pages/dashBoard';
 import { VerificationPage } from './Pages/verification';
 import { PayslipReport } from './Pages/payslipReport';
+import { AboutUsPage } from './Pages/aboutUs';
 
 function App() {
 
@@ -49,6 +50,7 @@ function App() {
         <Route path='no-autorizado' element={<Unauthoraized />} />
         <Route path='register' element={<Register />} />
         <Route path='verification' element={<VerificationPage />} />
+        <Route path='aboutUs' element={<AboutUsPage />} />
 
         {/* Routes for the employer */}
         {userRoll && userRoll.Roles === 'admin' ?
