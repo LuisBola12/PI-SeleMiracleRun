@@ -34,11 +34,17 @@ export const projectQueries = {
     WHERE [NombreProyecto] = @projectName`,
 
   getHourlyEmployeeWorkedHours:
-    `SELECT [CedulaEmpleado]
+    `
+    set implicit_transactions off;
+    set transaction isolation level serializable;
+    begin transaction t1;
+    SELECT [CedulaEmpleado]
     ,[NombreProyecto]
     ,[Cantidad]
     ,[Fecha] FROM [SeleMiracleRun].[dbo].[HorasRegistradas]
-    WHERE NombreProyecto = @projectName AND CedulaEmpleado = @employeeId` ,
+    WHERE NombreProyecto = @projectName AND CedulaEmpleado = @employeeId
+    commit transaction t1;
+    ` ,
 
 
   getEmployeeProjectsByEmail: `SELECT P.[Nombre] FROM EmpleadoYContratoSeAsocianAProyecto ep
