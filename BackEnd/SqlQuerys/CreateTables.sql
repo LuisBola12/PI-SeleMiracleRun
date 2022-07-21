@@ -163,7 +163,6 @@ Create Table PagoAplicaDeduccionesObligatorias(
 	CedulaEmpleador varchar(15),
 	ConsecutivoPago int,
 	NombreDeduccionObligatoria varchar(50),
-	-- NombreProyecto varchar(50),
 	MontoEmpleador float ,
 	MontoEmpleado float ,
 	primary key(ConsecutivoPlanilla, CedulaEmpleador, ConsecutivoPago, NombreDeduccionObligatoria),
@@ -204,7 +203,7 @@ Create Table PagoPoseeDeduccionesVoluntarias(
 	NombreProyecto varchar(50),
 	CedulaEmpleadorProyecto varchar(15),
 	MontoDeduccion real not null,
-	primary key(ConsecutivoPlanilla, CedulaEmpleador, ConsecutivoPago, NombreDeduccion, NombreProyecto),
+	primary key(ConsecutivoPlanilla, CedulaEmpleador, ConsecutivoPago, NombreDeduccion, NombreProyecto, CedulaEmpleadorProyecto),
 	foreign key(ConsecutivoPago, ConsecutivoPlanilla, CedulaEmpleador) references Pago(ConsecutivoPago, ConsecutivoPlanilla, CedulaEmpleador)on update cascade,
 	foreign key(NombreDeduccion,NombreProyecto, CedulaEmpleadorProyecto) references DeduccionesVoluntarias(Nombre, NombreProyecto, CedulaEmpleador)on update cascade,
 );
