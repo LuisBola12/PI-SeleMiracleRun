@@ -141,25 +141,13 @@ export const registerNewUser = async ( req, res ) => {
       .input( 'Email', sql.VarChar, Email )
       .input( 'Contrasenia', sql.VarChar, Contrasenia )
       .input( 'Roles', sql.VarChar, Roles )
-      .query( userQueries.createNewUser );
-    console.log( result );
-  } catch ( e ) {
-    console.log( `Error: ${e}` );
-    res.status( 500 ).send( e.message );
-  }
-
-  try {
-    const result = await pool
-      .request()
       .input( 'Cedula', sql.VarChar, Cedula )
       .input( 'Nombre', sql.VarChar, Nombre )
       .input( 'Apellido1', sql.VarChar, Apellido1 )
       .input( 'Apellido2', sql.VarChar, Apellido2 )
       .input( 'Telefono', sql.VarChar, Telefono )
-      .input( 'Email', sql.VarChar, Email )
-      .query( employerQueries.createNewEmployer );
+      .execute( 'registrarEmpleador' );
     console.log( result );
-    res.status( 200 ).send();
   } catch ( e ) {
     console.log( `Error: ${e}` );
     res.status( 500 ).send( e.message );

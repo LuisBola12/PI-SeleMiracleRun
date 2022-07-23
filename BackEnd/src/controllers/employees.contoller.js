@@ -133,28 +133,11 @@ export const postNewEmployee = async (req, res) => {
       .input('Email', Email)
       .input('Contrasenia', ContraseniaRandom)
       .input('Roles', Roles)
-      .query(userQueries.createNewUser);
-  } catch (e) {
-    console.log(e);
-  }
-
-  try {
-    const createEmployee = await pool
-      .request()
       .input('Nombre', Nombre)
       .input('Apellido1', Apellido1)
       .input('Apellido2', Apellido2)
       .input('Cedula', Cedula)
       .input('Telefono', Telefono)
-      .input('Email', Email)
-      .query(employeesQueries.createNewEmployee);
-  } catch (e) {
-    console.log(e);
-  }
-  try {
-    const createContractForEmployee = await pool
-      .request()
-      .input('Cedula', Cedula)
       .input('NombreProyecto', NombreProyecto)
       .input('CedulaEmpleador', CedulaEmpleador)
       .input('TipoJornada', TipoJornada)
@@ -163,10 +146,11 @@ export const postNewEmployee = async (req, res) => {
       .input('SalarioPorHora', SalarioPorHora)
       .input('NombreServicio', NombreServicio)
       .input('ValorServicio', ValorServicio)
-      .query(employeesQueries.addContractOfAnEmployee);
+      .execute('crearEmpleado');
   } catch (e) {
     console.log(e);
   }
+
   try {
     const result = await pool.request()
       .input('CedEmpleado', Cedula)
